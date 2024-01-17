@@ -1,0 +1,10 @@
+{% extends 'site/base.html' %}
+
+{% block content %}
+
+<ul>
+    {% for list in lists %}
+    <li><a href="{% url 'list-detail' list.id %}">{{ list.title }}</a></li>   {% endfor %}
+</ul>
+
+{% endblock %}

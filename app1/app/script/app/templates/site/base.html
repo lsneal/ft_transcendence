@@ -1,0 +1,18 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Site Test</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    </head>
+    <body>
+
+        <!---<nav>
+            <a href="{% url 'band-list' %}">Groupes</a>
+            <a href="{% url 'listing' %}">Lists</a>
+        </nav>-->
+
+        {% block content %}{% endblock %}
+
+    </body>
+</html>
