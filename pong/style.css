@@ -1,25 +1,43 @@
+.game {
+    position: absolute;
+    height: 500px;
+    width: 1000px;
+    background-color: black;
+    left: 25%;
+    margin-left:-50px;
+}
+
+.center {
+	position: absolute;
+	width: 10px;
+	height: 50px;
+	left: 50%;
+	background-color: white;
+}
+
 .block {
 	position: absolute;
-	top: 500px;
-	background-color: black;
-	width: 30px;
-	height: 120px;
+	background-color: white;
+	width: 25px;
+	height: 80px;
+	top: 250px;
 }
 
 #leftBox{
-	left: 30px;
+	left: 2%;
 }
 
 #rightBox{
-	left: 530px;
+	left: 95%;
 }
 
 .ball {
 	position:absolute;
-	left: 265px;
-	top: 500px;
-	background-color: black;
-	height: 50px;
-	width: 50px;
+	background-color: white;
+	height: 30px;
+	width: 30px;
 	border-radius: 50%;
+	top: 250px;
+	left: 50%;
+	margin-left:-10px;
 }
