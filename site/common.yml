@@ -23,8 +23,7 @@ services:
       - "8001"  #change the port
     restart: unless-stopped
     volumes:
-      #- static:/var/www/admin/css
-      - ./app/script/:/script/mysite #development purpose
+      - ./app/site/:/script/mysite #development purpose
     depends_on:
       - postgres #change
     tty: true
