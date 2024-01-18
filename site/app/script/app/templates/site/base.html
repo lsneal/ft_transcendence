@@ -7,10 +7,12 @@
     </head>
     <body>
 
-        <!---<nav>
+        <nav>
             <a href="{% url 'band-list' %}">Groupes</a>
             <a href="{% url 'listing' %}">Lists</a>
-        </nav>-->
+            <a href="{% url 'contact-us' %}">Contact</a>
+            <a href="{% url 'about-us' %}">a propos</a>
+        </nav>
 
         {% block content %}{% endblock %}
 

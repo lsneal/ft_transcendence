@@ -1,5 +1,7 @@
 from django.db import models
+from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 class Band(models.Model):
 
@@ -39,4 +41,9 @@ class Listing(models.Model):
     )
     type = models.fields.CharField(default="", choices=Type.choices)
     band = models.ForeignKey(Band, null=True, on_delete=models.SET_NULL)
+
+class ContactUsForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField()
+    message = forms.CharField(max_length=1000)
 
