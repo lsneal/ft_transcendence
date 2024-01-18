@@ -1,8 +1,8 @@
 version: "3.8"
 
 include:
-  - app1/common.yml
-  - app2/common.yml
+  - site/common.yml
+    #- app2/common.yml
 
 services:
   nginx:
@@ -11,7 +11,7 @@ services:
     build: nginx
     restart: always
     volumes:
-      - ./app1/app/script/static/:/var/www
+      - ./site/app/script/static/:/var/www #development purpose
       - static:/var/www/css
     ports:
       - "443:443"
@@ -19,19 +19,7 @@ services:
       - nginx
     depends_on:
       - django
-      - django2
-
-  #not working for now
-  caddy:
-    image: caddy:2.7.6-alpine
-    container_name: caddy
-    profiles:
-      - donotstart
-    restart: always
-    ports:
-      - "448:448"
-    networks:
-      - nginx
+        #- django2
 
 networks:
   nginx:
