@@ -2,7 +2,6 @@ from django.db import models
 from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
 class Band(models.Model):
 
     def __str__(self):
@@ -47,3 +46,5 @@ class ContactUsForm(forms.Form):
     email = forms.EmailField()
     message = forms.CharField(max_length=1000)
 
+
+    

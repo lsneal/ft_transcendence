@@ -7,4 +7,6 @@
     <li><a href="{% url 'list-detail' list.id %}">{{ list.title }}</a></li>   {% endfor %}
 </ul>
 
+<a href="{% url 'list-create' %}">Créer un nouveau produit</a>
+
 {% endblock %}

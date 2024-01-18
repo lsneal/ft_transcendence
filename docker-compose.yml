@@ -2,7 +2,7 @@ version: "3.8"
 
 include:
   - site/common.yml
-    #- app2/common.yml
+  - app2/common.yml
 
 services:
   nginx:
@@ -19,7 +19,7 @@ services:
       - nginx
     depends_on:
       - django
-        #- django2
+      - django2
 
 networks:
   nginx:
