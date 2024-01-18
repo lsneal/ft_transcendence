@@ -1,0 +1,25 @@
+.block {
+	position: absolute;
+	top: 500px;
+	background-color: black;
+	width: 30px;
+	height: 120px;
+}
+
+#leftBox{
+	left: 30px;
+}
+
+#rightBox{
+	left: 530px;
+}
+
+.ball {
+	position:absolute;
+	left: 265px;
+	top: 500px;
+	background-color: black;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
