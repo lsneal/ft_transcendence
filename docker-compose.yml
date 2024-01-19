@@ -2,7 +2,7 @@ version: "3.8"
 
 include:
   - site/common.yml
-  - app2/common.yml
+  - rest/common.yml
 
 services:
   nginx:
@@ -11,7 +11,7 @@ services:
     build: nginx
     restart: always
     volumes:
-      - ./site/app/script/static/:/var/www #development purpose
+      - ./site/app/script/static/:/var/www/ #development purpose
         #- static:/var/www/css
     ports:
       - "443:443"
