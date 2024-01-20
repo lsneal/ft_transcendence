@@ -5,12 +5,28 @@ services:
     image: postgres:16.1-alpine3.19
     networks:
       - app #change
+      - postgres-app1
     environment:
       - POSTGRES_PASSWORD=password
       - PG_PORT=5432
     expose:
       - "5432"
     restart: unless-stopped
+
+  postgres_exporter:
+    container_name: postgres_exporter
+    image: quay.io/prometheuscommunity/postgres-exporter
+    command: --web.listen-address=:9001
+    networks:
+      - postgres-app1
+      - prometheus-network
+    environment:
+      - DATA_SOURCE_NAME=postgresql://postgres:password@postgres:5432/postgres?sslmode=disable
+    expose:
+      - "9001"
+    restart: unless-stopped
+    depends_on:
+      - postgres
     
     
   django: #change the name
@@ -31,4 +47,7 @@ services:
 
 networks:
   app: #change the name
+    driver: bridge
+  
+  postgres-app1:
     driver: bridge

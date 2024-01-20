@@ -8,16 +8,23 @@ services:
       - "9100"
     networks:
       - prometheus-network
+    logging:
+      driver: none
+
   prometheus:
     container_name: prometheus
     restart: always
     build: ./prometheus
     expose:
       - "9090"
+    volumes:
+      - prometheus:/prometheus
     networks:
       - prometheus-network
       - grafana-network
       - nginx
+    logging:
+      driver: none
 
   grafana:
     container_name: grafana
@@ -28,6 +35,8 @@ services:
     networks:
       - grafana-network
       - nginx
+    logging:
+      driver: none
 
 networks:
   prometheus-network:
@@ -35,4 +44,11 @@ networks:
   
   grafana-network:
     driver: bridge 
+
+volumes:
+  prometheus:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
 
