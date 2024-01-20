@@ -3,6 +3,8 @@ version: "3.8"
 include:
   - site/common.yml
   - rest/common.yml
+  - restv2/common.yml
+  - logs/common.yml
 
 services:
   nginx:
@@ -20,6 +22,7 @@ services:
     depends_on:
       - django
       - django2
+      - django3
 
 networks:
   nginx:

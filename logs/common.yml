@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  node_exporter:
+    container_name: node_exporter
+    restart: always
+    build: ./node_exporter
+    expose:
+      - "9100"
+    networks:
+      - prometheus-network
+  prometheus:
+    container_name: prometheus
+    restart: always
+    build: ./prometheus
+    expose:
+      - "9090"
+    networks:
+      - prometheus-network
+      - grafana-network
+      - nginx
+
+  grafana:
+    container_name: grafana
+    restart: always
+    build: ./grafana
+    expose:
+      - "3000"
+    networks:
+      - grafana-network
+      - nginx
+
+networks:
+  prometheus-network:
+    driver: bridge 
+  
+  grafana-network:
+    driver: bridge 
+
