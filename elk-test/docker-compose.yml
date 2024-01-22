@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    build: ./elasticsearch
+    mem_limit: 1g
+    networks:
+      - elk
+        #environment:
+      # - xpack.security.enabled= true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    restart: unless-stopped
+
+  kibana:
+    container_name: kibana
+    build: ./kibana
+    networks:
+      - elk
+    ports:
+      - "5601:5601"
+    restart: unless-stopped
+      #environment:
+      #- ELASTICSEARCH_HOSTS=https://elasticsearch:9200
+      #- XPACK_MONITORING_ENABLED=true
+      #- XPACK_MONITORING_COLLECTION_ENABLED=true
+      #- XPACK_SECURITY_ENABLED=true
+      #- ELASTICSEARCH_USERNAME="kibana_system"
+      #- ELASTICSEARCH_PASSWORD="test"
+    depends_on:
+      - elasticsearch
+    
+  logstash:
+    container_name: logstash
+    build: ./logstash
+    networks:
+      - elk
+    ports:
+      - "5044:5044"
+      #- "50000:50000/tcp"
+      #- "50000:50000/udp"
+      - "9600:9600"
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge
