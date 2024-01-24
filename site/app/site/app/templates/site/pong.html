@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{% static 'css/pong.css' %}" />
+	</head>
+	<body>
+		{% block content %}
+			<div class="game" class="{{ game }}">
+				<div id="leftBox" class="block"></div>
+				<div id="ball" class="ball"></div>
+				<div id="rightBox" class="block"></div>
+			</div>			
+		{%  endblock content %}
+	</body>
+</html>
