@@ -4,23 +4,53 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="{% static 'css/pong.css' %}" />
+		<link rel="stylesheet" href="../static/css/pong.css" />
 	</head>
 	<body>
 		<!--{% block content %}-->
-			<h1>Lets chat!</h1>
+			<h1>Chat</h1>
 			<form id="form">
 				<input type="text" name="message"/>
 			</form>
 			<div id="messages">
 			</div>
-			<div class="game" class="{{ game }}">
+			<button  onclick="startGame()">Start</button>
+			<div class="game">
 				<div id="leftBox" class="block"></div>
 				<div id="ball" class="ball"></div>
 				<div id="rightBox" class="block"></div>
-			</div>		
+			</div>
 		<script type="text/javascript">
-			let url = `wss://localhost/ws/socket-server`
+
+			let url = `ws://localhost:8001/ws/socket-server`
+
+			function startGame() {
+				console.log("le jeux commence");
+
+				const leftBarSocket = new WebSocket(url)
+				const ballSocket = new WebSocket(url)
+				const rightBarSocket = new WebSocket(url)
+
+				let leftBar = document.getElementById("leftBox")
+				let ball = document.getElementById("ball")
+				let rightBox = document.getElementById("rightBox")
+				
+				let i = 0;
+				while (i != 100)
+				{
+					
+
+					i++;
+				}
+			}
+
+
+
+
+
+
+
+			
 
 			const chatSocket = new WebSocket(url)
 
