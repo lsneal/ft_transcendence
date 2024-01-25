@@ -1,0 +1,3 @@
+*.[pyc]
+/home/lobozier/django/site/app/script/app/__pycache__
+/home/lobozier/django/site/app/script/app/migrations
