@@ -5,15 +5,16 @@ include:
   - rest/common.yml
   - restv2/common.yml
   - logs/common.yml
+    #- elk-test/common.yml
 
 services:
   nginx:
     container_name: nginx
-    #image: nginx:1.25.3-alpine
     build: nginx
     restart: always
     volumes:
       - ./site/app/script/static/:/var/www/ #development purpose
+      - adm:/lib/adminer
         #- static:/var/www/css
     ports:
       - "443:443"
@@ -24,8 +25,26 @@ services:
       - django2
       - django3
 
+  adminer:
+    container_name: adminer
+    depends_on:
+      - postgres
+    build: ./adminer
+    restart: always
+    working_dir: /
+    expose:
+      - "8080"
+    volumes:
+      - adm:/lib/adminer
+    networks:
+      - db-network
+      - nginx
+
 networks:
   nginx:
+    driver: bridge
+
+  db-network:
     driver: bridge
 
 volumes:
@@ -34,3 +53,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
+
+  adm:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: "/home/lobozier/data/adm"

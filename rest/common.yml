@@ -5,6 +5,7 @@ services:
     image: postgres:16.1-alpine3.19
     networks:
       - app2 #change
+      - db-network
     environment:
       - POSTGRES_PASSWORD=password
       - PG_PORT=5432
