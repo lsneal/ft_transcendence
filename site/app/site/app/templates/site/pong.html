@@ -22,59 +22,107 @@
 			</div>
 		<script type="text/javascript">
 
+			let posX = 499;
+			let posY = 250;
+
+			let numRight = 250;
+			let numLeft = 250;
 			let url = `ws://localhost:8001/ws/socket-server`
+			const game = new WebSocket(url)
+			let leftBar = document.getElementById("leftBox")
+			let ball = document.getElementById("ball")
+			let rightBar = document.getElementById("rightBox")
+			
+			let i = 0;
 
 			function startGame() {
 				console.log("le jeux commence");
-
-				const leftBarSocket = new WebSocket(url)
-				const ballSocket = new WebSocket(url)
-				const rightBarSocket = new WebSocket(url)
-
-				let leftBar = document.getElementById("leftBox")
-				let ball = document.getElementById("ball")
-				let rightBox = document.getElementById("rightBox")
-				
-				let i = 0;
-				while (i != 100)
-				{
-					
-
+				let box = 0;
+				//while (i != 100)
+				//{
+					console.log("cacacac")
+					box = 0;
+					window.addEventListener("keydown", function (e) {
+						if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
+						{
+							box = 1;
+							game.send(JSON.stringify({
+								'moov':e.key
+							}))
+						}
+					})
+					//if (box === 0)
+					//{
+					//	game.send(JSON.stringify({
+					//		'moov':'ball'
+					//	}))
+					//}
 					i++;
+				//}
+			}
+			game.onmessage = function (event) {
+				let data = JSON.parse(event.data)
+				console.log("Data:", data)
+				if (data.type === "game")
+				{
+					if (data.moov === "w" && numLeft > 0)
+					{
+						numLeft -= 30;
+						numLeft.toString();
+						leftBar.style.top = numLeft + "px";
+						console.log("reiceve w")
+					}
+					if (data.moov === "s" && numLeft < 430)
+					{
+						numLeft += 30;
+						numLeft.toString();
+						leftBar.style.top = numLeft + "px";
+						console.log("reiceve s")
+					}
+					if (data.moov === "ArrowUp" && numRight > 0)
+					{
+						numRight -= 30;
+						numRight.toString();
+						rightBar.style.top = numRight + "px";
+						console.log("reiceve ArrowUp")
+					}
+					if (data.moov === "ArrowDown" && numRight < 430)
+					{
+						numRight += 30;
+						numRight.toString();
+						rightBar.style.top = numRight + "px";
+						console.log("reiceve ArrowDown", numRight)
+					}
+					if (data.moov === "ball")
+					{
+						console.log("reiceve ball")
+					}
 				}
 			}
 
-
-
-
-
-
-
-			
-
-			const chatSocket = new WebSocket(url)
-
-			chatSocket.onmessage = function(e) {
-				let data = JSON.parse(e.data)
-				console.log('Data:', data)
-				if (data.type === 'chat'){
-					let messages = document.getElementById("messages")
-					
-					messages.insertAdjacentHTML("beforeend", `<div>
-							<p>${data.message}</p>
-						<div/>`)
-				}
-			}
-
-			let form = document.getElementById("form")
-			form.addEventListener('submit', (e)=> {
-				e.preventDefault()
-				let message = e.target.message.value
-				chatSocket.send(JSON.stringify({
-					'message':message
-				}))
-				form.reset()
-			})
+			//const chatSocket = new WebSocket(url)
+//
+			//chatSocket.onmessage = function(e) {
+			//	let data = JSON.parse(e.data)
+			//	console.log('Data:', data)
+			//	if (data.type === 'chat'){
+			//		let messages = document.getElementById("messages")
+			//		
+			//		messages.insertAdjacentHTML("beforeend", `<div>
+			//				<p>${data.message}</p>
+			//			<div/>`)
+			//	}
+			//}
+//
+			//let form = document.getElementById("form")
+			//form.addEventListener('submit', (e)=> {
+			//	e.preventDefault()
+			//	let message = e.target.message.value
+			//	chatSocket.send(JSON.stringify({
+			//		'message':message
+			//	}))
+			//	form.reset()
+			//})
 		</script>
 		<!--{%  endblock content %}-->
 	</body>
