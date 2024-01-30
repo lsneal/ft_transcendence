@@ -5,7 +5,7 @@ include:
   - rest/common.yml
   - restv2/common.yml
   - logs/common.yml
-    #- elk-test/common.yml
+  - elk-test/common.yml
 
 services:
   nginx:
@@ -15,11 +15,13 @@ services:
     volumes:
       - ./site/app/script/static/:/var/www/ #development purpose
       - adm:/lib/adminer
+      - certs:/etc/nginx/certs/
         #- static:/var/www/css
     ports:
       - "443:443"
     networks:
       - nginx
+      - elk
     depends_on:
       - django
       - django2
@@ -60,3 +62,5 @@ volumes:
       type: 'none'
       o: 'bind'
       device: "/home/lobozier/data/adm"
+
+  certs:

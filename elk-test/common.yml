@@ -6,11 +6,14 @@ services:
     mem_limit: 1g
     networks:
       - elk
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
     environment:
       #- node.name=elasticsearch
       #- ELASTIC_PASSWORD=changeme
       - xpack.security.enabled=false
       - discovery.type=single-node
+      - ELASTIC_PASSWORD=elastic
     expose:
       - "9200"
       - "9300"
@@ -29,6 +32,12 @@ services:
       #- KIBANA_SYSTEM_PASSWORD=changeme
       - SERVER_NAME=kibana
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_PASSWORD=elastic
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/server.crt
+      - XPACK_SECURITY_ENCRYPTIONKEY=ae469e4fa2a45614c71b84185187ef53
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=f5aa3a1d98b98222dc2ef56f834bc832
+      - XPACK_REPORTING_ENCRYPTIONKEY=8db78661d0be5bec2ec76cacebe1684b
       #- ELASTICSEARCH_HOSTS=https://elasticsearch:9200
       #- XPACK_MONITORING_ENABLED=true
       #- XPACK_MONITORING_COLLECTION_ENABLED=true
@@ -37,10 +46,13 @@ services:
       #- ELASTICSEARCH_PASSWORD="test"
     depends_on:
       - elasticsearch
+    volumes:
+      - certs:/usr/share/kibana/config/certs
     
   logstash:
     container_name: logstash
     build: ./logstash
+    command: logstash -f /usr/share/logstash/pipeline/logstash.conf
     networks:
       - elk
     expose:
@@ -50,9 +62,18 @@ services:
       - "9600"
     restart: unless-stopped
     environment:
+      - xpack.monitoring.enabled=false
+      - NODE_NAME=logstash
       - LOGSTASH_INTERNAL_PASSWORD=changeme
+      - ELASTIC_HOSTS=http://elasticsearch:9200
+      - ELASTIC_PASSWORD=elastic
+      - ELASTIC_USER=elastic
+        #- KIBANA_HOSTS=http://kibana:5601
     depends_on:
       - elasticsearch
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - certs:/usr/share/logstash/certs
 
 networks:
   elk:
