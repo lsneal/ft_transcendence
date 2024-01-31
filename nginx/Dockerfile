@@ -9,6 +9,6 @@ RUN apk --update add --no-cache openssl \
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/ /etc/nginx/conf/
-COPY ./site/ /var/www/html/
+#COPY ./site/ /var/www/html/
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

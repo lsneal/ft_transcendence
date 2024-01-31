@@ -9,6 +9,7 @@ services:
     build: nginx
     volumes:
       - ./users/users/script/static/:/var/www/django/ #development purpose
+      - ./nginx/site/:/var/www/html/ #development purpose
     restart: always
     ports:
       - "443:443"
