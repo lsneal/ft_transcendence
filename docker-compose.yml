@@ -8,10 +8,11 @@ services:
     container_name: nginx
     build: nginx
     volumes:
-      - ./users/users/script/static/:/var/www/ #development purpose
+      - ./users/users/script/static/:/var/www/django/ #development purpose
     restart: always
     ports:
       - "443:443"
+      - "3000:3000"
     networks:
       - nginx
     depends_on:
