@@ -12,10 +12,6 @@ import qrcode
 import base64
 import secrets
 
-#api
-from rest_framework.views import APIView
-from .serializer import UserSerializer
-from rest_framework.response import Response
 
 def home(request):
         return render(request, 'site/home.html')
@@ -26,7 +22,7 @@ def test(request):
 def qr_code(request):
     return render(request, 'site/qr_code.html') 
 
-"""def register(request):
+def register(request):
     # Verifie si la requete est une requete POST (c'est-a-dire un formulaire a ete soumis)
     if request.method == 'POST':
         # Cree une instance du formulaire CustomUserCreationForm avec les donnees de la requete POST
@@ -63,7 +59,7 @@ def qr_code(request):
         user_register = CustomUserCreationForm()
     # Rend le modele 'register.html' avec le formulaire, qu'il soit vide ou contenant des donnees POST invalides
     return render(request, 'site/test.html', {'user_register': user_register})
-"""
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -86,11 +82,3 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'site/home.html', {'form': form})
-
-
-class register(APIView):
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
