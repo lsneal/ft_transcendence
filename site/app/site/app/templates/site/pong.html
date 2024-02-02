@@ -7,14 +7,13 @@
 		<link rel="stylesheet" href="../static/css/pong.css" />
 	</head>
 	<body>
-		<!--{% block content %}-->
-			<h1>Chat</h1>
-			<form id="form">
-				<input type="text" name="message"/>
-			</form>
-			<div id="messages">
-			</div>
-			<button  onclick="startGame()">Start</button>
+			{% comment %} <h1>Chat</h1> {% endcomment %}
+			{% comment %} <form id="form"> {% endcomment %}
+				{% comment %} <input type="text" name="message"/> {% endcomment %}
+			{% comment %} </form> {% endcomment %}
+			{% comment %} <div id="messages"> {% endcomment %}
+			{% comment %} </div> {% endcomment %}
+			<button onclick="JoinGame()">Join Game</button>
 			<div class="game">
 				<h1 id="scoreP1">0</h1>
 				<div id="leftBox" class="block"></div>
@@ -22,63 +21,7 @@
 				<h1 id="scoreP2" >0</h1>
 				<div id="rightBox" class="block"></div>
 			</div>
-		<script type="text/javascript">
-
-			let posX = 499;
-			let posY = 250;
-
-			let numRight = 250;
-			let numLeft = 250;
-			let url = `ws://localhost:8001/ws/socket-server`
-			//let url = `ws://localhost:8001/ws/` + game.id
-			const game = new WebSocket(url)
-			let leftBar = document.getElementById("leftBox")
-			let ball = document.getElementById("ball")
-			let rightBar = document.getElementById("rightBox")
-			
-			function startGame() {
-				console.log("res =", leftBar.style.top);
-				game.send(JSON.stringify({
-					'game':'start',
-					'moov':'none',
-				}))
-				console.log("le jeux commence");
-				window.addEventListener("keydown", function (e) {
-					if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
-					{
-						game.send(JSON.stringify({
-							'game':'in progress',
-							'moov':e.key,
-						}))
-					}
-				})
-			}
-			
-			game.onmessage = function (event) {
-				let data = JSON.parse(event.data)
-				console.log("Data:", data)
-				if (data.type === "game")
-				{
-					if (data.moov === "w" || data.moov === "s" || data.moov === "ArrowUp" || data.moov === "ArrowDown")
-					{
-						numLeft = data.leftBoxTop.toString();
-						numRight = data.rightBoxTop.toString();
-						leftBar.style.top = numLeft + "px";
-						rightBar.style.top = numRight + "px";
-					}
-					if (data.moov === "ball")
-					{
-						ball.style.top = data.posY.toString() + "px";
-						ball.style.left = data.posX.toString() + "px";
-						console.log("reiceve ball " , data.moov)
-						document.getElementById("scoreP1").innerHTML = data.scoreP1;
-						document.getElementById("scoreP2").innerHTML = data.scoreP2;
-					}
-				}
-			}
-
-
-		</script>
-		<!--{%  endblock content %}-->
+		<script type="text/javascript" src="../static/js/pong.js"></script>
+		<script type="text/javascript" src="../static/js/Matchmaking.js"></script>
 	</body>
 </html>

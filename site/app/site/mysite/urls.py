@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.home),
     path('test/', views.test),
     path('admin/', admin.site.urls),  
-    path('pong/', views.pong), 
+    path('pong/', views.pong),
+    path('pong/joinPong', views.Matchmake),
 ]
