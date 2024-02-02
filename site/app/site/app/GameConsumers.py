@@ -28,7 +28,7 @@ class GameConsumer(WebsocketConsumer):
             manager.games[gameId].player2 = self
 
         if manager.games[gameId].player1 != 'p1' and manager.games[gameId].player2 != 'p2' and manager.games[gameId].player2 != None:
-            manager.games[gameId].bar_moov(moov)
+            manager.games[gameId].bar_moov(moov, self)
             manager.games[gameId].game(game)
         else:
             print("Waiting room....")

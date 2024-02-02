@@ -14,15 +14,15 @@ class Pong:
         self.player2 = None
         self.id = id
 
-    def bar_moov(self, moov):
+    def bar_moov(self, moov, playerMoov):
         
-        if moov == 'w' and self.leftBoxTop > 0:
+        if moov == 'ArrowUp' and self.leftBoxTop > 0 and self.player1 == playerMoov:
             self.leftBoxTop -= 30
-        if moov == 's' and self.leftBoxTop < 430:
-            self.leftBoxTop += 30    
-        if moov == 'ArrowUp' and self.rightBoxTop > 0:
+        if moov == 'ArrowDown' and self.leftBoxTop < 430 and self.player1 == playerMoov:
+            self.leftBoxTop += 30 
+        if moov == 'ArrowUp' and self.rightBoxTop > 0 and self.player2 == playerMoov:
             self.rightBoxTop -= 30
-        if moov == 'ArrowDown' and self.rightBoxTop < 430:
+        if moov == 'ArrowDown' and self.rightBoxTop < 430 and self.player2 == playerMoov:
            self.rightBoxTop += 30
         
         self.player1.send(text_data=json.dumps({
@@ -54,7 +54,6 @@ class Pong:
         hitLeft = 50
         hitRight = 930
         hitWall = 0
-        print("ball start moov")
         while (scoreP1 < 5 and scoreP2 < 5):
             if ballPosX == 499 and ballPosY == 250:
                 while ballPosX > hitLeft: #go left mid
@@ -62,7 +61,6 @@ class Pong:
                     self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                     time.sleep(0.03)            
             if self.leftBoxTop - ballPosY < 30 and self.leftBoxTop - ballPosY > -90 and ballPosX <= hitLeft:
-                print('HITEEEEEEEEEE left box',file=sys.stderr)
                 if self.leftBoxTop - ballPosY > -20:
                     print('to right direction top')
                     hitWall = 0        
@@ -101,7 +99,6 @@ class Pong:
                 scoreP2 += 1
             
             if self.rightBoxTop - ballPosY < 30 and self.rightBoxTop - ballPosY > -90 and ballPosX >= hitRight:
-                print('HITEEEEEEEEEE right box',file=sys.stderr)
                 if self.rightBoxTop - ballPosY > -20:
                     print('to left direction top')
                     hitWall = 0        

@@ -37,7 +37,7 @@ function startGame(gameId) {
         console.log("Data:", data)
         if (data.type === "game")
         {
-            if (data.moov === "w" || data.moov === "s" || data.moov === "ArrowUp" || data.moov === "ArrowDown")
+            if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
             {
                 numLeft = data.leftBoxTop.toString();
                 numRight = data.rightBoxTop.toString();
