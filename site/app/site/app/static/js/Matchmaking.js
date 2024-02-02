@@ -1,4 +1,4 @@
-function JoinGame() {
+function JoinGameOnline() {
     fetch(`joinPong`, {
         headers:{
             'Accept': 'application/json',
@@ -9,5 +9,5 @@ function JoinGame() {
     .then(data => {
         startGame(data.id)
         return data;
-    })		
+    })
 }

@@ -14,6 +14,9 @@ class Matchmaking():
         self.games.append(Pong('p1', pos))
         return pos
 
-        
 
-
+    def endGame(self, gameId):
+        for game in self.games:
+            if game.id == gameId:
+                self.games.remove(game)
+                return

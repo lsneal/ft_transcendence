@@ -34,6 +34,7 @@ class GameConsumer(WebsocketConsumer):
             print("Waiting room....")
 
 
+
 #chat ->
 #    def receive(self, text_data):
 #        text_data_json = json.loads(text_data)

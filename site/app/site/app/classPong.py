@@ -1,10 +1,6 @@
-#from .views import manager
 import json
 import threading
-import sys
 import time
-#from channels.generic.websocket import WebsocketConsumer
-#from asgiref.sync import async_to_sync
 
 class Pong:
     def __init__(self, Player1, id):
@@ -13,6 +9,7 @@ class Pong:
         self.player1 = Player1
         self.player2 = None
         self.id = id
+        self.status = None
 
     def bar_moov(self, moov, playerMoov):
         
@@ -25,18 +22,8 @@ class Pong:
         if moov == 'ArrowDown' and self.rightBoxTop < 430 and self.player2 == playerMoov:
            self.rightBoxTop += 30
         
-        self.player1.send(text_data=json.dumps({
-            'type':'game',
-            'moov':moov,
-            'leftBoxTop': self.leftBoxTop,
-            'rightBoxTop': self.rightBoxTop
-        }))
-        self.player2.send(text_data=json.dumps({
-            'type':'game',
-            'moov':moov,
-            'leftBoxTop': self.leftBoxTop,
-            'rightBoxTop': self.rightBoxTop
-        }))
+        self.barSendToJs(moov, self.leftBoxTop, self.rightBoxTop)
+
     
     def game(self, game):
 
@@ -58,7 +45,7 @@ class Pong:
             if ballPosX == 499 and ballPosY == 250:
                 while ballPosX > hitLeft: #go left mid
                     ballPosX -= 15
-                    self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                    self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                     time.sleep(0.03)            
             if self.leftBoxTop - ballPosY < 30 and self.leftBoxTop - ballPosY > -90 and ballPosX <= hitLeft:
                 if self.leftBoxTop - ballPosY > -20:
@@ -72,7 +59,7 @@ class Pong:
                         if ballPosY <  0:
                             hitWall = 1
                         ballPosX += 18
-                        self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                         time.sleep(0.03)
                 elif self.leftBoxTop - ballPosY < -50:
                     print('to right direction bot')
@@ -85,13 +72,13 @@ class Pong:
                         if ballPosY > 460:
                             hitWall = 1
                         ballPosX += 18
-                        self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                         time.sleep(0.03)
                 else:
                     print('to right direction mid')
                     while ballPosX < hitRight:
                         ballPosX += 18
-                        self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                         time.sleep(0.03)
             elif ballPosX < hitLeft :
                 ballPosX = 499
@@ -110,7 +97,7 @@ class Pong:
                         if ballPosY <  0:
                             hitWall = 1
                         ballPosX -= 18
-                        self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                         time.sleep(0.03)
                 elif self.rightBoxTop - ballPosY < -50:
                     print('to left direction bot')
@@ -123,20 +110,24 @@ class Pong:
                         if ballPosY > 460:
                             hitWall = 1
                         ballPosX -= 18
-                        self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                         time.sleep(0.03)
                 else:
                     print('to right direction mid')
                     while ballPosX > hitLeft:
                         ballPosX -= 18
-                        self.sendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                         time.sleep(0.03)
             elif ballPosX > hitRight:
                 ballPosX = 499
                 ballPosY = 250
                 scoreP1 += 1
-            
-    def sendToJs(self, ballPosX, ballPosY, scoreP1, scoreP2):
+        self.ballSendToJs(499, 250, scoreP1, scoreP2)
+        self.barSendToJs('ArrowUp', 250, 250)
+        from .views import manager
+        manager.endGame(self.id)
+
+    def ballSendToJs(self, ballPosX, ballPosY, scoreP1, scoreP2):
         self.player1.send(text_data=json.dumps({
             'type':'game',
             'moov':'ball',
@@ -153,3 +144,22 @@ class Pong:
             'scoreP1':scoreP1,
             'scoreP2':scoreP2
         }))
+    
+    def barSendToJs(self, moov, leftBoxTop, rightBoxTop):
+        self.player1.send(text_data=json.dumps({
+            'type':'game',
+            'moov':moov,
+            'leftBoxTop': leftBoxTop,
+            'rightBoxTop': rightBoxTop
+        }))
+        
+        self.player2.send(text_data=json.dumps({
+            'type':'game',
+            'moov':moov,
+            'leftBoxTop': leftBoxTop,
+            'rightBoxTop': rightBoxTop
+        }))
+
+    def __del__(self):
+        self.player1.close()
+        self.player2.close()
