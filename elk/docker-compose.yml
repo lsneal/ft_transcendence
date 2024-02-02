@@ -104,7 +104,6 @@ services:
       - kibanadata:/usr/share/kibana/data
     networks:
       - elk
-        #- nginx
     ports:
       - ${KIBANA_PORT}:5601
     environment:
@@ -149,6 +148,15 @@ services:
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     command: logstash -f /usr/share/logstash/pipeline/logstash.conf
     mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:5044 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 160
   
 volumes:
   certs:
