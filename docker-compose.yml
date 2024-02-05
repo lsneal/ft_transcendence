@@ -5,7 +5,7 @@ include:
   - rest/common.yml
   - restv2/common.yml
   - logs/common.yml
-    #- elk/common.yml
+  - elk/common.yml
 
 services:
   nginx:
@@ -24,7 +24,8 @@ services:
       - django
       - django2
       - django3
-        # - kibana
+      - kibana
+      
 
   adminer:
     container_name: adminer

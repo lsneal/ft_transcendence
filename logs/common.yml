@@ -38,6 +38,7 @@ services:
       - grafana-network
       - nginx
 
+
   grafana:
     container_name: grafana
     restart: always
@@ -51,6 +52,7 @@ services:
     volumes:
       - grafana-data:/usr/share/grafana/data
       - grafana-conf:/usr/share/grafana/conf
+
 
 networks:
   prometheus-network:
