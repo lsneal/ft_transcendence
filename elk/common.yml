@@ -1,4 +1,4 @@
-version: "2.2"
+version: "3.8"
 
 services:
   setup:
@@ -35,6 +35,7 @@ services:
           > config/certs/instances.yml;
           bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
           unzip config/certs/certs.zip -d config/certs;
+          chown -R 1000:1000 config/certs/  
         fi;
         echo "Setting file permissions"
         chown -R root:root config/certs;
@@ -108,7 +109,7 @@ services:
       - elk
       - nginx
     expose:
-      - ${KIBANA_PORT}
+      - 5601
     environment:
       - SERVERNAME=kibana
       - ELASTICSEARCH_HOSTS=https://es01:9200
@@ -131,15 +132,17 @@ services:
       es01:
         condition: service_healthy
     image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+    user: "root"
     volumes:
-      - certs:/usr/share/logstash/config/certs
-      - logstashdata:/usr/share/logstash/data
+      - certs:/usr/share/logstash/config/certs:rw
+      - ./logstash/postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      #- logstashdata:/usr/share/logstash/data
     labels:
       co.elastic.logs/module: logstash
-    user: root
     networks:
       - elk
+      - postgres-app1
     expose:
       - 5044/udp
     environment:
@@ -151,16 +154,26 @@ services:
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     command: logstash -f /usr/share/logstash/pipeline/logstash.conf
     mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:5044 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 160
   
 volumes:
   certs:
+    name: "certs"
     driver: local
   esdata01:
     driver: local
   kibanadata:
     driver: local
-  logstashdata:
-    driver: local
+  #logstashdata:
+  #  driver: local
 
 networks:
   elk:

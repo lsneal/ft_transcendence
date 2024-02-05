@@ -21,16 +21,20 @@ services:
     networks:
       - nginx
     depends_on:
-      - django
-      - django2
-      - django3
-      - kibana
-      
+      django:
+        condition: service_started
+      django2:
+        condition: service_started
+      django3:
+        condition: service_started
+      kibana:
+        condition: service_healthy
 
   adminer:
     container_name: adminer
     depends_on:
-      - postgres
+      postgres:
+        condition: service_started
     build: ./adminer
     restart: always
     working_dir: /
