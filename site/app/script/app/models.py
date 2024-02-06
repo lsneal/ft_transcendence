@@ -46,5 +46,10 @@ class ContactUsForm(forms.Form):
     email = forms.EmailField()
     message = forms.CharField(max_length=1000)
 
+class Osef(models.Model):
+    title = models.fields.CharField(max_length=100)
+    description = models.fields.CharField(default="",max_length=500)
+    osef = models.fields.BooleanField(default=False)
+
 
     

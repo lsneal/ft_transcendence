@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
@@ -9,7 +8,8 @@ CREATE TABLE users(
     user_last_name VARCHAR(20) NOT NULL,
     user_birthdate DATE NOT NULL,
     created_on TIMESTAMP NOT NULL,
-    last_update TIMESTAMP
+    modification_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    insertion_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO users(
@@ -18,10 +18,10 @@ INSERT INTO users(
     user_first_name,
     user_last_name,
     user_birthdate,
-    created_on,
-    last_update
+    created_on
 )
 VALUES 
-    ('cwenga','cwenga@carml.ai','carmel','wenga','1990-09-20',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-    ('smenguope','smenguope@carml.ai','suzie','menguope','1992-11-13',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
-    ('cdiogni','cdiogni@carml.ai','christian','diogni','1992-10-13',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
+    ('cwenga','cwenga@carml.ai','carmel','wenga','1990-09-20',CURRENT_TIMESTAMP),
+    ('smenguope','smenguope@carml.ai','suzie','menguope','1992-11-13',CURRENT_TIMESTAMP),
+    ('cdiogni','cdiogni@carml.ai','christian','diogni','1992-10-13',CURRENT_TIMESTAMP);
+
