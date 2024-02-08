@@ -3,32 +3,16 @@ body{
 	background-color: #C499F3;
 }
 
-
-.modal-open .container-fluid, .modal-open  .container {
-    -webkit-filter: blur(2px);
-}
-
-#modalLogin .modal-content{
-	background-color: #33186B;
-}
-
-#modalScoreboard .modal-content{
-	background-color: #F2AFEF;
-}
-
-#modalBurger .modal-content{
-	background-color: #7360DF;
-}
-
-#modal42 .modal-content{
+.modal-content{
 	background-color: #33186B;
 	color: #7360DF;
 }
 
-#emailHelp .modal-content{
-	color: #7360DF;
 
-}
+
+/*	background-color: #F2AFEF;*/
+
+/*	background-color: #7360DF;*/
 
 .main-buttons{
 	margin-top: 23vh;
