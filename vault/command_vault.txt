@@ -1,0 +1,35 @@
+
+# Start server (ne pas faire en production)
+./vault server -dev 
+
+# Recuperer var VAULT_ADDR pour l'export
+# Recuperer unseal key et le token root 
+# VAULT_DEV_ROOT_TOKEN
+
+# HELP :
+./vault server -help
+./vault kv -help
+
+# kv permet de stocker des donnee sous forme de cle valeur
+# CREATE SECRET
+./vault kv put secret/hello foo=world
+
+# GET SECRET JSON FORMAT
+./vault kv get -format=json secret/hello
+
+# DELETE SECRET
+./vault kv delete secret/hello
+
+# lister les cle sur le path de kv
+ ./vault kv list path
+
+# cree token root
+./vault token create
+
+
+# 'VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200'
+
+
+create token with api:
+
+curl --header "X-Vault-Token: token" --request POST --data @payload.json http://127.0.0.1:8200/v1/auth/token/create

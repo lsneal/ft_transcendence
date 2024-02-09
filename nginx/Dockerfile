@@ -70,10 +70,10 @@ RUN mkdir /etc/nginx/modsec \
 	&& cp /opt/ModSecurity/unicode.mapping /etc/nginx/modsec \
 	&& cp /opt/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf
 
-COPY ./modsecurity.conf /etc/nginx/modsec
-COPY ./main.conf /etc/nginx/modsec
+COPY ./conf/modsecurity.conf /etc/nginx/modsec
+COPY ./conf/main.conf /etc/nginx/modsec
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/ /etc/nginx/conf/
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

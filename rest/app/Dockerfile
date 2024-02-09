@@ -9,11 +9,16 @@ RUN pip install --upgrade pip && pip install django  \
                                             PyJWT \ 
                                             django-cors-headers \ 
                                             pyotp \
-                                            qrcode[pil] 
+                                            qrcode[pil] \
+                                            hvac \
+                                            django_postgres_vault
 
 RUN apk add --no-cache build-base && pip install psycopg2-binary && apk del build-base
 
 WORKDIR /script/mysite
+
+# test
+COPY ./script/auth.py .
 
 COPY ./script /script/mysite
 COPY ./startup.sh /run/startup.sh
