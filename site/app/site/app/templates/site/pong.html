@@ -7,16 +7,8 @@
 		<link rel="stylesheet" href="../static/css/pong.css" />
 	</head>
 	<body>
-			{% comment %} <h1>Chat</h1> {% endcomment %}
-			{% comment %} <form id="form"> {% endcomment %}
-				{% comment %} <input type="text" name="message"/> {% endcomment %}
-			{% comment %} </form> {% endcomment %}
-			{% comment %} <div id="messages"> {% endcomment %}
-			{% comment %} </div> {% endcomment %}
 			<button id="JoinGameOnline" style="display: block;" onclick="JoinGameOnline()">Join Game Online</button>
 			<div id="resultMatch"></div>
-			<button onclick="p1()">PLAYER 1</button>
-			<button onclick="p2()">PLAYER 2</button>
 			<div class="game">
 				<h1 id="scoreP1">0</h1>
 				<div id="leftBox" class="block"></div>
@@ -27,18 +19,6 @@
 		<script type="text/javascript" src="../static/js/pong.js"></script>
 		<script type="text/javascript" src="../static/js/Matchmaking.js"></script>
 		<script>
-			{% comment %} test {% endcomment %}
-			funtion p1() {
-				fetch("/users/", {
-					method: "POST",
-					body: "email: caca@caca.",
-				})
-				.then((response) => response.json())
-				.then(data => {
-					console.log("game ", data.id)
-				})
-			}
-			
 		</script>
 	
 	</body>

@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from app.models import Game
 from app.models import User
+#from app.Matchmaking import Matchmaking
+#
+#manager = Matchmaking()
 
-class GameSerializer(serializers.HyperlinkedModelSerializer):
+class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ['url', 'id', 'player1', 'player2']
+        fields = ['id', 'player1', 'player2']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

@@ -21,15 +21,23 @@ class GameConsumer(WebsocketConsumer):
         moov = text_data_json['moov']
         game = text_data_json['game']
         gameId = text_data_json['gameId']
+        gameIdx = gameId - 1
 
-        if manager.games[gameId].player1 == 'p1':
-            manager.games[gameId].player1 = self
-        elif manager.games[gameId].player2 == 'p2':
-            manager.games[gameId].player2 = self
 
-        if manager.games[gameId].player1 != 'p1' and manager.games[gameId].player2 != 'p2' and manager.games[gameId].player2 != None:
-            manager.games[gameId].bar_moov(moov, self)
-            manager.games[gameId].game(game)
+        if manager.games[gameIdx].player1 == 'p1':
+            manager.games[gameIdx].player1 = self
+        elif manager.games[gameIdx].player2 == 'p2':
+            manager.games[gameIdx].player2 = self
+
+        if manager.games[gameIdx].player1 != 'p1' and manager.games[gameIdx].player2 != 'p2' and manager.games[gameIdx].player2 != None:
+            manager.games[gameIdx].player1.send(text_data=json.dumps({
+                'type':'start',
+            }))
+            manager.games[gameIdx].player2.send(text_data=json.dumps({
+                'type':'start',
+            }))
+            manager.games[gameIdx].bar_moov(moov, self)
+            manager.games[gameIdx].game(game)
         else:
             print("Waiting room....")
 

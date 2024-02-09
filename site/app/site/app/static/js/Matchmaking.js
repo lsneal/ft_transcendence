@@ -23,18 +23,14 @@ function JoinGameOnline() {
     //    console.log(data.jwt)
     //})
 
-
-    fetch("/games/", {
-            method: "POST",
-            body: "player1: p1 player2: p2",
+    let gameId = -1;
+    fetch("/api/joinGame/", {
+        method: "POST",
     })
     .then((response) => response.json())
     .then(data => {
-        console.log("game ", data.id)
+        gameId = data.id;
     })
-
+    if (gameId != -1)
+        startGame(gameId)
 }
-
-//async function JoinGameOnline() {
-//
-//}

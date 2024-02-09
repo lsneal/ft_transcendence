@@ -3,16 +3,15 @@ from .classPong import Pong
 class Matchmaking():
     games = []
     
-    def joinGame(self, user):
-        pos = 0
-
+    def joinGame(self, id):
+        pos = id
+        print("result ======================", pos)
         for game in self.games:
-            if game.player2 == None:
-                game.player2 = 'p2'
-                return game.id
-            pos += 1
+            if self.games[pos].player2 == None:
+                self.games[pos].player2 = 'p2'
+                return self.games[pos]
         self.games.append(Pong('p1', pos))
-        return pos
+        return self.games[pos]
 
 
     def endGame(self, gameId):

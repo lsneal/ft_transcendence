@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Game(models.Model):
-    player1 = None
-    player2 = None
+    player1 = models.CharField(default="null", max_length=50)
+    player2 = models.CharField(default="null", max_length=50)
 
 class User(AbstractUser):
     pseudo = models.CharField(max_length=50)

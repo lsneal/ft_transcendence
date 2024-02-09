@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from .Matchmaking import Matchmaking
 from django.http import JsonResponse
 from rest_framework import permissions, viewsets
-from mysite.serializers import GameSerializer
+
 from .models import Game
 from .models import User
+from mysite.serializers import GameSerializer
 from mysite.serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
@@ -23,23 +24,40 @@ def test(request):
 def pong(request):
         return render(request, 'site/pong.html')
 
-def Matchmake(request):
-        result = manager.joinGame(request.user)
-        return JsonResponse({
-                        'id': result
-                })
+# def Matchmake(request):
+        # result = manager.joinGame(request.user)
+        # return JsonResponse({
+                        # 'id': result
+                # })
 
-class GameViewSet(viewsets.ModelViewSet):
-        queryset = Game.objects.all().order_by('-id')
-        serializer_class = GameSerializer
-        permissions_classes = [permissions.IsAuthenticated]
+class JoinGameView(APIView):
+    def post(self, request):
+        if request.method == 'POST':
+            if Game.DoesNotExist:
+                game = manager.joinGame(0)
+            else:
+                game = manager.joinGame(Game.objects.latest('id').id)
+            if game.player1 is not None and game.player2 is 'p2':
+                serializer = Game.objects.get(pk=Game.objects.latest('id').id)
+                serializer = GameSerializer(serializer, data={'player2': game.player2})
+                serializer.is_valid()
+                serializer.save()
+                return Response(serializer.data)
+            elif game.player1 is 'p1' and game.player2 is not 'p2':
+                serializer = GameSerializer(data={'player1': game.player1})
+                serializer.is_valid()
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response("Error")
 
-# class GameJoinViewSet():
-    #  def put(self, request):
-        # if self.player2 is None:
-            # self.player2 = request.player2
-            # self.save()
-        # return Response(self.player2)
+class GetGameView(APIView):
+    def get(self, request, pk):
+        if request.method == 'GET':
+            game = Game.objects.get(id=pk)
+            serializer = GameSerializer(game)
+            return Response(serializer.data)
+
 
 class RegisterView(APIView):
     def post(self, request):

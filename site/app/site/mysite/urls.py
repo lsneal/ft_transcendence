@@ -18,20 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from app import views
+from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from app.views import RegisterView, LoginView, UserView, LogoutView
-
-router = routers.DefaultRouter()
-router.register(r'games', views.GameViewSet)
+from app.views import RegisterView, LoginView, UserView, LogoutView, JoinGameView, GetGameView
 
 urlpatterns = [
-    #path('api-auth/', include('rest_framework.urls')),
     path('', views.home),
-    path('', include(router.urls)),
     path('test/', views.test),
     path('admin/', admin.site.urls),  
     path('pong/', views.pong),
-    path('pong/joinPong', views.Matchmake),
+    path('api/joinGame/', JoinGameView.as_view()),
+    path('api/getGame/<int:pk>/', GetGameView.as_view()),
     path('api/register/', RegisterView.as_view()),
     path('api/login/', LoginView.as_view()),
     path('api/user/', UserView.as_view()),
@@ -40,4 +37,4 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
-urlpatterns += router.urls
+urlpatterns = format_suffix_patterns(urlpatterns)

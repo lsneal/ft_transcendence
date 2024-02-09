@@ -2,9 +2,10 @@ function startGame(gameId) {
     let button = document.getElementById("JoinGameOnline");
     
     button.style.display = 'none'
-
+    if (!gameId)
+        return ;
     gameId = Number(gameId)
-    
+
     let numRight = 250;
     let numLeft = 250;
     
@@ -16,12 +17,13 @@ function startGame(gameId) {
 
     let url = `ws://localhost:8001/ws/` + gameId
     const socket = new WebSocket(url)
-    
+    console.log("url socket = ", url)
     socket.onopen = () => {
+        console.log("send on open");
         socket.send(JSON.stringify({
-             'game':'start',
-             'moov':'none',
-             'gameId': gameId,
+            'game':'none',
+            'moov':'none',
+            'gameId': gameId,
         }))
 
         window.addEventListener("keydown", function (e) {
@@ -38,7 +40,16 @@ function startGame(gameId) {
 
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data)
-        if (data.type === "game")
+        if (data.type == "start")
+        {
+            console.log("caca")
+            socket.send(JSON.stringify({
+                'game':'start',
+                'moov':'none',
+                'gameId': gameId,
+            }))
+        }
+        else if (data.type === "game")
         {
             if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
             {
