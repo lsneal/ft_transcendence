@@ -15,6 +15,7 @@ services:
     volumes:
       - ./site/app/script/static/:/var/www/ #development purpose
       - adm:/lib/adminer
+      - nginx-logs:/var/log/nginx
         #- static:/var/www/css
     ports:
       - "443:443"
@@ -61,4 +62,7 @@ volumes:
       o: 'bind'
 
   adm: 
+    driver: local
+
+  nginx-logs:
     driver: local
