@@ -12,7 +12,7 @@ export default class extends AbstractView {
     
     async getHtml() {
       try{
-        const response = await fetch('./Register.html');
+        const response = await fetch('https://localhost/Register.html');
         if (!response.ok){
             throw new Error('Failed to fetch Register.html');
         }
@@ -22,7 +22,5 @@ export default class extends AbstractView {
           console.error('Error fetchin', error);
           return '<p>Error loading </p>'
         }
-       
-        ;
     }
 }

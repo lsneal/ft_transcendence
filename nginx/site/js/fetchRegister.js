@@ -1,48 +1,44 @@
-/* On récupère les éléments form et message */
-const form = document.getElementById("formRegister");
-const message = document.getElementById("message");
 
-/* Lors de la soumission du formulaire on previent
-le comportement par défaut */
-form.addEventListener("submit", async function (e) {
-  e.preventDefault();
 
-  /* L'astuce pour IE, si vous n'utilisez pas de polyfill, consiste
-  à inviter l'utilisateur à utiliser un autre navigateur */
-  if (!window.fetch || !window.FormData) {
-    alert(
-      "Tu crois que c'est du respect mon garçon ? Est ce que tu crois que c'est du respect d'utiliser un navigateur archaïque ?"
-    );
-    return;
-  }
+  // Écoutez l'événement de soumission du formulaire
+  async function EventRegister () {
 
-  /* Lorsque l'on instancie FormData on peut lui passer un élément
-  form en paramètre. De cette façon, FormData peut detecter chaque
-  input du formulaire et leur valeur.
-  Ici, this fait référence à form */
-  const formData = new FormData(this);
+      // Récupérez les valeurs des champs de formulaire
+      const email = document.querySelector('#email').value;
+      const pseudo = document.querySelector('#pseudo').value;
+      const password = document.querySelector('#password').value;
 
-  try {
-    /* fetch() prend en 1er paramètre l'url et en second paramètre
-    les options. Ici, nous indiquons que notre requête sera en POST
-    et que le corps de la requête sera constitué de nos formData. */
-    await fetch("http://localhost:3000/register", {
-      method: "POST",
-      body: formData,
-    });
+      console.log('Valeurs des champs:', email, pseudo, password);
 
-    // On affiche un message suivant le résultat de la requête
-    message.innerText = "Fichier uploadé avec succès \\o/";
-  } catch (error) {
-    message.innerText =
-      "C'est la cata, c'est la cata, c'est la catastrophe /o\\";
-  }
+      // Construisez l'objet à envoyer
+      const formData = {
+          email: email,
+          pseudo: pseudo,
+          password: password,
+      };
 
-  // On réinitialise le formulaire
-  this.reset();
+      console.log('Valeur fu form', JSON.stringify(formData));
 
-  // On efface le message après deux secondes
-  setTimeout(() => {
-    message.innerText = "";
-  }, 2000);
-});
+      try {
+          // Effectuez une requête POST à l'API
+          const response = await fetch('http://localhost:3000/register/', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
+          console.log('reponse de lapi:', response);
+
+          // Vérifiez si la requête a réussi
+          if (response.ok) {
+              // Affichez un message de succès
+          console.log('Reussi');
+            } else {
+              // Affichez un message d'erreur
+              console.error('Erreur lors de lenvoie', response.statusText)
+            }
+      } catch (error) {
+          console.error('Erreur lors de l\'envoi des informations :', error);
+      }
+  };
