@@ -17,52 +17,23 @@
 </head>
   <body>
 
-  
-    <!-- NAVBAR -->
-    <nav class="navbar">
-      <div class="container-fluid"> 
-        <i class="fa-brands fa-docker fs-1"></i> <!--logo en haut a gauche-->
-        <h1>Ft_transcendence</h1>
-        <button class="navbar-toggler" type="button" data-bs-toggle="modal" data-bs-target="#modalBurger">
-          <i class="fa-solid fa-bars"></i><!--menu bar-->
-        </button>
-      </div>
-    </nav>
-
-    <!-- BURGER -->
-
-    <div class="modal fade" id="modalBurger" tabindex="-1" aria-labelledby="modalBurgerLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-           
-            <div class="modal-body">
-              <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-gear"></i>   Setting</button></div>
-              <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-volume-high"></i>   Sound</button></div>
-              <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-person-praying"></i>    Paypal</button></div>
+    <div class="container text-center">
+      <div class="row align-items-start">
+            <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modalA class="btn btn-outline-dark">Left</button>
+                <button type="button" class="btn btn-outline-dark">Middle</button>
+                <button type="button" class="btn btn-outline-dark">Right</button>
             </div>
-           
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="modalBurger" tabindex="-1" aria-labelledby="modalBurgerLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-           
-            <div class="modal-body">
-              <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-gear"></i>   Setting</button></div>
-              <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-volume-high"></i>   Sound</button></div>
-              <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-person-praying"></i>    Paypal</button></div>
             </div>
-           
+            </div>
+    
+            <div class="modal fade modal-xl" id="modalA" tabindex="-1" aria-labelledby="modalScoreboard" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body"></div>
+                
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      
-   
-      
-      <div id="app"></div>
-      <script type="module" src="js/index.js"></script>
-      </body>
-    </html>
 </body>
 </html>

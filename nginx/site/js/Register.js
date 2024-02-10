@@ -11,26 +11,18 @@ export default class extends AbstractView {
     }
     
     async getHtml() {
-
-        return ` 
-        <div class="container text-center">
-  <div class="row align-items-start">
-        <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modalA class="btn btn-outline-dark">Left</button>
-            <button type="button" class="btn btn-outline-dark">Middle</button>
-            <button type="button" class="btn btn-outline-dark">Right</button>
-        </div>
-        </div>
-        </div>
-
-        <div class="modal fade modal-xl" id="modalA" tabindex="-1" aria-labelledby="modalScoreboard" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-body"></div>
-            
-          </div>
-        </div>
-      </div>
-        `;
+      try{
+        const response = await fetch('./Register.html');
+        if (!response.ok){
+            throw new Error('Failed to fetch Register.html');
+        }
+        const html = await response.text();
+        return html;
+        } catch(error){
+          console.error('Error fetchin', error);
+          return '<p>Error loading </p>'
+        }
+       
+        ;
     }
 }
