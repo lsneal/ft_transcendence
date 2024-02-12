@@ -17,8 +17,10 @@
 <div class="modal-content">
  
   <div class="modal-body">
-  <div><button type="button"  data-bs-toggle="modal" data-bs-target="#modal42" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
-  </div>
+  <div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
+  <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
+    
+</div>
  
 </div>
 </div>
@@ -43,7 +45,8 @@
             <input type="password" class="form-control" id="password" required>
           </div>
           <div class="col-md-12">
-            <a href="/api/register/" class="btn btn-primary" type="submit" onclick="EventRegister()" data-link >Submit form</a>
+            <a class="btn btn-primary" type="submit" onclick="EventRegister()" data-link >Submit form</a>
+            <div id="error-message" class="text-danger" style="display: none;"></div>
           </div>
         </form>
       </div>
@@ -52,26 +55,26 @@
 </div>
 
 <!-- MODAL LOGIN EMAIL-->
-<div class="modal fade" id="modal42" tabindex="-1" aria-labelledby="modal42" aria-hidden="true">
+<div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="modalEmail" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content">
 
 <div class="modal-body">
-  <form id="formRegister">
+  <form id="formLogin">
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <label for="emailLogin" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="emailLogin" aria-describedby="emailHelp">
       <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
+      <label for="PasswordLogin" class="form-label">Password</label>
+      <input type="password" class="form-control" id="PasswordLogin">
     </div>
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="exampleCheck1">
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/api/login/" class="btn btn-primary"  type="submit" onclick="EventLogin()" data-link >Submit form</a>
   </form>
 </div>
 

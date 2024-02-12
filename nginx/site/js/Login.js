@@ -3,16 +3,16 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Home");
+        this.setTitle("Login");
 
     }
 
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/Home.html');
+        const response = await fetch('https://localhost/Login.html');
         if (!response.ok){
-            throw new Error('Failed to fetch Home.html');
+            throw new Error('Failed to fetch Login.html');
         }
         const html = await response.text();
         return html;

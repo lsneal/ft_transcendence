@@ -1,5 +1,7 @@
 import Home from "./Home.js";
 import Register from "./Register.js";
+import Login from "./Login.js";
+import Logout from "./Logout.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -21,6 +23,8 @@ const router = async () => {
     const routes = [
         { path: "/", view:  Home},
         { path: "/api/register/", view: Register},
+        {path: "/api/login/", view: Login},
+        {path: "/api/logout/", view: Logout},
       
     ];
 
