@@ -8,6 +8,6 @@ COPY ./conf.json /vault/config/
 COPY ./script.sh .
 RUN chmod +x script.sh
 
-COPY ./payload.json .
+COPY ./policies.hcl .
 
 CMD ["sh", "script.sh"]

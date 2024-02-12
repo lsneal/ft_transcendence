@@ -17,17 +17,11 @@ vault operator unseal $key3
 
 echo "$token" > root_token
 export VAULT_TOKEN=$token
-curl --header "X-Vault-Token: $token" --request POST --data @payload.json http://127.0.0.1:8200/v1/auth/token/create | jq '.' > default
-cat default | grep client_token | awk '{print $2}' | cut -d "\"" -f 2 > default_token
-cp default_token /opt
 
 sleep 5
 
-curl --header "X-Vault-Token: hvs.SvYWG8o8BfsGaav13MHA5sLJ" --request GET http://vault:8200/v1
-
 vault secrets enable database
 
-# mettre le on role pour la suite
 vault write database/config/postgres \
     plugin_name="postgresql-database-plugin" \
     allowed_roles="my-rolev1" \
@@ -35,20 +29,25 @@ vault write database/config/postgres \
     username="postgres" \
     password="password" \
     password_authentication="scram-sha-256"
-#
-# mettre le bon role dans le path que au debut
+
 vault write database/roles/my-rolev1 \
     db_name="postgres" \
     creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
-        GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
+        GRANT ALL PRIVILEGES ON DATABASE postgres TO \"{{name}}\"; \
+        ALTER ROLE \"{{name}}\" WITH SUPERUSER;" \
     default_ttl="1h" \
     max_ttl="24h"
-GRANT ALL PRIVILEGES ON DATABASE thedatabse TO theotheruser;
 
-# export le token root 
-# cree new secret engine avec le root 
-# cree un token a partir du root (mais avec moins de privilege)
-# partager le token (default token) avec docker django (et les autres si besoin)
+vault policy write certif policies.hcl
 
+vault token create -policy="certif" | grep -o 'hvs\.[^\ ]*' > token
+cp token /opt
+
+# for key django
+vault secrets enable kv
+
+private_key_django=$(cat /dev/urandom | head -n 128)
+curl -X PUT -H "X-Vault-Request: true" -H "X-Vault-Token: $(vault print token)" -d '{"key_django":"clejango"}' http://127.0.0.1:8200/v1/kv/django_secrets
+vault kv put kv/django_secrets key=$KEY
 
 wait $! 

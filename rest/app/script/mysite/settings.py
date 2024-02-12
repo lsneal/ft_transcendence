@@ -100,43 +100,25 @@ AUTH_USER_MODEL="users.User"
 
 
 # Configuration Vault
-#VAULT_ADDR = 'http://<adresse_IP_vault>:8200'
-#VAULT_TOKEN = 'votre_token_vault'
-#
-## Connexion à Vault
-#vault_client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
-#
-## Logic pour récupérer les informations de configuration de la base de données depuis Vault
-#database_credentials = vault_client.read('secret/django/database')
-#
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': database_credentials['data']['name'],
-#        'USER': database_credentials['data']['user'],
-#        'PASSWORD': database_credentials['data']['password'],
-#        'HOST': '<adresse_IP_postgresql>',
-#        'PORT': '5432',
-#    }
-#}
+VAULT_ADDR = 'http://vault:8200'
+fd = os.open("/opt/token", os.O_RDONLY)
+n_bytes = 95 # token size
+TOKEN = os.read(fd, n_bytes)
 
+vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
 
+database_credentials = vault_client.read('database/creds/my-rolev1')
 
-# change var env
-# pas la meme erreur avec un root token (erreur d'access au niveau de la db postgres)
 DATABASES = {
     'default': {
-        'ENGINE': 'django_postgres_vault',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
+        'USER': database_credentials['data']['username'],
+        'PASSWORD': database_credentials['data']['password'],
         'HOST': 'postgres',
         'PORT': '5432',
-        'VAULT_ADDR': 'http://vault:8200',
-        'VAULT_TOKEN': 'hvs.FyhlemfOuVptD0eqARLzaF1Z',
-        'VAULT_ROLE_NAME': 'my-rolev1',
-        'VAULD_DB_MOUNT_POINT': 'database', 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

@@ -1,9 +1,0 @@
-{
-  "policies": ["web", "stage"],
-  "meta": {
-    "user": "waw"
-  },
-  "ttl": "1h",
-  "renewable": true
-}
-
