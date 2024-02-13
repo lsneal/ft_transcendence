@@ -38,16 +38,12 @@ vault write database/roles/my-rolev1 \
     default_ttl="1h" \
     max_ttl="24h"
 
-vault policy write certif policies.hcl
+vault secrets enable kv
+private_key_django=$(openssl rand -hex 32)
+vault kv put kv/django_secrets django_key=$private_key_django
 
+vault policy write certif policies.hcl
 vault token create -policy="certif" | grep -o 'hvs\.[^\ ]*' > token
 cp token /opt
-
-# for key django
-vault secrets enable kv
-
-private_key_django=$(cat /dev/urandom | head -n 128)
-curl -X PUT -H "X-Vault-Request: true" -H "X-Vault-Token: $(vault print token)" -d '{"key_django":"clejango"}' http://127.0.0.1:8200/v1/kv/django_secrets
-vault kv put kv/django_secrets key=$KEY
 
 wait $! 

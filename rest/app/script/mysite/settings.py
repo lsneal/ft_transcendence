@@ -25,7 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!by_b!m3kd+$89x7#_wp7ye(5$p)66%3fc(1e-=r&nd^ukc7_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -84,28 +83,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 AUTH_USER_MODEL="users.User" 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'postgres',
-#        'USER': 'postgres',
-#        'PASSWORD': 'password',
-#        'HOST': 'postgres',
-#        'PORT': '5432',
-#    }
-#}
-
-
-# Configuration Vault
 VAULT_ADDR = 'http://vault:8200'
 fd = os.open("/opt/token", os.O_RDONLY)
 n_bytes = 95 # token size
 TOKEN = os.read(fd, n_bytes)
 
 vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
+
+secret_key = vault_client.read('kv/django_secrets')
+
+SECRET_KEY = secret_key['data']['django_key']
 
 database_credentials = vault_client.read('database/creds/my-rolev1')
 
