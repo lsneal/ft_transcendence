@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  postgres: #change the name
+    container_name: postgres #change the name
+    image: postgres:16.1-alpine3.19
+    networks:
+      - app2 #change
+    environment:
+      - POSTGRES_PASSWORD=password
+      - PG_PORT=5432
+    expose:
+      - "5432"
+    restart: unless-stopped
+    
+    
+  django: #change the name
+    container_name: django #change the name
+    build: ./app
+    networks:
+      - app2 #change
+      - nginx
+    expose:
+      - "8001"  #change the port
+      - "8200"
+    restart: unless-stopped
+    volumes:
+      - vault:/opt
+      #- static:/var/www/admin/css
+      - ./app/script/:/script/mysite #development purpose
+    depends_on:
+      - postgres #change
+    tty: true
+
+networks:
+  app2: #change the name
+    driver: bridge
