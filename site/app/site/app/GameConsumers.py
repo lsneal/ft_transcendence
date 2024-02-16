@@ -3,6 +3,7 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from .views import manager
 from django.contrib.auth.models import AnonymousUser
+from channels.exceptions import StopConsumer
 
 class GameConsumer(WebsocketConsumer):
 
@@ -23,8 +24,10 @@ class GameConsumer(WebsocketConsumer):
         gameId = text_data_json['gameId']
         gameIdx = gameId - 1
 
-
-        if manager.games[gameIdx].player1 == 'p1':
+        if game == 'local':
+            manager.games[gameIdx].player1 = self
+            manager.games[gameIdx].player2 = self
+        elif manager.games[gameIdx].player1 == 'p1':
             manager.games[gameIdx].player1 = self
         elif manager.games[gameIdx].player2 == 'p2':
             manager.games[gameIdx].player2 = self
@@ -40,26 +43,13 @@ class GameConsumer(WebsocketConsumer):
             manager.games[gameIdx].game(game)
         else:
             print("Waiting room....")
+    
+    def disconnect(self, close_code):
+        if close_code == 1001:
+             
+            for game in manager.games:
+                if game.player1 == self or game.player2 == self:
+                    game.player1.close()
+                    game.player2.close()
+        raise StopConsumer
 
-
-
-#chat ->
-#    def receive(self, text_data):
-#        text_data_json = json.loads(text_data)
-#        message = text_data_json['message']
-#
-#        async_to_sync(self.channel_layer.group_send)(
-#            self.room_group_name,
-#            {
-#                'type':'chat_message',
-#                'message':message
-#            }
-#        )
-#    
-#    def chat_message(self, event):
-#        message = event['message']
-#
-#        self.send(text_data=json.dumps({
-#            'type':'chat',
-#            'message':message
-#        }))

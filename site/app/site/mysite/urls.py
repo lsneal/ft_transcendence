@@ -20,19 +20,20 @@ from rest_framework import routers
 from app import views
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from app.views import RegisterView, LoginView, UserView, LogoutView, JoinGameView, GetGameView
-
+from app.views import RegisterView, LoginView, UserView, LogoutView, JoinGameView, GetGameView, UserIdGameView, CreateTournamentView
 urlpatterns = [
     path('', views.home),
     path('test/', views.test),
     path('admin/', admin.site.urls),  
     path('pong/', views.pong),
+    path('pong/api/UserIdGameView', UserIdGameView.as_view()),
     path('api/joinGame/', JoinGameView.as_view()),
     path('api/getGame/<int:pk>/', GetGameView.as_view()),
     path('api/register/', RegisterView.as_view()),
     path('api/login/', LoginView.as_view()),
     path('api/user/', UserView.as_view()),
     path('api/logout/', LogoutView.as_view()),
+    path('pong/api/tournament', CreateTournamentView.as_view()),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

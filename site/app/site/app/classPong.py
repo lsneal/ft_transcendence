@@ -13,23 +13,29 @@ class Pong:
 
     def bar_moov(self, moov, playerMoov):
         
-        if moov == 'ArrowUp' and self.leftBoxTop > 0 and self.player1 == playerMoov:
+        if moov == 'ArrowUp' and self.leftBoxTop > 0 and self.player1 == playerMoov != self.player2:
             self.leftBoxTop -= 30
-        if moov == 'ArrowDown' and self.leftBoxTop < 430 and self.player1 == playerMoov:
-            self.leftBoxTop += 30 
+        if moov == 'ArrowDown' and self.leftBoxTop < 430 and self.player1 == playerMoov != self.player2:
+            self.leftBoxTop += 30
+        
         if moov == 'ArrowUp' and self.rightBoxTop > 0 and self.player2 == playerMoov:
             self.rightBoxTop -= 30
         if moov == 'ArrowDown' and self.rightBoxTop < 430 and self.player2 == playerMoov:
-           self.rightBoxTop += 30
+            self.rightBoxTop += 30
         
+        if moov == 'w' and self.leftBoxTop > 0 and self.player1 == playerMoov == self.player2:
+            self.leftBoxTop -= 30
+        if moov == 's' and self.leftBoxTop < 430 and self.player1 == playerMoov == self.player2:
+            self.leftBoxTop += 30
+
         self.barSendToJs(moov, self.leftBoxTop, self.rightBoxTop)
 
     
     def game(self, game):
-
+        t = threading.Thread(target=self.ball, args=())
         if game == 'start':
-            t = threading.Thread(target=self.ball, args=())
             t.start()
+
     
     def ball(self):
         scoreP1 = 0
@@ -43,7 +49,8 @@ class Pong:
         hitWall = 0
         while (scoreP1 < 5 and scoreP2 < 5):
             if ballPosX == 499 and ballPosY == 250:
-                while ballPosX > hitLeft: #go left mid
+                while ballPosX > hitLeft:
+                    print('to left direction mid')
                     ballPosX -= 15
                     self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
                     time.sleep(0.03)            
@@ -125,7 +132,8 @@ class Pong:
         self.ballSendToJs(499, 250, scoreP1, scoreP2)
         self.barSendToJs('ArrowUp', 250, 250)
         from .views import manager
-        manager.endGame(self.id)
+        manager.endGame(self)
+        return 
 
     def ballSendToJs(self, ballPosX, ballPosY, scoreP1, scoreP2):
         self.player1.send(text_data=json.dumps({
@@ -136,6 +144,7 @@ class Pong:
             'scoreP1':scoreP1,
             'scoreP2':scoreP2
         }))
+        
         self.player2.send(text_data=json.dumps({
             'type':'game',
             'moov':'ball',
@@ -144,7 +153,9 @@ class Pong:
             'scoreP1':scoreP1,
             'scoreP2':scoreP2
         }))
-    
+        
+        return
+        
     def barSendToJs(self, moov, leftBoxTop, rightBoxTop):
         self.player1.send(text_data=json.dumps({
             'type':'game',
@@ -158,8 +169,5 @@ class Pong:
             'moov':moov,
             'leftBoxTop': leftBoxTop,
             'rightBoxTop': rightBoxTop
-        }))
-
-    def __del__(self):
-        self.player1.close()
-        self.player2.close()
+        }))    
+        return
