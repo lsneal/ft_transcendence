@@ -3,23 +3,23 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Login");
+        this.setTitle("Profile");
 
         
     }
 
     async executeViewScript()
     {
-      //console.log("Logout Charge")
-      //document.getElementById("btnLogout").addEventListener('click', EventLogout);
+      console.log("Logout Charge")
+      document.getElementById("btnLogout").addEventListener('click', EventLogout);
     }
 
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/login.html');
+        const response = await fetch('https://localhost/profile.html');
         if (!response.ok){
-            throw new Error('Failed to fetch Login.html');
+            throw new Error('Failed to fetch profile.html');
         }
         const html = await response.text();
         return html;

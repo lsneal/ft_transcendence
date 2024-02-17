@@ -23,8 +23,9 @@ async function EventRegister () {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/register/', {
+        const response = await fetch('https://api.localhost/register/', {
             method: 'POST',
+
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -45,7 +46,7 @@ async function EventRegister () {
     // If error -> Print on the error in the modal ?    Else close modal and redirect (code behind)
 
     modal.hide();
-    window.history.pushState(null, "Register", "/register/");
+    window.history.pushState(null, "Register", "/");
     window.dispatchEvent(new Event('popstate'));
 
 }

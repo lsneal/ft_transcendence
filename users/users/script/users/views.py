@@ -3,8 +3,20 @@ from .serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import rest_framework_simplejwt, datetime, jwt
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.middleware import csrf
+from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 class RegisterView(APIView):
     def post(self, request):
@@ -15,32 +27,28 @@ class RegisterView(APIView):
     
 class LoginView(APIView):
     def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
+        email = request.data.get('email', None)
+        password = request.data.get('password', None)
+        response =  Response()
 
         user = User.objects.filter(email=email).first()
         if user is None:
             raise AuthenticationFailed('User not found')
         
         if not user.check_password(password):
-            raise AuthenticationFailed ('Incorrect password')
-        
-        payload = {
-            'id': user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow(),
-        }
+            raise AuthenticationFailed('Incorrect password')
 
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
-
-        
-        response =  Response()
-
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        response.data = {
-            'jwt': token
-        }
-
+        data = get_tokens_for_user(user)
+        response.set_cookie(
+            key = settings.SIMPLE_JWT['AUTH_COOKIE'],
+            value = data["access"],
+            expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+        )
+        csrf.get_token(request)
+        response.data = {"Success" : "Login successfully","data":data}
         return response
 
 class UserView(APIView):

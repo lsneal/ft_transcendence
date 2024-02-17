@@ -20,13 +20,17 @@ async function EventLogin () {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/login/', {
+        const response = await fetch('https://api.localhost/login/', {
             method: 'POST',
+            mode: "cors",
+            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData)
         });
+
+        console.log(response);
 
         if (response.ok) {
           //alert('Login OK!');
@@ -41,7 +45,7 @@ async function EventLogin () {
 
     modal.hide();
 
-    window.history.pushState(null, "Login", "/login/");
+    window.history.pushState(null, "Profile", "/profile/");
     window.dispatchEvent(new Event('popstate'));
 }
 

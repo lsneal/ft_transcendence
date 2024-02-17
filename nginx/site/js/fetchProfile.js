@@ -5,10 +5,8 @@ async function EventLogout() {
         const response = await fetch('https://api.localhost/logout/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'getSetCookie': 'true'
-            },
-            credentials: 'include',
+                'Content-Type': 'application/json'
+            }
         });
 
         if (response.ok) {
@@ -21,7 +19,6 @@ async function EventLogout() {
         }
     } catch (error) {
         alert('Erreur de déconnexion');
-        
     }
 
     window.history.pushState(null, "Logout", "/");

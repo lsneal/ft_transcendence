@@ -1,6 +1,5 @@
 
 <div class="container" id="modalHome">
-
     <div class="row justify-content-center main-buttons">    
       <div class="col-6">
         <div><button id="Buttonlogin" data-bs-toggle="modal" data-bs-target="#modalLogin" type="button" class="btn btn-lg btn-warning mb-3 w-100">Login</button></div>
@@ -8,22 +7,48 @@
         <div><button id="ButtonScoreboard" data-bs-toggle="modal" data-bs-target="#modalScoreboard" type="button" class="btn btn-lg btn-warning w-100">Scoreboard</button></div>
       </div>
     </div>
-  </div>
+</div>
 
 
 <!-- MODAL LOGIN -->
 <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLogin" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
  
-  <div class="modal-body">
-  <div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
-  <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
+      <div class="modal-body">
+        <div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
+        <div><button type="button" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
     
+      </div>
+    </div>
+  </div>
 </div>
- 
-</div>
-</div>
+
+<!-- MODAL LOGIN EMAIL-->
+<div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="modalEmail" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+          <div class="modal-body">
+          <form id="formLogin">
+              <div class="mb-3">
+              <label for="emailLogin" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="emailLogin" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3">
+              <label for="PasswordLogin" class="form-label">Password</label>
+              <input type="password" class="form-control" id="PasswordLogin">
+              </div>
+              <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              </div>
+              <a class="btn btn-primary" id="btnLogin" type="submit" data-link >Submit form</a>
+          </form>
+          </div>
+      </div>
+  </div>
 </div>
 
 <!-- MODAL REGITRER -->
@@ -54,33 +79,6 @@
   </div>
 </div>
 
-<!-- MODAL LOGIN EMAIL-->
-<div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="modalEmail" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-
-<div class="modal-body">
-  <form id="formLogin">
-    <div class="mb-3">
-      <label for="emailLogin" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="emailLogin" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <label for="PasswordLogin" class="form-label">Password</label>
-      <input type="password" class="form-control" id="PasswordLogin">
-    </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <a class="btn btn-primary" id="btnLogin" type="submit" data-link >Submit form</a>
-  </form>
-</div>
-
-</div>
-</div>
-</div>
 
 <!-- MODAL SCORE -->
 <div class="modal fade modal-xl" id="modalScoreboard" tabindex="-1" aria-labelledby="modalScoreboard" aria-hidden="true">

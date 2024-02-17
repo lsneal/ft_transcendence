@@ -11,13 +11,15 @@ export default class extends AbstractView {
     async executeViewScript()
     {
       //console.log("Modal Charge")
-      document.getElementById("btnLogin").addEventListener('click', EventLogin);
+
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
+      document.getElementById("btnLogin").addEventListener('click', EventLogin);
+     
     }
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/Home.html');
+        const response = await fetch('https://localhost/home.html');
         if (!response.ok){
             throw new Error('Failed to fetch Home.html');
         }

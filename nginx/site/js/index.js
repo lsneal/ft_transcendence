@@ -2,6 +2,7 @@ import Home from "./Home.js";
 import Register from "./Register.js";
 import Login from "./Login.js";
 import Logout from "./Logout.js";
+import Profile from "./Profile.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -25,6 +26,7 @@ const router = async () => {
         {   path: "/register/", view: Register },
         {   path: "/login/", view: Login },
         {   path: "/logout/", view: Logout },
+        {   path: "/profile/", view: Profile },
     ];
 
     // Test each route for potential match
@@ -54,16 +56,21 @@ const router = async () => {
 window.addEventListener("popstate", router);
 
 document.addEventListener("DOMContentLoaded", () => {
-    /*document.body.addEventListener("popstate", e => {
-        /*if (e.target.matches("[data-link]")) {
-            
+    document.body.addEventListener("popstate", e => {
+        if (e.target.matches("[data-link]")) {
+            e.preventDefault();
+            navigateTo(e.target.href); 
         }
-        e.preventDefault();
-        navigateTo(e.target.href);
-    });*/
+    });
 
     router();
 });
+
+/*function changeLocation(name, url)
+{
+    window.history.pushState(null, name, url);
+    window.dispatchEvent(new Event('popstate'));
+}*/
 
 
 

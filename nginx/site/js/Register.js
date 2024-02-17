@@ -5,19 +5,17 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Register");
 
-        console.log("Register");
-
     }
 
     async executeViewScript()
     {
-      //console.log("Logout Charge");
-      document.getElementById("btnLogout").addEventListener('click', EventLogout);
+      //console.log("Register Charge");
+
     }
     
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/Home.html');
+        const response = await fetch('https://localhost/register.html');
         if (!response.ok){
             throw new Error('Failed to fetch Register.html');
         }
