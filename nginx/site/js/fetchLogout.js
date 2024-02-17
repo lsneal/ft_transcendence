@@ -10,14 +10,17 @@ async function EventLogout() {
         });
 
         if (response.ok) {
-            console.log('Ok', response.text())
-            alert('Déconnexion réussie!');
+            //console.log('Ok', response.text())
+            //alert('Déconnexion réussie!');
 
         } else {
-            const errorMessage = await response.json();
-            alert('Erreur de déconnexion: ' + errorMessage.detail);
+            //const errorMessage = await response.json();
+            //alert('Erreur de déconnexion: ' + errorMessage.detail);
         }
     } catch (error) {
         alert('Erreur de déconnexion');
     }
+
+    window.history.pushState(null, "Logout", "/logout/");
+    window.dispatchEvent(new Event('popstate'));
 }

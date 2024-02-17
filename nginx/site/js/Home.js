@@ -5,8 +5,15 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Home");
 
+        console.log("Home");
     }
 
+    async executeViewScript()
+    {
+      //console.log("Modal Charge")
+      document.getElementById("btnLogin").addEventListener('click', EventLogin);
+      document.getElementById("btnRegister").addEventListener('click', EventRegister);
+    }
 
     async getHtml() {
       try{

@@ -21,11 +21,10 @@ const navigateTo = url => {
 
 const router = async () => {
     const routes = [
-        { path: "/", view:  Home},
-        { path: "/api/register/", view: Register},
-        {path: "/api/login/", view: Login},
-        {path: "/api/logout/", view: Logout},
-      
+        {   path: "/", view:  Home },
+        {   path: "/register/", view: Register },
+        {   path: "/login/", view: Login },
+        {   path: "/logout/", view: Logout },
     ];
 
     // Test each route for potential match
@@ -44,22 +43,52 @@ const router = async () => {
             result: [location.pathname]
         };
     }
-
+ 
     const view = new match.route.view(getParams(match));
 
     document.querySelector("#app").innerHTML = await view.getHtml();
-    /*Luis m'envoie bon ou pas -> il reste sur la modal ou lui affiche la suite*/
+    await view.executeViewScript();
+    //Luis m'envoie bon ou pas -> il reste sur la modal ou lui affiche la suite
 };
 
 window.addEventListener("popstate", router);
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.body.addEventListener("click", e => {
-        if (e.target.matches("[data-link]")) {
-            e.preventDefault();
-            navigateTo(e.target.href);
+    /*document.body.addEventListener("popstate", e => {
+        /*if (e.target.matches("[data-link]")) {
+            
         }
-    });
+        e.preventDefault();
+        navigateTo(e.target.href);
+    });*/
 
     router();
 });
+
+
+
+/*document.addEventListener('click', listenModal);
+
+function listenModal(event)
+{
+    if (event.target.closest("#modalHome"))
+    {
+        console.log("Modal Charge")
+        document.getElementById("btnLogin").addEventListener('click', EventLogin);
+        document.getElementById("btnRegister").addEventListener('click', EventRegister);
+        
+    }
+
+
+}*/
+
+/*document.addEventListener("popstate", logoutBtn);
+function logoutBtn(event)
+{
+    if (event.target.closest("#logoutDiv"))
+    {
+        console.log("Logout Charge")
+        document.getElementById("btnLogout").addEventListener('click', EventLogout);
+    }
+}*/
+

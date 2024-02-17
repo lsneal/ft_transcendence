@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" id="modalHome">
 
     <div class="row justify-content-center main-buttons">    
       <div class="col-6">
@@ -45,7 +45,7 @@
             <input type="password" class="form-control" id="password" required>
           </div>
           <div class="col-md-12">
-            <a class="btn btn-primary" type="submit" onclick="EventRegister()" data-link >Submit form</a>
+            <a class="btn btn-primary" id="btnRegister" type="submit" data-link >Submit form</a>
             <div id="error-message" class="text-danger" style="display: none;"></div>
           </div>
         </form>
@@ -74,7 +74,7 @@
       <input type="checkbox" class="form-check-input" id="exampleCheck1">
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
     </div>
-    <a href="/api/login/" class="btn btn-primary"  type="submit" onclick="EventLogin()" data-link >Submit form</a>
+    <a class="btn btn-primary" id="btnLogin" type="submit" data-link >Submit form</a>
   </form>
 </div>
 

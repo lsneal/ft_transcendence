@@ -5,14 +5,19 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Register");
 
-        var myModalEl = document.getElementById('modalRegistrer');
-        var modal = bootstrap.Modal.getInstance(myModalEl)
-        modal.hide();
+        console.log("Register");
+
+    }
+
+    async executeViewScript()
+    {
+      //console.log("Logout Charge");
+      document.getElementById("btnLogout").addEventListener('click', EventLogout);
     }
     
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/Register.html');
+        const response = await fetch('https://localhost/Home.html');
         if (!response.ok){
             throw new Error('Failed to fetch Register.html');
         }
