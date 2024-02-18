@@ -2,7 +2,7 @@
 
 async function EventLogout() {
     try {
-        const response = await fetch('https://api.localhost/logout/', {
+        const response = await fetch('https://localhost/api/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -23,16 +23,18 @@ async function EventRegister () {
     };
 
     try {
-        const response = await fetch('https://api.localhost/register/', {
+        const response = await fetch('https://localhost/api/register/', {
             method: 'POST',
-
+            mode: "cors",
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
         });
+
         if (response.ok) {
-            alert('Register OK!');
+            document.cookie.delete("access_token");
         } else {
             const errorMessage = await response.json();
             alert('Erreur ' + errorMessage.email[0]); 

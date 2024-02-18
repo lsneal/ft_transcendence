@@ -4,10 +4,10 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import rest_framework_simplejwt, datetime, jwt
 from django.conf import settings
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user
 from django.middleware import csrf
 from rest_framework import status
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 from .models import User
 
@@ -53,17 +53,13 @@ class LoginView(APIView):
 
 class UserView(APIView):
     def get(self, request):
-        token = request.COOKIES.get('jwt')
-
+        token = request.COOKIES.get('access_token')
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
         
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            AuthenticationFailed('Unauthenticated!')
-
-        user = User.objects.filter(id = payload['id']).first()
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
         serialiazer = UserSerializer(user)
 
         return Response(serialiazer.data)
@@ -71,7 +67,8 @@ class UserView(APIView):
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
-        response.delete_cookie('jwt')
+        response.delete_cookie('access_token')
+        response.delete_cookie('csrftoken')
         response.data = {
             'message': 'success'
         }

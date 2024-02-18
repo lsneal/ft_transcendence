@@ -10,7 +10,7 @@ services:
       - PG_PORT=5432
     expose:
       - "5432"
-    restart: unless-stopped
+    restart: always
     
     
   django_users:
@@ -21,7 +21,7 @@ services:
       - nginx
     expose:
       - "8002"
-    restart: unless-stopped
+    restart: always
     volumes:
       #- static:/var/www/admin/css
       - ./users/script/:/script/mysite #development purpose

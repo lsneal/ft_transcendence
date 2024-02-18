@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-!by_b!m3kd+$89x7#_wp7ye(5$p)66%3fc(1e-=r&nd^ukc7_)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["api.localhost"]
+ALLOWED_HOSTS = ["api.localhost", "localhost"]
 
 
 # Application definition
@@ -38,9 +38,9 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -141,12 +141,25 @@ REST_AUTH_SERIALIZERS = {
 }
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_ALLOW_ALL = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE_FORCE_ALL = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+CORS_ORIGIN_WHITELIST = [
+    'https://localhost',
+    'https://django_users:8001',
+    'https://api.localhost',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost',
+    'https://django_users:8001',
+    'https://api.localhost',
+]
+
 
 
 from datetime import timedelta
@@ -164,7 +177,7 @@ SIMPLE_JWT = {
   'ISSUER': None,
 
   'AUTH_HEADER_TYPES': ('Bearer',),
-  'AUTH_HEADER_NAME': 'HTTPS_AUTHORIZATION',
+  'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
   'USER_ID_FIELD': 'id',
   'USER_ID_CLAIM': 'user_id',
   'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
@@ -180,9 +193,9 @@ SIMPLE_JWT = {
 
   # custom
   'AUTH_COOKIE': 'access_token',  # Cookie name. Enables cookies if value is set.
-  'AUTH_COOKIE_DOMAIN': 'https://api.localhost/',     # A string like "example.com", or None for standard domain cookie.
+  'AUTH_COOKIE_DOMAIN': 'localhost',     # A string like "example.com", or None for standard domain cookie.
   'AUTH_COOKIE_SECURE': True,    # Whether the auth cookies should be secure (https:// only).
-  'AUTH_COOKIE_HTTP_ONLY' : False, # Http only cookie flag.It's not fetch by javascript.
+  'AUTH_COOKIE_HTTP_ONLY' : True, # Http only cookie flag.It's not fetch by javascript.
   'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
   'AUTH_COOKIE_SAMESITE': 'None',  # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
 }

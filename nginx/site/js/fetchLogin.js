@@ -14,13 +14,19 @@ async function EventLogin () {
         return; 
     }
 
+    var getCookie = function(name) {
+      var re = new RegExp(name + "=([^;]+)");
+      var value = re.exec(document.cookie);
+      return (value != null) ? unescape(value[1]) : null;
+    };
+
     const formData = {
         email: email,
         password: password,
     };
 
     try {
-        const response = await fetch('https://api.localhost/login/', {
+        const response = await fetch('https://localhost/api/login/', {
             method: 'POST',
             mode: "cors",
             credentials: 'include',
@@ -28,16 +34,23 @@ async function EventLogin () {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData)
+        }).then((response) => response.json())
+        .then((json) => {
+          console.log(document.cookie);
+          console.log(json);
+        }).catch((err) => {
+          console.log(err);
         });
 
-        console.log(response);
+        
+        //Cookies.set('acces_token', await response);
 
-        if (response.ok) {
+        /*if (response.ok) {
           //alert('Login OK!');
         } else {
           const errorMessage = await response.json();
           alert('Erreur ' + errorMessage.detail); 
-        }
+        }*/
     }
     catch (error) {
       alert('Erreur');
