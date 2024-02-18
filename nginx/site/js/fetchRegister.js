@@ -34,7 +34,6 @@ async function EventRegister () {
         });
 
         if (response.ok) {
-            document.cookie.delete("access_token");
         } else {
             const errorMessage = await response.json();
             alert('Erreur ' + errorMessage.email[0]); 
