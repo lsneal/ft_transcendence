@@ -3,6 +3,7 @@ import Register from "./Register.js";
 import Login from "./Login.js";
 import Logout from "./Logout.js";
 import Profile from "./Profile.js";
+import Error from "./Error.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -27,6 +28,7 @@ const router = async () => {
         {   path: "/login/", view: Login },
         {   path: "/logout/", view: Logout },
         {   path: "/profile/", view: Profile },
+        {   path: "/error/", view: Error },
     ];
 
     // Test each route for potential match

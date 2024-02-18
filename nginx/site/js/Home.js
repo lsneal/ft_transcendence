@@ -13,6 +13,12 @@ export default class extends AbstractView {
       console.log("Modal Button Charge")
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
       document.getElementById("btnLogin").addEventListener('click', EventLogin);
+      console.log(window.location)
+      if (window.location != 'https://localhost/')
+      {
+        window.history.pushState(null, "Error Page 404", "/error/");
+        window.dispatchEvent(new Event('popstate'));
+      }
      
     }
 
