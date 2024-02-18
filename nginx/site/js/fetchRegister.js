@@ -31,13 +31,14 @@ async function EventRegister () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
-        });
+        }).then((response) => response.json())
+        .then((data) =>{
+            console.log(data.email[0]);
+            console.log(data);
 
-        if (response.ok) {
-        } else {
-            const errorMessage = await response.json();
-            alert('Erreur ' + errorMessage.email[0]); 
-        }
+            // If it fails put error in modal 
+
+        });
     }
     catch (error) {
         alert('An unexepected error occured. Please try again!');

@@ -8,16 +8,13 @@ async function EventLogout() {
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
+        }).then((response) => response.json())
+        .then((data) =>{
+
+            // Logout shouldn't fail for now, we'll see later
+
         });
 
-        if (response.ok) {
-            //console.log('Ok', response.text())
-            //alert('Déconnexion réussie!');
-
-        } else {
-            //const errorMessage = await response.json();
-            //alert('Erreur de déconnexion: ' + errorMessage.detail);
-        }
     } catch (error) {
         alert('Erreur de déconnexion');
         

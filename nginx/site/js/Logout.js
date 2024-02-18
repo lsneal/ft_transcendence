@@ -5,7 +5,6 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Logout");
 
-        console.log("Logout")
     }
 
     async executeViewScript()

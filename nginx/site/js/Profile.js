@@ -5,15 +5,14 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Profile");
 
-        
     }
 
     async executeViewScript()
     {
-      console.log("Logout Charge")
+      console.log("Logout Button Charge")
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
+      //EventProfile();
     }
-
 
     async getHtml() {
       try{

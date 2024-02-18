@@ -10,8 +10,7 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-      //console.log("Modal Charge")
-
+      console.log("Modal Button Charge")
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
       document.getElementById("btnLogin").addEventListener('click', EventLogin);
      

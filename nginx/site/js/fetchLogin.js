@@ -6,7 +6,6 @@ async function EventLogin () {
     let myModalEl = document.getElementById('modalEmail');
     let modal = bootstrap.Modal.getInstance(myModalEl);
 
-    //console.log(modal);
 
     if (!email || !password) {
         alert('Veuillez remplir tous les champs !');
@@ -14,11 +13,11 @@ async function EventLogin () {
         return; 
     }
 
-    var getCookie = function(name) {
+    /*var getCookie = function(name) {
       var re = new RegExp(name + "=([^;]+)");
       var value = re.exec(document.cookie);
       return (value != null) ? unescape(value[1]) : null;
-    };
+    };*/
 
     const formData = {
         email: email,
@@ -35,29 +34,25 @@ async function EventLogin () {
             },
             body: JSON.stringify(formData)
         }).then((response) => response.json())
-        .then((json) => {
-          console.log(document.cookie);
-          console.log(json);
-        }).catch((err) => {
-          console.log(err);
+        .then((data) =>{
+            console.log(data.detail);
+
+            // If it fails put error in modal 
+
+
+            // You can look at that doc to know everything you can use with you response https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+            // Here I use https://developer.mozilla.org/en-US/docs/Web/API/Response/json
+            // To retrieve and parse the errors correctly
+
         });
-
-        
-        //Cookies.set('acces_token', await response);
-
-        /*if (response.ok) {
-          //alert('Login OK!');
-        } else {
-          const errorMessage = await response.json();
-          alert('Erreur ' + errorMessage.detail); 
-        }*/
     }
     catch (error) {
-      alert('Erreur');
+      console.log('Erreur');
     };
 
-    modal.hide();
 
+    // If login fail then don't do that and add the message in the modal with js
+    modal.hide();
     window.history.pushState(null, "Profile", "/profile/");
     window.dispatchEvent(new Event('popstate'));
 }
