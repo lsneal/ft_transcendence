@@ -7,15 +7,18 @@ async function EventProfile() {
             headers: {
                 'Content-Type': 'application/json'
             }
+        }).then((response) => response.json())
+        .then((data) =>{
+            console.log(data);
+            console.log(data.email);
+            console.log(data.pseudo);
+            console.log(data.id);
+
+            // If it fails, that means the user isn't connected or his cookies expired, 
+            // so put error and redirect him to Home (or refresh token ?) 
+
         });
 
-        if (response.ok) {
-            console.log('Ok', response.text())
-
-        } else {
-            // If it fails, that means the user isn't connected or his cookies expired, 
-            // so put error and redirect him to Home (or refresh token ?)
-        }
     } catch (error) {
         alert('Erreur de déconnexion');
     }
