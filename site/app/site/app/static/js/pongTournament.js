@@ -49,12 +49,26 @@ function buildBracket(data) {
     const list = document.getElementById("list");
     list.style.display = 'none';
 
-    const bracket = document.getElementById("bracket");
-    for (let i = 0; i < data.nb_user; i += 2)
-    {
-        bracket.innerHTML += `<div style="background-color:powderblue;">
-                                <h1>${data.users[i]}<h1>
-                                <h1>${data.users[i + 1]}<h1>
-                            </div>`;
-    }
+    fetch("api/UserIdGameView", {
+        method: "GET",
+    })
+    .then((response) => response.json())
+    .then(dataUser => {
+        let url = `ws://localhost:8001/ws/` + dataUser.id 
+        const socket = new WebSocket(url)
+        console.log("url socket = ", url)
+        playTournament(gameId, socket, data)
+    })
+    //const bracket = document.getElementById("bracket");
+    //for (let i = 0; i < data.nb_user; i += 2)
+    //{
+    //    bracket.innerHTML += `<div style="background-color:powderblue;">
+    //                            <h1>${data.users[i]}<h1>
+    //                            <h1>${data.users[i + 1]}<h1>
+    //                        </div>`;
+    //}
+}
+
+function playTournament(gameId, socket) {
+
 }

@@ -24,6 +24,10 @@ class GameConsumer(WebsocketConsumer):
         gameId = text_data_json['gameId']
         gameIdx = gameId - 1
 
+        if game == 'tournament':
+            manager.games[gameIdx].player1 = self
+            manager.games[gameIdx].player2 = self
+            return
         if game == 'local':
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self
