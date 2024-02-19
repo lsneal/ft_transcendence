@@ -9,15 +9,6 @@ body{
 }
 
 
-
-/*	background-color: #F2AFEF;*/
-
-/*	background-color: #7360DF;*/
-
-.main-buttons{
-	margin-top: 23vh;
-}
-
 .button-with-background {
 	background-size: cover;
 	background-position: center;
@@ -25,26 +16,76 @@ body{
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-  }
-  
-  .button-column {
+}
+
+.button-column {
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	padding: 0;
-  }
-  
-  .footer-button {
+}
+
+.footer-button {
 	text-align: center;
 	margin-bottom: 20px;
-  }
-  
-  .max-height-btn {
-	height: 80vh;
-  }
+}
 
-  .custom-background-tournament {
+.max-height-btn {
+	height: 80vh;
+}
+
+
+/*--------------------------TOURNAMENT----------------------------*/
+
+
+.tournament-row{
+	margin: 0 0 30px 0;
+}
+
+.custom-tournament .match{
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+
+.custom-tournament .match div {
+	border: 1px solid #C499F3;
+	margin: 0 3px;
+	padding: 5px 0;
+}
+
+.tournament-row:not(:last-child) .match div:before {
+	content: "";
+	display: block;
+	width: 1px;
+	height: 45px;
+	background: #C499F3;
+	bottom: 0;
+	left: 50%;
+	position: absolute;
+	transform: rotate(135deg);
+	transform-origin: bottom;
+}
+
+.tournament-row:not(:last-child) .match div:after {
+	content: "";
+	display: block;
+	width: 1px;
+	height: 45px;
+	background: #C499F3;
+	bottom: 0;
+	left: 50%;
+	position: absolute;
+	transform: rotate(-135deg);
+	transform-origin: bottom;
+}
+
+/*--------------------------TOURNAMENT----------------------------*/
+
+
+
+.custom-background-tournament {
 	background-image: url('../static/tournoi.jpeg'); /* Remplacez 'image-personnalisee.jpg' par le chemin de votre image personnalisée /
 	background-size: cover;
 	background-position: center;
 	height: 100%; / Assurez-vous que le bouton prend toute la hauteur */
-  }
+}

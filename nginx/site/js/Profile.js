@@ -11,7 +11,7 @@ export default class extends AbstractView {
     {
       console.log("Logout Button Charge")
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
-      EventProfile();
+      //EventProfile();
     }
 
     async getHtml() {
