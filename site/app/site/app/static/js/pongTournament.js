@@ -45,10 +45,20 @@ function getName() {
     })
 }
 
-function buildBracket(data) {
+function buildBracket(value) {
     const list = document.getElementById("list");
     list.style.display = 'none';
 
+    fetch("/api/joinGame/", {
+        method: "POST",
+    })
+    .then((response) => response.json())
+    .then(data => {
+        beforeStart(data.id, value)
+    })
+}
+
+function beforeStart(gameId, value) {
     fetch("api/UserIdGameView", {
         method: "GET",
     })
@@ -57,18 +67,74 @@ function buildBracket(data) {
         let url = `ws://localhost:8001/ws/` + dataUser.id 
         const socket = new WebSocket(url)
         console.log("url socket = ", url)
-        playTournament(gameId, socket, data)
+        playTournament(gameId, socket, value)
     })
-    //const bracket = document.getElementById("bracket");
-    //for (let i = 0; i < data.nb_user; i += 2)
-    //{
-    //    bracket.innerHTML += `<div style="background-color:powderblue;">
-    //                            <h1>${data.users[i]}<h1>
-    //                            <h1>${data.users[i + 1]}<h1>
-    //                        </div>`;
-    //}
 }
 
-function playTournament(gameId, socket) {
+function playTournament(gameId, socket, tournament) {
+    
+    socket.onopen = () => {
+        console.log("tournament id =", tournament.id)
+        socket.send(JSON.stringify({
+            'game':'tournament',
+            'moov': 'none',
+            'tournamentId':tournament.id,
+            'gameId':gameId,
+            'users':tournament.users,
+            'nb_user':tournament.nb_user
+        }))
+        console.log("tournament create")
+        socket.send(JSON.stringify({
+            'game':'start',
+            'moov':'none',
+            'gameId': gameId,
+        }))
 
+        window.addEventListener("keydown", function (e) {
+            if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
+            {
+                socket.send(JSON.stringify({
+                    'game':'in progress',
+                    'moov':e.key,
+                    'gameId': gameId,
+                }))
+            }
+        })
+    }
+
+    socket.onmessage = function (event) {
+        let data = JSON.parse(event.data)
+        if (data.type === "players")
+        {
+            console.log("receive message players")
+            const bracket = document.getElementById("bracket");
+            bracket.innerHTML += `<div style="background-color:powderblue;">
+                           <h1>${data.player1}<h1>
+                           <h1>${data.player2}<h1>
+                       </div>`;
+        }
+        if (data.type === "game")
+        {
+            if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
+            {
+                //TODO: changer les valeurs suivant la taille de fenetre
+                numLeft = data.leftBoxTop.toString();
+                numRight = data.rightBoxTop.toString();
+                leftBar.style.top = numLeft + "px";
+                rightBar.style.top = numRight + "px";
+            }
+            if (data.moov === "ball")
+            {
+                //TODO: changer les valeurs suivant la taille de fenetre
+                ball.style.top = data.posY.toString() + "px";
+                ball.style.left = data.posX.toString() + "px";
+                document.getElementById("scoreP1").innerHTML = data.scoreP1;
+                document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                if (data.scoreP1 == 5)
+                    winner = "p1";
+                if (data.scoreP2 == 5)
+                    winner = "p2";
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .Matchmaking import Matchmaking
+from .MatchmakingTournament import MatchmakingTournament
 from django.http import JsonResponse
 from rest_framework import permissions, viewsets
 
@@ -16,6 +17,7 @@ import rest_framework_simplejwt, datetime, jwt
 from rest_framework.views import APIView
 
 manager = Matchmaking()
+managerTournament = MatchmakingTournament()
 
 def home(request):
         return render(request, 'site/home.html')
@@ -26,19 +28,21 @@ def test(request):
 def pong(request):
         return render(request, 'site/pong.html')
 
-class CreateTournamentView(APIView):
-    def post(self, request):
-        if request.method == 'POST':
-            serializer = TournamentSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-
 class UserIdGameView(APIView):
     def get(self, request):
         if request.method == 'GET':
             serializer = UserGameSerializer(data={'user_id': 'Join'})
             serializer.is_valid()
+            serializer.save()
+            return Response(serializer.data)
+
+
+class CreateTournamentView(APIView):
+    def post(self, request):
+        if request.method == 'POST':
+            managerTournament.joinTournament()
+            serializer = TournamentSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
 

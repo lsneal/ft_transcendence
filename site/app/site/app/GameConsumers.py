@@ -2,6 +2,7 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from .views import manager
+from .views import managerTournament
 from django.contrib.auth.models import AnonymousUser
 from channels.exceptions import StopConsumer
 
@@ -25,9 +26,22 @@ class GameConsumer(WebsocketConsumer):
         gameIdx = gameId - 1
 
         if game == 'tournament':
+            tournamentId = text_data_json['tournamentId']
+            tournamentId = tournamentId - 1
+            users = text_data_json['users']
+            nb_user = text_data_json['nb_user']
+            managerTournament.tournaments[tournamentId].users = users
+            managerTournament.tournaments[tournamentId].nb_user = nb_user
+            managerTournament.tournaments[tournamentId].tournamentinit()
+            managerTournament.tournaments[tournamentId].player1 = self
+            managerTournament.tournaments[tournamentId].player2 = self
+            managerTournament.tournaments[tournamentId].player1.send(text_data=json.dumps({
+                'type':'players',
+                'player1': managerTournament.tournaments[tournamentId].match[0],
+                'player2': managerTournament.tournaments[tournamentId].match[1],
+            }))
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self
-            return
         if game == 'local':
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self

@@ -2,7 +2,7 @@ from .classPong import Pong
 
 class Matchmaking():
     games = []
-    
+
     def joinGame(self):
         nbGame = 0
         
