@@ -9,10 +9,9 @@ export default class extends AbstractView {
     }
 
     async executeViewScript()
-    {
-      console.log("Modal Button Charge")
-      
+    {      
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
+      // Handle enter in modal
       document.getElementById('modalRegistrer').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnRegister').click();
@@ -20,12 +19,14 @@ export default class extends AbstractView {
       });
 
       document.getElementById("btnLogin").addEventListener('click', EventLogin);
+      // Handle enter in modal
       document.getElementById('modalEmail').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnLogin').click();
         }
       });
-      console.log(window.location)
+
+      // Handle redirection error when wrong url
       if (window.location != 'https://localhost/')
       {
         window.history.pushState(null, "Error Page 404", "/error/");
