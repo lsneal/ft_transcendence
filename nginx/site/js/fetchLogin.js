@@ -36,6 +36,16 @@ async function EventLogin () {
         }).then((response) => response.json())
         .then((data) =>{
             console.log(data.detail);
+            if (data.detail === undefined)
+            {
+                modal.hide();
+                window.history.pushState(null, "Profile", "/profile/");
+                window.dispatchEvent(new Event('popstate'));
+            }
+            else
+            {
+                
+            }
 
             // If it fails put error in modal 
 
@@ -52,9 +62,7 @@ async function EventLogin () {
 
 
     // If login fail then don't do that and add the message in the modal with js
-    modal.hide();
-    window.history.pushState(null, "Profile", "/profile/");
-    window.dispatchEvent(new Event('popstate'));
+    
 }
 
 
