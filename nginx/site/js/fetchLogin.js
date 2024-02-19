@@ -44,7 +44,10 @@ async function EventLogin () {
             }
             else
             {
-                
+                const errorMessage = data.detail || 'suce ma bite';
+                const errorElement = document.getElementById('error-message');
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
 
             // If it fails put error in modal 
