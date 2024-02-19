@@ -11,8 +11,20 @@ export default class extends AbstractView {
     async executeViewScript()
     {
       console.log("Modal Button Charge")
+      
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
+      document.getElementById('modalRegistrer').addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+          document.getElementById('btnRegister').click();
+        }
+      });
+
       document.getElementById("btnLogin").addEventListener('click', EventLogin);
+      document.getElementById('modalEmail').addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+          document.getElementById('btnLogin').click();
+        }
+      });
       console.log(window.location)
       if (window.location != 'https://localhost/')
       {
