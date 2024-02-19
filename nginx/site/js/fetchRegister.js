@@ -35,6 +35,17 @@ async function EventRegister () {
         .then((data) =>{
             console.log(data.email[0]);
             console.log(data);
+            if(data.id !== undefined){
+                modal.hide();
+                window.dispatchEvent(new Event('popstate'));
+                window.history.pushState(null, "Register", "/");
+            }
+            else{
+                const errorMessage = data.email[0];
+                    const errorElement = document.getElementById('error-message');
+                    errorElement.innerText = errorMessage;
+                    errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
+            }
 
             // If it fails put error in modal 
 
@@ -47,9 +58,6 @@ async function EventRegister () {
 
     // If error -> Print on the error in the modal ?    Else close modal and redirect (code behind)
 
-    modal.hide();
-    window.history.pushState(null, "Register", "/");
-    window.dispatchEvent(new Event('popstate'));
 
 }
 
