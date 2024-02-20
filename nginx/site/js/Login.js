@@ -12,6 +12,8 @@ export default class extends AbstractView {
     {
       //console.log("Logout Charge")
       //document.getElementById("btnLogout").addEventListener('click', EventLogout);
+
+      
     }
 
 

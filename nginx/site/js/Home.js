@@ -9,7 +9,9 @@ export default class extends AbstractView {
     }
 
     async executeViewScript()
-    {      
+    {
+      document.getElementById("btnLogin42").addEventListener('click', EventLogin42);
+
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
       // Handle enter in modal
       document.getElementById('modalRegistrer').addEventListener('keydown', function(event) {
@@ -27,11 +29,11 @@ export default class extends AbstractView {
       });
 
       // Handle redirection error when wrong url
-      if (window.location != 'https://localhost/')
+      /*if (window.location != 'https://localhost/')
       {
         window.history.pushState(null, "Error Page 404", "/error/");
         window.dispatchEvent(new Event('popstate'));
-      }
+      }*/
      
     }
 

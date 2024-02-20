@@ -1,6 +1,7 @@
 import Home from "./Home.js";
 import Register from "./Register.js";
 import Login from "./Login.js";
+import Login42 from "./Login42.js";
 import Logout from "./Logout.js";
 import Profile from "./Profile.js";
 import Error from "./Error.js";
@@ -26,6 +27,7 @@ const router = async () => {
         {   path: "/", view:  Home },
         {   path: "/register/", view: Register },
         {   path: "/login/", view: Login },
+        {   path: "/login42/", view: Login42 },
         {   path: "/logout/", view: Logout },
         {   path: "/profile/", view: Profile },
         {   path: "/error/", view: Error },
