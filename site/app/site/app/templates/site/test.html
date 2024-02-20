@@ -40,6 +40,7 @@
       <div class="row justify-content-center main-buttons">    
         <div class="col-6">
           <div><button id="Buttonlogin" data-bs-toggle="modal" data-bs-target="#modalLogin" type="button" class="btn btn-lg btn-warning mb-3 w-100">Login</button></div>
+          <div><button id="ButtonRegistrer" data-bs-toggle="modal" data-bs-target="#modalRegistrer" type="button" class="btn btn-lg btn-warning mb-3 w-100">Registrer</button></div>
           <div><button id="ButtonScoreboard" data-bs-toggle="modal" data-bs-target="#modalScoreboard" type="button" class="btn btn-lg btn-warning w-100">Scoreboard</button></div>
         </div>
       </div>
@@ -60,34 +61,103 @@
       </div>
     </div>
 
+    <!-- MODAL REGITRER -->
+    <div class="modal fade" id="modalRegistrer" tabindex="-1" aria-labelledby="modalRegistrer" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form method="post" action="{% url 'register' %}">
+              {% csrf_token %}
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email address</label>
+                <input type="text" class="form-control" id="email" name="email">
+                {% if user_register.errors.email %}
+                  <p class="text-danger">{{ user_register.errors.email.0 }}</p>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label for="username" class="form-label">Username</label>
+                <div class="input-group">
+                  <span class="input-group-text" id="username">@</span>
+                  <input type="text" class="form-control" id="username" name="username" aria-describedby="username">
+                </div>
+                {% if user_register.errors.username %}
+                  <p class="text-danger">{{ user_register.errors.username.0 }}</p>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label for="password1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password1" name="password1">
+                {% if user_register.errors.password1 %}
+                  <p class="text-danger">{{ user_register.errors.password1.0 }}</p>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label for="password2" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="password2" name="password2">
+                {% if user_register.errors.password2 %}
+                  <p class="text-danger">{{ user_register.errors.password2.0 }}</p>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                  <label class="form-check-label" for="invalidCheck2">
+                    Agree to terms and conditions
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
   <!-- MODAL LOGIN EMAIL-->
   <div class="modal fade" id="modal42" tabindex="-1" aria-labelledby="modal42" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-       
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" action="{% url 'user_login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        {{ form.username }}
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        {{ form.password }}
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {{form.errors}}
+                </form>
             </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
         </div>
-       
-      </div>
     </div>
-  </div>
+</div>
 
+
+
+  
     <!-- MODAL SCORE -->
     <div class="modal fade modal-xl" id="modalScoreboard" tabindex="-1" aria-labelledby="modalScoreboard" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
