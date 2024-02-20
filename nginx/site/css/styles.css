@@ -1,0 +1,114 @@
+body{
+	height: 100vh;
+	background-color: #C499F3;
+}
+
+.modal-content{
+	background-color: #33186B;
+	color: #7360DF;
+}
+
+.btn:hover{
+	background-color: #7360DF;
+	color:#33186B;
+
+}
+
+.btn-primary {
+	--bs-btn-bg: #33186B;
+	--bs-btn-border-color: #C499F3;
+	--bs-btn-active-bg: #7360DF;
+}
+
+.btn-secondary {
+	--bs-btn-bg: #33186B;
+	--bs-btn-border-color: #C499F3;
+	--bs-btn-active-bg: #7360DF;
+
+
+}
+
+.big-button {
+	background-color: #33186B;
+	color: #fff;
+	height: 80vh;
+}
+ 
+
+/*--------------------------TOURNAMENT----------------------------*/
+
+.tournament-row{
+	margin: 0 0 30px 0;
+}
+
+.custom-tournament .match{
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+
+.custom-tournament .match div {
+	border: 1px solid #C499F3;
+	margin: 0 3px;
+	padding: 5px 0;
+}
+
+.tournament-row:not(:last-child) .match div:before {
+	content: "";
+	display: block;
+	width: 1px;
+	height: 45px;
+	background: #C499F3;
+	bottom: 0;
+	left: 50%;
+	position: absolute;
+	transform: rotate(135deg);
+	transform-origin: bottom;
+}
+
+.tournament-row:not(:last-child) .match div:after {
+	content: "";
+	display: block;
+	width: 1px;
+	height: 45px;
+	background: #C499F3;
+	bottom: 0;
+	left: 50%;
+	position: absolute;
+	transform: rotate(-135deg);
+	transform-origin: bottom;
+}
+
+/*--------------------------TOURNAMENT----------------------------*/
+
+.button-error-404 {
+	text-align: center;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-weight: 500;
+
+}
+
+.custom-background-error {
+	background-image: url('../static/error404.png');
+	background-color: #C499F3;
+	background-size: cover;
+	height: 550px;
+	background-position: center;
+	display: inline-block;
+	padding: 1px; 
+	border: none;
+	max-width: 60%;
+	max-height: 100%;
+
+}
+
+.custom-background-error p {
+	margin: 0;
+}
+
+.custom-background-tournament {
+	background-image: url('../static/tournoi.jpeg'); 
+	background-size: cover;
+	background-position: center;
+	height: 100%; 
+}

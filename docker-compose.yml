@@ -1,20 +1,27 @@
 version: "3.8"
 
 include:
+<<<<<<< HEAD
   - rest/common.yml
+=======
+  - users/common.yml
+>>>>>>> spa
 
 services:
   nginx:
     container_name: nginx
     build: nginx
-    restart: always
     volumes:
-      - ./site/app/site/static/:/var/www #development purpose
+      - ./users/users/script/static/:/var/www/django/ #development purpose
+      - ./nginx/site/:/var/www/html/ #development purpose
+    restart: always
     ports:
       - "443:443"
+      - "3000:3000"
     networks:
       - nginx
     depends_on:
+<<<<<<< HEAD
       - django
   vault:
     container_name: vault
@@ -29,6 +36,9 @@ services:
       VAULT_ADDR: http://127.0.0.1:8200
     volumes:
       - vault:/opt
+=======
+      - django_users
+>>>>>>> spa
 
 networks:
   nginx:

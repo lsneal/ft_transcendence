@@ -1,0 +1,42 @@
+import AbstractView from "./AbstractView.js";
+
+export default class extends AbstractView {
+    constructor(params) {
+        super(params);
+        this.setTitle("Profile");
+
+    }
+
+    async executeViewScript()
+    {
+      console.log("Logout Button Charge")
+      document.getElementById("btnLogout").addEventListener('click', EventLogout);
+
+      document.getElementById("TournamentButton").addEventListener('click',event  => {
+        window.history.pushState(null, "Tournament", "/tournament/");
+        window.dispatchEvent(new Event('popstate'));
+      }); 
+      document.getElementById("OnlineGameButton").addEventListener('click',event  => {
+        window.history.pushState(null, "Online", "/online/");
+        window.dispatchEvent(new Event('popstate'));
+      });  
+      document.getElementById("LocalGameButton").addEventListener('click',event  => {
+        window.history.pushState(null, "local", "/local/");
+        window.dispatchEvent(new Event('popstate'));
+      });   
+    }
+
+    async getHtml() {
+      try{
+        const response = await fetch('https://localhost/profile.html');
+        if (!response.ok){
+            throw new Error('Failed to fetch profile.html');
+        }
+        const html = await response.text();
+        return html;
+      } catch(error){
+        console.error('Error fetchin', error);
+        return '<p>Error loading </p>'
+      }
+    }
+}
