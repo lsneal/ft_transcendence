@@ -142,11 +142,9 @@ REST_FRAMEWORK = {
     'FORM_CONTENTTYPE_OVERRIDE': None,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
-    'DEFAULT_AUTHENTIFICATION_CLASSES': ('authenticate.CustomAuthentication',),
-}
-
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+    'DEFAULT_AUTHENTIFICATION_CLASSES': (
+        'authenticate.CustomAuthentication',
+    ),
 }
 
 CORS_ALLOW_CREDENTIALS = True
