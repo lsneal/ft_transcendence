@@ -37,12 +37,12 @@ async function EventRegister () {
             console.log(data);
             if(data.id !== undefined){
                 modal.hide();
-                window.dispatchEvent(new Event('popstate'));
                 window.history.pushState(null, "Register", "/");
+                window.dispatchEvent(new Event('popstate'));
             }
             else{
                 const errorMessage = data.email[0];
-                    const errorElement = document.getElementById('error-message');
+                    const errorElement = document.getElementById('error-message-Register');
                     errorElement.innerText = errorMessage;
                     errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
