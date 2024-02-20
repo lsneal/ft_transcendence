@@ -8,34 +8,34 @@ body{
 	color: #7360DF;
 }
 
+.btn:hover{
+	background-color: #7360DF;
+	color:#33186B;
 
-.button-with-background {
-	background-size: cover;
-	background-position: center;
-	min-height: 100vh; 
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 }
 
-.button-column {
-	background-color: rgba(255, 255, 255, 0.5);
-	border-radius: 10px;
-	padding: 0;
+.btn-primary {
+	--bs-btn-bg: #33186B;
+	--bs-btn-border-color: #C499F3;
+	--bs-btn-active-bg: #7360DF;
 }
 
-.footer-button {
-	text-align: center;
-	margin-bottom: 20px;
+.btn-secondary {
+	--bs-btn-bg: #33186B;
+	--bs-btn-border-color: #C499F3;
+	--bs-btn-active-bg: #7360DF;
+
+
 }
 
-.max-height-btn {
+.big-button {
+	background-color: #33186B;
+	color: #fff;
 	height: 80vh;
 }
-
+ 
 
 /*--------------------------TOURNAMENT----------------------------*/
-
 
 .tournament-row{
 	margin: 0 0 30px 0;
@@ -81,11 +81,34 @@ body{
 
 /*--------------------------TOURNAMENT----------------------------*/
 
+.button-error-404 {
+	text-align: center;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-weight: 500;
 
+}
+
+.custom-background-error {
+	background-image: url('../static/error404.png');
+	background-color: #C499F3;
+	background-size: cover;
+	height: 550px;
+	background-position: center;
+	display: inline-block;
+	padding: 1px; 
+	border: none;
+	max-width: 60%;
+	max-height: 100%;
+
+}
+
+.custom-background-error p {
+	margin: 0;
+}
 
 .custom-background-tournament {
-	background-image: url('../static/tournoi.jpeg'); /* Remplacez 'image-personnalisee.jpg' par le chemin de votre image personnalisée /
+	background-image: url('../static/tournoi.jpeg'); 
 	background-size: cover;
 	background-position: center;
-	height: 100%; / Assurez-vous que le bouton prend toute la hauteur */
+	height: 100%; 
 }

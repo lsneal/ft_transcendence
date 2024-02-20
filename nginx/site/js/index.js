@@ -4,6 +4,9 @@ import Login from "./Login.js";
 import Logout from "./Logout.js";
 import Profile from "./Profile.js";
 import Error from "./Error.js";
+import Tournament from "./Tournament.js";
+import Online from "./Online.js";
+import Local from "./Local.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -24,11 +27,13 @@ const navigateTo = url => {
 const router = async () => {
     const routes = [
         {   path: "/", view:  Home },
-        {   path: "/register/", view: Register },
-        {   path: "/login/", view: Login },
         {   path: "/logout/", view: Logout },
         {   path: "/profile/", view: Profile },
+        {   path: "/tournament/", view: Tournament },
+        {   path: "/online/", view: Online },
+        {   path: "/local/", view: Local },
         {   path: "/error/", view: Error },
+
     ];
 
     // Test each route for potential match
