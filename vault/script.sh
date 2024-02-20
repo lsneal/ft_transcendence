@@ -2,7 +2,7 @@
 
 vault server --config=/vault/config/conf.json &
 
-sleep 3
+sleep 4
 
 vault operator init > key.txt
 
@@ -18,7 +18,7 @@ vault operator unseal $key3
 echo "$token" > root_token
 export VAULT_TOKEN=$token
 
-sleep 5
+sleep 3
 
 vault secrets enable database
 
@@ -29,6 +29,7 @@ vault write database/config/postgres \
     username="postgres" \
     password="password" \
     password_authentication="scram-sha-256"
+#change password and username 
 
 vault write database/roles/my-rolev1 \
     db_name="postgres" \
@@ -37,6 +38,7 @@ vault write database/roles/my-rolev1 \
         ALTER ROLE \"{{name}}\" WITH SUPERUSER;" \
     default_ttl="1h" \
     max_ttl="24h"
+# changer la durer d'expiration des creds de la db (ttl)
 
 vault secrets enable kv
 private_key_django=$(openssl rand -hex 32)

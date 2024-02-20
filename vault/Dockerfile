@@ -4,7 +4,7 @@ RUN apk add --no-cache curl \
                         jq \
                         openssl
                         
-COPY ./conf.json /vault/config/
+COPY ./conf/conf.json /vault/config/
 
 COPY ./script.sh .
 RUN chmod +x script.sh
