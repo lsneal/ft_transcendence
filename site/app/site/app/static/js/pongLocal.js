@@ -45,12 +45,14 @@ function playGameLocal(gameId, socket)
             'game':'local',
             'moov':'none',
             'gameId': gameId,
+            'typeParty': 'game'
         }))
 
         socket.send(JSON.stringify({
             'game':'start',
             'moov':'none',
             'gameId': gameId,
+            'typeParty': 'game'
         }))
 
         window.addEventListener("keydown", function (e) {
@@ -60,6 +62,7 @@ function playGameLocal(gameId, socket)
                     'game':'in progress',
                     'moov':e.key,
                     'gameId': gameId,
+                    'typeParty': 'game'
                 }))
             }
         })

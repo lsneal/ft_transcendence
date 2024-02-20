@@ -44,6 +44,7 @@ function playGameOnline(gameId, socket)
             'game':'start',
             'moov':'none',
             'gameId': gameId,
+            'typeParty': 'game'
         }))
 
         window.addEventListener("keydown", function (e) {
@@ -53,6 +54,7 @@ function playGameOnline(gameId, socket)
                     'game':'in progress',
                     'moov':e.key,
                     'gameId': gameId,
+                    'typeParty': 'game'
                 }))
             }
         })

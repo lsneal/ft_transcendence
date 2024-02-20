@@ -10,6 +10,8 @@ class Pong:
         self.player2 = None
         self.id = id
         self.status = None
+        self.scoreP1 = 0
+        self.scoreP2 = 0
 
     def bar_moov(self, moov, playerMoov):
         
@@ -31,15 +33,13 @@ class Pong:
         self.barSendToJs(moov, self.leftBoxTop, self.rightBoxTop)
 
     
-    def game(self, game):
-        t = threading.Thread(target=self.ball, args=())
+    def game(self, game, typeParty):
+        t = threading.Thread(target=self.ball, args=(typeParty,))
         if game == 'start':
             t.start()
 
     
-    def ball(self):
-        scoreP1 = 0
-        scoreP2 = 0
+    def ball(self, typeParty):
 
         ballPosX = 499
         ballPosY = 250
@@ -47,16 +47,17 @@ class Pong:
         hitLeft = 50
         hitRight = 930
         hitWall = 0
-        while (scoreP1 < 5 and scoreP2 < 5):
+        self.scoreP1 = 0
+        self.scoreP2 = 0
+        while (self.scoreP1 < 5 and self.scoreP2 < 5):
+            print("ball game")
             if ballPosX == 499 and ballPosY == 250:
                 while ballPosX > hitLeft:
-                    print('to left direction mid')
                     ballPosX -= 15
-                    self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                    self.ballSendToJs(ballPosX, ballPosY, typeParty)
                     time.sleep(0.03)            
             if self.leftBoxTop - ballPosY < 30 and self.leftBoxTop - ballPosY > -90 and ballPosX <= hitLeft:
                 if self.leftBoxTop - ballPosY > -20:
-                    print('to right direction top')
                     hitWall = 0        
                     while ballPosX < hitRight:
                         if hitWall == 1:
@@ -66,10 +67,9 @@ class Pong:
                         if ballPosY <  0:
                             hitWall = 1
                         ballPosX += 18
-                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 elif self.leftBoxTop - ballPosY < -50:
-                    print('to right direction bot')
                     hitWall = 0
                     while ballPosX < hitRight:
                         if hitWall == 1:
@@ -79,22 +79,20 @@ class Pong:
                         if ballPosY > 460:
                             hitWall = 1
                         ballPosX += 18
-                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 else:
-                    print('to right direction mid')
                     while ballPosX < hitRight:
                         ballPosX += 18
-                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
             elif ballPosX < hitLeft :
                 ballPosX = 499
                 ballPosY = 250
-                scoreP2 += 1
+                self.scoreP2 += 1
             
             if self.rightBoxTop - ballPosY < 30 and self.rightBoxTop - ballPosY > -90 and ballPosX >= hitRight:
                 if self.rightBoxTop - ballPosY > -20:
-                    print('to left direction top')
                     hitWall = 0        
                     while ballPosX > hitLeft:
                         if hitWall == 1:
@@ -104,10 +102,9 @@ class Pong:
                         if ballPosY <  0:
                             hitWall = 1
                         ballPosX -= 18
-                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 elif self.rightBoxTop - ballPosY < -50:
-                    print('to left direction bot')
                     hitWall = 0
                     while ballPosX > hitLeft:
                         if hitWall == 1:
@@ -117,42 +114,43 @@ class Pong:
                         if ballPosY > 460:
                             hitWall = 1
                         ballPosX -= 18
-                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 else:
-                    print('to right direction mid')
                     while ballPosX > hitLeft:
                         ballPosX -= 18
-                        self.ballSendToJs(ballPosX, ballPosY, scoreP1, scoreP2)
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
             elif ballPosX > hitRight:
                 ballPosX = 499
                 ballPosY = 250
-                scoreP1 += 1
-        self.ballSendToJs(499, 250, scoreP1, scoreP2)
+                self.scoreP1 += 1
+        self.ballSendToJs(499, 250, typeParty)
         self.barSendToJs('ArrowUp', 250, 250)
-        from .views import manager
-        manager.endGame(self)
-        return 
-
-    def ballSendToJs(self, ballPosX, ballPosY, scoreP1, scoreP2):
+        if typeParty == 'game':
+            from .views import manager
+            manager.endGame(self)
+            return
+            #TODO remmetre ce caca
+    def ballSendToJs(self, ballPosX, ballPosY, typeParty):
+        
         self.player1.send(text_data=json.dumps({
             'type':'game',
             'moov':'ball',
             'posX':ballPosX,
             'posY':ballPosY,
-            'scoreP1':scoreP1,
-            'scoreP2':scoreP2
+            'scoreP1':self.scoreP1,
+            'scoreP2':self.scoreP2
         }))
-        
-        self.player2.send(text_data=json.dumps({
-            'type':'game',
-            'moov':'ball',
-            'posX':ballPosX,
-            'posY':ballPosY,
-            'scoreP1':scoreP1,
-            'scoreP2':scoreP2
-        }))
+        if typeParty == 'game':
+            self.player2.send(text_data=json.dumps({
+                'type':'game',
+                'moov':'ball',
+                'posX':ballPosX,
+                'posY':ballPosY,
+                'scoreP1':self.scoreP1,
+                'scoreP2':self.scoreP2
+            }))
         
         return
         

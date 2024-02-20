@@ -73,21 +73,27 @@ function beforeStart(gameId, value) {
 
 function playTournament(gameId, socket, tournament) {
     
+    let leftBar = document.getElementById("leftBox")
+    let ball = document.getElementById("ball")
+    let rightBar = document.getElementById("rightBox")
+
     socket.onopen = () => {
-        console.log("tournament id =", tournament.id)
+        console.log("on open tournament id =", tournament.id)
         socket.send(JSON.stringify({
             'game':'tournament',
             'moov': 'none',
             'tournamentId':tournament.id,
             'gameId':gameId,
             'users':tournament.users,
-            'nb_user':tournament.nb_user
+            'nb_user':tournament.nb_user,
+            'typeParty': 'tournament'
         }))
         console.log("tournament create")
         socket.send(JSON.stringify({
             'game':'start',
             'moov':'none',
             'gameId': gameId,
+            'typeParty': 'tournament'
         }))
 
         window.addEventListener("keydown", function (e) {
@@ -97,6 +103,7 @@ function playTournament(gameId, socket, tournament) {
                     'game':'in progress',
                     'moov':e.key,
                     'gameId': gameId,
+                    'typeParty': 'tournament'
                 }))
             }
         })
@@ -106,12 +113,27 @@ function playTournament(gameId, socket, tournament) {
         let data = JSON.parse(event.data)
         if (data.type === "players")
         {
-            console.log("receive message players")
+            console.log("match is player", data.player1, "vs", data.player2)
             const bracket = document.getElementById("bracket");
-            bracket.innerHTML += `<div style="background-color:powderblue;">
+            bracket.innerHTML = `<div style="background-color:powderblue;">
                            <h1>${data.player1}<h1>
                            <h1>${data.player2}<h1>
                        </div>`;
+        }
+        if (data.type === "end")
+        {
+            resultMatch = document.getElementById("resultMatch")
+            resultMatch.innerHTML = "And the winner is " + data.winner
+            document.getElementById("scoreP1").innerHTML = 0
+            document.getElementById("scoreP2").innerHTML = 0
+            //TODO changer les valeurs suivant la fenetre
+            posY = 250
+            posX = 499
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+            button.style.display = 'block';
+            button2.style.display = 'block';
+            button3.style.display = 'block';
         }
         if (data.type === "game")
         {
@@ -134,6 +156,24 @@ function playTournament(gameId, socket, tournament) {
                     winner = "p1";
                 if (data.scoreP2 == 5)
                     winner = "p2";
+                if (data.scoreP2 == 5 || data.scoreP1 == 5)
+                {
+                    socket.send(JSON.stringify({
+                        'game':'tournament',
+                        'moov': 'none',
+                        'tournamentId':tournament.id,
+                        'gameId':gameId,
+                        'users':tournament.users,
+                        'nb_user':tournament.nb_user,
+                        'typeParty': 'tournament'
+                    }))
+                    socket.send(JSON.stringify({
+                        'game':'start',
+                        'moov':'none',
+                        'gameId': gameId,
+                        'typeParty': 'tournament'
+                    }))            
+                }
             }
         }
     }

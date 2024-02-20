@@ -23,6 +23,7 @@ class GameConsumer(WebsocketConsumer):
         moov = text_data_json['moov']
         game = text_data_json['game']
         gameId = text_data_json['gameId']
+        typeParty = text_data_json['typeParty']
         gameIdx = gameId - 1
 
         if game == 'tournament':
@@ -32,9 +33,21 @@ class GameConsumer(WebsocketConsumer):
             nb_user = text_data_json['nb_user']
             managerTournament.tournaments[tournamentId].users = users
             managerTournament.tournaments[tournamentId].nb_user = nb_user
+            if manager.games[gameIdx].scoreP1 == 5:
+                managerTournament.tournaments[tournamentId].winner = managerTournament.tournaments[tournamentId].match[0]
+            elif manager.games[gameIdx].scoreP2 == 5:
+                managerTournament.tournaments[tournamentId].winner = managerTournament.tournaments[tournamentId].match[1]
             managerTournament.tournaments[tournamentId].tournamentinit()
             managerTournament.tournaments[tournamentId].player1 = self
             managerTournament.tournaments[tournamentId].player2 = self
+            print("message des players envoi")
+            if managerTournament.tournaments[tournamentId].match == None:
+                managerTournament.tournaments[tournamentId].player1.send(text_data=json.dumps({
+                    'type':'end',
+                    'winner': managerTournament.tournaments[tournamentId].arrWinner[0]
+                }))
+                manager.games[gameIdx].endGame(manager.games[gameIdx])
+                return
             managerTournament.tournaments[tournamentId].player1.send(text_data=json.dumps({
                 'type':'players',
                 'player1': managerTournament.tournaments[tournamentId].match[0],
@@ -42,6 +55,8 @@ class GameConsumer(WebsocketConsumer):
             }))
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self
+            manager.games[gameIdx].scoreP1 = 0
+            manager.games[gameIdx].scoreP1 = 0
         if game == 'local':
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self
@@ -58,7 +73,7 @@ class GameConsumer(WebsocketConsumer):
                 'type':'start',
             }))
             manager.games[gameIdx].bar_moov(moov, self)
-            manager.games[gameIdx].game(game)
+            manager.games[gameIdx].game(game, typeParty)
         else:
             print("Waiting room....")
     
