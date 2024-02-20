@@ -2,7 +2,17 @@ FROM python:3.12.1-alpine3.19
 
 RUN apk add --update --no-cache postgresql-client
 
-RUN pip install --upgrade pip && pip install django djangorestframework gunicorn  djangorestframework-simplejwt django-cors-headers requests Authlib
+RUN pip install --upgrade pip &&pip install django  \
+                                            djangorestframework \ 
+                                            gunicorn \ 
+                                            djangorestframework-simplejwt \ 
+                                            django-cors-headers \ 
+                                            pyotp \
+                                            qrcode[pil] \
+                                            hvac \
+                                            django_postgres_vault \
+                                            requests \
+                                            Authlib 
 
 RUN apk add --no-cache build-base && pip install psycopg2-binary && apk del build-base
 

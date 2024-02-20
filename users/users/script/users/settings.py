@@ -2,11 +2,8 @@
 from pathlib import Path
 import os
 from datetime import timedelta
-<<<<<<<< HEAD:rest/app/script/mysite/settings.py
 import hvac
 
-========
->>>>>>>> spa:users/users/script/users/settings.py
 #from app.models import User
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,15 +14,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-!by_b!m3kd+$89x7#_wp7ye(5$p)66%3fc(1e-=r&nd^ukc7_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<<< HEAD:rest/app/script/mysite/settings.py
-ALLOWED_HOSTS = ["localhost"]
-========
 ALLOWED_HOSTS = ["api.localhost", "localhost"]
->>>>>>>> spa:users/users/script/users/settings.py
 
 
 # Application definition
@@ -42,8 +36,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,9 +69,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'users.wsgi.application'
 
 
-AUTH_USER_MODEL="users.User" 
+AUTH_USER_MODEL="users.User"
 
-<<<<<<<< HEAD:rest/app/script/mysite/settings.py
 VAULT_ADDR = 'http://vault:8200'
 fd = os.open("/opt/token", os.O_RDONLY)
 n_bytes = 95 # token size
@@ -92,30 +83,17 @@ secret_key = vault_client.read('kv/django_secrets')
 SECRET_KEY = secret_key['data']['django_key']
 
 database_credentials = vault_client.read('database/creds/my-rolev1')
-========
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
->>>>>>>> spa:users/users/script/users/settings.py
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-<<<<<<<< HEAD:rest/app/script/mysite/settings.py
         'USER': database_credentials['data']['username'],
         'PASSWORD': database_credentials['data']['password'],
-        'HOST': 'postgres',
-========
-        'USER': 'postgres',
-        'PASSWORD': 'password',
         'HOST': 'postgres_users',
->>>>>>>> spa:users/users/script/users/settings.py
         'PORT': '5432',
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -158,37 +136,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-<<<<<<<< HEAD:rest/app/script/mysite/settings.py
 REST_FRAMEWORK = {
     'FORM_METHOD_OVERRIDE': None,
     'FORM_CONTENT_OVERRIDE': None,
     'FORM_CONTENTTYPE_OVERRIDE': None,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
-    'DEFAULT_AUTHENTIFICATION_CLASSES': ('rest_framework_simplejwt.authentification.JWTAuthentication',),
+    'DEFAULT_AUTHENTIFICATION_CLASSES': ('authenticate.CustomAuthentication',),
 }
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-========
-
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100,
-    'DEFAULT_AUTHENTIFICATION_CLASSES': (
-        'authenticate.CustomAuthentication',
-    ),
-}
-
-
-
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_ALLOW_ALL = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE_FORCE_ALL = True
@@ -246,4 +208,3 @@ SIMPLE_JWT = {
   'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
   'AUTH_COOKIE_SAMESITE': 'None',  # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
 }
->>>>>>>> spa:users/users/script/users/settings.py

@@ -5,6 +5,7 @@ services:
     image: postgres:16.1-alpine3.19
     networks:
       - users_network
+      - vault_network
     environment:
       - POSTGRES_PASSWORD=password
       - PG_PORT=5432
@@ -18,16 +19,19 @@ services:
     build: ./users
     networks:
       - users_network
+      - vault_network
       - nginx
     expose:
       - "8002"
+      - "8200"
     restart: always
     volumes:
+      - vault:/opt
       #- static:/var/www/admin/css
       - ./users/script/:/script/mysite #development purpose
     depends_on:
       - postgres_users
-    tty: true
+      - vault
 
 networks:
   users_network:

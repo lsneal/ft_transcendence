@@ -25,7 +25,7 @@ vault secrets enable database
 vault write database/config/postgres \
     plugin_name="postgresql-database-plugin" \
     allowed_roles="my-rolev1" \
-    connection_url="postgresql://{{username}}:{{password}}@postgres:5432/postgres" \
+    connection_url="postgresql://{{username}}:{{password}}@postgres_users:5432/postgres" \
     username="postgres" \
     password="password" \
     password_authentication="scram-sha-256"

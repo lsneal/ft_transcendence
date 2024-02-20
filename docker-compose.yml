@@ -1,11 +1,7 @@
 version: "3.8"
 
 include:
-<<<<<<< HEAD
-  - rest/common.yml
-=======
   - users/common.yml
->>>>>>> spa
 
 services:
   nginx:
@@ -21,13 +17,12 @@ services:
     networks:
       - nginx
     depends_on:
-<<<<<<< HEAD
-      - django
+      - django_users
   vault:
     container_name: vault
     build: vault
     networks:
-      - app2
+      - vault_network
     ports:
       - "8200:8200"
     environment:
@@ -36,12 +31,13 @@ services:
       VAULT_ADDR: http://127.0.0.1:8200
     volumes:
       - vault:/opt
-=======
-      - django_users
->>>>>>> spa
+    depends_on:
+      - postgres_users
 
 networks:
   nginx:
+    driver: bridge
+  vault_network:
     driver: bridge
 
 volumes:

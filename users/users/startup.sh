@@ -1,5 +1,5 @@
 #!/bin/sh
-sleep 5
+sleep 20
 
 python manage.py migrate
 #exec python manage.py runserver 0.0.0.0:8002
