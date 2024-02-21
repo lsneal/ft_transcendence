@@ -5,7 +5,7 @@ class Matchmaking():
 
     def joinGame(self):
         nbGame = 0
-        
+
         for game in self.games:
             if game.player2 == None:
                 game.player2 = 'p2'
@@ -17,3 +17,5 @@ class Matchmaking():
     def endGame(self, game):
         game.player1.close()
         game.player2.close()
+        game.player2 = 'END'
+        game.player1 = 'END'
