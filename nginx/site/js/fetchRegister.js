@@ -1,19 +1,27 @@
 async function EventRegister () {
 
-    console.log("test");
 
     const email = document.querySelector('#email').value;
     const pseudo = document.querySelector('#pseudo').value;
     const password = document.querySelector('#password').value;
+    const confirmPassword = document.querySelector('#ConfirmPassword').value;
+
 
     let myModalEl = document.getElementById('modalRegistrer');
     let modal = bootstrap.Modal.getInstance(myModalEl);
 
 
-    if (!email || !pseudo ||!password) {
+    if (!email || !pseudo ||!password || !confirmPassword) {
         //alert('Veuillez remplir tous les champs !');
         modal.hide();
         return; 
+    }
+    if(password != confirmPassword){
+        const errorMessage = 'Not Same Password';
+        const errorElement = document.getElementById('error-message-ConfirmPass');
+        errorElement.innerText = errorMessage;
+        errorElement.style.display = 'block';
+        return;
     }
 
     const formData = {

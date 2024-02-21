@@ -5,19 +5,28 @@ body{
 
 .modal-content{
 	background-color: #33186B;
-	color: #7360DF;
+	color: #F2AFEF;
+}
+
+.form-text{
+	color: #F2AFEF;
 }
 
 .btn:hover{
 	background-color: #7360DF;
-	color:#33186B;
+	border: #7360DF;
+	--bs-btn-bg: #7360DF;
+	--bs-btn-border-color: #7360DF;
+	color:#F2AFEF;
 
 }
+
 
 .btn-primary {
 	--bs-btn-bg: #33186B;
 	--bs-btn-border-color: #C499F3;
 	--bs-btn-active-bg: #7360DF;
+	color: #F2AFEF;
 }
 
 .btn-secondary {

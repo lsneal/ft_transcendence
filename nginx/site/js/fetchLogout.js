@@ -10,7 +10,6 @@ async function EventLogout() {
             credentials: 'include',
         }).then((response) => response.json())
         .then((data) =>{
-
             // Logout shouldn't fail for now, we'll see later
 
         });

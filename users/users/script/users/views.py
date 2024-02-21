@@ -64,6 +64,28 @@ class UserView(APIView):
 
         return Response(serialiazer.data)
     
+    def put(self, request):
+        password = request.data.get('password', None)
+        #authentification = request.data.get('2FA', None)
+        pseudo = request.data.get('pseudo', None)
+
+        token = request.COOKIES.get('access_token')
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        print(user)
+
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
