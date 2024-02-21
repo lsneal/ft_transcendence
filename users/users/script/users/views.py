@@ -75,3 +75,11 @@ class LogoutView(APIView):
         }
         return response
 
+class HealthView(APIView):
+    def get(self, request):
+        response = Response()
+        response.data = {
+            'status': 'healthy'
+        }
+        return response
+
