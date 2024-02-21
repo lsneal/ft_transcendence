@@ -4,7 +4,7 @@ RUN apk --update add --no-cache nginx
 
 RUN apk add --no-cache autoconf \
 						openrc \
-						pkgconf g++ \ 
+						pkgconf \ 
 						libcurl \
 						automake \
 						curl-dev \
@@ -75,7 +75,5 @@ COPY ./conf/main.conf /etc/nginx/modsec
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/ /etc/nginx/conf/
-#COPY ./site/ /var/www/html/
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
-

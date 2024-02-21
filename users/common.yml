@@ -30,8 +30,8 @@ services:
       #- static:/var/www/admin/css
       - ./users/script/:/script/mysite #development purpose
     depends_on:
-      - postgres_users
-      - vault
+      vault:
+        condition: service_healthy
 
 networks:
   users_network:
