@@ -41,7 +41,6 @@ function getName() {
     })
     .then((response) => response.json())
     .then(data => {
-        console.log("call /api/tournament = ", data)
         buildBracket(data);
     })
 }
@@ -57,7 +56,6 @@ function buildBracket(value) {
     })
     .then((response) => response.json())
     .then(data => {
-        console.log("game =", data)
         beforeStart(data.id, value)
     })
 }
@@ -70,7 +68,6 @@ function beforeStart(gameId, value) {
     .then(dataUser => {
         let url = `ws://localhost:8001/ws/` + dataUser.id 
         const socket = new WebSocket(url)
-        console.log("url socket = ", url)
         playTournament(gameId, socket, value)
     })
 }
@@ -86,7 +83,6 @@ function playTournament(gameId, socket, tournament) {
     let button3 = document.getElementById("tournament");
 
     socket.onopen = () => {
-        console.log("on open tournament id =", tournament.id)
         socket.send(JSON.stringify({
             'game':'tournament',
             'moov': 'none',
@@ -96,7 +92,6 @@ function playTournament(gameId, socket, tournament) {
             'nb_user':tournament.nb_user,
             'typeParty': 'tournament'
         }))
-        console.log("tournament create")
         socket.send(JSON.stringify({
             'game':'start',
             'moov':'none',
@@ -121,7 +116,6 @@ function playTournament(gameId, socket, tournament) {
         let data = JSON.parse(event.data)
         if (data.type === "players")
         {
-            console.log("match is player", data.player1, "vs", data.player2)
             const bracket = document.getElementById("bracket");
             bracket.innerHTML = `<div style="background-color:powderblue;">
                            <h1>${data.player1}<h1>

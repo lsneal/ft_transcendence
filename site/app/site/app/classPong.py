@@ -50,7 +50,6 @@ class Pong:
         self.scoreP1 = 0
         self.scoreP2 = 0
         while (self.scoreP1 < 5 and self.scoreP2 < 5):
-            print("ball game")
             if ballPosX == 499 and ballPosY == 250:
                 while ballPosX > hitLeft:
                     ballPosX -= 15
