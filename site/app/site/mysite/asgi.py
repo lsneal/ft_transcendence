@@ -7,25 +7,19 @@ For more information on this file, see
 https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 """
 
+import uvicorn
 import os
-
+import django
 from django.core.asgi import get_asgi_application
-#new 
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
-from app import routing
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 
-#application = get_asgi_application()
+from channels.routing import get_default_application
 
-#new 
 
-application = ProtocolTypeRouter({
-    'http':get_asgi_application(),
-    'websocket':AuthMiddlewareStack(
-        URLRouter(
-            routing.websocket_urlpatterns
-        )
-    )
-})
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+django.setup()
+
+application = get_asgi_application()
+    
+if __name__ == "__main__":
+    uvicorn.run("server:app")
