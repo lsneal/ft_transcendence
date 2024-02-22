@@ -9,6 +9,7 @@ from django.middleware import csrf
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from .oauth import AuthorizationCodeClient
+from .authenticate import CustomAuthentication
 
 from .models import User
 
@@ -58,12 +59,17 @@ class UserView(APIView):
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
         
+        response = Response()
         access_token_obj = AccessToken(token)
+            
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
         serialiazer = UserSerializer(user)
+        response.data = {
+            serialiazer.data
+        }
 
-        return Response(serialiazer.data)
+        return response
     
 class LogoutView(APIView):
     def post(self, request):

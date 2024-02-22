@@ -11,6 +11,7 @@ export default class extends AbstractView {
     {
       console.log("Logout Button Charge")
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
+      EventProfile()
 
       document.getElementById("TournamentButton").addEventListener('click',event  => {
         window.history.pushState(null, "Tournament", "/tournament/");
