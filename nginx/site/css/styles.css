@@ -115,9 +115,9 @@ body{
 	margin: 0;
 }
 
-.custom-background-tournament {
-	background-image: url('../static/tournoi.jpeg'); 
+
+#qrcode{
+	background-image: url('../static/Untitled.png');
 	background-size: cover;
 	background-position: center;
-	height: 100%; 
 }
