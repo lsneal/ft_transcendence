@@ -10,9 +10,9 @@ RUN pip install --upgrade pip &&pip install django  \
                                             pyotp \
                                             qrcode[pil] \
                                             hvac \
-                                            django_postgres_vault \
                                             requests \
-                                            Authlib 
+                                            Authlib
+
 
 RUN apk add --no-cache build-base && pip install psycopg2-binary && apk del build-base
 
@@ -21,4 +21,7 @@ WORKDIR /script/mysite
 COPY ./script /script/mysite
 COPY ./startup.sh /run/startup.sh
 
+COPY ./django_postgres_vault /usr/local/lib/python3.12/site-packages
+
 ENTRYPOINT ["/run/startup.sh"]
+

@@ -69,17 +69,14 @@ class LoginView(APIView):
 
 class ActivateA2F(APIView):
     def post(self, request):
-        token = request.COOKIES.get('jwt')
+        token = request.COOKIES.get('access_token')
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
-        
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            AuthenticationFailed('Unauthenticated!')
 
-        user = User.objects.filter(id = payload['id']).first()
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
 
         otp_bool = request.data['a2f']
         user.a2f = otp_bool
@@ -92,7 +89,7 @@ class ActivateA2F(APIView):
             }
         if otp_bool:
             prvt_key = gen_key_user()
-            user.private_key = prvt_key
+            user.totp_key = prvt_key
             otp_url = gen_otp_url(user.email, prvt_key) 
             img = gen_qr_img(otp_url, user.email)
 
@@ -108,17 +105,15 @@ class ActivateA2F(APIView):
 
 class LoginA2F(APIView):
     def get(self, request):
-        token = request.COOKIES.get('jwt')
+        token = request.COOKIES.get('access_token')
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
-        
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            AuthenticationFailed('Unauthenticated!')
 
-        user = User.objects.filter(id = payload['id']).first()
+
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
 
         response = Response()
 
@@ -133,20 +128,17 @@ class LoginA2F(APIView):
         return response
 
     def post(self, request):
-        token = request.COOKIES.get('jwt')
+        token = request.COOKIES.get('access_token')
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
-        
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            AuthenticationFailed('Unauthenticated!')
-
-        user = User.objects.filter(id = payload['id']).first()
+    
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
 
         user_code = request.data['totp']
-        totp = pyotp.TOTP(user.private_key)
+        totp = pyotp.TOTP(user.totp_key)
 
         response = Response()
         if totp.now() == user_code:

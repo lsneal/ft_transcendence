@@ -1,6 +1,6 @@
-path "database/creds/my-rolev1"
+path "database/static-creds/my-rolev1"
 {
-    capabilities = ["create", "read"]
+    capabilities = ["read"]
 }
 
 path "kv/*" 

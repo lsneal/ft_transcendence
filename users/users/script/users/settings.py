@@ -3,7 +3,12 @@ from pathlib import Path
 import os
 from datetime import timedelta
 import hvac
-
+from .test import creds
+from .vault import *
+import threading
+import time
+from django.db import connections
+from django.db.utils import OperationalError
 #from app.models import User
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -12,9 +17,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!by_b!m3kd+$89x7#_wp7ye(5$p)66%3fc(1e-=r&nd^ukc7_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,7 +37,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'users',
-    'qr_code',
 ]
 
 MIDDLEWARE = [
@@ -72,9 +73,39 @@ WSGI_APPLICATION = 'users.wsgi.application'
 
 AUTH_USER_MODEL="users.User"
 
+#VAULT_ADDR = 'http://vault:8200'
+#fd = os.open("/opt/root_token", os.O_RDONLY)
+##n_bytes = 28
+#n_bytes = 95 # token size
+#TOKEN = os.read(fd, n_bytes)
+##
+#vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
+##
+#secret_key = vault_client.read('kv/django_secrets')
+##
+#SECRET_KEY = secret_key['data']['django_key']
+#
+##VAULT = VaultAuth12Factor.fromenv()
+#
+##CREDS = VaultCredentialProvider("http://vault:8200", VAULT,
+##                                "database/creds/my-rolev1")
+#
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django_postgres_vault',
+#        'NAME': 'postgres',
+#        'HOST': 'postgres_users',
+#        'PORT': '5432',
+#        'VAULT_ADDR': VAULT_ADDR,
+#        'VAULT_TOKEN': TOKEN,
+#        'VAULT_ROLE_NAME': 'my-rolev1',
+#        'VAULT_DB_MOUNT_POINT': 'database',
+#    },
+#}
+
 VAULT_ADDR = 'http://vault:8200'
 fd = os.open("/opt/token", os.O_RDONLY)
-n_bytes = 95 # token size
+n_bytes = 95 # token size 28
 TOKEN = os.read(fd, n_bytes)
 
 vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
@@ -83,18 +114,20 @@ secret_key = vault_client.read('kv/django_secrets')
 
 SECRET_KEY = secret_key['data']['django_key']
 
-database_credentials = vault_client.read('database/creds/my-rolev1')
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django_postgres_vault',
         'NAME': 'postgres',
-        'USER': database_credentials['data']['username'],
-        'PASSWORD': database_credentials['data']['password'],
         'HOST': 'postgres_users',
-        'PORT': '5432',
-    }
+        'PORT': '5432', 
+        'VAULT_ADDR': VAULT_ADDR,
+        'VAULT_TOKEN': TOKEN,
+        'VAULT_ROLE_NAME': 'my-rolev1',
+        'VAULT_DB_MOUNT_POINT': 'database',   
+    },
 }
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
