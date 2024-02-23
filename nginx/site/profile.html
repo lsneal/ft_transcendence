@@ -43,7 +43,7 @@
 							<label class="form-check-label" for="flexSwitchTwoFA">2FA</label>
 						</div>
 					</div>
-					<button id="ButtonChange" type="submit" class="btn btn-primary" data-link >Submit</button>
+					<a id="ButtonChange" type="submit" class="btn btn-primary" data-link >Submit</a>
 					<div id="error-message-Login" class="text-danger" style="display: none;"></div>
 				</form>
 			</div>
@@ -57,7 +57,23 @@
       <div class="modal-content">
        
         <div class="modal-body">
-			<h1>QR CODE DE LUIS</h1>
+			<div class="container-twoFA">
+				<form class="otc" id="form-twoFA"  name="one-time-code">
+				  <h1>TWO-FACTOR AUTHENTICATION</h1>
+				  <div class="form__group form__pincode">
+					<label>Enter 6-digit code from your authenticator application</label>
+					<input type="tel" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
+				  </div>
+				  <div class="form__buttons">
+					<a href="#" class="button button--primary" disabled>Continue</a>
+				  </div>
+				</form>
+			  </div>
 			<div id="validation-qrcode" class="text" style="display: none;"></div>
 		</div>
 	  </div>

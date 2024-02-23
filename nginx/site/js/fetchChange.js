@@ -6,16 +6,23 @@ async function EventChange () {
 
    // const twoFA = document.querySelector('#').value;
 
-    if(oldpassword == password && oldpassword != null){
+    if(oldpassword == password && oldpassword != ''){
       const errorMessage = 'No changes made';
-      const errorElement = document.getElementById('error-message-nochange');
+      const errorElement = document.getElementById('error-message-Login');
       errorElement.innerText = errorMessage;
       errorElement.style.display = 'block';
       return;
     }
-    else if(password != confirmpassword){
+    else if(password != confirmpassword && oldpassword != ''){
       const errorMessage = 'Not Same Password';
-      const errorElement = document.getElementById('error-message-Confirmchange');
+      const errorElement = document.getElementById('error-message-Login');
+      errorElement.innerText = errorMessage;
+      errorElement.style.display = 'block';
+      return;
+    }
+    else if(pseudo != '' && oldpassword == ''){
+      const errorMessage = 'Please enter your atcually password for change your pseudo';
+      const errorElement = document.getElementById('error-message-Login');
       errorElement.innerText = errorMessage;
       errorElement.style.display = 'block';
       return;
@@ -52,6 +59,5 @@ async function EventChange () {
       })
 
 }
-
 
 
