@@ -20,8 +20,8 @@ WORKDIR /script/mysite
 
 COPY ./script /script/mysite
 COPY ./startup.sh /run/startup.sh
-
 COPY ./django_postgres_vault /usr/local/lib/python3.12/site-packages
+COPY ./vault.py /script/vault.py
 
 ENTRYPOINT ["/run/startup.sh"]
 
