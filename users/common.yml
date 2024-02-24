@@ -9,6 +9,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - PG_PORT=5432
+      - PGUSER=postgres
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
@@ -45,6 +46,11 @@ services:
         condition: service_healthy
       postgres_users:
         condition: service_healthy
+    healthcheck:
+      test: wget -qO- http://localhost:8002/health/
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   users_network:
