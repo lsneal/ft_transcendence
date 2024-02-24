@@ -1,6 +1,5 @@
 from django.urls import path, include
-from .views import RegisterView, LoginView, UserView, LogoutView, LoginA2F, ActivateA2F
-
+from .views import RegisterView, LoginView, UserView, LogoutView, HealthView, LoginA2F, ActivateA2F
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
 from django.contrib.auth import views as auth_views
@@ -8,6 +7,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    path('health/', HealthView.as_view()),
     path('api/register/', RegisterView.as_view()),
     path('api/login/', LoginView.as_view()),
     path('api/user/', UserView.as_view()),

@@ -14,6 +14,15 @@ services:
     expose:
       - "5432"
     restart: always
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     
     
   django_users:
@@ -34,7 +43,8 @@ services:
     depends_on:
       vault:
         condition: service_healthy
-    tty: true
+      postgres_users:
+        condition: service_healthy
 
 networks:
   users_network:
