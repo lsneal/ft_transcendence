@@ -1,6 +1,6 @@
-path "database/static-creds/my-rolev1"
+path "database/+/postgres_users"
 {
-    capabilities = ["read"]
+    capabilities = ["create", "read", "update"] 
 }
 
 path "kv/*" 

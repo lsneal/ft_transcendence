@@ -73,7 +73,7 @@ RUN mkdir /etc/nginx/modsec \
 COPY ./conf/modsecurity.conf /etc/nginx/modsec
 COPY ./conf/main.conf /etc/nginx/modsec
 
-#COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/ /etc/nginx/conf/
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

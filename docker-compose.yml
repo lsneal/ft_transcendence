@@ -33,8 +33,6 @@ services:
       VAULT_ADDR: http://127.0.0.1:8200
     volumes:
       - vault:/opt
-    depends_on:
-      - postgres_users
     healthcheck:
       test:
         [

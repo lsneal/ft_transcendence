@@ -48,30 +48,6 @@ else
 
     vault secrets enable database
 
-    vault write database/config/postgres \
-        plugin_name="postgresql-database-plugin" \
-        allowed_roles="*" \
-        connection_url="postgresql://{{username}}:{{password}}@postgres_users:5432/postgres" \
-        username="postgres" \
-        password="password" \
-        password_authentication="scram-sha-256"
-
-    vault write -force database/rotate-root/postgres
-
-
-tee rotation.sql <<EOF
-ALTER USER "{{name}}" WITH PASSWORD '{{password}}';
-EOF
-
-
-    vault write database/static-roles/my-rolev1 \
-        db_name="postgres" \
-        rotation_statements=@rotation.sql \
-        username="django" \
-        rotation_period=3600
-
-    vault read database/static-roles/my-rolev1
-
     vault secrets enable kv
     private_key_django=$(openssl rand -hex 32)
     vault kv put kv/django_secrets django_key=$private_key_django
