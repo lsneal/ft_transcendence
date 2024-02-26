@@ -1,0 +1,27 @@
+<button id="JoinGameOnline" style="display: block;" onclick="JoinGameOnline()">Join Game Online</button>
+<button id="ButtonStart" style="display: block;" method="POST" onclick="JoinGameLocal()">Join Game Local</button>
+<div id="tournament">
+	<button id="CreateTournament" style="display: block;" onclick="CreateTournament()">Create Tournament</button>
+	<label for="pet-select">number player:</label>
+	<select id="nbP" name="nbP" id="pet-select">
+	  <option>4</option>
+	  <option>8</option>
+	  <option>16</option>
+	</select>
+</div>
+<div id="inputs" style="display: none;">
+	<h1>nom de chaque joueur</h1>
+</div>
+<div id="list">
+	<button onclick="getName()">ENTER</button>
+</div>
+<div id="bracket">
+</div>
+<div id="resultMatch"></div>
+<div class="game">
+	<h1 id="scoreP1">0</h1>
+	<div id="leftBox" class="block"></div>
+	<div id="ball" class="ball"></div>
+	<h1 id="scoreP2">0</h1>
+	<div id="rightBox" class="block"></div>
+</div>

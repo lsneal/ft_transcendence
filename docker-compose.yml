@@ -2,6 +2,7 @@ version: "3.8"
 
 include:
   - users/common.yml
+  - site/common.yml
 
 services:
   nginx:
@@ -9,6 +10,7 @@ services:
     build: nginx
     volumes:
       - ./users/users/script/static/:/var/www/django/ #development purpose
+      - ./site/app/site/static/:/var/www
       - ./nginx/site/:/var/www/html/ #development purpose
     restart: always
     ports:
