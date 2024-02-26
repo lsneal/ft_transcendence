@@ -64,6 +64,14 @@ class LoginView(APIView):
             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
+        response.set_cookie(
+            key = settings.SIMPLE_JWT['REFRESH_COOKIE'],
+            value = data["refresh"],
+            expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+        )
         csrf.get_token(request)
         response.data = {"Success" : "Login successfully","data":data}
         return response
@@ -111,7 +119,6 @@ class LoginA2F(APIView):
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
 
-
         access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
@@ -150,24 +157,46 @@ class LoginA2F(APIView):
             response.data = {
                 'message': 'failure'
             }
-        return response 
+        return response
+    
+def getAccessToken(request):
+    token = request.COOKIES.get('access_token')
+    if not token:
+        raise AuthenticationFailed('Unauthenticated!')
+
+    response = Response()
+
+    try:
+        access_token_obj = AccessToken(token)
+    except:
+        refresh_token = request.COOKIES.get('refresh_token')
+        try:
+            refresh = RefreshToken(refresh_token)
+            access_token_obj = refresh.access_token
+            response.set_cookie(
+                key = settings.SIMPLE_JWT['AUTH_COOKIE'],
+                value = access_token_obj,
+                expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+            )
+        except:
+            print ('Error Refresh Token')
+
+    return response, access_token_obj
+    
 
 class UserView(APIView):
     def get(self, request):
-        token = request.COOKIES.get('access_token')
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
         
-        response = Response()
-        access_token_obj = AccessToken(token)
+        response, access_token_obj = getAccessToken(request)
             
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
         serialiazer = UserSerializer(user)
-        response.data = {
-            serialiazer.data
-        }
 
+        response.data = {'data' : serialiazer.data}
         return response
     
 class LogoutView(APIView):
@@ -175,6 +204,7 @@ class LogoutView(APIView):
         response = Response()
         response.delete_cookie('access_token')
         response.delete_cookie('csrftoken')
+        response.delete_cookie('refresh_token')
         response.data = {
             'message': 'success'
         }
