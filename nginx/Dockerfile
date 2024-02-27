@@ -33,7 +33,9 @@ RUN apk add --no-cache autoconf \
 						bison \
 						musl-dev \
 						libpcrecpp \
-						lua5.2-dev
+						lua5.2-dev \
+						jq \
+						curl
 
 RUN apk --update add --no-cache openssl \
 	&& openssl req -x509 -nodes -subj "/C=FR/O=My Company/CN=example.com" -newkey rsa:2048 -keyout /etc/nginx/server.key -out /etc/nginx/server.crt \
@@ -76,4 +78,12 @@ COPY ./conf/main.conf /etc/nginx/modsec
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/ /etc/nginx/conf/
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+COPY ./certificat.sh /opt
+COPY ./pki.py /opt
+
+RUN apk add py3-pip
+RUN pip install hvac
+RUN chmod +x /opt/certificat.sh
+
+#CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD ["sh", "/opt/certificat.sh"]

@@ -68,6 +68,27 @@ class LoginView(APIView):
         return response
 
 class ActivateA2F(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('access_token')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+
+        response = Response()
+        if not user.a2f:
+            response.data = {
+                '2FA': 'disable'
+            }
+        if user.a2f:
+            response.data = {
+                '2FA': 'enabled'
+            }
+        return response
+
     def post(self, request):
         token = request.COOKIES.get('access_token')
 
@@ -82,25 +103,19 @@ class ActivateA2F(APIView):
         user.a2f = otp_bool
         response = Response()
 
-        print(otp_bool)
-        if not otp_bool:
-            response.data = {
-                '2FA': 'disable'
-            }
-        if otp_bool:
-            prvt_key = gen_key_user()
-            user.totp_key = prvt_key
-            otp_url = gen_otp_url(user.email, prvt_key) 
-            img = gen_qr_img(otp_url, user.email)
+        prvt_key = gen_key_user()
+        user.totp_key = prvt_key
+        otp_url = gen_otp_url(user.email, prvt_key) 
+        img = gen_qr_img(otp_url, user.email)
 
-            user.save()
+        user.save()
 
-            qr = 'https://api.qrserver.com/v1/create-qr-code/?data=' + otp_url
+        qr = 'https://api.qrserver.com/v1/create-qr-code/?data=' + otp_url
 
-            response.data = {
-                '2FA': 'enabled',
-                'url': qr
-            }
+        response.data = {
+            '2FA': 'enabled',
+            'url': qr
+        }
         return response 
 
 class LoginA2F(APIView):
