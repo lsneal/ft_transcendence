@@ -11,14 +11,13 @@ function startGameLocal(gameId) {
         return ;
     gameId = Number(gameId)
 
-    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
+    fetch("https://localhost/api/pong/UserIdGameView", {//TODO: fetch sur user
         method: "GET",
     })
     .then((response) => response.json())
     .then(data => {
         let url = `ws://localhost:8003/api/pong/ws/` + data.id 
         const socket = new WebSocket(url)
-        console.log("url socket = ", url)
         playGameLocal(gameId, socket)
     })
 }
@@ -40,7 +39,6 @@ function playGameLocal(gameId, socket)
     let rightBar = document.getElementById("rightBox")
 
     socket.onopen = () => {
-        console.log("send on open");
         socket.send(JSON.stringify({
             'game':'local',
             'moov':'none',

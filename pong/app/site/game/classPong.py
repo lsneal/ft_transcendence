@@ -130,7 +130,7 @@ class Pong:
             from .views import manager
             manager.endGame(self)
             return
-            #TODO remmetre ce caca
+
     def ballSendToJs(self, ballPosX, ballPosY, typeParty):
         
         self.player1.send(text_data=json.dumps({

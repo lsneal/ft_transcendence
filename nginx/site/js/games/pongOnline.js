@@ -10,14 +10,13 @@ function startGameOnline(gameId) {
         return ;
     gameId = Number(gameId)
 
-    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
+    fetch("https://localhost/api/pong/UserIdGameView", {//TODO: fetch sur user
         method: "GET",
     })
     .then((response) => response.json())
     .then(data => {
         let url = `ws://localhost:8003/api/pong/ws/` + data.id 
         const socket = new WebSocket(url)
-        console.log("url socket = ", url)
         playGameOnline(gameId, socket)
     })
 }
@@ -39,7 +38,6 @@ function playGameOnline(gameId, socket)
 
 
     socket.onopen = () => {
-        console.log("send on open");
         socket.send(JSON.stringify({
             'game':'start',
             'moov':'none',

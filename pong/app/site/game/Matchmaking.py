@@ -15,7 +15,10 @@ class Matchmaking():
         return self.games[nbGame]
     
     def endGame(self, game):
-        game.player1.close()
-        game.player2.close()
+        if game.player1 == game.player2:
+            game.player1.close()
+        else:
+            game.player1.close()
+            game.player2.close()
         game.player2 = 'END'
         game.player1 = 'END'

@@ -6,8 +6,8 @@ if [ ! -e /$CONTAINER_FIRST_STARTUP ]; then
     python /script/vault.py  
 fi
 
-python manage.py makemigrations
-python manage.py migrate
+python manage.py makemigrations users
+python manage.py migrate users
 #exec python manage.py runserver 0.0.0.0:8002
 exec gunicorn --reload --bind 0.0.0.0:8002 users.wsgi:application
 

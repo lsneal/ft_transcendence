@@ -82,7 +82,7 @@ class GameConsumer(WebsocketConsumer):
         elif manager.games[gameIdx].player2 == 'p2':
             manager.games[gameIdx].player2 = self
 
-        if manager.games[gameIdx].player1 != 'p1' and type(manager.games[gameIdx].player2) != str and manager.games[gameIdx].player2 != None:
+        if type(manager.games[gameIdx].player1) != str and type(manager.games[gameIdx].player2) != str and manager.games[gameIdx].player2 != None:
             manager.games[gameIdx].player1.send(text_data=json.dumps({
                 'type':'start',
             }))
@@ -96,7 +96,6 @@ class GameConsumer(WebsocketConsumer):
     
     def disconnect(self, close_code):
         if close_code == 1001:
-             
             for game in manager.games:
                 if game.player1 == self or game.player2 == self:
                     self.player1.close()

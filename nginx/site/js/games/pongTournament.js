@@ -29,7 +29,7 @@ function getName() {
         arrPlayer[i] = name.value
     }
 
-    fetch("/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
+    fetch("https://localhost/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -51,7 +51,7 @@ function buildBracket(value) {
     list.style.display = 'none';
     inputs.style.display = 'none';
 
-    fetch("/api/pong/joinGame/", {
+    fetch("https://localhost/api/pong/joinGame/", {
         method: "POST",
     })
     .then((response) => response.json())
@@ -61,7 +61,7 @@ function buildBracket(value) {
 }
 
 function beforeStart(gameId, value) {
-    fetch("/api/pong/UserIdGameView", {
+    fetch("https://localhost/api/pong/UserIdGameView", {
         method: "GET",
     })
     .then((response) => response.json())
