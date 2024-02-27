@@ -1,6 +1,5 @@
 function startGameLocal(gameId) {
     let button = document.getElementById("ButtonStart")
-
     button.style.display = 'none'
 
     if (!gameId)
@@ -79,8 +78,18 @@ function playGameLocal(gameId, socket)
             if (data.moov === "ball")
             {
                 //TODO: changer les valeurs suivant la taille de fenetre
-                ball.style.top = data.posY.toString() + "px";
-                ball.style.left = data.posX.toString() + "px";
+                if (window.innerWidth < 1288)
+                {
+                    //data.posY /= 2;
+                    data.posX /= 2;
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
+                else
+                {
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
                 document.getElementById("scoreP1").innerHTML = data.scoreP1;
                 document.getElementById("scoreP2").innerHTML = data.scoreP2;
                 if (data.scoreP1 == 5)
@@ -104,8 +113,31 @@ function playGameLocal(gameId, socket)
         //TODO: changer les valeurs suivant la taille de fenetre
         posY = 250
         posX = 499
-        ball.style.top = posY.toString() + "px";
-        ball.style.left = posX.toString() + "px";
+        if (window.innerWidth < 1288)
+        {
+            posX /= 2;
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
+        else
+        {
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
         button.style.display = 'block';
     }
 }
+
+
+function reportWindowSize() {
+    if (window.innerWidth < 1288)
+    {
+        document.getElementById("game").style.width = "500px";
+    }
+    else
+    {
+        document.getElementById("game").style.width = "1000px";
+    }
+}
+
+window.onresize = reportWindowSize;

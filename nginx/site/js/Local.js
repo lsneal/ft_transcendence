@@ -11,7 +11,11 @@ export default class extends AbstractView {
     {
 
       console.log("TESTTTT Event listen OK")
-    
+      console.log(window.innerWidth)
+      if (window.innerWidth < 1288)
+      {
+        document.getElementById("game").style.width = "500px";
+      }
     }
 
 
@@ -19,8 +23,11 @@ export default class extends AbstractView {
       try{
         const response = await fetch('https://localhost/LocalGame.html');
         if (!response.ok){
-            throw new Error('Failed to fetch Home.html');
+            throw new Error('Failed to fetch LocalGame.html');
         }
+//        if (window.innerWidth < 612)
+//          throw new Error('Small Window LocalGame.html');
+
         const html = await response.text();
         return html;
       } catch(error){
