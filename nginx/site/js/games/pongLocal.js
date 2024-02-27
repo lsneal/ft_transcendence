@@ -1,11 +1,7 @@
 function startGameLocal(gameId) {
     let button = document.getElementById("ButtonStart")
-    let button2 = document.getElementById("JoinGameOnline");
-    let button3 = document.getElementById("tournament");
 
     button.style.display = 'none'
-    button2.style.display = 'none'
-    button3.style.display = 'none'
 
     if (!gameId)
         return ;
@@ -26,8 +22,6 @@ function playGameLocal(gameId, socket)
 { 
     //= document.getElementById("JoinGameOnline");
     let button = document.getElementById("ButtonStart")
-    let button2 = document.getElementById("JoinGameOnline");
-    let button3 = document.getElementById("tournament");
 
     let numRight = 250;
     let numLeft = 250;
@@ -95,6 +89,9 @@ function playGameLocal(gameId, socket)
                     winner = "p2";
             }
         }
+        if (data.type === "time")
+            document.getElementById("time").innerHTML = data.time;
+
     }
     socket.onclose = () => {
         resultMatch = document.getElementById("resultMatch")
@@ -110,7 +107,5 @@ function playGameLocal(gameId, socket)
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
         button.style.display = 'block';
-        button2.style.display = 'block'
-        button3.style.display = 'block'
     }
 }

@@ -98,8 +98,10 @@ class GameConsumer(WebsocketConsumer):
         if close_code == 1001:
             for game in manager.games:
                 if game.player1 == self or game.player2 == self:
-                    self.player1.close()
-                    self.player2.close()
+                    if type(self.player1) != str: 
+                        self.player1.close()
+                    if type(self.player2) != str:
+                        self.player2.close()
                     self.player2 = 'END'
                     self.player1 = 'END'
         raise StopConsumer

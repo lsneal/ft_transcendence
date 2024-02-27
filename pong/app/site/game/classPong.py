@@ -49,7 +49,20 @@ class Pong:
         hitWall = 0
         self.scoreP1 = 0
         self.scoreP2 = 0
-        while (self.scoreP1 < 5 and self.scoreP2 < 5):
+        i = 0
+        while i <= 3:
+            self.player1.send(text_data=json.dumps({
+                'type':'time',
+                'time':i,
+            }))
+            if typeParty == 'game':
+                self.player2.send(text_data=json.dumps({
+                    'type':'time',
+                    'time':i,
+                }))
+            time.sleep(0.5)
+            i += 1
+        while self.scoreP1 < 5 and self.scoreP2 < 5:
             if ballPosX == 499 and ballPosY == 250:
                 while ballPosX > hitLeft:
                     ballPosX -= 15

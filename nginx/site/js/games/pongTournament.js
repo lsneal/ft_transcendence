@@ -1,11 +1,7 @@
 function CreateTournament() {
 
-    let button = document.getElementById("ButtonStart")
-    let button2 = document.getElementById("JoinGameOnline");
     let button3 = document.getElementById("tournament");
 
-    button.style.display = 'none'
-    button2.style.display = 'none'
     button3.style.display = 'none'
 
     let nbPlayer = document.getElementById("nbP")
@@ -78,8 +74,6 @@ function playTournament(gameId, socket, tournament) {
     let ball = document.getElementById("ball")
     let rightBar = document.getElementById("rightBox")
 
-    let button = document.getElementById("ButtonStart")
-    let button2 = document.getElementById("JoinGameOnline");
     let button3 = document.getElementById("tournament");
 
     socket.onopen = () => {
@@ -114,6 +108,8 @@ function playTournament(gameId, socket, tournament) {
 
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data)
+        if (data.type === "time")
+            document.getElementById("time").innerHTML = data.time;
         if (data.type === "players")
         {
             const bracket = document.getElementById("bracket");
@@ -188,8 +184,6 @@ function playTournament(gameId, socket, tournament) {
         posX = 499
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
-        button.style.display = 'block';
-        button2.style.display = 'block';
         button3.style.display = 'block';
         list.style.display = 'block';
     }
