@@ -16,7 +16,7 @@ function startGameLocal(gameId) {
     })
     .then((response) => response.json())
     .then(data => {
-        let url = `ws://localhost:8003/api/pong/ws/` + data.id 
+        let url = `wss://localhost/api/pong/ws/` + data.id 
         const socket = new WebSocket(url)
         playGameLocal(gameId, socket)
     })
