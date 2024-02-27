@@ -29,8 +29,8 @@ services:
     networks:
       - pong_network #change
       - nginx
-    expose:
-      - "8003"  #change the port
+    ports:
+      - "8003:8003"  #change the port
     restart: always
     volumes:
       - ./app/site/:/script/mysite #development purpose
