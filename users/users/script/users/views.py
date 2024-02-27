@@ -68,27 +68,6 @@ class LoginView(APIView):
         return response
 
 class ActivateA2F(APIView):
-    def get(self, request):
-        token = request.COOKIES.get('access_token')
-
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
-
-        access_token_obj = AccessToken(token)
-        user_id=access_token_obj['user_id']
-        user=User.objects.get(id=user_id)
-
-        response = Response()
-        if not user.a2f:
-            response.data = {
-                '2FA': 'disable'
-            }
-        if user.a2f:
-            response.data = {
-                '2FA': 'enabled'
-            }
-        return response
-
     def post(self, request):
         token = request.COOKIES.get('access_token')
 
@@ -99,8 +78,7 @@ class ActivateA2F(APIView):
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
 
-        otp_bool = request.data['a2f']
-        user.a2f = otp_bool
+        user.a2f = True
         response = Response()
 
         prvt_key = gen_key_user()
@@ -118,7 +96,28 @@ class ActivateA2F(APIView):
         }
         return response 
 
-class LoginA2F(APIView):
+class DisableA2F(APIView):
+    def post(self, request):
+        token = request.COOKIES.get('access_token')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+
+        user.a2f = False
+        response = Response()
+
+        user.save()
+
+        response.data = {
+            '2FA': 'disabled',
+        }
+        return response 
+
+class A2FView(APIView):
     def get(self, request):
         token = request.COOKIES.get('access_token')
 
@@ -142,6 +141,7 @@ class LoginA2F(APIView):
             }
         return response
 
+class LoginA2F(APIView):
     def post(self, request):
         token = request.COOKIES.get('access_token')
 
