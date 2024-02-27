@@ -66,7 +66,7 @@ function beforeStart(gameId, value) {
     })
     .then((response) => response.json())
     .then(dataUser => {
-        let url = `ws://localhost:8003/api/pong/ws/` + dataUser.id 
+        let url = `ws://localhost/api/pong/ws/` + dataUser.id 
         const socket = new WebSocket(url)
         playTournament(gameId, socket, value)
     })

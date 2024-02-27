@@ -1,2 +1,3 @@
 *.pyc
-users/users/script/users/migrations/
+users/users/script/users/migrations
+pong/app/site/app/migrations

@@ -2,7 +2,7 @@
 
 async function EventProfile() {
     try {
-        const response = await fetch('https://localhost/api/user/', {
+        const response = await fetch('https://localhost/api/users/user/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

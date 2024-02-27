@@ -1,7 +1,7 @@
 async function EventLogin42 () {
 
     try {
-        const response = fetch('https://localhost/api/login42/', {
+        const response = fetch('https://localhost/api/users/login42/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

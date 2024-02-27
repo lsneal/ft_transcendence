@@ -2,7 +2,7 @@ version: "3.8"
 
 include:
   - users/common.yml
-  - site/common.yml
+  - pong/common.yml
 
 services:
   nginx:
@@ -10,7 +10,7 @@ services:
     build: nginx
     volumes:
       - ./users/users/script/static/:/var/www/django/ #development purpose
-      - ./site/app/site/static/:/var/www
+      - ./pong/app/site/static/:/var/www
       - ./nginx/site/:/var/www/html/ #development purpose
     restart: always
     ports:
@@ -21,11 +21,12 @@ services:
     depends_on:
       django_users:
         condition: service_healthy
+      django_pong:
+        condition: service_healthy
     healthcheck:
       test: curl --fail https://localhost || exit 1
       interval: 60s
       retries: 10
-      start_period: 20s
       timeout: 10s
 
   vault:
@@ -60,8 +61,4 @@ networks:
 
 volumes:
   vault:
-  static:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
+

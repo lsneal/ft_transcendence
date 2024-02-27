@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from app.models import Game
-from app.models import User
-from app.models import UserGame
-from app.models import TournamentGame
+from game.models import Game
+from game.models import User
+from game.models import UserGame
+from game.models import TournamentGame
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:

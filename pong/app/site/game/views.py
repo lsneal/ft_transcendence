@@ -7,26 +7,24 @@ from rest_framework import permissions, viewsets
 
 from .models import Game
 from .models import User
-from mysite.serializers import UserGameSerializer
-from mysite.serializers import GameSerializer
-from mysite.serializers import UserSerializer
-from mysite.serializers import TournamentSerializer
+from .serializers import UserGameSerializer
+from .serializers import GameSerializer
+from .serializers import UserSerializer
+from .serializers import TournamentSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-import rest_framework_simplejwt, datetime, jwt
 from rest_framework.views import APIView
 
 manager = Matchmaking()
 managerTournament = MatchmakingTournament()
 
-#def home(request):
-#        return render(request, 'site/home.html')
-#
-#def test(request):
-#        return render(request, 'site/test.html')
-
-#def pong(request):
-#        return render(request, 'site/pong.html')
+class HealthView(APIView):
+    def get(self, request):
+        response = Response()
+        response.data = {
+            'status': 'healthy'
+        }
+        return response
 
 class UserIdGameView(APIView):
     def get(self, request):
