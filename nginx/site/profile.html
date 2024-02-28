@@ -1,3 +1,85 @@
+<div class="modal fade" id="modalBurger" tabindex="-1" aria-labelledby="modalBurgerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+       
+        <div class="modal-body">
+			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-volume-high"></i>Profile</button></div>
+			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-gear"></i>   Setting</button></div>
+			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+  <div  class="modal fade" id="modalProfile" tabindex="-1" aria-labelledby="modalProfile" aria-hidden="true"> 
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<form>
+					<div class="mb-3">
+					  <label for="ChangePseudo" class="form-label">Pseudo</label>
+					  <input type="email" class="form-control" id="ChangePseudo" aria-describedby="emailHelp">
+					</div>
+					<div class="mb-3">
+					  <label for="OldPassword" class="form-label">Old Password</label>
+					  <input type="password" class="form-control" id="OldPassword">
+					</div>
+					<div class="mb-3">
+						<label for="ChangePassword" class="form-label">New Password</label>
+						<input type="password" class="form-control" id="ChangePassword">
+						<div id="error-message-nochange" class="text-danger" style="display: none;"></div>
+
+					</div>
+					<div class="mb-3">
+						<label for="ConfirmChangePassword" class="form-label">Confirm New Password</label>
+						<input type="password" class="form-control" id="ConfirmChangePassword">
+						<div id="error-message-Confirmchange" class="text-danger" style="display: none;"></div>
+
+					</div>
+					<div class="mb-3 form-check">
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchTwoFA" data-bs-toggle="modal" data-bs-target="#modaltwoFA">
+							<label class="form-check-label" for="flexSwitchTwoFA">2FA</label>
+						</div>
+					</div>
+					<a id="ButtonChange" type="submit" class="btn btn-primary" data-link >Submit</a>
+					<div id="error-message-Login" class="text-danger" style="display: none;"></div>
+				</form>
+			</div>
+		</div>
+	</div>	
+  </div>
+
+
+<div class="modal fade" id="modaltwoFA" tabindex="-1" aria-labelledby="modaltwoFA" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+       
+        <div class="modal-body">
+			<div class="container-twoFA">
+				<form class="otc" id="form-twoFA"  name="one-time-code">
+				  <h1>TWO-FACTOR AUTHENTICATION</h1>
+				  <div class="form__group form__pincode">
+					<label>Enter 6-digit code from your authenticator application</label>
+					<input type="tel" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
+					<input type="tel" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
+				  </div>
+				  <div class="form__buttons">
+					<a href="#" class="button button--primary" disabled>Continue</a>
+				  </div>
+				</form>
+			  </div>
+			<div id="validation-qrcode" class="text" style="display: none;"></div>
+		</div>
+	  </div>
+	</div>
+</div>
+
 
 <div class="button-with-background container">
 
@@ -115,10 +197,6 @@
 			</div>
 
 		</div>
-	</div>
-
-	<div id="logoutDiv" class="text-center mt-4"> 
-		<a class="btn btn-lg w-25 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
 	</div>
 
 

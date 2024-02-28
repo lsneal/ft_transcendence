@@ -9,7 +9,7 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-      console.log("Logout Button Charge")
+      EventProfile();
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
       EventProfile()
 
@@ -25,6 +25,7 @@ export default class extends AbstractView {
         window.history.pushState(null, "local", "/local/");
         window.dispatchEvent(new Event('popstate'));
       });   
+      document.getElementById("ButtonChange").addEventListener('click', EventChange);
     }
 
     async getHtml() {

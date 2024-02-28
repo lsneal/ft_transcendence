@@ -5,19 +5,28 @@ body{
 
 .modal-content{
 	background-color: #33186B;
-	color: #7360DF;
+	color: #F2AFEF;
+}
+
+.form-text{
+	color: #F2AFEF;
 }
 
 .btn:hover{
 	background-color: #7360DF;
-	color:#33186B;
+	border: #7360DF;
+	--bs-btn-bg: #7360DF;
+	--bs-btn-border-color: #7360DF;
+	color:#F2AFEF;
 
 }
+
 
 .btn-primary {
 	--bs-btn-bg: #33186B;
 	--bs-btn-border-color: #C499F3;
 	--bs-btn-active-bg: #7360DF;
+	color: #F2AFEF;
 }
 
 .btn-secondary {
@@ -106,9 +115,60 @@ body{
 	margin: 0;
 }
 
-.custom-background-tournament {
-	background-image: url('../static/tournoi.jpeg'); 
-	background-size: cover;
-	background-position: center;
-	height: 100%; 
+.otc label {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
 }
+
+.otc {
+	position: relative;
+	width: 320px;
+	margin: 0 auto;
+	font-size: x-large;
+}
+
+.otc fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.otc div {
+	display: flex;
+	align-items: center;
+}
+
+.otc legend {
+	margin: 0 auto 1em;
+	color: #5555FF;
+}
+
+input[type="tel"] {
+	width: .82em;
+	line-height: 1;
+	margin: .1em;
+	padding: 8px 0 4px;
+	font-size: 2.65em;
+	text-align: center;
+	appearance: textfield;
+	-webkit-appearance: textfield;
+	border: 2px solid #7360DF;
+	color: #33186B;
+	border-radius: 4px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
