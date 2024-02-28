@@ -2,6 +2,7 @@ version: "3.8"
 
 include:
   - users/common.yml
+  - pong/common.yml
 
 services:
   nginx:
@@ -9,6 +10,7 @@ services:
     build: nginx
     volumes:
       - ./users/users/script/static/:/var/www/django/ #development purpose
+      - ./pong/app/site/static/:/var/www
       - ./nginx/site/:/var/www/html/ #development purpose
       - vault_nginx:/opt # CHANGER OPT !!
     restart: always
@@ -21,11 +23,12 @@ services:
     depends_on:
       django_users:
         condition: service_healthy
+      django_pong:
+        condition: service_healthy
     healthcheck:
       test: curl --fail https://localhost || exit 1
-      interval: 60s
+      interval: 10s
       retries: 10
-      start_period: 20s
       timeout: 10s
 
   vault:
@@ -60,6 +63,7 @@ networks:
     driver: bridge
 
 volumes:
+<<<<<<< HEAD
   vault_django:
   vault_nginx:
   static:
@@ -67,3 +71,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
+=======
+  vault:
+
+>>>>>>> 4935ed50eb83eb1f926a37503f70b673af6f010d

@@ -8,6 +8,7 @@ import Error from "./Error.js";
 import Tournament from "./Tournament.js";
 import Online from "./Online.js";
 import Local from "./Local.js";
+import Games from "./Games.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -35,7 +36,7 @@ const router = async () => {
         {   path: "/online/", view: Online },
         {   path: "/local/", view: Local },
         {   path: "/error/", view: Error },
-
+        {   path: "/games/", view: Games },
     ];
 
     // Test each route for potential match

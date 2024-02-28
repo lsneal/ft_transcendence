@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  postgres_pong: #change the name
+    container_name: postgres_pong #change the name
+    image: postgres:16.1-alpine3.19
+    networks:
+      - pong_network #change
+    environment:
+      - POSTGRES_PASSWORD=password
+      - PG_PORT=5432
+      - PGUSER=postgres
+    expose:
+      - "5432"
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    
+  django_pong: #change the name
+    container_name: django_pong #change the name
+    build: ./app
+    networks:
+      - pong_network #change
+      - nginx
+    expose:
+      - "8003"  #change the port
+    restart: always
+    volumes:
+      - ./app/site/:/script/mysite #development purpose
+    depends_on:
+      postgres_pong:
+        condition: service_healthy
+    healthcheck:
+      test: wget -qO- http://localhost:8003/health/
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+networks:
+  pong_network: #change the name
+    driver: bridge

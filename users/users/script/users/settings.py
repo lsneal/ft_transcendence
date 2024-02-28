@@ -176,9 +176,9 @@ CSRF_TRUSTED_ORIGINS = [
 
 from datetime import timedelta
 SIMPLE_JWT = {
-  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-  'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-  'ROTATE_REFRESH_TOKENS': False,
+  'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+  'ROTATE_REFRESH_TOKENS': True,
   'BLACKLIST_AFTER_ROTATION': True,
   'UPDATE_LAST_LOGIN': False,
 
@@ -204,6 +204,7 @@ SIMPLE_JWT = {
   'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 
   # custom
+  'REFRESH_COOKIE': 'refresh_token',
   'AUTH_COOKIE': 'access_token',  # Cookie name. Enables cookies if value is set.
   'AUTH_COOKIE_DOMAIN': 'localhost',     # A string like "example.com", or None for standard domain cookie.
   'AUTH_COOKIE_SECURE': True,    # Whether the auth cookies should be secure (https:// only).

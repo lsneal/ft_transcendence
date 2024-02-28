@@ -30,6 +30,6 @@ credentials = vault_client.secrets.database.create_static_role(
     db_name='postgres_users',
     username='django',
     rotation_statements=rotation_statement,
-    rotation_period=45,
+    rotation_period=3600,
     mount_point='database'
 )

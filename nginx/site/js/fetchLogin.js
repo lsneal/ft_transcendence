@@ -25,7 +25,7 @@ async function EventLogin () {
     };
 
     try {
-        const response = await fetch('https://localhost/api/login/', {
+        const response = await fetch('https://localhost/api/users/login/', {
             method: 'POST',
             mode: "cors",
             credentials: 'include',
