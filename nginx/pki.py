@@ -38,18 +38,10 @@ def sign_intermediate_certif(intermediate_csr):
 
     return signed_intermediate_cert
 
-#renewal_options = {
-#    'ttl': '30s',
-#    'renewal': '1m',
-#    'renewal_grace_period': '1m'
-#}
-
 create_or_update_role_response = client.secrets.pki.create_or_update_role(
     'pki_cert_role',
     {
-        'ttl': '30s',
-        'renewal': '1m',
-        'renewal_grace_period': '1m',
+        'ttl': '72h',
         'allow_localhost': 'true',
         'enforce_hostnames': 'false'
     }
