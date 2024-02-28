@@ -1,7 +1,7 @@
 #!/bin/sh
 
-python manage.py makemigrations
-python manage.py migrate
+python manage.py makemigrations game
+python manage.py migrate game
 
 #change the port
 #exec python -m gunicorn -k uvicorn.workers.UvicornWorker game.asgi:application & 
