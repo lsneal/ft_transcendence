@@ -63,7 +63,6 @@ networks:
     driver: bridge
 
 volumes:
-<<<<<<< HEAD
   vault_django:
   vault_nginx:
   static:
@@ -71,7 +70,3 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-=======
-  vault:
-
->>>>>>> 4935ed50eb83eb1f926a37503f70b673af6f010d
