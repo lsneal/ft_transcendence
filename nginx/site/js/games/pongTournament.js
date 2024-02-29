@@ -132,21 +132,27 @@ function playTournament(gameId, socket, tournament) {
         {
             if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numRight = data.rightBoxTop.toString();
                 rightBar.style.top = numRight + "px";
             }
             if (data.moov === "w" || data.moov === "s")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numLeft = data.leftBoxTop.toString();
                 leftBar.style.top = numLeft + "px";
             }
             if (data.moov === "ball")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
-                ball.style.top = data.posY.toString() + "px";
-                ball.style.left = data.posX.toString() + "px";
+                if (window.innerWidth < 1288)
+                {
+                    data.posX /= 2;
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
+                else
+                {
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
                 document.getElementById("scoreP1").innerHTML = data.scoreP1;
                 document.getElementById("scoreP2").innerHTML = data.scoreP2;
                 if (data.scoreP1 == 5)
@@ -177,14 +183,36 @@ function playTournament(gameId, socket, tournament) {
     }
 
     socket.onclose = () => {
-        //TODO: changer les valeurs suivant la taille de fenetre
         const list = document.getElementById("list");
-
         posY = 250
         posX = 499
+        if (window.innerWidth < 1288)
+        {
+            posX /= 2;
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
+        else
+        {
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
         button3.style.display = 'block';
         list.style.display = 'block';
     }
 }
+
+function reportWindowSize() {
+    if (window.innerWidth < 1288)
+    {
+        document.getElementById("game").style.width = "500px";
+    }
+    else
+    {
+        document.getElementById("game").style.width = "1000px";
+    }
+}
+
+window.onresize = reportWindowSize;
