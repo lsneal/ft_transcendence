@@ -10,5 +10,6 @@ COPY ./script.sh .
 RUN chmod +x script.sh
 
 COPY ./policies.hcl .
+COPY ./policies_nginx.hcl .
 
 CMD ["sh", "script.sh"]

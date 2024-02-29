@@ -12,11 +12,13 @@ services:
       - ./users/users/script/static/:/var/www/django/ #development purpose
       - ./pong/app/site/static/:/var/www
       - ./nginx/site/:/var/www/html/ #development purpose
+      - vault_nginx:/opt # CHANGER OPT !!
     restart: always
     ports:
       - "443:443"
       - "3000:3000"
     networks:
+      - vault_network
       - nginx
     depends_on:
       django_users:
@@ -24,7 +26,7 @@ services:
       django_pong:
         condition: service_healthy
     healthcheck:
-      test: curl --fail https://localhost || exit 1
+      test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
       retries: 10
       timeout: 10s
@@ -42,7 +44,9 @@ services:
       VAULT_ENABLE_FILE_PERMISSIONS_CHECK: True
       VAULT_ADDR: http://127.0.0.1:8200
     volumes:
-      - vault:/opt
+      - vault_django:/django_token
+      - vault_nginx:/nginx_token
+    restart: always
     healthcheck:
       test:
         [
@@ -60,5 +64,10 @@ networks:
     driver: bridge
 
 volumes:
-  vault:
-
+  vault_django:
+  vault_nginx:
+  static:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'

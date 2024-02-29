@@ -9,9 +9,10 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-      console.log("Logout Button Charge")
+
+      EventProfile();
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
-      EventProfile()
+      //EventProfile()
 
       document.getElementById("TournamentButton").addEventListener('click',event  => {
         window.history.pushState(null, "Tournament", "/tournament/");
@@ -25,6 +26,10 @@ export default class extends AbstractView {
         window.history.pushState(null, "local", "/local/");
         window.dispatchEvent(new Event('popstate'));
       });   
+      document.getElementById("ButtonChange").addEventListener('click', EventChange);
+      document.getElementById("flexSwitchTwoFA").addEventListener('click', EventActiveTwoFA);
+      
+    
     }
 
     async getHtml() {

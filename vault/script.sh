@@ -36,16 +36,21 @@ else
     echo "$token" > root_token
     export VAULT_TOKEN=$token
 
-
     vault secrets enable database
 
     vault secrets enable kv
     private_key_django=$(openssl rand -hex 32)
     vault kv put kv/django_secrets django_key=$private_key_django
 
-    vault policy write certif policies.hcl
-    vault token create -policy="certif" | grep -o 'hvs\.[^\ ]*' > token
-    cp token /opt
+    vault policy write django_certif policies.hcl
+    vault token create -policy="django_certif" | grep -o 'hvs\.[^\ ]*' > token
+    cp token /django_token
+
+    vault policy write nginx_certif policies_nginx.hcl
+    vault token create -policy="nginx_certif" | grep -o 'hvs\.[^\ ]*' > n_token
+    mv n_token /nginx_token
+
+    vault secrets enable pki
 
     wait $!
 

@@ -7,7 +7,7 @@ from .test import creds
 from .vault import *
 import threading
 import time
-from django.db import connections
+from django.db import connections   
 from django.db.utils import OperationalError
 #from app.models import User
 
@@ -72,12 +72,12 @@ WSGI_APPLICATION = 'users.wsgi.application'
 
 AUTH_USER_MODEL="users.User"
 
-
 VAULT_ADDR = 'http://vault:8200'
 
-fd = os.open("/opt/token", os.O_RDONLY)
-n_bytes = 95 # token size 28
-TOKEN = os.read(fd, n_bytes)
+token_file_path = "/opt/token"
+
+with open(token_file_path, "r") as file:
+    TOKEN = file.read().strip()
 
 vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
 

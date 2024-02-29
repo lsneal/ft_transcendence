@@ -38,7 +38,7 @@ services:
       - "8200"
     restart: always
     volumes:
-      - vault:/opt
+      - vault_django:/opt
       #- static:/var/www/admin/css
       - ./users/script/:/script/mysite #development purpose
     depends_on:
