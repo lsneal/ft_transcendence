@@ -23,11 +23,11 @@ export default class extends AbstractView {
                 body: JSON.stringify({
                     code: code,
                 })
-            }).then((response) => response.json())
-            .then((data) =>{
-                console.log(data)
-                
+            }).then((response) => {
+              window.history.pushState(null, "Profile", "/profile/");
+              window.dispatchEvent(new Event('popstate'));
             });
+            
         }
         catch (error) {
           console.log(error);

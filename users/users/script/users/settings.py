@@ -7,7 +7,7 @@ from .test import creds
 from .vault import *
 import threading
 import time
-from django.db import connections
+from django.db import connections   
 from django.db.utils import OperationalError
 #from app.models import User
 
