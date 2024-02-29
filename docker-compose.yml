@@ -24,7 +24,7 @@ services:
       django_pong:
         condition: service_healthy
     healthcheck:
-      test: curl --fail https://localhost || exit 1
+      test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
       retries: 10
       timeout: 10s
@@ -43,6 +43,7 @@ services:
       VAULT_ADDR: http://127.0.0.1:8200
     volumes:
       - vault:/opt
+    restart: always
     healthcheck:
       test:
         [

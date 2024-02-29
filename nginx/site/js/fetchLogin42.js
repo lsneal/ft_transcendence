@@ -13,7 +13,7 @@ async function EventLogin42 () {
         .then((data) =>{
             const popup = window.open(data, '_blank', "left=800,top=100,width=480,height=480");
             const checkPopup = setInterval(() => {
-                if (popup.window.location.href.includes("https://localhost/login42/")) {
+                if (popup.window.location.href.includes("https://localhost/profile/")) {
                     popup.close()
                     modal.hide();
                     window.history.pushState(null, "Profile", "/profile/");
@@ -21,7 +21,7 @@ async function EventLogin42 () {
                 }
                 if (!popup || !popup.closed) return;
                 clearInterval(checkPopup);
-             }, 2500);
+             }, 500);
         });
     }
     catch (error) {

@@ -3,13 +3,14 @@ from .serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import rest_framework_simplejwt, datetime, jwt
+import json
 
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user
 from django.middleware import csrf
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from .oauth import AuthorizationCodeClient
+from .oauth import AuthorizationCodeClient, getInfoClient
 from .authenticate import CustomAuthentication
 
 from .models import User
@@ -66,7 +67,9 @@ class Login42View(APIView):
 
         code = request.data.get('code', None)
         token_info = client.get_token(code)
-        print(token_info)
+        #pseudo = 
+        pretty_json = json.dumps(token_info, indent=4)
+        print(pretty_json)
         response = Response()
         response.set_cookie(
             key = '42access_token',
@@ -85,6 +88,7 @@ class Login42View(APIView):
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
         csrf.get_token(request)
+
         return response
 
 
@@ -235,14 +239,62 @@ def getAccessToken(request):
 
 class UserView(APIView):
     def get(self, request):
-        
-        response, access_token_obj = getAccessToken(request)
-            
-        user_id=access_token_obj['user_id']
-        user=User.objects.get(id=user_id)
-        serialiazer = UserSerializer(user)
+        token = request.COOKIES.get('42access_token')
+        if token:
+            response = Response()
+            connectedClient = getInfoClient(
+                access_token=token,
+            )
+            login = connectedClient.get_name_client('https://api.intra.42.fr/v2/me')
+            print(login)
+            if login.get('error', []):
+                client = AuthorizationCodeClient(
+                    client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
+                    client_secret="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",
+                    redirect_uri="https://localhost/login42/",
+                    auth_endpoint="https://api.intra.42.fr/oauth/authorize",
+                    token_endpoint="https://api.intra.42.fr/oauth/token"
+                )
+                refresh_token = request.COOKIES.get('42refresh_token')
+                token_info = client.refresh_token(refresh_token)
+                print(token_info)
+                response.set_cookie(
+                    key = '42access_token',
+                    value = token_info['access_token'],
+                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                response.set_cookie(
+                    key = '42refresh_token',
+                    value = token_info['refresh_token'],
+                    expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                connectedClient = getInfoClient(
+                    access_token=token_info['access_token'],
+                )
+                login = connectedClient.get_name_client('https://api.intra.42.fr/v2/me')
 
-        response.data = {'data' : serialiazer.data}
+            print('id = ' + str(login['id']) + '\npseudo = ' + login['login'])
+            response.data = {
+                'token_data': login,
+                'user_id': login['id'],
+                'pseudo': login['login'],
+            }
+            
+        else:
+            response, access_token_obj = getAccessToken(request)
+
+        
+            user_id=access_token_obj['user_id']
+            user=User.objects.get(id=user_id)
+            serialiazer = UserSerializer(user)
+
+            response.data = {'data' : serialiazer.data}
         return response
     
 class LogoutView(APIView):

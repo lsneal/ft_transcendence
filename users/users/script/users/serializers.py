@@ -18,3 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
+    #def update():
+    #    https://stackoverflow.com/questions/46061406/how-to-update-user-data-using-django-and-rest-framework
+    
