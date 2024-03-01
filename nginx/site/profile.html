@@ -5,12 +5,25 @@
         <div class="modal-body">
 			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-volume-high"></i>Profile</button></div>
 			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal" data-bs-target="#modaltwoFA"><i class="fa-solid fa-gear"></i>   2FA</button></div>
+			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore">Scoreboard</a>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
         </div>
        
       </div>
     </div>
   </div>
+
+  <div  class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div id="pie-chart">
+				</div>				
+			</div>
+		</div>
+	</div>
+  </div>
+
 
   <div  class="modal fade" id="modalProfile" tabindex="-1" aria-labelledby="modalProfile" aria-hidden="true"> 
 	<div class="modal-dialog modal-dialog-centered">
@@ -26,13 +39,7 @@
 					  <input type="password" class="form-control" id="OldPassword">
 					</div>
 					<div class="mb-3">
-						<label for="ChangePassword" class="form-label">New Password</label>
-						<input type="password" class="form-control" id="ChangePassword">
-						<div id="error-message-nochange" class="text-danger" style="display: none;"></div>
-
-					</div>
-					<div class="mb-3">
-						<label for="ConfirmChangePassword" class="form-label">Confirm New Password</label>
+						<label for=nb_gameConfirmChangePassword" class="form-label">Confirm New Password</label>
 						<input type="password" class="form-control" id="ConfirmChangePassword">
 						<div id="error-message-Confirmchange" class="text-danger" style="display: none;"></div>
 

@@ -8,6 +8,8 @@ class User(AbstractBaseUser):
     totp_key = models.CharField(default="", max_length=32)
     password = models.CharField(max_length=255)
     username = None
+    victory = models.IntegerField(default=5)
+    nb_game = models.IntegerField(default=50)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

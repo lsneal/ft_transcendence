@@ -28,7 +28,7 @@ export default class extends AbstractView {
       });   
       document.getElementById("ButtonChange").addEventListener('click', EventChange);
       document.getElementById("flexSwitchTwoFA").addEventListener('click', EventActiveTwoFA);
-      
+      document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
     
     }
 

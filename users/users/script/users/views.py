@@ -19,6 +19,8 @@ import pyotp
 from django.shortcuts import render
 import qrcode
 
+from django.contrib.auth.decorators import login_required
+
 def qr_code(request):
     def get(request):
         img = 'users/qr_image/img.png'
@@ -342,6 +344,20 @@ class HealthView(APIView):
         response = Response()
         response.data = {
             'status': 'healthy'
+        }
+        return response
+
+class UserStats(APIView):
+    def get(self, request):
+        response, access_token_obj = getAccessToken(request)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        serialiazer = UserSerializer(user)
+
+
+        response.data = {
+            'victory': serialiazer.data['victory'],
+            'nb_game': serialiazer.data['nb_game'],
         }
         return response
 
