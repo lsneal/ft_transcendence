@@ -1,17 +1,21 @@
 <div id="tournament">
 	<button id="CreateTournament" style="display: block;" onclick="CreateTournament()">Create Tournament</button>
-	<label for="pet-select">number player:</label>
+	<label for="pet-select">de :</label>
 	<select id="nbP" name="nbP" id="pet-select">
-	  <option>4</option>
-	  <option>8</option>
-	  <option>16</option>
+	  <option>4 joueurs</option>
+	  <option>8 joueurs</option>
+	  <option>16 joueurs</option>
 	</select>
 </div>
-<div id="inputs" style="display: none;">
-	<h1>nom de chaque joueur</h1>
+<div id="users" style="display: none;">
+	<input type="text" name="user" placeholder="nom de joueur"/>
+	<button id="new_user" onclick="insertUsers()">Entrer un nouveau joueur</button>
 </div>
-<div id="list">
-	<button onclick="getName()">ENTER</button>
+<!-- <div id="inputs" style="display: none;"> -->
+	<!-- <h1>nom de chaque joueur</h1> -->
+<!-- </div> -->
+<div id="list" style="display: none;">
+	<button onclick="getName()">Jouer le tournoi</button>
 </div>
 <div id="bracket">
 </div>

@@ -1,22 +1,33 @@
+let arrPlayer = new Array();
+
+function insertUsers() {
+    console.log("oo");
+}
+
 function CreateTournament() {
 
     let button3 = document.getElementById("tournament");
+    let users = document.getElementById("users");
+    
+    button3.style.display = 'none';
+    users.style.display = 'block';
 
-    button3.style.display = 'none'
+    let nbPlayer = document.getElementById("nbP");
+    nbPlayer = Number(nbPlayer.value);
 
-    let nbPlayer = document.getElementById("nbP")
-    nbPlayer = Number(nbPlayer.value)
-    let inputs = document.getElementById("inputs");
-    inputs.style.display = 'block';
-    inputs.innerHTML = ``
-    for (let i = 0; i < nbPlayer; i++)
-    {
-        inputs.innerHTML += `<input type="text" name="name" id="name${i}"/>`;
-    }
+    
+    //let inputs = document.getElementById("inputs");
+    //inputs.style.display = 'block';
+    //inputs.innerHTML = ``
+    //for (let i = 0; i < nbPlayer; i++)
+    //{
+    //    inputs.innerHTML += `<input type="text" name="name" id="name${i}"/>`;
+    //    
+    //}
 }
 
 function getName() {
-    let arrPlayer = new Array();
+    
     for (let i = 0; i < 16; i++)
     {
         if (document.getElementById(`name${i}`) == null)
