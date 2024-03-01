@@ -86,7 +86,14 @@ function playGameOnline(gameId, socket)
             }
         }
         if (data.type === "time")
+        {
+            document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
+            if (data.time == '4')
+            {
+                document.getElementById("time").style.display = 'none';
+            }
+        }
     }
     socket.onclose = () => {
         resultMatch = document.getElementById("resultMatch")
@@ -110,6 +117,7 @@ function playGameOnline(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button2.style.display = 'block';
+        document.getElementById("time").innerHTML = '0';
     }
 }
 

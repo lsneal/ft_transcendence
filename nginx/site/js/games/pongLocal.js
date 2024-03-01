@@ -92,11 +92,17 @@ function playGameLocal(gameId, socket)
                 if (data.scoreP2 == 5)
                     winner = "p2";
             }
-            if (data.type === "time")
-                document.getElementById("time").innerHTML = data.time;
+
         }
         if (data.type === "time")
+        {
+            document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
+            if (data.time == '4')
+            {
+                document.getElementById("time").style.display = 'none';
+            }
+        }
 
     }
     socket.onclose = () => {
@@ -121,6 +127,7 @@ function playGameLocal(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button.style.display = 'block';
+        document.getElementById("time").innerHTML = '0';
     }
 }
 

@@ -28,6 +28,16 @@
 	left: 90%;
 }
 
+#time{ 
+	position: absolute;
+	display: none;
+	left: 50%;
+	top: 200px;
+	margin-left:-30px;
+	font-size: 7.0rem;
+	color: yellow;
+}
+
 .block {
 	position: absolute;
 	background-color: white;

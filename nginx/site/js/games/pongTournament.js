@@ -109,7 +109,14 @@ function playTournament(gameId, socket, tournament) {
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data)
         if (data.type === "time")
+        {
+            document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
+            if (data.time == '4')
+            {
+                document.getElementById("time").style.display = 'none';
+            }
+        }
         if (data.type === "players")
         {
             const bracket = document.getElementById("bracket");
