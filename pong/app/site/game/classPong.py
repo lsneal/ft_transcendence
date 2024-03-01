@@ -50,7 +50,8 @@ class Pong:
         self.scoreP1 = 0
         self.scoreP2 = 0
         i = 0
-        while i <= 3:
+        #TODO quitte en plei gmae
+        while i <= 4:
             self.player1.send(text_data=json.dumps({
                 'type':'time',
                 'time':i,

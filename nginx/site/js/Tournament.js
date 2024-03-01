@@ -9,9 +9,10 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-
-      console.log("TESTTTT Event listen OK")
-    
+      if (window.innerWidth < 1288)
+      {
+        document.getElementById("game").style.width = "500px";
+      }
     }
 
 

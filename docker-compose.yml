@@ -26,7 +26,7 @@ services:
       django_pong:
         condition: service_healthy
     healthcheck:
-      test: curl --fail https://localhost || exit 1
+      test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
       retries: 10
       timeout: 10s
@@ -47,6 +47,7 @@ services:
       - vault_django_pong:/django_pong_token
       - vault_django:/django_token
       - vault_nginx:/nginx_token
+    restart: always
     healthcheck:
       test:
         [
