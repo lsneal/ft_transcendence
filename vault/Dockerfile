@@ -9,7 +9,8 @@ COPY ./conf/conf.json /vault/config/
 COPY ./script.sh .
 RUN chmod +x script.sh
 
-COPY ./policies.hcl .
-COPY ./policies_nginx.hcl .
+COPY ./policies/policies.hcl .
+COPY ./policies/policies_nginx.hcl .
+COPY ./policies/policies_pong.hcl .
 
 CMD ["sh", "script.sh"]

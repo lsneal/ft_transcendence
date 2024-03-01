@@ -79,10 +79,7 @@ class LoginView(APIView):
 class ActivateA2F(APIView):
     def post(self, request):
         token = request.COOKIES.get('access_token')
-        user_code = request.data['totp']
-
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
+        user_code = request.data['totp_code']
 
         access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
@@ -90,17 +87,18 @@ class ActivateA2F(APIView):
 
         response = Response()
 
-        prvt_key = gen_key_user()
-        user.totp_key = prvt_key
-        otp_url = gen_otp_url(user.email, prvt_key) 
-        img = gen_qr_img(otp_url, user.email)
+        if user.a2f is True:
+            response.data = { 'message': 'error' }
+            return response
 
-        user.save()
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
 
         totp = pyotp.TOTP(user.totp_key)
 
         if totp.now() == user_code:
-            #user.a2f = True
+            user.a2f = True
+            user.save()
             response.data = { 'message': 'success' }
         else:
             response.data = { 'message': 'failure' }
@@ -117,6 +115,10 @@ class ActivateA2F(APIView):
         user=User.objects.get(id=user_id)
         response = Response()
 
+        if user.a2f is True:
+            response.data = { 'message': 'error' }
+            return response
+
         prvt_key = gen_key_user()
         user.totp_key = prvt_key
         otp_url = gen_otp_url(user.email, prvt_key) 
@@ -128,17 +130,23 @@ class ActivateA2F(APIView):
         response.data = { 'url': qr }
         return response 
     
-    #def put(self, request):
-    #    token = request.COOKIES.get('access_token')
-#
-    #    if not token:
-    #        raise AuthenticationFailed('Unauthenticated!')
-#
-    #    access_token_obj = AccessToken(token)
-    #    user_id=access_token_obj['user_id']
-    #    user=User.objects.get(id=user_id)
-    #    response = Response()
+    def put(self, request):
+        token = request.COOKIES.get('access_token')
 
+        if not token:
+           raise AuthenticationFailed('Unauthenticated!')
+
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        response = Response()
+
+        user.a2f = False
+        user.save()
+
+        response.data = { 'message': 'success disable 2fa'}
+
+        return response
         
 
 class LoginA2F(APIView):

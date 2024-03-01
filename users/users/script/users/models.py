@@ -7,8 +7,6 @@ class User(AbstractBaseUser):
     a2f = models.BooleanField(default=False)
     totp_key = models.CharField(default="", max_length=32)
     password = models.CharField(max_length=255)
-    #sa2f = models.BooleanField(default=False)
-    #totp_key = models.CharField(max_length=32, unique=True)
     username = None
 
     USERNAME_FIELD = 'email'

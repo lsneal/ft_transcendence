@@ -44,7 +44,11 @@ else
 
     vault policy write django_certif policies.hcl
     vault token create -policy="django_certif" | grep -o 'hvs\.[^\ ]*' > token
-    cp token /django_token
+    mv token /django_token
+
+    vault policy write django_certif_pong policies_pong.hcl
+    vault token create -policy="django_certif_pong" | grep -o 'hvs\.[^\ ]*' > token
+    mv token /django_pong_token
 
     vault policy write nginx_certif policies_nginx.hcl
     vault token create -policy="nginx_certif" | grep -o 'hvs\.[^\ ]*' > n_token

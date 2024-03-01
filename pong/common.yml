@@ -5,12 +5,15 @@ services:
     image: postgres:16.1-alpine3.19
     networks:
       - pong_network #change
+      - vault_network
     environment:
       - POSTGRES_PASSWORD=password
-      - PG_PORT=5432
+      - PGPORT=5433
       - PGUSER=postgres
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
-      - "5432"
+      - "5433"
     restart: always
     healthcheck:
       test:
@@ -29,10 +32,12 @@ services:
     networks:
       - pong_network #change
       - nginx
+      - vault_network
     expose:
       - "8003"  #change the port
     restart: always
     volumes:
+      - vault_django_pong:/opt
       - ./app/site/:/script/mysite #development purpose
     depends_on:
       postgres_pong:

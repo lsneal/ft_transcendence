@@ -8,7 +8,7 @@ services:
       - vault_network
     environment:
       - POSTGRES_PASSWORD=password
-      - PG_PORT=5432
+      - PGPORT=5432
       - PGUSER=postgres
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -35,7 +35,6 @@ services:
       - nginx
     expose:
       - "8002"
-      - "8200"
     restart: always
     volumes:
       - vault_django:/opt
