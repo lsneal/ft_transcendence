@@ -18,6 +18,4 @@ RUN rm /var/log/nginx/error.log
 ENV MODSEC_AUDIT_LOG /var/log/nginx/access.log
 ENV MODSEC_DEBUG_LOG /var/log/nginx/error.log
 
-
-
 CMD ["sh", "/opt/certificat.sh"]

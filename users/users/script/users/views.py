@@ -200,6 +200,24 @@ class ActivateA2F(APIView):
         
 
 class LoginA2F(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('access_token')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+    
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+
+        response = Respons()
+
+        if user.a2f is True:
+            response.data = { 'message': 'True' }
+        else:
+            reponse.data = { 'message': 'False' }
+        return response
+
     def post(self, request):
         token = request.COOKIES.get('access_token')
 
@@ -215,13 +233,9 @@ class LoginA2F(APIView):
 
         response = Response()
         if totp.now() == user_code:
-            response.data = {
-                'message': 'success'
-            }
+            response.data = { 'message': 'success' }
         else:
-            response.data = {
-                'message': 'failure'
-            }
+            response.data = { 'message': 'failure' }
         return response
     
 def getAccessToken(request):
