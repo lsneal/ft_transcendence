@@ -198,7 +198,6 @@ class ActivateA2F(APIView):
 
         return response
         
-
 class LoginA2F(APIView):
     def get(self, request):
         token = request.COOKIES.get('access_token')
@@ -210,7 +209,7 @@ class LoginA2F(APIView):
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
 
-        response = Respons()
+        response = Response()
 
         if user.a2f is True:
             response.data = { 'message': 'True' }

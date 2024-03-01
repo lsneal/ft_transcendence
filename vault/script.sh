@@ -42,13 +42,13 @@ else
     private_key_django=$(openssl rand -hex 32)
     vault kv put kv/django_secrets django_key=$private_key_django
 
-    vault policy write django_certif policies.hcl
-    vault token create -policy="django_certif" | grep -o 'hvs\.[^\ ]*' > token
-    mv token /django_token
+    vault policy write django_users_certif policies_users.hcl
+    vault token create -policy="django_users_certif" | grep -o 'hvs\.[^\ ]*' > users_token
+    mv users_token /django_users_token
 
-    vault policy write django_certif_pong policies_pong.hcl
-    vault token create -policy="django_certif_pong" | grep -o 'hvs\.[^\ ]*' > token
-    mv token /django_pong_token
+    vault policy write django_pong_certif policies_pong.hcl
+    vault token create -policy="django_pong_certif" | grep -o 'hvs\.[^\ ]*' > pong_token
+    mv pong_token /django_pong_token
 
     vault policy write nginx_certif policies_nginx.hcl
     vault token create -policy="nginx_certif" | grep -o 'hvs\.[^\ ]*' > n_token
