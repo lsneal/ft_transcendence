@@ -44,7 +44,7 @@ async function EventLogin () {
             }
             else
             {
-                const errorMessage = data.detail || 'suce ma bite';
+                const errorMessage = data.detail;
                 const errorElement = document.getElementById('error-message-Login');
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché

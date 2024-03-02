@@ -42,10 +42,11 @@ async function EventChange () {
       formData.password = password;
     }
 
-    console.log(formData);
-
     
+
     const jsonString = JSON.stringify(formData);
+
+    console.log(jsonString);
     
     const url = '/api/users/user/';
 
@@ -60,7 +61,7 @@ async function EventChange () {
       fetch(url, options)
       .then(response => {
        
-        return response.json();
+        console.log(response.json());
       })
       .then(updatedData => {
         console.log('Data updated:', updatedData);

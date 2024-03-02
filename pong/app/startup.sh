@@ -1,7 +1,13 @@
 #!/bin/sh
 
-python manage.py makemigrations game
-python manage.py migrate game
+CONTAINER_FIRST_STARTUP="django"
+if [ ! -e /$CONTAINER_FIRST_STARTUP ]; then
+    touch /$CONTAINER_FIRST_STARTUP
+    python /script/vault.py  
+fi
+
+python manage.py makemigrations
+python manage.py migrate
 
 #change the port
 #exec python -m gunicorn -k uvicorn.workers.UvicornWorker game.asgi:application & 
