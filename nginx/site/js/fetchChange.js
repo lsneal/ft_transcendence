@@ -29,15 +29,25 @@ async function EventChange () {
     }
 
     const formData = {
-        pseudo: pseudo,
         oldpassword: oldpassword,
-        password: password,
     };
-    
-    const jsonString = JSON.stringify(formData);
+
+    if (pseudo != '')
+    {
+      formData.pseudo = pseudo;
+    }
+
+    if (password != '')
+    {
+      formData.password = password;
+    }
+
+    console.log(formData);
 
     
-    const url = 'https://localhost/api/user/';
+    const jsonString = JSON.stringify(formData);
+    
+    const url = '/api/users/user/';
 
     const options = {
         method: 'PUT',
@@ -49,9 +59,7 @@ async function EventChange () {
 
       fetch(url, options)
       .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error ${response.status}`);
-        }
+       
         return response.json();
       })
       .then(updatedData => {

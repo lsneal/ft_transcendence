@@ -37,9 +37,9 @@ RUN apk add --no-cache autoconf \
 						jq \
 						curl
 
-RUN apk --update add --no-cache openssl \
-	&& openssl req -x509 -nodes -subj "/C=FR/O=My Company/CN=example.com" -newkey rsa:2048 -keyout /etc/nginx/server.key -out /etc/nginx/server.crt \
-	&& apk del openssl
+#RUN apk --update add --no-cache openssl \
+#	&& openssl req -x509 -nodes -subj "/C=FR/O=My Company/CN=example.com" -newkey rsa:2048 -keyout /etc/nginx/server.key -out /etc/nginx/server.crt \
+#	&& apk del openssl
 
 WORKDIR /opt
 

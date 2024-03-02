@@ -1,6 +1,6 @@
 function JoinGameOnline() {
 
-    fetch("https://localhost/api/pong/joinGame/", {
+    fetch("/api/pong/joinGame/", {
         method: "POST",
     })
     .then((response) => response.json())
@@ -12,7 +12,7 @@ function JoinGameOnline() {
 
 function JoinGameLocal() {
 
-    fetch("https://localhost/api/pong/joinGame/", {
+    fetch("/api/pong/joinGame/", {
         method: "POST",
     })
     .then((response) => response.json())

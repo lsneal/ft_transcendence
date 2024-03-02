@@ -34,7 +34,7 @@ export default class extends AbstractView {
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/profile.html');
+        const response = await fetch('/profile.html');
         if (!response.ok){
             throw new Error('Failed to fetch profile.html');
         }

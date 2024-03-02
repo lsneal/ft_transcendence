@@ -17,7 +17,7 @@ export default class extends AbstractView {
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/Tournament.html');
+        const response = await fetch('/Tournament.html');
         if (!response.ok){
             throw new Error('Failed to fetch Home.html');
         }
