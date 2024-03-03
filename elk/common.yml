@@ -50,7 +50,7 @@ services:
       test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   es01:
     depends_on:
@@ -94,8 +94,8 @@ services:
           "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
         ]
       interval: 15s
-      timeout: 100s
-      retries: 5
+      timeout: 10s
+      retries: 10
 
   kibana:
     depends_on:
@@ -113,6 +113,7 @@ services:
       - 5601
     environment:
       - SERVERNAME=kibana
+      - xpack.reporting.roles.enabled=false
       - ELASTICSEARCH_HOSTS=https://es01:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
@@ -130,13 +131,13 @@ services:
   
   logstash:
     depends_on:
-      es01:
+      kibana:
         condition: service_healthy
     image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
     user: "1000"
     volumes:
       - certs:/usr/share/logstash/config/certs
-      - ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
+      #- ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
       - ./nginx:/usr/share/logstash/pattern/nginx:ro
       - ./logstash/:/usr/share/logstash/pipeline/:ro
       - logstashdata:/usr/share/logstash/data
@@ -146,7 +147,7 @@ services:
     restart: always
     networks:
       - elk
-      - users_network
+      #- users_network
     expose:
       - 5044/udp
     environment:
@@ -156,7 +157,7 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_HOSTS=https://es01:9200
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-    command: logstash #-f /usr/share/logstash/pipeline/
+    command: logstash -f /usr/share/logstash/pipeline/
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
