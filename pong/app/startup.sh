@@ -3,7 +3,7 @@
 CONTAINER_FIRST_STARTUP="django"
 if [ ! -e /$CONTAINER_FIRST_STARTUP ]; then
     touch /$CONTAINER_FIRST_STARTUP
-    python /script/vault.py  
+    python /script/vault_pong.py  
 fi
 
 python manage.py makemigrations
