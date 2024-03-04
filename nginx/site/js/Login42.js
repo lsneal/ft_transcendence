@@ -15,7 +15,7 @@ export default class extends AbstractView {
         console.log(code)
 
         try {
-            const response = fetch('https://localhost/api/users/login42/', {
+            const response = fetch('/api/users/login42/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default class extends AbstractView {
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/home.html');
+        const response = await fetch('/home.html');
         if (!response.ok){
             throw new Error('Failed to fetch Home.html');
         }

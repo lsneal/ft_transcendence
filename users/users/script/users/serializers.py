@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'pseudo', 'password']
         extra_kwargs= {
             'password': {'write_only': True}
-        }
+        }  
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -18,6 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-    #def update():
-    #    https://stackoverflow.com/questions/46061406/how-to-update-user-data-using-django-and-rest-framework
-    
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        pseudo = validated_data.pop('pseudo', None)
+        if password is not None:
+            instance.set_password(password)
+        if pseudo is not None:
+            instance.pseudo = pseudo
+        instance.save()
+        return instance

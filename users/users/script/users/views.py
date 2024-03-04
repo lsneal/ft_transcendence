@@ -48,7 +48,7 @@ class Login42View(APIView):
         client = AuthorizationCodeClient(
             client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
             client_secret="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",
-            redirect_uri="https://localhost/login42/",
+            redirect_uri="https://10.11.249.157/login42/",
             auth_endpoint="https://api.intra.42.fr/oauth/authorize",
             token_endpoint="https://api.intra.42.fr/oauth/token"
         )
@@ -60,16 +60,14 @@ class Login42View(APIView):
         client = AuthorizationCodeClient(
             client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
             client_secret="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",
-            redirect_uri="https://localhost/login42/",
+            redirect_uri="https://10.11.249.157/login42/",
             auth_endpoint="https://api.intra.42.fr/oauth/authorize",
             token_endpoint="https://api.intra.42.fr/oauth/token"
         )
 
         code = request.data.get('code', None)
         token_info = client.get_token(code)
-        #pseudo = 
-        pretty_json = json.dumps(token_info, indent=4)
-        print(pretty_json)
+        
         response = Response()
         response.set_cookie(
             key = '42access_token',
@@ -280,7 +278,7 @@ class UserView(APIView):
                 client = AuthorizationCodeClient(
                     client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
                     client_secret="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",
-                    redirect_uri="https://localhost/login42/",
+                    redirect_uri="https://10.11.249.157/login42/",
                     auth_endpoint="https://api.intra.42.fr/oauth/authorize",
                     token_endpoint="https://api.intra.42.fr/oauth/token"
                 )
@@ -327,9 +325,7 @@ class UserView(APIView):
         return response
     
     def put(self, request):
-        password = request.data.get('password', None)
-        #authentification = request.data.get('2FA', None)
-        pseudo = request.data.get('pseudo', None)
+        oldpassword = request.data.get('oldpassword', None)
 
         token = request.COOKIES.get('access_token')
         if not token:
@@ -338,9 +334,11 @@ class UserView(APIView):
         access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
-        print(user)
 
-        serializer = UserSerializer(user, data=request.data)
+        if not user.check_password(oldpassword):
+            return Response('Wrong Password')
+        
+        serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
