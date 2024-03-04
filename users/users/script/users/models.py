@@ -13,3 +13,5 @@ class User(AbstractBaseUser):
     profile_image = models.ImageField(upload_to='default_img/', default='users/default_img/default.jpeg')
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    

@@ -1,22 +1,37 @@
-function CreateTournament() {
+let arrPlayer = new Array();
 
-    let button3 = document.getElementById("tournament");
+function insertUsers() {
+    let nbPlayer = document.getElementById("nbP");
+    let input = document.getElementById("input_user");
 
-    button3.style.display = 'none'
-
-    let nbPlayer = document.getElementById("nbP")
-    nbPlayer = Number(nbPlayer.value)
-    let inputs = document.getElementById("inputs");
-    inputs.style.display = 'block';
-    inputs.innerHTML = ``
-    for (let i = 0; i < nbPlayer; i++)
+    nbPlayer = nbPlayer.value.split(' ');
+    nbPlayer = Number(nbPlayer[0]);
+    if (input.value == '')
+        return (1);
+    arrPlayer.push(input.value);
+    input.value = '';
+    if (arrPlayer.length == nbPlayer)
     {
-        inputs.innerHTML += `<input type="text" name="name" id="name${i}"/>`;
+        let users = document.getElementById("users");
+        users.style.display = 'none';
+        document.getElementById("list").style.display = 'block';
     }
 }
 
+function CreateTournament() {
+
+    let button3 = document.getElementById("tournament");
+    let users = document.getElementById("users");
+    
+    button3.style.display = 'none';
+    users.style.display = 'block';
+
+    let nbPlayer = document.getElementById("nbP");
+    nbPlayer = Number(nbPlayer.value);
+}
+
 function getName() {
-    let arrPlayer = new Array();
+    
     for (let i = 0; i < 16; i++)
     {
         if (document.getElementById(`name${i}`) == null)
@@ -25,7 +40,7 @@ function getName() {
         arrPlayer[i] = name.value
     }
 
-    fetch("https://localhost/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
+    fetch("/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -43,11 +58,11 @@ function getName() {
 
 function buildBracket(value) {
     const list = document.getElementById("list");
-    let inputs = document.getElementById("inputs");
+    //let inputs = document.getElementById("inputs");
     list.style.display = 'none';
-    inputs.style.display = 'none';
+    //inputs.style.display = 'none';
 
-    fetch("https://localhost/api/pong/joinGame/", {
+    fetch("/api/pong/joinGame/", {
         method: "POST",
     })
     .then((response) => response.json())
@@ -57,7 +72,7 @@ function buildBracket(value) {
 }
 
 function beforeStart(gameId, value) {
-    fetch("https://localhost/api/pong/UserIdGameView", {
+    fetch("/api/pong/UserIdGameView", {
         method: "GET",
     })
     .then((response) => response.json())
@@ -109,9 +124,17 @@ function playTournament(gameId, socket, tournament) {
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data)
         if (data.type === "time")
+        {
+            document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
+            if (data.time == '4')
+            {
+                document.getElementById("time").style.display = 'none';
+            }
+        }
         if (data.type === "players")
         {
+            console.log("tournois = ", data.tournamentUsers);
             const bracket = document.getElementById("bracket");
             bracket.innerHTML = `<div style="background-color:powderblue;">
                            <h1>${data.player1}<h1>
@@ -132,21 +155,27 @@ function playTournament(gameId, socket, tournament) {
         {
             if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numRight = data.rightBoxTop.toString();
                 rightBar.style.top = numRight + "px";
             }
             if (data.moov === "w" || data.moov === "s")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numLeft = data.leftBoxTop.toString();
                 leftBar.style.top = numLeft + "px";
             }
             if (data.moov === "ball")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
-                ball.style.top = data.posY.toString() + "px";
-                ball.style.left = data.posX.toString() + "px";
+                if (window.innerWidth < 1288)
+                {
+                    data.posX /= 2;
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
+                else
+                {
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
                 document.getElementById("scoreP1").innerHTML = data.scoreP1;
                 document.getElementById("scoreP2").innerHTML = data.scoreP2;
                 if (data.scoreP1 == 5)
@@ -177,14 +206,36 @@ function playTournament(gameId, socket, tournament) {
     }
 
     socket.onclose = () => {
-        //TODO: changer les valeurs suivant la taille de fenetre
-        const list = document.getElementById("list");
-
+        //const list = document.getElementById("list");
         posY = 250
         posX = 499
+        if (window.innerWidth < 1288)
+        {
+            posX /= 2;
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
+        else
+        {
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
         button3.style.display = 'block';
-        list.style.display = 'block';
+        //list.style.display = 'block';
     }
 }
+
+function reportWindowSize() {
+    if (window.innerWidth < 1288)
+    {
+        document.getElementById("game").style.width = "500px";
+    }
+    else
+    {
+        document.getElementById("game").style.width = "1000px";
+    }
+}
+
+window.onresize = reportWindowSize;

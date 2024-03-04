@@ -6,7 +6,7 @@ function startGameOnline(gameId) {
         return ;
     gameId = Number(gameId)
 
-    fetch("https://localhost/api/pong/UserIdGameView", {//TODO: fetch sur user
+    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
         method: "GET",
     })
     .then((response) => response.json())
@@ -58,7 +58,6 @@ function playGameOnline(gameId, socket)
         {
             if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numLeft = data.leftBoxTop.toString();
                 numRight = data.rightBoxTop.toString();
                 leftBar.style.top = numLeft + "px";
@@ -66,9 +65,18 @@ function playGameOnline(gameId, socket)
             }
             if (data.moov === "ball")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
-                ball.style.top = data.posY.toString() + "px";
-                ball.style.left = data.posX.toString() + "px";
+                if (window.innerWidth < 1288)
+                {
+                    //data.posY /= 2;
+                    data.posX /= 2;
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
+                else
+                {
+                    ball.style.top = data.posY.toString() + "px";
+                    ball.style.left = data.posX.toString() + "px";
+                }
                 document.getElementById("scoreP1").innerHTML = data.scoreP1;
                 document.getElementById("scoreP2").innerHTML = data.scoreP2;
                 if (data.scoreP1 == 5)
@@ -78,7 +86,14 @@ function playGameOnline(gameId, socket)
             }
         }
         if (data.type === "time")
+        {
+            document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
+            if (data.time == '4')
+            {
+                document.getElementById("time").style.display = 'none';
+            }
+        }
     }
     socket.onclose = () => {
         resultMatch = document.getElementById("resultMatch")
@@ -88,11 +103,33 @@ function playGameOnline(gameId, socket)
             resultMatch.innerHTML = "And the winner is Player2"
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
-        //TODO: changer les valeurs suivant la taille de fenetre
         posY = 250
         posX = 499
-        ball.style.top = posY.toString() + "px";
-        ball.style.left = posX.toString() + "px";
+        if (window.innerWidth < 1288)
+        {
+            posX /= 2;
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
+        else
+        {
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+        }
         button2.style.display = 'block';
+        document.getElementById("time").innerHTML = '0';
     }
 }
+
+function reportWindowSize() {
+    if (window.innerWidth < 1288)
+    {
+        document.getElementById("game").style.width = "500px";
+    }
+    else
+    {
+        document.getElementById("game").style.width = "1000px";
+    }
+}
+
+window.onresize = reportWindowSize;

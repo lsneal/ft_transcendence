@@ -41,7 +41,7 @@ def sign_intermediate_certif(intermediate_csr):
 create_or_update_role_response = client.secrets.pki.create_or_update_role(
     'pki_cert_role',
     {
-        'ttl': '72h',
+        'ttl': '31d',
         'allow_localhost': 'true',
         'enforce_hostnames': 'false'
     }

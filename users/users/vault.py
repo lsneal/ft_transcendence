@@ -3,9 +3,10 @@ import os
 
 VAULT_ADDR='http://vault:8200'
 
-fd = os.open("/opt/token", os.O_RDONLY)
-n_bytes = 95
-VAULT_TOKEN = os.read(fd, n_bytes)
+token_file_path = "/opt/token"
+
+with open(token_file_path, "r") as file:
+    VAULT_TOKEN = file.read().strip()
 
 vault_client = hvac.Client(url='http://vault:8200', token=VAULT_TOKEN)
 

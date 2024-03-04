@@ -25,7 +25,7 @@ async function EventLogin () {
     };
 
     try {
-        const response = await fetch('https://localhost/api/users/login/', {
+        const response = await fetch('/api/users/login/', {
             method: 'POST',
             mode: "cors",
             credentials: 'include',
@@ -44,7 +44,7 @@ async function EventLogin () {
             }
             else
             {
-                const errorMessage = data.detail || 'suce ma bite';
+                const errorMessage = data.detail;
                 const errorElement = document.getElementById('error-message-Login');
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché

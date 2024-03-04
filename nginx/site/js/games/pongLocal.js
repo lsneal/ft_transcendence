@@ -6,7 +6,7 @@ function startGameLocal(gameId) {
         return ;
     gameId = Number(gameId)
 
-    fetch("https://localhost/api/pong/UserIdGameView", {//TODO: fetch sur user
+    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
         method: "GET",
     })
     .then((response) => response.json())
@@ -19,7 +19,6 @@ function startGameLocal(gameId) {
 
 function playGameLocal(gameId, socket)
 { 
-    //= document.getElementById("JoinGameOnline");
     let button = document.getElementById("ButtonStart")
 
     let numRight = 250;
@@ -65,22 +64,18 @@ function playGameLocal(gameId, socket)
         {
             if (data.moov === "ArrowUp" || data.moov === "ArrowDown")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numRight = data.rightBoxTop.toString();
                 rightBar.style.top = numRight + "px";
             }
             if (data.moov === "w" || data.moov === "s")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 numLeft = data.leftBoxTop.toString();
                 leftBar.style.top = numLeft + "px";
             }
             if (data.moov === "ball")
             {
-                //TODO: changer les valeurs suivant la taille de fenetre
                 if (window.innerWidth < 1288)
                 {
-                    //data.posY /= 2;
                     data.posX /= 2;
                     ball.style.top = data.posY.toString() + "px";
                     ball.style.left = data.posX.toString() + "px";
@@ -97,9 +92,17 @@ function playGameLocal(gameId, socket)
                 if (data.scoreP2 == 5)
                     winner = "p2";
             }
+
         }
         if (data.type === "time")
+        {
+            document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
+            if (data.time == '4')
+            {
+                document.getElementById("time").style.display = 'none';
+            }
+        }
 
     }
     socket.onclose = () => {
@@ -110,7 +113,6 @@ function playGameLocal(gameId, socket)
             resultMatch.innerHTML = "And the winner is Player2"
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
-        //TODO: changer les valeurs suivant la taille de fenetre
         posY = 250
         posX = 499
         if (window.innerWidth < 1288)
@@ -125,6 +127,7 @@ function playGameLocal(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button.style.display = 'block';
+        document.getElementById("time").innerHTML = '0';
     }
 }
 

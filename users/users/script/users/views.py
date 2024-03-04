@@ -50,7 +50,7 @@ class Login42View(APIView):
         client = AuthorizationCodeClient(
             client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
             client_secret="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",
-            redirect_uri="https://localhost/login42/",
+            redirect_uri="https://10.11.249.157/login42/",
             auth_endpoint="https://api.intra.42.fr/oauth/authorize",
             token_endpoint="https://api.intra.42.fr/oauth/token"
         )
@@ -62,16 +62,14 @@ class Login42View(APIView):
         client = AuthorizationCodeClient(
             client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
             client_secret="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",
-            redirect_uri="https://localhost/login42/",
+            redirect_uri="https://10.11.249.157/login42/",
             auth_endpoint="https://api.intra.42.fr/oauth/authorize",
             token_endpoint="https://api.intra.42.fr/oauth/token"
         )
 
         code = request.data.get('code', None)
         token_info = client.get_token(code)
-        #pseudo = 
-        pretty_json = json.dumps(token_info, indent=4)
-        print(pretty_json)
+        
         response = Response()
         response.set_cookie(
             key = '42access_token',
@@ -131,10 +129,7 @@ class LoginView(APIView):
 class ActivateA2F(APIView):
     def post(self, request):
         token = request.COOKIES.get('access_token')
-        user_code = request.data['totp']
-
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
+        user_code = request.data['totp_code']
 
         access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
@@ -142,17 +137,18 @@ class ActivateA2F(APIView):
 
         response = Response()
 
-        prvt_key = gen_key_user()
-        user.totp_key = prvt_key
-        otp_url = gen_otp_url(user.email, prvt_key) 
-        img = gen_qr_img(otp_url, user.email)
+        if user.a2f is True:
+            response.data = { 'message': 'error' }
+            return response
 
-        user.save()
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
 
         totp = pyotp.TOTP(user.totp_key)
 
         if totp.now() == user_code:
-            #user.a2f = True
+            user.a2f = True
+            user.save()
             response.data = { 'message': 'success' }
         else:
             response.data = { 'message': 'failure' }
@@ -169,6 +165,10 @@ class ActivateA2F(APIView):
         user=User.objects.get(id=user_id)
         response = Response()
 
+        if user.a2f is True:
+            response.data = { 'message': 'error' }
+            return response
+
         prvt_key = gen_key_user()
         user.totp_key = prvt_key
         otp_url = gen_otp_url(user.email, prvt_key) 
@@ -180,17 +180,23 @@ class ActivateA2F(APIView):
         response.data = { 'url': qr }
         return response 
     
-    #def put(self, request):
-    #    token = request.COOKIES.get('access_token')
-#
-    #    if not token:
-    #        raise AuthenticationFailed('Unauthenticated!')
-#
-    #    access_token_obj = AccessToken(token)
-    #    user_id=access_token_obj['user_id']
-    #    user=User.objects.get(id=user_id)
-    #    response = Response()
+    def put(self, request):
+        token = request.COOKIES.get('access_token')
 
+        if not token:
+           raise AuthenticationFailed('Unauthenticated!')
+
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        response = Response()
+
+        user.a2f = False
+        user.save()
+
+        response.data = { 'message': 'success disable 2fa'}
+
+        return response
         
 
 class LoginA2F(APIView):
@@ -260,7 +266,7 @@ class UserView(APIView):
                 client = AuthorizationCodeClient(
                     client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
                     client_secret="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",
-                    redirect_uri="https://localhost/login42/",
+                    redirect_uri="https://10.11.249.157/login42/",
                     auth_endpoint="https://api.intra.42.fr/oauth/authorize",
                     token_endpoint="https://api.intra.42.fr/oauth/token"
                 )
@@ -307,9 +313,7 @@ class UserView(APIView):
         return response
     
     def put(self, request):
-        password = request.data.get('password', None)
-        #authentification = request.data.get('2FA', None)
-        pseudo = request.data.get('pseudo', None)
+        oldpassword = request.data.get('oldpassword', None)
 
         token = request.COOKIES.get('access_token')
         if not token:
@@ -318,9 +322,11 @@ class UserView(APIView):
         access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
-        print(user)
 
-        serializer = UserSerializer(user, data=request.data)
+        if not user.check_password(oldpassword):
+            return Response('Wrong Password')
+        
+        serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

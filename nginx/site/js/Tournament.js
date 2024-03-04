@@ -9,15 +9,16 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-
-      console.log("TESTTTT Event listen OK")
-    
+      if (window.innerWidth < 1288)
+      {
+        document.getElementById("game").style.width = "500px";
+      }
     }
 
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/Tournament.html');
+        const response = await fetch('/Tournament.html');
         if (!response.ok){
             throw new Error('Failed to fetch Home.html');
         }

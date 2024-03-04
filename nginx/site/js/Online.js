@@ -3,21 +3,22 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Tournament");
+        this.setTitle("Online");
 
     }
 
     async executeViewScript()
     {
-
-      console.log("TESTTTT Event listen OK")
-    
+      if (window.innerWidth < 1288)
+      {
+        document.getElementById("game").style.width = "500px";
+      }
     }
 
 
     async getHtml() {
       try{
-        const response = await fetch('https://localhost/OnlineGame.html');
+        const response = await fetch('/OnlineGame.html');
         if (!response.ok){
             throw new Error('Failed to fetch Home.html');
         }

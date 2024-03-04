@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import os
+import hvac
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,16 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!by_b!m3kd+$89x7#_wp7ye(5$p)66%3fc(1e-=r&nd^ukc7_)'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ALLOWED_HOSTS = ["localhost"]
-CSRF_TRUSTED_ORIGINS = ['https://localhost']
+ALLOWED_HOSTS = ["localhost", "10.11.249.157"]
+CSRF_TRUSTED_ORIGINS = ['https://localhost', 'https://10.11.249.157']
 
 # Application definition
 
@@ -90,21 +88,35 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'game.wsgi.application'
 
+VAULT_ADDR = 'http://vault:8200'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+token_file_path = "/opt/token"
 
+with open(token_file_path, "r") as file:
+    TOKEN = file.read().strip()
+
+vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
+
+secret_key = vault_client.read('kv/django_secrets')
+
+SECRET_KEY = secret_key['data']['django_key']
+#########################################
+
+### CHANGE DB NAME VIEW common.yml
+
+##########################################3
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django_postgres_vault',
         'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
         'HOST': 'postgres_pong',
-        'PORT': '5432',
-    }
+        'PORT': '5433', 
+        'VAULT_ADDR': VAULT_ADDR,
+        'VAULT_TOKEN': TOKEN,
+        'VAULT_ROLE_NAME': 'postgres_pong', ###### changer dans le script vault (cree new role)
+        'VAULT_DB_MOUNT_POINT': 'database',   
+    },
 }
-
 AUTH_USER_MODEL="game.User" 
 
 # Password validation
