@@ -19,7 +19,7 @@ import pyotp
 from django.shortcuts import render
 import qrcode
 
-from django.contrib.auth.decorators import login_required
+from django.db.models import F, Case, When, Value, FloatField
 
 def qr_code(request):
     def get(request):
@@ -361,3 +361,29 @@ class UserStats(APIView):
         }
         return response
 
+
+
+class PlayerRanking(APIView):
+    def get(self, request):
+        players = User.objects.annotate(prc_win=Case(
+            When(nb_game__gt=0, then=(F('victory') / F('nb_game')) * 100),
+            default=Value(0),
+            output_field=FloatField()
+        )).filter(nb_game__gt=0).order_by('-prc_win')[:5]
+        
+        serialized_players = []
+        for player in players:
+            if player.nb_game != 0:
+                prc_win = player.prc_win
+            else:
+                prc_win = 0
+            serialized_player = {
+                'pseudo': player.pseudo,
+                'prc_win': player.prc_win,
+                'nb_game': player.nb_game,
+                'victory': player.victory,
+            }
+            serialized_players.append(serialized_player)
+
+        
+        return Response(serialized_players)

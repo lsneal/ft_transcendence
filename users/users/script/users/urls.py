@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import RegisterView, LoginView, Login42View, UserView, LogoutView, HealthView, LoginA2F, ActivateA2F, UserStats
+from .views import RegisterView, LoginView, Login42View, UserView, LogoutView, HealthView, LoginA2F, ActivateA2F, UserStats, PlayerRanking
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
 from django.contrib.auth import views as auth_views
@@ -18,5 +18,5 @@ urlpatterns = [
     path('api/users/2fa/', LoginA2F.as_view(), name='login_2fa'),
     path('api/users/activate2fa/', ActivateA2F.as_view(), name='activate2fa'),
     path('api/users/stats/', UserStats.as_view(), name='user_stats'),
-
+     path('api/users/rank/', PlayerRanking.as_view(), name='rank_player'),
 ]
