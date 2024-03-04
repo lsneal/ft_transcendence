@@ -137,7 +137,7 @@ services:
     user: "1000"
     volumes:
       - certs:/usr/share/logstash/config/certs
-      #- ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
+      - ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
       - ./nginx:/usr/share/logstash/pattern/nginx:ro
       - ./logstash/:/usr/share/logstash/pipeline/:ro
       - logstashdata:/usr/share/logstash/data
