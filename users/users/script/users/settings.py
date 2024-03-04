@@ -74,7 +74,7 @@ AUTH_USER_MODEL="users.User"
 
 VAULT_ADDR = 'http://vault:8200'
 
-token_file_path = "/opt/token"
+token_file_path = "/opt/users_token"
 
 with open(token_file_path, "r") as file:
     TOKEN = file.read().strip()

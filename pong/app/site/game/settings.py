@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'game.wsgi.application'
 
 VAULT_ADDR = 'http://vault:8200'
 
-token_file_path = "/opt/token"
+token_file_path = "/opt/pong_token"
 
 with open(token_file_path, "r") as file:
     TOKEN = file.read().strip()
@@ -100,11 +100,8 @@ vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
 secret_key = vault_client.read('kv/django_secrets')
 
 SECRET_KEY = secret_key['data']['django_key']
-#########################################
 
-### CHANGE DB NAME VIEW common.yml
 
-##########################################3
 DATABASES = {
     'default': {
         'ENGINE': 'django_postgres_vault',
@@ -113,7 +110,7 @@ DATABASES = {
         'PORT': '5433', 
         'VAULT_ADDR': VAULT_ADDR,
         'VAULT_TOKEN': TOKEN,
-        'VAULT_ROLE_NAME': 'postgres_pong', ###### changer dans le script vault (cree new role)
+        'VAULT_ROLE_NAME': 'postgres_pong',
         'VAULT_DB_MOUNT_POINT': 'database',   
     },
 }

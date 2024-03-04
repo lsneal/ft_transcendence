@@ -2,7 +2,6 @@ FROM python:3.12.1-alpine3.19
 
 RUN apk add --update --no-cache postgresql-client
 
-# RUN pip install --upgrade pip && pip install django djangorestframework gunicorn && pip install channels uvicorn['standard'] daphne
 RUN pip install --upgrade pip && pip install django \
                                             djangorestframework \
                                             gunicorn \
@@ -17,6 +16,6 @@ WORKDIR /script/mysite
 
 COPY ./startup.sh /run/startup.sh
 COPY ./django_postgres_vault /usr/local/lib/python3.12/site-packages
-COPY ./vault.py /script/vault.py
+COPY ./vault_pong.py /script/vault_pong.py
 
 ENTRYPOINT ["/run/startup.sh"]
