@@ -16,8 +16,8 @@ DEBUG = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ALLOWED_HOSTS = ["localhost"]
-CSRF_TRUSTED_ORIGINS = ['https://localhost']
+ALLOWED_HOSTS = ["localhost", "10.11.249.157"]
+CSRF_TRUSTED_ORIGINS = ['https://localhost', 'https://10.11.249.157']
 
 # Application definition
 

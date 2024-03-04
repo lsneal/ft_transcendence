@@ -6,7 +6,7 @@ function startGameLocal(gameId) {
         return ;
     gameId = Number(gameId)
 
-    fetch("https://localhost/api/pong/UserIdGameView", {//TODO: fetch sur user
+    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
         method: "GET",
     })
     .then((response) => response.json())

@@ -31,7 +31,7 @@ async function EventRegister () {
     };
 
     try {
-        const response = await fetch('https://localhost/api/users/register/', {
+        const response = await fetch('/api/users/register/', {
             method: 'POST',
             mode: "cors",
             credentials: 'include',

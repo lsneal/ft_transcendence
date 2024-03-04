@@ -3,6 +3,7 @@ version: "3.8"
 include:
   - users/common.yml
   - pong/common.yml
+  #- elk/common.yml
 
 services:
   nginx:
@@ -13,6 +14,7 @@ services:
       - ./pong/app/site/static/:/var/www
       - ./nginx/site/:/var/www/html/ #development purpose
       - vault_nginx:/opt # CHANGER OPT !!
+      - nginx_logs:/var/log/nginx
     restart: always
     ports:
       - "443:443"
@@ -25,6 +27,8 @@ services:
         condition: service_healthy
       django_pong:
         condition: service_healthy
+      #kibana:
+      #  condition: service_healthy
     healthcheck:
       test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
@@ -68,6 +72,7 @@ volumes:
   vault_django_users:
   vault_django_pong:
   vault_nginx:
+  nginx_logs:
   static:
     driver: local
     driver_opts:

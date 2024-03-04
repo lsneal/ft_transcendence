@@ -4,7 +4,7 @@ async function EventLogin42 () {
     let modal = bootstrap.Modal.getInstance(myModalEl);
 
     try {
-        const response = fetch('https://localhost/api/users/login42/', {
+        const response = fetch('/api/users/login42/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ async function EventLogin42 () {
         .then((data) =>{
             const popup = window.open(data, '_blank', "left=800,top=100,width=480,height=480");
             const checkPopup = setInterval(() => {
-                if (popup.window.location.href.includes("https://localhost/profile/")) {
+                if (popup.window.location.href.includes("/profile/")) {
                     popup.close()
                     modal.hide();
                     window.history.pushState(null, "Profile", "/profile/");

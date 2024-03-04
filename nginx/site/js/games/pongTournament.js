@@ -1,7 +1,21 @@
 let arrPlayer = new Array();
 
 function insertUsers() {
-    console.log("oo");
+    let nbPlayer = document.getElementById("nbP");
+    let input = document.getElementById("input_user");
+
+    nbPlayer = nbPlayer.value.split(' ');
+    nbPlayer = Number(nbPlayer[0]);
+    if (input.value == '')
+        return (1);
+    arrPlayer.push(input.value);
+    input.value = '';
+    if (arrPlayer.length == nbPlayer)
+    {
+        let users = document.getElementById("users");
+        users.style.display = 'none';
+        document.getElementById("list").style.display = 'block';
+    }
 }
 
 function CreateTournament() {
@@ -14,16 +28,6 @@ function CreateTournament() {
 
     let nbPlayer = document.getElementById("nbP");
     nbPlayer = Number(nbPlayer.value);
-
-    
-    //let inputs = document.getElementById("inputs");
-    //inputs.style.display = 'block';
-    //inputs.innerHTML = ``
-    //for (let i = 0; i < nbPlayer; i++)
-    //{
-    //    inputs.innerHTML += `<input type="text" name="name" id="name${i}"/>`;
-    //    
-    //}
 }
 
 function getName() {
@@ -36,7 +40,7 @@ function getName() {
         arrPlayer[i] = name.value
     }
 
-    fetch("https://localhost/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
+    fetch("/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -54,11 +58,11 @@ function getName() {
 
 function buildBracket(value) {
     const list = document.getElementById("list");
-    let inputs = document.getElementById("inputs");
+    //let inputs = document.getElementById("inputs");
     list.style.display = 'none';
-    inputs.style.display = 'none';
+    //inputs.style.display = 'none';
 
-    fetch("https://localhost/api/pong/joinGame/", {
+    fetch("/api/pong/joinGame/", {
         method: "POST",
     })
     .then((response) => response.json())
@@ -68,7 +72,7 @@ function buildBracket(value) {
 }
 
 function beforeStart(gameId, value) {
-    fetch("https://localhost/api/pong/UserIdGameView", {
+    fetch("/api/pong/UserIdGameView", {
         method: "GET",
     })
     .then((response) => response.json())
@@ -130,6 +134,7 @@ function playTournament(gameId, socket, tournament) {
         }
         if (data.type === "players")
         {
+            console.log("tournois = ", data.tournamentUsers);
             const bracket = document.getElementById("bracket");
             bracket.innerHTML = `<div style="background-color:powderblue;">
                            <h1>${data.player1}<h1>
@@ -201,7 +206,7 @@ function playTournament(gameId, socket, tournament) {
     }
 
     socket.onclose = () => {
-        const list = document.getElementById("list");
+        //const list = document.getElementById("list");
         posY = 250
         posX = 499
         if (window.innerWidth < 1288)
@@ -218,7 +223,7 @@ function playTournament(gameId, socket, tournament) {
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
         button3.style.display = 'block';
-        list.style.display = 'block';
+        //list.style.display = 'block';
     }
 }
 
