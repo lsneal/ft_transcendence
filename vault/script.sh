@@ -42,6 +42,8 @@ else
     private_key_django=$(openssl rand -hex 32)
     vault kv put kv/django_secrets django_key=$private_key_django
 
+    vault kv put kv/elasticsearch username=motdepassword
+
     vault policy write django_users_certif policies_users.hcl
     vault token create -policy="django_users_certif" | grep -o 'hvs\.[^\ ]*' > users_token
     mv users_token /django_users_token
@@ -53,6 +55,10 @@ else
     vault policy write nginx_certif policies_nginx.hcl
     vault token create -policy="nginx_certif" | grep -o 'hvs\.[^\ ]*' > n_token
     mv n_token /nginx_token
+
+    vault policy write devops_certif policies_devops.hcl
+    vault token create -policy="devops_certif" | grep -o 'hvs\.[^\ ]*' > dvps_token 
+    mv dvps_token /devops_token
 
     vault secrets enable pki
 
