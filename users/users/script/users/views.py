@@ -14,10 +14,12 @@ from .oauth import AuthorizationCodeClient, getInfoClient
 from .authenticate import CustomAuthentication
 
 from .models import User
-from .utils import gen_otp_url, gen_qr_img, gen_key_user
+from .utils import gen_otp_url, gen_key_user
 import pyotp
 from django.shortcuts import render
 import qrcode
+
+from django.db.models import F, Case, When, Value, FloatField
 
 def qr_code(request):
     def get(request):
@@ -170,7 +172,6 @@ class ActivateA2F(APIView):
         prvt_key = gen_key_user()
         user.totp_key = prvt_key
         otp_url = gen_otp_url(user.email, prvt_key) 
-        img = gen_qr_img(otp_url, user.email)
         user.save()
 
         qr = 'https://api.qrserver.com/v1/create-qr-code/?data=' + otp_url
@@ -196,8 +197,25 @@ class ActivateA2F(APIView):
 
         return response
         
-
 class LoginA2F(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('access_token')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+    
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+
+        response = Response()
+
+        if user.a2f is True:
+            response.data = { 'message': 'True' }
+        else:
+            reponse.data = { 'message': 'False' }
+        return response
+
     def post(self, request):
         token = request.COOKIES.get('access_token')
 
@@ -213,13 +231,9 @@ class LoginA2F(APIView):
 
         response = Response()
         if totp.now() == user_code:
-            response.data = {
-                'message': 'success'
-            }
+            response.data = { 'message': 'success' }
         else:
-            response.data = {
-                'message': 'failure'
-            }
+            response.data = { 'message': 'failure' }
         return response
     
 def getAccessToken(request):
@@ -351,3 +365,43 @@ class HealthView(APIView):
         }
         return response
 
+class UserStats(APIView):
+    def get(self, request):
+        response, access_token_obj = getAccessToken(request)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        serialiazer = UserSerializer(user)
+
+
+        response.data = {
+            'victory': serialiazer.data['victory'],
+            'nb_game': serialiazer.data['nb_game'],
+        }
+        return response
+
+
+
+class PlayerRanking(APIView):
+    def get(self, request):
+        players = User.objects.annotate(prc_win=Case(
+            When(nb_game__gt=0, then=(F('victory') / F('nb_game')) * 100),
+            default=Value(0),
+            output_field=FloatField()
+        )).filter(nb_game__gt=0).order_by('-prc_win')[:5]
+        
+        serialized_players = []
+        for player in players:
+            if player.nb_game != 0:
+                prc_win = player.prc_win
+            else:
+                prc_win = 0
+            serialized_player = {
+                'pseudo': player.pseudo,
+                'prc_win': player.prc_win,
+                'nb_game': player.nb_game,
+                'victory': player.victory,
+            }
+            serialized_players.append(serialized_player)
+
+        
+        return Response(serialized_players)

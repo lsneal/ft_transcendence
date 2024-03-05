@@ -8,16 +8,11 @@ async function EventGetQRCode() {
             }
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data);
-            console.log(data.pseudo);
-            console.log(data.url)
-            const errorMessage = data.url;
-            const errorElement = document.getElementById('2FA-link');
-            errorElement.innerText = errorMessage;
-            errorElement.style.display = 'block'; // A
-            // If it fails, that means the user isn't connected or his cookies expired, 
-            // so put error and redirect him to Home (or refresh token ?) 
-
+            console.log('data.url: ', data.url)
+            var qrcode = document.createElement("img");
+            qrcode.src = data.url;
+            var imgElement = document.getElementById("2FA-link");
+            imgElement.src = qrcode.src;
         });
 
     } catch (error) {
