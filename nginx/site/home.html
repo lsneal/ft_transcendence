@@ -1,39 +1,39 @@
 <div class="modal fade" id="modalBurger" tabindex="-1" aria-labelledby="modalBurgerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-     
-      <div class="modal-body">
-        <div><button type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-person-praying"></i>    Paypal</button></div>
-      </div>
-     
-    </div>
-  </div>
+<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content">
+	
+	<div class="modal-body">
+		<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-person-praying"></i>    Paypal</button></div>
+	</div>
+	
+	</div>
+</div>
 </div>
 
 
 <div class="container" id="modalHome">
-    <div class="row justify-content-center main-buttons">    
-      <div class="col-6 my-5">
-        <div><button id="Buttonlogin" data-bs-toggle="modal" data-bs-target="#modalLogin" type="button" class="btn btn-lg btn-primary mb-3 w-100">Login</button></div>
-        <div><button id="ButtonRegistrer" data-bs-toggle="modal" data-bs-target="#modalRegistrer" type="button" class="btn btn-lg btn-primary mb-3 w-100">Registrer</button></div>
-        <div><button id="ButtonScoreboard" data-bs-toggle="modal" data-bs-target="#modalScoreboard" type="button" class="btn btn-lg btn-primary w-100">Scoreboard</button></div>
-      </div>
-    </div>
+	<div class="row justify-content-center main-buttons">    
+	<div class="col-6 my-5">
+		<div><button id="Buttonlogin" data-bs-toggle="modal" data-bs-target="#modalLogin" type="button" class="btn btn-lg btn-primary mb-3 w-100">Login</button></div>
+		<div><button id="ButtonRegistrer" data-bs-toggle="modal" data-bs-target="#modalRegistrer" type="button" class="btn btn-lg btn-primary mb-3 w-100">Registrer</button></div>
+		<div><button id="BtnRank" data-bs-toggle="modal" data-bs-target="#modalScoreboard" type="button" class="btn btn-lg btn-primary w-100">Scoreboard</button></div>
+	</div>
+	</div>
 </div>
 
 
 <!-- MODAL LOGIN -->
 <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLogin" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
- 
-      <div class="modal-body">
-        <div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
-        <div><button type="button" id="btnLogin42" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
-    
-      </div>
-    </div>
-  </div>
+<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content">
+
+	<div class="modal-body">
+		<div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
+		<div><button type="button" id="btnLogin42" class="btn btn-lg btn-outline-warning mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
+	
+	</div>
+	</div>
+</div>
 </div>
 
 <!-- MODAL LOGIN EMAIL-->
@@ -63,43 +63,59 @@
 
 <!-- MODAL REGITRER -->
 <div class="modal fade" id="modalRegistrer" tabindex="-1" aria-labelledby="modalRegistrer" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form class="row g-3" id="formRegister">
-          <div class="col-md-6">
-            <label for="email" class="form-label">Email</label>
-            <input name="email" id="email" type="text" class="form-control" required>
-          </div>
-          <div class="col-md-4">
-            <label for="pseudo" class="form-label">Username</label>
-            <input type="text" class="form-control" id="pseudo" aria-describedby="inputGroupPrepend2" required>
-          </div>
-          <div class="col-md-4">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" required>
-          </div>
-          <div class="col-md-4">
-            <label for="ConfirmPassword" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="ConfirmPassword" required>
-            <div id="error-message-ConfirmPass" class="text-danger" style="display: none;"></div>
-        </div>
-          <div class="col-md-12">
-            <a class="btn btn-primary" id="btnRegister" type="submit" data-link >Submit</a>
-            <div id="error-message-Register" class="text-danger" style="display: none;"></div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content">
+	<div class="modal-body">
+		<form class="row g-3" id="formRegister">
+		<div class="col-md-6">
+			<label for="email" class="form-label">Email</label>
+			<input name="email" id="email" type="text" class="form-control" required>
+		</div>
+		<div class="col-md-4">
+			<label for="pseudo" class="form-label">Username</label>
+			<input type="text" class="form-control" id="pseudo" aria-describedby="inputGroupPrepend2" required>
+		</div>
+		<div class="col-md-4">
+			<label for="password" class="form-label">Password</label>
+			<input type="password" class="form-control" id="password" required>
+		</div>
+		<div class="col-md-4">
+			<label for="ConfirmPassword" class="form-label">Confirm Password</label>
+			<input type="password" class="form-control" id="ConfirmPassword" required>
+			<div id="error-message-ConfirmPass" class="text-danger" style="display: none;"></div>
+		</div>
+		<div class="col-md-12">
+			<a class="btn btn-primary" id="btnRegister" type="submit" data-link >Submit</a>
+			<div id="error-message-Register" class="text-danger" style="display: none;"></div>
+		</div>
+		</form>
+	</div>
+	</div>
+</div>
 </div>
 
 
 <!-- MODAL SCORE -->
 <div class="modal fade modal-xl" id="modalScoreboard" tabindex="-1" aria-labelledby="modalScoreboard" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-  <div class="modal-body"></div>
-</div>
+	<div class="modal-content">
+	<div class="modal-body">
+		<table id="scoreboard-table" class="table table-dark table-striped table-s">
+			<thead>
+			<tr>
+			<th scope="col">Rank</th>
+			<th scope="col">IMG</th>
+			<th scope="col">Pseudo</th>
+			<th scope="col">Victory</th>
+			<th scope="col">Nb_game</th>
+			<th scope="col">Pourcentage de victoire</th>
+			</tr>
+			</thead>
+			<tbody>
+			<!-- Les données du tableau seront ajoutées ici dynamiquement -->
+			</tbody>
+		</table>
+	</div>
+	</div>
 </div>
 </div>
