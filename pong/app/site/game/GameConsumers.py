@@ -34,14 +34,12 @@ class GameConsumer(WebsocketConsumer):
             managerTournament.tournaments[tournamentId].users = users
             managerTournament.tournaments[tournamentId].nb_user = nb_user
             managerTournament.tournaments[tournamentId].tournamentinit()
-            usersTournament = managerTournament.tournaments[tournamentId].tournamentUsers()
             managerTournament.tournaments[tournamentId].player1 = self
             managerTournament.tournaments[tournamentId].player2 = self
             managerTournament.tournaments[tournamentId].player1.send(text_data=json.dumps({
                 'type':'players',
                 'player1': managerTournament.tournaments[tournamentId].match[0],
                 'player2': managerTournament.tournaments[tournamentId].match[1],
-                'tournamentUsers': usersTournament,
             }))
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self
@@ -70,7 +68,6 @@ class GameConsumer(WebsocketConsumer):
                 'type':'players',
                 'player1': managerTournament.tournaments[tournamentId].match[0],
                 'player2': managerTournament.tournaments[tournamentId].match[1],
-                'tournamentUsers': managerTournament.tournaments[tournamentId].arrWinner,
             }))
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self

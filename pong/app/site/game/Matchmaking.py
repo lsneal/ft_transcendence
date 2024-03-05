@@ -10,6 +10,8 @@ class Matchmaking():
             if game.player2 == None:
                 game.player2 = 'p2'
                 return game
+            elif not game.id:
+                break
             nbGame += 1
         self.games.append(Pong('p1', nbGame))
         return self.games[nbGame]

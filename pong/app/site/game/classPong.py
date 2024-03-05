@@ -49,9 +49,10 @@ class Pong:
         hitWall = 0
         self.scoreP1 = 0
         self.scoreP2 = 0
-        i = 0
-        #TODO quitte en plei gmae
-        while i <= 4:
+        winner = None
+        i = 3
+        #TODO quitte en plein game
+        while i >= -1:
             self.player1.send(text_data=json.dumps({
                 'type':'time',
                 'time':i,
@@ -62,24 +63,38 @@ class Pong:
                     'time':i,
                 }))
             time.sleep(0.5)
-            i += 1
+            i -= 1
         while self.scoreP1 < 5 and self.scoreP2 < 5:
             if ballPosX == 499 and ballPosY == 250:
-                while ballPosX > hitLeft:
-                    ballPosX -= 15
-                    self.ballSendToJs(ballPosX, ballPosY, typeParty)
-                    time.sleep(0.03)            
+                if winner == 'p2':
+                    while ballPosX > hitLeft:
+                        ballPosX -= 13
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
+                        time.sleep(0.03)
+                        winner = None            
+                elif winner == 'p1':
+                    while ballPosX < hitRight:
+                        ballPosX += 13
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
+                        time.sleep(0.03)
+                        winner = None
+                else:
+                    while ballPosX > hitLeft:
+                        ballPosX -= 13
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
+                        time.sleep(0.03)
+            #hit box 
             if self.leftBoxTop - ballPosY < 30 and self.leftBoxTop - ballPosY > -90 and ballPosX <= hitLeft:
                 if self.leftBoxTop - ballPosY > -20:
                     hitWall = 0        
                     while ballPosX < hitRight:
                         if hitWall == 1:
-                            ballPosY += 18
+                            ballPosY += 13
                         else:
                             ballPosY -= 10
                         if ballPosY <  0:
                             hitWall = 1
-                        ballPosX += 18
+                        ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 elif self.leftBoxTop - ballPosY < -50:
@@ -91,18 +106,19 @@ class Pong:
                             ballPosY += 10
                         if ballPosY > 460:
                             hitWall = 1
-                        ballPosX += 18
+                        ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 else:
                     while ballPosX < hitRight:
-                        ballPosX += 18
+                        ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
             elif ballPosX < hitLeft :
                 ballPosX = 499
                 ballPosY = 250
                 self.scoreP2 += 1
+                winner = 'p2'
             
             if self.rightBoxTop - ballPosY < 30 and self.rightBoxTop - ballPosY > -90 and ballPosX >= hitRight:
                 if self.rightBoxTop - ballPosY > -20:
@@ -114,7 +130,7 @@ class Pong:
                             ballPosY -= 10
                         if ballPosY <  0:
                             hitWall = 1
-                        ballPosX -= 18
+                        ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 elif self.rightBoxTop - ballPosY < -50:
@@ -126,18 +142,19 @@ class Pong:
                             ballPosY += 10
                         if ballPosY > 460:
                             hitWall = 1
-                        ballPosX -= 18
+                        ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 else:
                     while ballPosX > hitLeft:
-                        ballPosX -= 18
+                        ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
             elif ballPosX > hitRight:
                 ballPosX = 499
                 ballPosY = 250
                 self.scoreP1 += 1
+                winner = 'p1'
         self.ballSendToJs(499, 250, typeParty)
         self.barSendToJs('ArrowUp', 250, 250)
         if typeParty == 'game':
