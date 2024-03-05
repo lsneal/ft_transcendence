@@ -14,7 +14,7 @@ from .oauth import AuthorizationCodeClient, getInfoClient
 from .authenticate import CustomAuthentication
 
 from .models import User
-from .utils import gen_otp_url, gen_qr_img, gen_key_user
+from .utils import gen_otp_url, gen_key_user
 import pyotp
 from django.shortcuts import render
 import qrcode
@@ -170,7 +170,6 @@ class ActivateA2F(APIView):
         prvt_key = gen_key_user()
         user.totp_key = prvt_key
         otp_url = gen_otp_url(user.email, prvt_key) 
-        img = gen_qr_img(otp_url, user.email)
         user.save()
 
         qr = 'https://api.qrserver.com/v1/create-qr-code/?data=' + otp_url
