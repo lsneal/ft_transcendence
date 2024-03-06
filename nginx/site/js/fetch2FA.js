@@ -1,14 +1,15 @@
 
 async function EventGetQRCode() {
     try {
-        const response = await fetch('/api/users/activate2fa', {
+        const response = await fetch('https://localhost/api/users/activate2fa/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => response.json())
         .then((data) =>{
-            console.log('data.url: ', data.url)
+            console.log(data.qr)
+            console.log('data.url: ', data.qr)
             var qrcode = document.createElement("img");
             qrcode.src = data.url;
             var imgElement = document.getElementById("2FA-link");

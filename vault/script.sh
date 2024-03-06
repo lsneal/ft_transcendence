@@ -62,6 +62,20 @@ else
 
     vault secrets enable pki
 
+    #vault write database/config/my-elasticsearch-database \
+    #plugin_name="elasticsearch-database-plugin" \
+    #allowed_roles="internally-defined-role,externally-defined-role" \
+    #username=kibana_system \
+    #password=kibana \
+    #url=http://kibana:5601
+#
+    #vault write database/config/my-elasticsearch-database \
+    #plugin_name="elasticsearch-database-plugin" \
+    #allowed_roles="internally-defined-role" \
+    #username=kibana_system \
+    #password=kibana \
+    #url=http://kibana:5601
+
     wait $!
 
 fi
