@@ -5,18 +5,25 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-      - vault_elk:/opt
+      - vault_elastic:/opt
     user: "0"
     networks:
       - elk
       - vault_network
     command: >
       bash -c '
-        export VAULT_TOKEN=$(cat /opt/dvps_token)
-        if [ x${ELASTIC_PASSWORD} == x ]; then
+      export VAULT_TOKEN=$(cat /opt/logstash_token)
+      jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
+      export ELASTIC_PASSWORD=$($jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
+
+      jsoncreeds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/kibana)
+      export KIBANA_PASSWORD=$($jsoncreeds | sed -n 's/.*"kibana_system":"\([^"]*\).*/\1/p')
+
+
+        if [ x$ELASTIC_PASSWORD == x ]; then
           echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
           exit 1;
-        elif [ x${KIBANA_PASSWORD} == x ]; then
+        elif [ x$KIBANA_PASSWORD == x ]; then
           echo "Set the KIBANA_PASSWORD environment variable in the .env file";
           exit 1;
         fi;
@@ -46,7 +53,7 @@ services:
         echo "Waiting for Elasticsearch availability";
         until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
         echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"$KIBANA_PASSWORD\"}" | grep -q "^{}"; do sleep 10; done;
         echo "All done!";
       '
     healthcheck:
@@ -63,8 +70,11 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
+      - vault_elastic:/opt
+      - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
     networks:
       - elk
+      - vault_network
     expose:
       - 9200
     restart: always
@@ -72,7 +82,7 @@ services:
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=es01
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      #- ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -94,7 +104,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+          "curl -s --cacert config/certs/es01/es01.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
         ]
       interval: 15s
       timeout: 10s
@@ -104,13 +114,16 @@ services:
     depends_on:
       es01:
         condition: service_healthy
-    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    container_name: kibana
+    build: kibana
     volumes:
       - certs:/usr/share/kibana/config/certs
       - kibanadata:/usr/share/kibana/data
+      - vault_kibana:/opt
     networks:
       - elk
       - nginx
+      - vault_network
     restart: always
     expose:
       - 5601
@@ -118,8 +131,8 @@ services:
       - SERVERNAME=kibana
       - xpack.reporting.roles.enabled=false
       - ELASTICSEARCH_HOSTS=https://es01:9200
-      - ELASTICSEARCH_USERNAME=kibana_system
-      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+      #- ELASTICSEARCH_USERNAME=kibana_system
+      #- ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     mem_limit: ${MEM_LIMIT}
     healthcheck:
@@ -145,20 +158,22 @@ services:
       - ./logstash/:/usr/share/logstash/pipeline/:ro
       - logstashdata:/usr/share/logstash/data
       - nginx_logs:/var/log/nginx
+      - ./docker-entrypoint:/usr/local/bin/docker-entrypoint
+      - vault_logstash:/opt
     labels:
       co.elastic.logs/module: logstash
     restart: always
     networks:
       - elk
       #- users_network
+      - vault_network
     expose:
       - 5044/udp
     environment:
-
       - NODE_NAME=logstash
       - xpack.monitoring.enabled=false
-      - ELASTIC_USER=elastic
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      #- ELASTIC_USER=elastic
+      #- ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_HOSTS=https://es01:9200
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     command: logstash -f /usr/share/logstash/pipeline/
