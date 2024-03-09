@@ -30,9 +30,9 @@ fi
 # This is also sourced in elasticsearch-env, and is only needed here
 # as well because we use ELASTIC_PASSWORD below. Sourcing this script
 # is idempotent.
-export VAULT_TOKEN=$(cat /opt/logstash_token)
+export VAULT_TOKEN=$(cat /opt/elasticsearch_token)
 jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
-export ELASTIC_PASSWORD=$($jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
+export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
 
 source /usr/share/elasticsearch/bin/elasticsearch-env-from-file
 
