@@ -1,19 +1,23 @@
 
 async function EventGetQRCode() {
     try {
-        const response = await fetch('https://localhost/api/users/activate2fa/', {
+        const response = await fetch('/api/users/activate2fa', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data.qr)
-            console.log('data.url: ', data.qr)
-            var qrcode = document.createElement("img");
-            qrcode.src = data.url;
-            var imgElement = document.getElementById("2FA-link");
-            imgElement.src = qrcode.src;
+            console.log(data);
+            console.log(data.pseudo);
+            console.log(data.url)
+            const errorMessage = data.url;
+            const errorElement = document.getElementById('2FA-link');
+            errorElement.innerText = errorMessage;
+            errorElement.style.display = 'block'; // A
+            // If it fails, that means the user isn't connected or his cookies expired, 
+            // so put error and redirect him to Home (or refresh token ?) 
+
         });
 
     } catch (error) {

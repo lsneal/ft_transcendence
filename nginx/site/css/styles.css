@@ -133,7 +133,7 @@ body{
 	position: relative;
 	width: 320px;
 	margin: 0 auto;
-	font-size: 115%;
+	font-size: x-large;
 }
 
 .otc fieldset {
@@ -171,3 +171,4 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+

@@ -56,18 +56,6 @@ function playGameLocal(gameId, socket)
                 }))
             }
         })
-
-        window.addEventListener("keydown", function (e) {
-            if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
-            {
-                socket.send(JSON.stringify({
-                    'game':'in progress',
-                    'moov':e.key,
-                    'gameId': gameId,
-                    'typeParty': 'game'
-                }))
-            }
-        })
     }
 
     socket.onmessage = function (event) {
@@ -110,7 +98,7 @@ function playGameLocal(gameId, socket)
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '-1')
+            if (data.time == '4')
             {
                 document.getElementById("time").style.display = 'none';
             }

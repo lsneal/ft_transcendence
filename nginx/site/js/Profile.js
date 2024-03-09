@@ -25,11 +25,11 @@ export default class extends AbstractView {
       document.getElementById("LocalGameButton").addEventListener('click',event  => {
         window.history.pushState(null, "local", "/local/");
         window.dispatchEvent(new Event('popstate'));
-      });
+      });   
       document.getElementById("ButtonChange").addEventListener('click', EventChange);
-      document.getElementById("flexSwitchTwoFA").addEventListener('click', EventActiveTwoFA);
       document.getElementById("flexSwitchTwoFA").addEventListener('click', EventGetQRCode);
-      document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+      
+      document.getElementById("ButtonOtp").addEventListener('click', EventActiveTwoFA);
     }
 
     async getHtml() {
