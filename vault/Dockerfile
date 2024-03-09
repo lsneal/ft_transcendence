@@ -9,7 +9,9 @@ COPY ./conf/conf.json /vault/config/
 COPY ./script.sh .
 RUN chmod +x script.sh
 
-COPY ./policies/policies_devops.hcl .
+COPY ./policies/policies_elasticsearch.hcl .
+COPY ./policies/policies_kibana.hcl .
+COPY ./policies/policies_logstash.hcl .
 COPY ./policies/policies_users.hcl .
 COPY ./policies/policies_pong.hcl .
 COPY ./policies/policies_nginx.hcl .

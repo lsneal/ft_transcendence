@@ -51,7 +51,9 @@ services:
       - vault_django_pong:/django_pong_token
       - vault_django_users:/django_users_token
       - vault_nginx:/nginx_token
-      - vault_elk:/devops_token
+      - vault_elastic:/token_elastic
+      - vault_kibana:/token_kibana
+      - vault_logstash:/token_logstash
     restart: always
     healthcheck:
       test:
