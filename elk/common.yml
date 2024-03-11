@@ -22,6 +22,7 @@ services:
     depends_on:
       setup:
         condition: service_healthy
+    container_name: es01
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
@@ -59,7 +60,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s --cacert config/certs/es01/es01.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
         ]
       interval: 15s
       timeout: 10s
@@ -101,17 +102,19 @@ services:
   
   logstash:
     depends_on:
-      kibana:
+      es01:
         condition: service_healthy
-    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}    
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
     user: "1000"
-    volumes:  
+    volumes:
       - certs:/usr/share/logstash/config/certs
-      #- ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
+      - ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
       - ./nginx:/usr/share/logstash/pattern/nginx:ro
-      - ./logstash/:/usr/share/logstash/pipeline/:ro
+      - ./logstash/config:/usr/share/logstash/pipeline/
+      - ./logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:st
       - logstashdata:/usr/share/logstash/data
-      - nginx_logs:/var/log/nginx
+      - nginx_logs:/var/log/
       - ./entrypoint/logstash_entrypoint:/logstash_entrypoint
       - vault_logstash:/opt
     labels:
