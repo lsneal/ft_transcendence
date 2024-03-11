@@ -31,7 +31,7 @@ jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vau
 export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
 
 if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
-  exec logstash -f /usr/share/logstash/pipeline/nginx.conf
+  exec logstash
 else
   exec "$@"
 fi
