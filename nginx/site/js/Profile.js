@@ -27,9 +27,11 @@ export default class extends AbstractView {
         window.dispatchEvent(new Event('popstate'));
       });
       document.getElementById("ButtonChange").addEventListener('click', EventChange);
-      document.getElementById("flexSwitchTwoFA").addEventListener('click', EventActiveTwoFA);
       document.getElementById("flexSwitchTwoFA").addEventListener('click', EventGetQRCode);
+      document.getElementById("Valid2FA").addEventListener('click', EventActiveTwoFA);
       document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+      document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
+
     }
 
     async getHtml() {

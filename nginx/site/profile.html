@@ -5,7 +5,7 @@
         <div class="modal-body">
 			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-volume-high"></i>Profile</button></div>
 			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal" data-bs-target="#modaltwoFA"><i class="fa-solid fa-gear"></i>   2FA</button></div>
-			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore">Scoreboard</a>
+			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore">Personal Stats</a>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
         </div>
        
@@ -13,15 +13,20 @@
     </div>
   </div>
 
-  <div  class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="pie-chart" id="mychart"></div>		
-			</div>
-		</div>
-	</div>
-  </div>
+<div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 
   <div  class="modal fade" id="modalProfile" tabindex="-1" aria-labelledby="modalProfile" aria-hidden="true"> 
@@ -62,15 +67,15 @@
 				<form class="otc" id="form-twoFA"  name="one-time-code">
 				  <div><h3 class="text-center">TWO-FACTOR AUTHENTICATION</h3></div>	
 				  <div class="form__group form__pincode centered rounded mx-auto d-block">
-					<input type="tel" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
-					<input type="tel" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
-					<input type="tel" name="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
-					<input type="tel" name="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
-					<input type="tel" name="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
-					<input type="tel" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
+					<input type="tel" id="code1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
+					<input type="tel" id="code2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
+					<input type="tel" id="code3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
+					<input type="tel" id="code4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
+					<input type="tel" id="code5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
+					<input type="tel" id="code6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
 				  </div>
 				  <div class="form__buttons">
-					<a class="btn btn-lg mb-3 w-100 btn-primary" disabled>Validatation</a>
+					<a class="btn btn-lg mb-3 w-100 btn-primary" id="Valid2FA" type="submit" data-link>Validatation</a>
 				  </div>
 				</form>
 			  </div>
@@ -81,7 +86,7 @@
 </div>
 
 
-<div class="button-with-background container">
+<div class="button-with-background container my-5">
 
 		<div class="row text-center">
 				

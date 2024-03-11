@@ -7,17 +7,15 @@ async function EventLogin () {
     let modal = bootstrap.Modal.getInstance(myModalEl);
 
 
+    var Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
+        keyboard: false
+      });
+
     if (!email || !password) {
         alert('Veuillez remplir tous les champs !');
         modal.hide();
         return; 
     }
-
-    /*var getCookie = function(name) {
-      var re = new RegExp(name + "=([^;]+)");
-      var value = re.exec(document.cookie);
-      return (value != null) ? unescape(value[1]) : null;
-    };*/
 
     const formData = {
         email: email,
@@ -35,12 +33,35 @@ async function EventLogin () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data.detail);
             if (data.detail === undefined)
             {
-                modal.hide();
-                window.history.pushState(null, "Profile", "/profile/");
-                window.dispatchEvent(new Event('popstate'));
+                try {
+                    const response =  fetch('/api/users/login/', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    }).then((response) => response.json())
+                    .then((data) =>{
+                    console.log('message: ', data.message);
+                    if (data.message == 'True'){
+                        console.log('active');
+                        Modal2fa.show();
+                        
+
+                    }    
+                    else{
+                        console.log('pas active');
+                        modal.hide();
+                        window.history.pushState(null, "Profile", "/profile/");
+                        window.dispatchEvent(new Event('popstate'));
+                    }
+                    });
+                }
+                catch (error) {
+                  console.log('Erreur');
+                };
+             
             }
             else
             {
@@ -63,7 +84,7 @@ async function EventLogin () {
       console.log('Erreur');
     };
 
-
+  
     // If login fail then don't do that and add the message in the modal with js
     
 }

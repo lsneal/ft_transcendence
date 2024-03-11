@@ -93,6 +93,23 @@ class Login42View(APIView):
 
 
 class LoginView(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('access_token')
+
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+
+        response = Response()
+        if user.a2f is True:
+            response.data = {
+                'message': 'True'
+            }
+        else:
+            response.data = {
+                'message': 'False'
+            }
+        return response
     def post(self, request):
         email = request.data.get('email', None)
         password = request.data.get('password', None)
@@ -376,6 +393,8 @@ class UserStats(APIView):
         response.data = {
             'victory': serialiazer.data['victory'],
             'nb_game': serialiazer.data['nb_game'],
+            'img': serialiazer.data['profile_image'],
+            'prc_win': ['serialiazer.prc_win'],
         }
         return response
 
