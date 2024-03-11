@@ -5,8 +5,6 @@
 # This may be undesirable, especially if logstash.yml is bind-mounted from the
 # host system.
 
-
-
 env2yaml /usr/share/logstash/config/logstash.yml
 
 if [[ -n "$LOG_STYLE" ]]; then
