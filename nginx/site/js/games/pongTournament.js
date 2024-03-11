@@ -127,25 +127,19 @@ function playTournament(gameId, socket, tournament) {
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '-1')
+            if (data.time == '4')
             {
                 document.getElementById("time").style.display = 'none';
             }
         }
         if (data.type === "players")
-        {   
+        {
+            console.log("tournois = ", data.tournamentUsers);
             const bracket = document.getElementById("bracket");
-            if (data.player1 != undefined)
-            {    
-                bracket.innerHTML = `<div style="background-color:red;">
-                                        <h1> ${data.player1} vs ${data.player2}</h1>
-                                    </div>`;
-            }
-            else
-            {
-                const bracket = document.getElementById("bracket");
-                bracket.innerHTML = ``
-            }
+            bracket.innerHTML = `<div style="background-color:powderblue;">
+                           <h1>${data.player1}<h1>
+                           <h1>${data.player2}<h1>
+                       </div>`;
         }
         if (data.type === "end")
         {
@@ -243,6 +237,5 @@ function reportWindowSize() {
         document.getElementById("game").style.width = "1000px";
     }
 }
-
 
 window.onresize = reportWindowSize;
