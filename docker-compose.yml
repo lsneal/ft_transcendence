@@ -4,6 +4,7 @@ include:
   - users/common.yml
   - pong/common.yml
   - elk/common.yml
+  - logs/common.yml
 
 services:
   nginx:
@@ -25,6 +26,8 @@ services:
       django_users:
         condition: service_healthy
       django_pong:
+        condition: service_healthy
+      grafana:
         condition: service_healthy
       kibana:
         condition: service_healthy
