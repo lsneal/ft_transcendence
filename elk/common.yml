@@ -171,7 +171,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://localhost:5044 | grep -q 'HTTP/1.1 302 Found'",
+          "curl -s -I http://localhost:9600",
         ]
       interval: 10s
       timeout: 10s
