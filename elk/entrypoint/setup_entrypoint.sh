@@ -7,7 +7,6 @@ jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vau
 export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
 jsoncreeds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/kibana)
 export KIBANA_PASSWORD=$(echo $jsoncreeds | sed -n 's/.*"kibana_system":"\([^"]*\).*/\1/p')
-echo $KIBANA_PASSWORD
 
 if [ x$ELASTIC_PASSWORD == x ]; then
   echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
