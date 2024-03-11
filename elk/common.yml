@@ -6,12 +6,12 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - vault_elastic:/opt
-      - ./entrypoint.sh:/entrypoint.sh
+      - ./entrypoint/setup_entrypoint.sh:/setup_entrypoint.sh
     user: "0"
     networks:
       - elk
       - vault_network
-    entrypoint: ["bash", "/entrypoint.sh"]
+    entrypoint: ["bash", "/setup_entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
       interval: 5s
@@ -27,7 +27,7 @@ services:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
       - vault_elastic:/opt
-      - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - ./entrypoint/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
     networks:
       - elk
       - vault_network
@@ -38,7 +38,6 @@ services:
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=es01
-      #- ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -88,7 +87,6 @@ services:
       - xpack.reporting.roles.enabled=false
       - ELASTICSEARCH_HOSTS=https://es01:9200
       - ELASTICSEARCH_USERNAME=kibana_system
-      #- ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     mem_limit: ${MEM_LIMIT}
     healthcheck:
@@ -105,18 +103,16 @@ services:
     depends_on:
       kibana:
         condition: service_healthy
-    container_name: logstash
-    build: logstash
-    #user: "1000"
-    volumes:
+    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}    
+    user: "1000"
+    volumes:  
       - certs:/usr/share/logstash/config/certs
       #- ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
       - ./nginx:/usr/share/logstash/pattern/nginx:ro
       - ./logstash/:/usr/share/logstash/pipeline/:ro
       - logstashdata:/usr/share/logstash/data
       - nginx_logs:/var/log/nginx
-      #- ./docker-entrypoint:/usr/local/bin/docker-entrypoint
-    #- ./docker-entrypoint:/docker-entrypoint
+      - ./entrypoint/logstash_entrypoint:/logstash_entrypoint
       - vault_logstash:/opt
     labels:
       co.elastic.logs/module: logstash
@@ -131,11 +127,9 @@ services:
       - NODE_NAME=logstash
       - xpack.monitoring.enabled=false
       - ELASTIC_USER=elastic
-      #- ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_HOSTS=https://es01:9200
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-    #entrypoint: ["bash", "/docker-entrypoint"]
-    #command: logstash -f /usr/share/logstash/pipeline/
+    entrypoint: ["bash", "/logstash_entrypoint"]
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
