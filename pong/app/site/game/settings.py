@@ -97,9 +97,9 @@ with open(token_file_path, "r") as file:
 
 vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
 
-secret_key = vault_client.read('kv/django_secrets')
+secret_key = vault_client.read('kv/django_secrets_pong')
 
-SECRET_KEY = secret_key['data']['django_key']
+SECRET_KEY = secret_key['data']['django_key_pong']
 
 
 DATABASES = {

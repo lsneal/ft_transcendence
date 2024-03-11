@@ -27,8 +27,13 @@ export LS_JAVA_OPTS="-Dls.cgroup.cpuacct.path.override=/ -Dls.cgroup.cpu.path.ov
 
 export VAULT_TOKEN=$(cat /opt/logstash_token)
 export ELASTIC_USER=elastic
+
 jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
 export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
+
+export DATABASE_USERS=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/postgres_users | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+export DATABASE_PONG=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/postgres_pong | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+## ADD LAST DB
 
 if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
   exec logstash
