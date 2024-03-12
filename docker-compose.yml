@@ -3,8 +3,8 @@ version: "3.8"
 include:
   - users/common.yml
   - pong/common.yml
-  - elk/common.yml
-  #- logs/common.yml
+  #- elk/common.yml
+  - logs/common.yml
 
 services:
   nginx:
@@ -27,8 +27,8 @@ services:
         condition: service_healthy
       django_pong:
         condition: service_healthy
-      #grafana:
-      #  condition: service_healthy
+      grafana:
+        condition: service_healthy
       #kibana:
       #  condition: service_healthy
     healthcheck:
@@ -56,6 +56,7 @@ services:
       - vault_elastic:/token_elastic
       - vault_kibana:/token_kibana
       - vault_logstash:/token_logstash
+      - vault_grafana:/token_grafana
     restart: always
     healthcheck:
       test:
@@ -74,6 +75,7 @@ networks:
     driver: bridge
 
 volumes:
+  vault_grafana:
   vault_elastic:
   vault_kibana:
   vault_logstash:
