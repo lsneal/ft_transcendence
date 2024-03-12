@@ -201,13 +201,14 @@ function playTournament(gameId, socket, tournament) {
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '-1')
+            if (data.time == '4')
             {
                 document.getElementById("time").style.display = 'none';
             }
         }
         if (data.type === "players")
-        {   
+        {
+            console.log("tournois = ", data.tournamentUsers);
             const bracket = document.getElementById("bracket");
             if (data.player1 != undefined)
             {    
@@ -321,6 +322,5 @@ function reportWindowSize() {
         document.getElementById("game").style.width = "1000px";
     }
 }
-
 
 window.onresize = reportWindowSize;

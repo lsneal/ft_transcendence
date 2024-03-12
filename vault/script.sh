@@ -41,24 +41,44 @@ else
     vault secrets enable kv
     private_key_django=$(openssl rand -hex 32)
     vault kv put kv/django_secrets django_key=$private_key_django
+    ################## mettre une deuxieme cle pour users et pong
 
-    vault kv put kv/elasticsearch username=motdepassword
 
+    elastic_password=$(openssl rand -hex 32 | sha256sum | sed 's/ .*//')
+    vault kv put kv/elasticsearch elastic=$elastic_password
+
+    kibana_password=$(openssl rand -hex 32 | sha256sum | sed 's/ .*//')
+    vault kv put kv/kibana kibana_system=$kibana_password
+
+    # users
     vault policy write django_users_certif policies_users.hcl
     vault token create -policy="django_users_certif" | grep -o 'hvs\.[^\ ]*' > users_token
     mv users_token /django_users_token
 
+    # pong
     vault policy write django_pong_certif policies_pong.hcl
     vault token create -policy="django_pong_certif" | grep -o 'hvs\.[^\ ]*' > pong_token
     mv pong_token /django_pong_token
 
+    # nginx
     vault policy write nginx_certif policies_nginx.hcl
     vault token create -policy="nginx_certif" | grep -o 'hvs\.[^\ ]*' > n_token
     mv n_token /nginx_token
 
-    vault policy write devops_certif policies_devops.hcl
-    vault token create -policy="devops_certif" | grep -o 'hvs\.[^\ ]*' > dvps_token 
-    mv dvps_token /devops_token
+    # elasticsearch
+    vault policy write elasticsearch_certif policies_elasticsearch.hcl
+    vault token create -policy="elasticsearch_certif" | grep -o 'hvs\.[^\ ]*' > elasticsearch_token 
+    mv elasticsearch_token /token_elastic
+
+    # kibana 
+    vault policy write kibana_certif policies_kibana.hcl
+    vault token create -policy="kibana_certif" | grep -o 'hvs\.[^\ ]*' > kibana_token
+    mv kibana_token /token_kibana
+
+    # logstash
+    vault policy write logstash_certif policies_logstash.hcl
+    vault token create -policy="logstash_certif" | grep -o 'hvs\.[^\ ]*' > logstash_token
+    mv logstash_token /token_logstash
 
     vault secrets enable pki
 
