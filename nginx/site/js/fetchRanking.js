@@ -1,4 +1,4 @@
-getRankingPlayers() {
+async function getRankingPlayers() {
     try {
         const response = await fetch('https://localhost/api/users/rank/', {
             method: 'GET',

@@ -1,66 +1,74 @@
 let arrPlayer = new Array();
 
-function insertUsers() {
-    let nbPlayer = document.getElementById("nbP");
-    let input = document.getElementById("input_user");
-
-    nbPlayer = nbPlayer.value.split(' ');
-    nbPlayer = Number(nbPlayer[0]);
-    if (input.value == '')
-        return (1);
-    arrPlayer.push(input.value);
-    input.value = '';
-    if (arrPlayer.length == nbPlayer)
-    {
-        let users = document.getElementById("users");
-        users.style.display = 'none';
-        document.getElementById("list").style.display = 'block';
-    }
-}
-
 function CreateTournament() {
-
+    if (document.getElementById("resultMatch") != null)
+        document.getElementById("resultMatch").style.display = 'none';
+    let nbPlayer = document.getElementById("nbP");
     let button3 = document.getElementById("tournament");
     let users = document.getElementById("users");
     
     button3.style.display = 'none';
     users.style.display = 'block';
 
-    let nbPlayer = document.getElementById("nbP");
-    nbPlayer = Number(nbPlayer.value);
+    nbPlayer = nbPlayer.value.split(' ');
+    nbPlayer = Number(nbPlayer[0]);
+    for (let i = 0; i < nbPlayer; i+=2)
+    {
+        users.innerHTML += `<div class="row mb-4">
+                                <div class="col">
+                                    <input type="text" class="form-control" id="name${i}" placeholder="nom du joueur">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="name${i + 1}" placeholder="nom du joueur">  
+                                </div>
+                            </div>`   
+    }
+    users.innerHTML += `
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="button" onclick="getName(${nbPlayer})" id="button_tournament" class="btn btn-primary btn-lg lign-items-center" >Commencer le tournoi</button>
+        </div>
+            `
 }
 
-function getName() {
-    
-    for (let i = 0; i < 16; i++)
+function getName(nbPlayer) 
+{    
+    if (document.getElementById("error") != null)
+        document.getElementById("error").style.display = 'none';
+    for (let i = 0; i < nbPlayer; i++)
     {
-        if (document.getElementById(`name${i}`) == null)
-            break ;
         let name = document.getElementById(`name${i}`);
+        if (name === null || name.value === "")
+            break ;
         arrPlayer[i] = name.value
     }
+    if (nbPlayer == arrPlayer.length)
+    {
+        let users = document.getElementById("users");
+        users.innerHTML = ``;
+        users.style.display = 'none';
+        fetch("/api/pong/tournament", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                        "users": arrPlayer,
+                        "nb_user": arrPlayer.length
+                    }),
+        })
+        .then((response) => response.json())
+        .then(data => {
+            buildBracket(data);
+        })
+    }
+    else
+        document.getElementById("error").style.display = 'block';
 
-    fetch("/api/pong/tournament", { // faire un check du nombre de nom donne et le nombre de user
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-                    "users": arrPlayer,
-                    "nb_user": arrPlayer.length
-                }),
-    })
-    .then((response) => response.json())
-    .then(data => {
-        buildBracket(data);
-    })
 }
 
 function buildBracket(value) {
     const list = document.getElementById("list");
-    //let inputs = document.getElementById("inputs");
     list.style.display = 'none';
-    //inputs.style.display = 'none';
 
     fetch("/api/pong/joinGame/", {
         method: "POST",
@@ -82,6 +90,34 @@ function beforeStart(gameId, value) {
         playTournament(gameId, socket, value)
     })
 }
+
+let keyP1 = undefined;
+let keyP2 = undefined;
+var Interval = undefined
+
+function gameLoop(gameId, socket)
+{
+    console.log("Je suis dedans")
+    if (keyP1 != undefined)
+    {
+        socket.send(JSON.stringify({
+            'game':'in progress',
+            'moov': keyP1,
+            'gameId': gameId,
+            'typeParty': 'game'
+        }))
+    }
+    if (keyP2 != undefined)
+    {
+        socket.send(JSON.stringify({
+            'game':'in progress',
+            'moov': keyP2,
+            'gameId': gameId,
+            'typeParty': 'game'
+        }))
+    }
+}
+
 
 function playTournament(gameId, socket, tournament) {
     
@@ -108,18 +144,56 @@ function playTournament(gameId, socket, tournament) {
             'typeParty': 'tournament'
         }))
 
-        window.addEventListener("keydown", function (e) {
-            if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
-            {
-                socket.send(JSON.stringify({
-                    'game':'in progress',
-                    'moov':e.key,
-                    'gameId': gameId,
-                    'typeParty': 'tournament'
-                }))
-            }
-        })
+        //window.addEventListener("keydown", function (e) {
+        //    if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
+        //    {
+        //        socket.send(JSON.stringify({
+        //            'game':'in progress',
+        //            'moov':e.key,
+        //            'gameId': gameId,
+        //            'typeParty': 'tournament'
+        //        }))
+        //    }
+        //})
+        Interval = setInterval(() => {
+            gameLoop(gameId, socket);
+        }, 60)
     }
+
+
+    document.addEventListener("keyup", function (e) {
+        e.preventDefault();
+        if  (e.key === "w" || e.key === "s")
+            keyP1 = undefined;
+    })
+
+    document.addEventListener("keydown", function (e) {
+        if (socket.readyState !== WebSocket.CLOSED)
+        {
+            e.preventDefault();
+            if  (e.key === "w" || e.key === "s")
+            {
+                keyP1 = e.key;    
+            }
+        }
+    })
+
+    document.addEventListener("keyup", function (e) {
+        e.preventDefault();
+        if (e.key === "ArrowUp" || e.key === "ArrowDown")
+        {
+            keyP2 = undefined;
+        }
+    })
+
+    document.addEventListener("keydown", function (e) {
+        if (socket.readyState !== WebSocket.CLOSED)
+        {
+            e.preventDefault();
+            if (e.key === "ArrowUp" || e.key === "ArrowDown")
+                keyP2 = e.key;
+        }
+    })
 
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data)
@@ -137,8 +211,8 @@ function playTournament(gameId, socket, tournament) {
             const bracket = document.getElementById("bracket");
             if (data.player1 != undefined)
             {    
-                bracket.innerHTML = `<div style="background-color:red;">
-                                        <h1> ${data.player1} vs ${data.player2}</h1>
+                bracket.innerHTML = `<div class="d-flex align-items-center justify-content-center">
+                                        <h1 class="p-3 mb-2 bg-dark text-white rounded"> ${data.player1}    vs    ${data.player2}</h1>
                                     </div>`;
             }
             else
@@ -151,8 +225,9 @@ function playTournament(gameId, socket, tournament) {
         {
             const bracket = document.getElementById("bracket");
             bracket.innerHTML = ``
-            resultMatch = document.getElementById("resultMatch")
-            resultMatch.innerHTML = "And the winner is " + data.winner
+            let resultMatch = document.getElementById("resultMatch");
+            resultMatch.style.display = 'block';
+            resultMatch.innerHTML += `Le gagnant du tournoi est ${data.winner}`
             document.getElementById("scoreP1").innerHTML = 0
             document.getElementById("scoreP2").innerHTML = 0
             return
@@ -212,7 +287,11 @@ function playTournament(gameId, socket, tournament) {
     }
 
     socket.onclose = () => {
-        //const list = document.getElementById("list");
+        keyP1 = undefined;
+        keyP2 = undefined;
+        if (Interval != undefined)
+            clearInterval(Interval);
+        Interval = undefined
         posY = 250
         posX = 499
         if (window.innerWidth < 1288)
@@ -229,7 +308,6 @@ function playTournament(gameId, socket, tournament) {
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
         button3.style.display = 'block';
-        //list.style.display = 'block';
     }
 }
 
