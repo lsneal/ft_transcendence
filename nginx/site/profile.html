@@ -4,7 +4,7 @@
        
         <div class="modal-body">
 			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-volume-high"></i>Profile</button></div>
-			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal" data-bs-target="#modaltwoFA"><i class="fa-solid fa-gear"></i>   2FA</button></div>
+			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal"><i class="fa-solid fa-gear"></i>   2FA</button></div>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore">Personal Stats</a>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
         </div>
@@ -13,15 +13,27 @@
     </div>
   </div>
 
-<div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
-    <div class="modal-dialog modal-dialog-centered">
+  <div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
+    <div class="modal-dialog modal-dialog-centered modalchart">
         <div class="modal-content">
             <div class="modal-body">
-                <canvas id="myChart" width="400" height="400"></canvas>
+                
+				
+				<!-- Canvas pour le pie chart -->
+                <div class="pie-chart" style="width: 50%; float: left;">
+                    <canvas id="myChart" width="200" height="200"></canvas>
+                </div>
+
+                <!-- Bar chart horizontal -->
+                <div class="bar-chart " style="width: 50%; float: left;">
+                    <div class="bar my-2" id="nbPartiesBar">Nb Partie</div>
+                    <div class="bar my-2" id="nbVictoiresBar">Victoire</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -85,6 +97,20 @@
 	</div>
 </div>
 
+
+<div class="modal fade" id="modalActivateOrDeactivateTwoFA" tabindex="-1" aria-labelledby="modalActivateOrDeactivateTwoFA" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 class="text-center">2fa already active do you want to deactivate it?</h3>
+                <div id="modalBodyContent"></div>
+                <div class="form__buttons">
+                    <a class="btn btn-lg mb-3 w-100 btn-primary" id="confirmDisable2FA" type="submit" data-link>Disable</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="button-with-background container my-5">
 

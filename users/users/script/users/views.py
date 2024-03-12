@@ -185,11 +185,11 @@ class ActivateA2F(APIView):
         if user.a2f is True:
             response.data = { 'message': 'error' }
             return response
-
-        prvt_key = gen_key_user()
-        user.totp_key = prvt_key
-        otp_url = gen_otp_url(user.email, prvt_key) 
-        user.save()
+        else:
+            prvt_key = gen_key_user()
+            user.totp_key = prvt_key
+            otp_url = gen_otp_url(user.email, prvt_key) 
+            user.save()
 
         qr = 'https://api.qrserver.com/v1/create-qr-code/?data=' + otp_url
 
@@ -247,6 +247,9 @@ class LoginA2F(APIView):
         totp = pyotp.TOTP(user.totp_key)
 
         response = Response()
+        print(str(user_code))
+        print("a")
+        print(totp.now)
         if totp.now() == user_code:
             response.data = { 'message': 'success' }
         else:

@@ -17,8 +17,8 @@ async function getUserStats() {
         console.log('data.nb_game: ', data.nb_game);
         console.log('data.img: ', data.img)
         const prc_win = (data.victory / data.nb_game) *100
-     // Mettre à jour les éléments HTML avec les données récupérées
-     const pieChartData = {
+
+        const pieChartData = {
         labels: ['Victoires', 'Parties Jouées'],
         datasets: [{
             data: [prc_win, data.nb_game - data.victory],
@@ -34,6 +34,9 @@ async function getUserStats() {
         type: 'pie',
         data: pieChartData
     });
+
+    document.getElementById('nbPartiesBar').style.width = ((data.nb_game / data.nb_game) * 100) + '%';
+    document.getElementById('nbVictoiresBar').style.width = prc_win + '%';
 
     } catch (error) {
         alert('Erreur: ' + error.message);

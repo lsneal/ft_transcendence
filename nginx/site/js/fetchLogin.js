@@ -46,8 +46,8 @@ async function EventLogin () {
                     console.log('message: ', data.message);
                     if (data.message == 'True'){
                         console.log('active');
+                        modal.hide();
                         Modal2fa.show();
-                        
 
                     }    
                     else{
@@ -61,7 +61,6 @@ async function EventLogin () {
                 catch (error) {
                   console.log('Erreur');
                 };
-             
             }
             else
             {

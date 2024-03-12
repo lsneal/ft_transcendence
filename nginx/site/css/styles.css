@@ -198,3 +198,37 @@ input::-webkit-inner-spin-button {
 }
 
 
+
+.bar-chart {
+    width: 300px; /* Largeur totale du bar chart */
+    margin: 20px auto; /* Centrer horizontalement */
+    background-color: #fff; /* Fond blanc */
+
+}
+
+.bar {
+    height: 30px; /* Hauteur des barres */
+    margin-bottom: 10px; /* Espacement entre les barres */
+    background-color: #7360DF; /* Couleur de base des barres */
+    position: relative; /* Permet de positionner le nom sur la barre */
+	color: #000;
+}
+
+.bar:hover::after {
+    content: attr(data-name); /* Affiche le nom de la barre */
+    position: absolute;
+    top: 50%; /* Position verticale centrée */
+    left: 100%; /* Positionné à droite de la barre */
+    transform: translate(10px, -50%); /* Décalage pour le nom */
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Ombre */
+    white-space: nowrap; /* Empêche le saut de ligne pour les noms longs */
+
+}
+
+
+#nbVictoiresBar {
+    width: 0; /* La largeur sera ajustée dynamiquement avec JavaScript */
+    background-color: #F2AFEF; /* Couleur différente pour les victoires */
+}
