@@ -1,4 +1,4 @@
-path "kv/*" 
+path "kv/grafana" 
 {
     capabilities = ["read"]
 }

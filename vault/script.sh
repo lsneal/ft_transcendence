@@ -42,19 +42,19 @@ else
     vault secrets enable kv
 
     # password django users
-    vault kv put kv/django_secrets_users django_key_users=$(openssl rand -hex 20)
+    vault kv put kv/django_secrets_users django_key_users=$(openssl rand -hex 32)
 
     # password django pong
-    vault kv put kv/django_secrets_pong django_key_pong=$(openssl rand -hex 20)
+    vault kv put kv/django_secrets_pong django_key_pong=$(openssl rand -hex 32)
 
     # password elastic
-    vault kv put kv/elasticsearch elastic=$(openssl rand -hex 20)
+    vault kv put kv/elasticsearch elastic=$(openssl rand -hex 32)
 
     # password kibana
-    vault kv put kv/kibana kibana_system=$(openssl rand -hex 20)
+    vault kv put kv/kibana kibana_system=$(openssl rand -hex 32)
 
     # password grafana
-    vault kv put kv/grafana $(openssl rand -hex 10)=$(openssl rand -hex 20)
+    vault kv put kv/grafana $(openssl rand -hex 10)=$(openssl rand -hex 32)
 
     # users
     vault policy write django_users_certif policies_users.hcl

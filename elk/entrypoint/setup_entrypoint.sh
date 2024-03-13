@@ -2,10 +2,10 @@
 
 sleep 5
 export VAULT_TOKEN=$(cat /opt/elasticsearch_token)
-jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
+jsoncreds=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
 
 export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
-jsoncreeds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/kibana)
+jsoncreeds=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/kibana)
 export KIBANA_PASSWORD=$(echo $jsoncreeds | sed -n 's/.*"kibana_system":"\([^"]*\).*/\1/p')
 
 if [ x$ELASTIC_PASSWORD == x ]; then
