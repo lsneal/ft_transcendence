@@ -3,8 +3,8 @@ version: "3.8"
 include:
   - users/common.yml
   - pong/common.yml
-  - elk/common.yml
-  - logs/common.yml
+  #- elk/common.yml
+  #- logs/common.yml
 
 services:
   nginx:
