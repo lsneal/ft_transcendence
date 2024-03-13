@@ -40,18 +40,6 @@ function playGameOnline(gameId, socket)
             'gameId': gameId,
             'typeParty': 'game'
         }))
-
-        window.addEventListener("keydown", function (e) {
-            if (e.key === "ArrowUp" || e.key === "ArrowDown")
-            {
-                socket.send(JSON.stringify({
-                    'game':'in progress',
-                    'moov':e.key,
-                    'gameId': gameId,
-                    'typeParty': 'game'
-                }))
-            }
-        })
         
         window.addEventListener("keydown", function (e) {
             if (e.key === "w" || e.key === "s")
@@ -103,7 +91,7 @@ function playGameOnline(gameId, socket)
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '4')
+            if (data.time == '0')
             {
                 document.getElementById("time").style.display = 'none';
             }

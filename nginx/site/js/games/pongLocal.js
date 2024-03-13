@@ -21,11 +21,10 @@ function startGameLocal(gameId) {
 
 let keyP1 = undefined;
 let keyP2 = undefined;
-var Interval = undefined
+var Interval = undefined;
 
 function gameLoop(gameId, socket)
 {
-    console.log("Je suis dedans")
     if (keyP1 != undefined)
     {
         socket.send(JSON.stringify({
@@ -153,7 +152,7 @@ function playGameLocal(gameId, socket)
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '4')
+            if (data.time == '-1')
             {
                 document.getElementById("time").style.display = 'none';
             }
@@ -188,7 +187,7 @@ function playGameLocal(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button.style.display = 'block';
-        document.getElementById("time").innerHTML = '0';
+        document.getElementById("time").innerHTML = ``;
     }
 }
 
@@ -196,10 +195,14 @@ function reportWindowSize() {
     if (window.innerWidth < 1288)
     {
         document.getElementById("game").style.width = "500px";
+        document.getElementById("leftBox").style.left = "0%";
+        document.getElementById("rightBox").style.left = "95.1%";
     }
     else
     {
         document.getElementById("game").style.width = "1000px";
+        document.getElementById("leftBox").style.left = "2%";
+        document.getElementById("rightBox").style.left = "95.6%";
     }
 }
 

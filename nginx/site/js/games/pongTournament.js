@@ -93,11 +93,9 @@ function beforeStart(gameId, value) {
 
 let keyP1 = undefined;
 let keyP2 = undefined;
-var Interval = undefined
-
+var Interval = undefined;
 function gameLoop(gameId, socket)
 {
-    console.log("Je suis dedans")
     if (keyP1 != undefined)
     {
         socket.send(JSON.stringify({
@@ -144,17 +142,6 @@ function playTournament(gameId, socket, tournament) {
             'typeParty': 'tournament'
         }))
 
-        //window.addEventListener("keydown", function (e) {
-        //    if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
-        //    {
-        //        socket.send(JSON.stringify({
-        //            'game':'in progress',
-        //            'moov':e.key,
-        //            'gameId': gameId,
-        //            'typeParty': 'tournament'
-        //        }))
-        //    }
-        //})
         Interval = setInterval(() => {
             gameLoop(gameId, socket);
         }, 60)
@@ -201,7 +188,7 @@ function playTournament(gameId, socket, tournament) {
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '4')
+            if (data.time == '0')
             {
                 document.getElementById("time").style.display = 'none';
             }
