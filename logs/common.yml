@@ -11,13 +11,29 @@ services:
     healthcheck:
       test: 
         [
-          "CMD", 
-          "wget", 
-          "http://localhost:9100"
+          "CMD-SHELL", 
+          "wget -qO- http://localhost:9100",
         ]
       interval: 10s
       retries: 10
       timeout: 10s
+
+    
+  #postgres_exporter:
+  #  container_name: postgres_exporter
+  #  image: quay.io/prometheuscommunity/postgres-exporter
+  #  command: --web.listen-address=:9001 --config.file /etc/postgres_exporter.yml
+  #  networks:
+  #    - users_network
+  #    - prometheus-network
+  #  volumes:
+  #    - ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
+  #  expose:
+  #    - "9001"
+  #  restart: always
+  #  depends_on:
+  #     postgres_users:
+  #      condition: service_healthy   
 
   prometheus:
     container_name: prometheus
@@ -33,13 +49,12 @@ services:
       - nginx
     depends_on:
       node_exporter:
-        condition: service_healthy
+        condition: service_started
     healthcheck:
       test: 
         [
-          "CMD", 
-          "wget", 
-          "http://localhost:9090"
+          "CMD-SHELL", 
+          "wget -qO- http://localhost:9090",
         ]
       interval: 10s
       retries: 10
@@ -58,12 +73,14 @@ services:
     volumes:
       - grafana-data:/usr/share/grafana/data
       - grafana-conf:/usr/share/grafana/conf
+    depends_on:
+      vault:
+        condition: service_healthy
     healthcheck:
       test: 
         [
-          "CMD", 
-          "wget", 
-          "http://grafana:3000/api/health"
+          "CMD-SHELL", 
+          "wget -qO- http://grafana:3000/api/health",
         ]
       interval: 10s
       retries: 10
@@ -79,25 +96,9 @@ networks:
 
 volumes:
   prometheus:
-    driver: local
-    driver_opts:
-      type: none
-      device: ~/data/prometheus
-      o: bind
-  
   grafana-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ~/data/grafana-data
-      o: bind
-  
   grafana-conf:
-    driver: local
-    driver_opts:
-      type: none
-      device: ~/data/grafana-conf
-      o: bind
+
 
 
 

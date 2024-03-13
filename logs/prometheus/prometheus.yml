@@ -18,6 +18,37 @@ scrape_configs:
   #    - targets: ['postgres_exporter:9001']
 
 
+  #- job_name: 'postgres_users'
+  #  static_configs:
+  #    - targets:
+  #      - postgres_users:5432
+  #  metrics_path: /probe
+  #  params:
+  #    auth_module: [postgres_users]
+  #  relabel_configs:
+  #    - source_labels: [__address__]
+  #      target_label: __param_target
+  #    - source_labels: [__param_target]
+  #      target_label: instance
+  #    - target_label: __address__
+  #      replacement: 127.0.0.1:9001
+
+  #- job_name: 'postgres_pong'
+  #  static_configs:
+  #    - targets:
+  #      - postgres_pong:5433
+  #  metrics_path: /probe
+  #  params:
+  #    auth_module: [postgres_pong]
+  #  relabel_configs:
+  #    - source_labels: [__address__]
+  #      target_label: __param_target
+  #    - source_labels: [__param_target]
+  #      target_label: instance
+  #    - target_label: __address__
+  #      replacement: 127.0.0.1:9001
+
+
 #remote_write:
 #  - url: 'http://grafana:3000'
 #    basic_auth:
