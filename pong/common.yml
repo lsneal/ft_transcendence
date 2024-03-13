@@ -9,7 +9,7 @@ services:
     env_file:
       - ../.env
     environment:
-      - POSTGRES_PASSWORD=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
       - PGPORT=5433
       - PGUSER=${PG_USER}
     volumes:
