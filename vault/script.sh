@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 if [ -f key.txt ]; then
 
     vault server --config=/vault/config/conf.json &
@@ -14,7 +15,7 @@ if [ -f key.txt ]; then
     vault operator unseal $key1
     vault operator unseal $key2
     vault operator unseal $key3
-
+    
     wait $!
 else
     
@@ -39,16 +40,21 @@ else
     vault secrets enable database
 
     vault secrets enable kv
-    private_key_django=$(openssl rand -hex 32)
-    vault kv put kv/django_secrets django_key=$private_key_django
-    ################## mettre une deuxieme cle pour users et pong
 
+    # password django users
+    vault kv put kv/django_secrets_users django_key_users=$(openssl rand -hex 32)
 
-    elastic_password=$(openssl rand -hex 32 | sha256sum | sed 's/ .*//')
-    vault kv put kv/elasticsearch elastic=$elastic_password
+    # password django pong
+    vault kv put kv/django_secrets_pong django_key_pong=$(openssl rand -hex 32)
 
-    kibana_password=$(openssl rand -hex 32 | sha256sum | sed 's/ .*//')
-    vault kv put kv/kibana kibana_system=$kibana_password
+    # password elastic
+    vault kv put kv/elasticsearch elastic=$(openssl rand -hex 32)
+
+    # password kibana
+    vault kv put kv/kibana kibana_system=$(openssl rand -hex 32)
+
+    # password grafana
+    vault kv put kv/grafana $(openssl rand -hex 10)=$(openssl rand -hex 32)
 
     # users
     vault policy write django_users_certif policies_users.hcl
@@ -79,6 +85,11 @@ else
     vault policy write logstash_certif policies_logstash.hcl
     vault token create -policy="logstash_certif" | grep -o 'hvs\.[^\ ]*' > logstash_token
     mv logstash_token /token_logstash
+
+    # grafana
+    vault policy write grafana_certif policies_grafana.hcl
+    vault token create -policy="grafana_certif" | grep -o 'hvs\.[^\ ]*' > grafana_token
+    mv grafana_token /token_grafana
 
     vault secrets enable pki
 
