@@ -6,10 +6,12 @@ services:
     networks:
       - users_network
       - vault_network
+    env_file:
+      - ../.env
     environment:
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
       - PGPORT=5432
-      - PGUSER=postgres
+      - PGUSER=${PG_USER}
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
@@ -24,7 +26,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    
     
   django_users:
     container_name: django_users

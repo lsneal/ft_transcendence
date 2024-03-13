@@ -6,10 +6,12 @@ services:
     networks:
       - pong_network #change
       - vault_network
+    env_file:
+      - ../.env
     environment:
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=${PG_USER}
       - PGPORT=5433
-      - PGUSER=postgres
+      - PGUSER=${PG_USER}
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
