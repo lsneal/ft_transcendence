@@ -3,12 +3,12 @@ path "kv/elasticsearch"
     capabilities = ["read"]
 }
 
-path "database/+/postgres_users"
+path "database/+/devops_users"
 {
     capabilities = ["read"] 
 }
 
-path "database/+/postgres_pong"
+path "database/+/devops_pong"
 {
     capabilities = ["read"] 
 }

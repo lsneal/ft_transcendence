@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/su root
 
 
 if [ -f key.txt ]; then

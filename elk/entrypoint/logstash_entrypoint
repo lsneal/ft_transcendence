@@ -31,8 +31,8 @@ export ELASTIC_USER=elastic
 jsoncreds=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
 export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
 
-export DATABASE_USERS=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/postgres_users | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
-export DATABASE_PONG=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/postgres_pong | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+export DATABASE_USERS=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/devops_users | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+export DATABASE_PONG=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/devops_pong | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
 ## ADD LAST DB
 
 if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
@@ -40,5 +40,3 @@ if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
 else
   exec "$@"
 fi
-
-# recup la valeur echo "$json_data" | sed -n 's/.*"django_key":"\([^"]*\).*/\1/p'
