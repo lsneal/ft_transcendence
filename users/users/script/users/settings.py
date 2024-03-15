@@ -77,9 +77,9 @@ VAULT_ADDR = 'http://vault:8200'
 token_file_path = "/opt/users_token"
 
 with open(token_file_path, "r") as file:
-    TOKEN = file.read().strip()
+    VAULT_TOKEN = file.read().strip()
 
-vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
+vault_client = hvac.Client(url='http://vault:8200', token=VAULT_TOKEN)
 
 secret_key = vault_client.read('kv/django_secrets_users')
 
@@ -92,7 +92,7 @@ DATABASES = {
         'HOST': 'postgres_users',
         'PORT': '5432', 
         'VAULT_ADDR': VAULT_ADDR,
-        'VAULT_TOKEN': TOKEN,
+        'VAULT_TOKEN': VAULT_TOKEN,
         'VAULT_ROLE_NAME': 'postgres_users',
         'VAULT_DB_MOUNT_POINT': 'database',   
     },

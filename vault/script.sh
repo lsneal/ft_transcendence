@@ -1,4 +1,4 @@
-#!/bin/su root
+#!/bin/sh
 
 
 if [ -f key.txt ]; then
@@ -41,11 +41,14 @@ else
 
     vault secrets enable kv
 
-    # password django users
+    # secret key django users
     vault kv put kv/django_secrets_users django_key_users=$(openssl rand -hex 32)
 
-    # password django pong
+    # secret key django pong
     vault kv put kv/django_secrets_pong django_key_pong=$(openssl rand -hex 32)
+
+    # secret key django dashboard
+    vault kv put kv/django_secrets_dashboard django_key_dashboard=$(openssl rand -hex 32)
 
     # password elastic
     vault kv put kv/elasticsearch elastic=$(openssl rand -hex 32)
@@ -65,6 +68,11 @@ else
     vault policy write django_pong_certif policies_pong.hcl
     vault token create -policy="django_pong_certif" | grep -o 'hvs\.[^\ ]*' > pong_token
     mv pong_token /django_pong_token
+
+    #dashboard
+    vault policy write django_dashboard_certif policies_dashboard.hcl
+    vault token create -policy="django_dashboard_certif" | grep -o 'hvs\.[^\ ]*' > dashboard_token
+    mv dashboard_token /django_dashboard_token
 
     # nginx
     vault policy write nginx_certif policies_nginx.hcl
