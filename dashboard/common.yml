@@ -1,0 +1,56 @@
+version: "3.8"
+services:
+  postgres_dashboard:
+    container_name: postgres_dashboard
+    image: postgres:16.1-alpine3.19
+    networks:
+      - dashboard_network
+      - vault_network
+    environment:
+      - POSTGRES_PASSWORD=password
+      - PGPORT=5434
+      - PGUSER=postgres
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    expose:
+      - "5434"
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    
+  django_dashboard:
+    container_name: django_dashboard
+    build: ./dashboard
+    networks:
+      - dashboard_network
+      - vault_network
+      - nginx
+    expose:
+      - "8004"
+    restart: always
+    volumes:
+      #- vault_django_dashboard:/opt
+      #- static:/var/www/admin/css
+      - ./dashboard/script/:/script/mysite #development purpose
+    depends_on:
+      vault:
+        condition: service_healthy
+      postgres_dashboard:
+        condition: service_healthy
+    #healthcheck:
+    #  test: wget -qO- http://localhost:8002/health/
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
+
+networks:
+  dashboard_network:
+    driver: bridge

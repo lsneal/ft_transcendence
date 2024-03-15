@@ -154,7 +154,7 @@ body{
 	position: relative;
 	width: 320px;
 	margin: 0 auto;
-	font-size: 115%;
+	font-size: x-large;
 }
 
 .otc fieldset {
@@ -199,11 +199,24 @@ input::-webkit-inner-spin-button {
 
 
 
+
+#textdash{
+	color: #F2AFEF;
+	text-shadow:
+		0 0 7px #F2AFEF,
+		0 0 10px #F2AFEF,
+		0 0 21px #F2AFEF,
+		0 0 42px #7360DF,
+		0 0 82px #7360DF,
+		0 0 92px #7360DF,
+		0 0 102px #7360DF,
+		0 0 151px #7360DF;
+}
+
+
 .bar-chart {
     width: 300px; /* Largeur totale du bar chart */
     margin: 20px auto; /* Centrer horizontalement */
-    background-color: #fff; /* Fond blanc */
-
 }
 
 .bar {
@@ -211,7 +224,13 @@ input::-webkit-inner-spin-button {
     margin-bottom: 10px; /* Espacement entre les barres */
     background-color: #7360DF; /* Couleur de base des barres */
     position: relative; /* Permet de positionner le nom sur la barre */
-	color: #000;
+    color: #000;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.bar:hover {
+    background-color: #ddd; /* Couleur de fond au survol */
 }
 
 .bar:hover::after {
@@ -224,11 +243,12 @@ input::-webkit-inner-spin-button {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Ombre */
     white-space: nowrap; /* Empêche le saut de ligne pour les noms longs */
-
 }
 
-
 #nbVictoiresBar {
-    width: 0; /* La largeur sera ajustée dynamiquement avec JavaScript */
     background-color: #F2AFEF; /* Couleur différente pour les victoires */
+}
+
+#nbPartiesBar{
+	background-color: #7360DF;
 }

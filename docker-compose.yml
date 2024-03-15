@@ -3,6 +3,7 @@ version: "3.8"
 include:
   - users/common.yml
   - pong/common.yml
+  - dashboard/common.yml
   #- elk/common.yml
 
 services:

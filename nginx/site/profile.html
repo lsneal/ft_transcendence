@@ -16,23 +16,26 @@
   <div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
     <div class="modal-dialog modal-dialog-centered modalchart">
         <div class="modal-content">
+			<h2 class="text-center my-3" id="textdash">DashBoard</h2>
             <div class="modal-body">
                 
-				
 				<!-- Canvas pour le pie chart -->
-                <div class="pie-chart" style="width: 50%; float: left;">
+                <div class="pie-chart my-5" style="width: 50%; float: left;">
+					<p class="text-center">En Pourcentage</p>
                     <canvas id="myChart" width="200" height="200"></canvas>
                 </div>
 
                 <!-- Bar chart horizontal -->
-                <div class="bar-chart " style="width: 50%; float: left;">
-                    <div class="bar my-2" id="nbPartiesBar">Nb Partie</div>
-                    <div class="bar my-2" id="nbVictoiresBar">Victoire</div>
+                <div class="bar-chart my-5" style="width: 50%; float: left;">
+                    <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
+                    <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 

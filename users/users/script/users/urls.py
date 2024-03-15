@@ -17,6 +17,4 @@ urlpatterns = [
     path('api/users/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/users/2fa/', LoginA2F.as_view(), name='login_2fa'),
     path('api/users/activate2fa/', ActivateA2F.as_view(), name='activate2fa'),
-    path('api/users/stats/', UserStats.as_view(), name='user_stats'),
-     path('api/users/rank/', PlayerRanking.as_view(), name='rank_player'),
 ]
