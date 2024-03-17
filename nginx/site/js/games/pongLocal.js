@@ -1,6 +1,12 @@
+let keyP1 = undefined;
+let keyP2 = undefined;
+var Interval = undefined;
+
 function startGameLocal(gameId) {
-    if (document.getElementById("resultMatch") != null)
-        document.getElementById("resultMatch").style.display = 'none';
+    //if (document.getElementById("resultMatch") != null)
+    //    document.getElementById("resultMatch").style.display = 'none';
+    if (document.getElementById("crown") != null)
+        document.getElementById("crown").style.display = 'none';
     let button = document.getElementById("ButtonStart")
     button.style.display = 'none'
 
@@ -19,12 +25,9 @@ function startGameLocal(gameId) {
     })
 }
 
-let keyP1 = undefined;
-let keyP2 = undefined;
-var Interval = undefined;
-
 function gameLoop(gameId, socket)
 {
+    console.log("keyP and get");
     if (keyP1 != undefined)
     {
         socket.send(JSON.stringify({
@@ -165,12 +168,16 @@ function playGameLocal(gameId, socket)
         if (Interval != undefined)
             clearInterval(Interval);
         Interval = undefined
-        resultMatch = document.getElementById("resultMatch")
-        resultMatch.style.display = 'block';
+        //resultMatch = document.getElementById("resultMatch")
+        //resultMatch.style.display = 'block';
+        document.getElementById("time").style.display = 'block';
+        document.getElementById("crown").style.display = 'block';
         if (winner == 'p1')
-            resultMatch.innerHTML += "Le gagnant est Joueur1"
+            document.getElementById("time").innerHTML = "Le gagnant est Joueur1";
+          //  resultMatch.innerHTML = "Le gagnant est Joueur1"
         if (winner == 'p2')
-            resultMatch.innerHTML += "Le gagnant est Joueur2"
+            document.getElementById("time").innerHTML = "Le gagnant est Joueur2";
+            //resultMatch.innerHTML = "Le gagnant est Joueur2"
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
         posY = 250
@@ -190,6 +197,8 @@ function playGameLocal(gameId, socket)
         document.getElementById("time").innerHTML = ``;
     }
 }
+
+
 
 function reportWindowSize() {
     if (window.innerWidth < 1288)

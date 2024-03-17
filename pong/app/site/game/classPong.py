@@ -64,6 +64,10 @@ class Pong:
             time.sleep(0.5)
             i -= 1
         while self.scoreP1 < 5 and self.scoreP2 < 5:
+            if type(self.player1) is not type(self.player2) or type(self.player1) == 'END' or type(self.player1) == 'END':
+                from .views import manager
+                manager.endGame(self)
+                return
             if ballPosX == 499 and ballPosY == 250:
                 if winner == 'p2':
                     while ballPosX > hitLeft:
@@ -172,23 +176,16 @@ class Pong:
                 winner = 'p1'
         self.ballSendToJs(499, 250, typeParty)
         self.barSendToJs('ArrowUp', 250, 250)
+        self.leftBoxTop = 250
+        self.rightBoxTop = 250
         if typeParty == 'game':
             from .views import manager
             manager.endGame(self)
             return
 
     def ballSendToJs(self, ballPosX, ballPosY, typeParty):
-        
-        self.player1.send(text_data=json.dumps({
-            'type':'game',
-            'moov':'ball',
-            'posX':ballPosX,
-            'posY':ballPosY,
-            'scoreP1':self.scoreP1,
-            'scoreP2':self.scoreP2
-        }))
-        if typeParty == 'game':
-            self.player2.send(text_data=json.dumps({
+        try:
+            self.player1.send(text_data=json.dumps({
                 'type':'game',
                 'moov':'ball',
                 'posX':ballPosX,
@@ -196,23 +193,38 @@ class Pong:
                 'scoreP1':self.scoreP1,
                 'scoreP2':self.scoreP2
             }))
-        
+            if typeParty == 'game':
+                self.player2.send(text_data=json.dumps({
+                    'type':'game',
+                    'moov':'ball',
+                    'posX':ballPosX,
+                    'posY':ballPosY,
+                    'scoreP1':self.scoreP1,
+                    'scoreP2':self.scoreP2
+                }))
+        except:
+            pass
         if self.scoreP1 == 5 or self.scoreP2 == 5:
             self.barSendToJs('ArrowUp', 250, 250)
+            self.leftBoxTop = 250
+            self.rightBoxTop = 250
         return
         
     def barSendToJs(self, moov, leftBoxTop, rightBoxTop):
-        self.player1.send(text_data=json.dumps({
-            'type':'game',
-            'moov':moov,
-            'leftBoxTop': leftBoxTop,
-            'rightBoxTop': rightBoxTop
-        }))
-        
-        self.player2.send(text_data=json.dumps({
-            'type':'game',
-            'moov':moov,
-            'leftBoxTop': leftBoxTop,
-            'rightBoxTop': rightBoxTop
-        }))    
+        try:
+            self.player1.send(text_data=json.dumps({
+                'type':'game',
+                'moov':moov,
+                'leftBoxTop': leftBoxTop,
+                'rightBoxTop': rightBoxTop
+            }))
+
+            self.player2.send(text_data=json.dumps({
+                'type':'game',
+                'moov':moov,
+                'leftBoxTop': leftBoxTop,
+                'rightBoxTop': rightBoxTop
+            }))
+        except:
+            pass 
         return

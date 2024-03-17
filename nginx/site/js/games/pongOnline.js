@@ -42,7 +42,7 @@ function playGameOnline(gameId, socket)
         }))
         
         window.addEventListener("keydown", function (e) {
-            if (e.key === "w" || e.key === "s")
+            if (e.key === "ArrowUp" || e.key === "ArrowDown")
             {
                 socket.send(JSON.stringify({
                     'game':'in progress',
@@ -69,7 +69,6 @@ function playGameOnline(gameId, socket)
             {
                 if (window.innerWidth < 1288)
                 {
-                    //data.posY /= 2;
                     data.posX /= 2;
                     ball.style.top = data.posY.toString() + "px";
                     ball.style.left = data.posX.toString() + "px";
@@ -91,7 +90,7 @@ function playGameOnline(gameId, socket)
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '0')
+            if (data.time == '-1')
             {
                 document.getElementById("time").style.display = 'none';
             }
@@ -101,9 +100,9 @@ function playGameOnline(gameId, socket)
         let resultMatch = document.getElementById("resultMatch");
         resultMatch.style.display = 'block';
         if (winner == 'p1')
-            resultMatch.innerHTML += "Le gagnant est Joueur1"
+            resultMatch.innerHTML = "Le gagnant est Joueur1"
         if (winner == 'p2')
-            resultMatch.innerHTML += "Le gagnant est Joueur2"
+            resultMatch.innerHTML = "Le gagnant est Joueur2"
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
         posY = 250
@@ -120,7 +119,7 @@ function playGameOnline(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button2.style.display = 'block';
-        document.getElementById("time").innerHTML = '0';
+        document.getElementById("time").innerHTML = ``;
     }
 }
 
@@ -128,10 +127,14 @@ function reportWindowSize() {
     if (window.innerWidth < 1288)
     {
         document.getElementById("game").style.width = "500px";
+        document.getElementById("leftBox").style.left = "0%";
+        document.getElementById("rightBox").style.left = "95.1%";
     }
     else
     {
         document.getElementById("game").style.width = "1000px";
+        document.getElementById("leftBox").style.left = "2%";
+        document.getElementById("rightBox").style.left = "95.6%";
     }
 }
 

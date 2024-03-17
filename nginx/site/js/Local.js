@@ -12,6 +12,8 @@ export default class extends AbstractView {
       if (window.innerWidth < 1288)
       {
         document.getElementById("game").style.width = "500px";
+        document.getElementById("leftBox").style.left = "0%";
+        document.getElementById("rightBox").style.left = "95.1%";
       }
     }
 
