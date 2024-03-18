@@ -7,9 +7,9 @@ async function EventLogin () {
     let modal = bootstrap.Modal.getInstance(myModalEl);
 
 
-    var Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
-        keyboard: false
-      });
+    //var Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
+    //    keyboard: false
+    //  });
 
     if (!email || !password) {
         alert('Veuillez remplir tous les champs !');

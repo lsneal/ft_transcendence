@@ -84,25 +84,25 @@
   </div>
 
 
-<div class="modal fade" id="modaltwoFA" tabindex="-1" aria-labelledby="modaltwoFA" aria-hidden="true">
+  <div class="modal fade" id="modaltwoFA" tabindex="-1" aria-labelledby="modaltwoFA" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
        
         <div class="modal-body">
 			<div class="container-twoFA">
-				<div id="2FA-link" class="link" style="display: none;"></div>
+				<img id="2FA-link" src="" alt="QR Code" class="rounded mx-auto my-4 d-block img-thumbnail"></img>
 				<form class="otc" id="form-twoFA"  name="one-time-code">
 				  <div><h3 class="text-center">TWO-FACTOR AUTHENTICATION</h3></div>	
 				  <div class="form__group form__pincode centered rounded mx-auto d-block">
-					<input type="tel" id="code1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
-					<input type="tel" id="code2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
-					<input type="tel" id="code3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
-					<input type="tel" id="code4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
-					<input type="tel" id="code5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
-					<input type="tel" id="code6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
+					<input type="tel" id="code1" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
+					<input type="tel" id="code2" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
+					<input type="tel" id="code3" name="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
+					<input type="tel" id="code4" name="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
+					<input type="tel" id="code5" name="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
+					<input type="tel" id="code6" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
 				  </div>
 				  <div class="form__buttons">
-					<a class="btn btn-lg mb-3 w-100 btn-primary" id="Valid2FA" type="submit" data-link>Validatation</a>
+					<a class="btn btn-lg mb-3 w-100 btn-primary" id="Valid2FA" disabled>Validatation</a>
 				  </div>
 				</form>
 			  </div>
@@ -111,7 +111,6 @@
 	  </div>
 	</div>
 </div>
-
 
 <div class="modal fade" id="modalActivateOrDeactivateTwoFA" tabindex="-1" aria-labelledby="modalActivateOrDeactivateTwoFA" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
