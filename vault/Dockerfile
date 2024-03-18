@@ -7,13 +7,18 @@ RUN apk add --no-cache curl \
 COPY ./conf/conf.json /vault/config/
 
 COPY ./script.sh .
+RUN chmod u+s script.sh
 RUN chmod +x script.sh
 
+COPY ./policies/policies_dashboard.hcl .
+COPY ./policies/policies_grafana.hcl .
 COPY ./policies/policies_elasticsearch.hcl .
 COPY ./policies/policies_kibana.hcl .
 COPY ./policies/policies_logstash.hcl .
 COPY ./policies/policies_users.hcl .
 COPY ./policies/policies_pong.hcl .
 COPY ./policies/policies_nginx.hcl .
+
+#USER 1000
 
 CMD ["./script.sh"]
