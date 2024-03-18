@@ -18,22 +18,35 @@ services:
       retries: 10
       timeout: 10s
 
-    
-  #postgres_exporter:
-  #  container_name: postgres_exporter
-  #  image: quay.io/prometheuscommunity/postgres-exporter
-  #  command: --web.listen-address=:9001 --config.file /etc/postgres_exporter.yml
+  #alertmanager:
+  #  image: prom/alertmanager:v0.27.0
+  #  restart: always
+  #  expose:
+  #    - "9093"
   #  networks:
-  #    - users_network
   #    - prometheus-network
   #  volumes:
-  #    - ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
-  #  expose:
-  #    - "9001"
-  #  restart: always
-  #  depends_on:
-  #     postgres_users:
-  #      condition: service_healthy   
+  #    - "./alertmanager:/config"
+  #    - alertmanager-data:/data
+  #  command: --config.file=/config/alertmanager.yml --log.level=debug
+  #  
+
+    
+  postgres_exporter:
+    container_name: postgres_exporter
+    image: quay.io/prometheuscommunity/postgres-exporter
+    command: --web.listen-address=:9001 --config.file /etc/postgres_exporter.yml
+    networks:
+      - users_network
+      - prometheus-network
+    volumes:
+      - ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
+    expose:
+      - "9001"
+    restart: always
+    depends_on:
+       postgres_users:
+        condition: service_healthy   
 
   prometheus:
     container_name: prometheus
@@ -98,6 +111,7 @@ volumes:
   prometheus:
   grafana-data:
   grafana-conf:
+  alertmanager-data:
 
 
 
