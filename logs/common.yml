@@ -1,0 +1,103 @@
+version: '3.8'
+services:
+  node_exporter:
+    container_name: node_exporter
+    restart: always
+    build: ./node_exporter
+    expose:
+      - "9100"
+    networks:
+      - prometheus-network
+    healthcheck:
+      test: 
+        [
+          "CMD", 
+          "wget", 
+          "http://localhost:9100"
+        ]
+      interval: 10s
+      retries: 10
+      timeout: 10s
+
+  prometheus:
+    container_name: prometheus
+    restart: always
+    build: ./prometheus
+    expose:
+      - "9090"
+    volumes:
+      - prometheus:/data
+    networks:
+      - prometheus-network
+      - grafana-network
+      - nginx
+    depends_on:
+      node_exporter:
+        condition: service_healthy
+    healthcheck:
+      test: 
+        [
+          "CMD", 
+          "wget", 
+          "http://localhost:9090"
+        ]
+      interval: 10s
+      retries: 10
+      timeout: 10s
+
+
+  grafana:
+    container_name: grafana
+    restart: always
+    build: ./grafana
+    expose:
+      - "3000"
+    networks:
+      - grafana-network
+      - nginx
+    volumes:
+      - grafana-data:/usr/share/grafana/data
+      - grafana-conf:/usr/share/grafana/conf
+    healthcheck:
+      test: 
+        [
+          "CMD", 
+          "wget", 
+          "http://grafana:3000/api/health"
+        ]
+      interval: 10s
+      retries: 10
+      timeout: 10s
+
+
+networks:
+  prometheus-network:
+    driver: bridge 
+  
+  grafana-network:
+    driver: bridge 
+
+volumes:
+  prometheus:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/prometheus
+      o: bind
+  
+  grafana-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/grafana-data
+      o: bind
+  
+  grafana-conf:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/grafana-conf
+      o: bind
+
+
+

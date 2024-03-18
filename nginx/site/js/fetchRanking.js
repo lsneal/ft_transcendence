@@ -1,5 +1,4 @@
 async function getRankingPlayers() {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
     try {
         const response = await fetch('api/dashboard/player-ranking/', {
             method: 'GET',

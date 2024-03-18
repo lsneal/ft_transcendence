@@ -25,13 +25,16 @@ export default class extends AbstractView {
       document.getElementById('modalEmail').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnLogin').click();
-        }      
+        }
       });
 
+<<<<<<< HEAD
       document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
       document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
 
 
+=======
+>>>>>>> main
       // Handle redirection error when wrong url
       /*if (window.location != 'https://localhost/')
       {

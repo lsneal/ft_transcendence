@@ -8,6 +8,10 @@ class User(AbstractBaseUser):
     totp_key = models.CharField(default="", max_length=32)
     password = models.CharField(max_length=255)
     username = None
+<<<<<<< HEAD
     profile_image = models.ImageField(upload_to='./default_img/', default='default.jpeg')
+=======
+
+>>>>>>> main
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -8,11 +8,12 @@ async function EventGetQRCode() {
     });
 
     try {
-        const response = await fetch('https://localhost/api/users/activate2fa/', {
+        const response = await fetch('/api/users/activate2fa', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
+<<<<<<< HEAD
         });
         const data = await response.json();
         console.log('message: ', data.message);
@@ -27,6 +28,22 @@ async function EventGetQRCode() {
             imgElement.src = qrcode.src;
             Modal2faInacif.show();
         }
+=======
+        }).then((response) => response.json())
+        .then((data) =>{
+            console.log(data);
+            console.log(data.pseudo);
+            console.log(data.url)
+            const errorMessage = data.url;
+            const errorElement = document.getElementById('2FA-link');
+            errorElement.innerText = errorMessage;
+            errorElement.style.display = 'block'; // A
+            // If it fails, that means the user isn't connected or his cookies expired, 
+            // so put error and redirect him to Home (or refresh token ?) 
+
+        });
+
+>>>>>>> main
     } catch (error) {
         alert('Erreur de déconnexion');
     }

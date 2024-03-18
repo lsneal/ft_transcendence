@@ -58,10 +58,22 @@
 					  <input type="password" class="form-control" id="OldPassword">
 					</div>
 					<div class="mb-3">
-						<label for="nb_gameConfirmChangePassword" class="form-label">Confirm New Password</label>
+						<label for="ChangePassword" class="form-label">New Password</label>
+						<input type="password" class="form-control" id="ChangePassword">
+						<div id="error-message-nochange" class="text-danger" style="display: none;"></div>
+
+					</div>
+					<div class="mb-3">
+						<label for="ConfirmChangePassword" class="form-label">Confirm New Password</label>
 						<input type="password" class="form-control" id="ConfirmChangePassword">
 						<div id="error-message-Confirmchange" class="text-danger" style="display: none;"></div>
 
+					</div>
+					<div class="mb-3 form-check">
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchTwoFA" data-bs-toggle="modal" data-bs-target="#modaltwoFA">
+							<label class="form-check-label" for="flexSwitchTwoFA">2FA</label>
+						</div>
 					</div>
 					<a id="ButtonChange" type="submit" class="btn btn-primary" data-link >Submit</a>
 					<div id="error-message-Login" class="text-danger" style="display: none;"></div>
@@ -78,8 +90,9 @@
        
         <div class="modal-body">
 			<div class="container-twoFA">
-				<img id="2FA-link" src="" alt="QR Code" class="rounded mx-auto my-4 d-block img-thumbnail"></img>
+				<div id="2FA-link" class="link" style="display: none;"></div>
 				<form class="otc" id="form-twoFA"  name="one-time-code">
+<<<<<<< HEAD
 				  <div><h3 class="text-center">TWO-FACTOR AUTHENTICATION</h3></div>	
 				  <div class="form__group form__pincode centered rounded mx-auto d-block">
 					<input type="tel" id="code1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
@@ -91,6 +104,20 @@
 				  </div>
 				  <div class="form__buttons">
 					<a class="btn btn-lg mb-3 w-100 btn-primary" id="Valid2FA" type="submit" data-link>Validatation</a>
+=======
+				  <h1>TWO-FACTOR AUTHENTICATION</h1>
+				  <div class="form__group form__pincode centered">
+					<label>Enter 6-digit code from your authenticator application</label>
+					<input type="tel" id="code1" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·" autocomplete="off">
+					<input type="tel" id="code2" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·" autocomplete="off">
+					<input type="tel" id="code3" name="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·" autocomplete="off">
+					<input type="tel" id="code4" name="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·" autocomplete="off">
+					<input type="tel" id="code5" name="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·" autocomplete="off">
+					<input type="tel" id="code6" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
+				  </div>
+				  <div class="form__buttons">
+					<a id="ButtonOtp" class="button button--primary" disabled>Continue</a>
+>>>>>>> main
 				  </div>
 				</form>
 			  </div>

@@ -1,4 +1,6 @@
 function startGameOnline(gameId) {
+    if (document.getElementById("resultMatch") != null)
+        document.getElementById("resultMatch").style.display = 'none';
     let button2 = document.getElementById("JoinGameOnline");
 
     button2.style.display = 'none'
@@ -40,7 +42,19 @@ function playGameOnline(gameId, socket)
         }))
 
         window.addEventListener("keydown", function (e) {
-            if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
+            if (e.key === "ArrowUp" || e.key === "ArrowDown")
+            {
+                socket.send(JSON.stringify({
+                    'game':'in progress',
+                    'moov':e.key,
+                    'gameId': gameId,
+                    'typeParty': 'game'
+                }))
+            }
+        })
+        
+        window.addEventListener("keydown", function (e) {
+            if (e.key === "w" || e.key === "s")
             {
                 socket.send(JSON.stringify({
                     'game':'in progress',
@@ -89,18 +103,19 @@ function playGameOnline(gameId, socket)
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '-1')
+            if (data.time == '4')
             {
                 document.getElementById("time").style.display = 'none';
             }
         }
     }
     socket.onclose = () => {
-        resultMatch = document.getElementById("resultMatch")
+        let resultMatch = document.getElementById("resultMatch");
+        resultMatch.style.display = 'block';
         if (winner == 'p1')
-            resultMatch.innerHTML = "And the winner is Player1"
+            resultMatch.innerHTML += "Le gagnant est Joueur1"
         if (winner == 'p2')
-            resultMatch.innerHTML = "And the winner is Player2"
+            resultMatch.innerHTML += "Le gagnant est Joueur2"
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
         posY = 250
