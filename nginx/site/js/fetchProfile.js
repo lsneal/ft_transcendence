@@ -9,14 +9,6 @@ async function EventProfile() {
             }
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data);
-            console.log(data.email);
-            console.log(data.pseudo);
-            console.log(data.id);
-
-            // If it fails, that means the user isn't connected or his cookies expired, 
-            // so put error and redirect him to Home (or refresh token ?) 
-
         });
 
     } catch (error) {
