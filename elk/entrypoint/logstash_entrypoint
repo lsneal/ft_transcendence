@@ -5,8 +5,6 @@
 # This may be undesirable, especially if logstash.yml is bind-mounted from the
 # host system.
 
-
-
 env2yaml /usr/share/logstash/config/logstash.yml
 
 if [[ -n "$LOG_STYLE" ]]; then
@@ -29,13 +27,16 @@ export LS_JAVA_OPTS="-Dls.cgroup.cpuacct.path.override=/ -Dls.cgroup.cpu.path.ov
 
 export VAULT_TOKEN=$(cat /opt/logstash_token)
 export ELASTIC_USER=elastic
-jsoncreds=$(curl --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
+
+jsoncreds=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/kv/elasticsearch)
 export ELASTIC_PASSWORD=$(echo $jsoncreds | sed -n 's/.*"elastic":"\([^"]*\).*/\1/p')
+
+export DATABASE_USERS=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/devops_users | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+export DATABASE_PONG=$(curl -s --request GET --header "X-Vault-Token: $VAULT_TOKEN" http://vault:8200/v1/database/static-creds/devops_pong | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+## ADD LAST DB
 
 if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
   exec logstash "$@"
 else
   exec "$@"
 fi
-
-# recup la valeur echo "$json_data" | sed -n 's/.*"django_key":"\([^"]*\).*/\1/p'

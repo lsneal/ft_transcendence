@@ -29,20 +29,20 @@ services:
   #    - "./alertmanager:/config"
   #    - alertmanager-data:/data
   #  command: --config.file=/config/alertmanager.yml --log.level=debug
-  #  
+  #
 
-    
   postgres_exporter:
     container_name: postgres_exporter
     image: quay.io/prometheuscommunity/postgres-exporter
-    command: --web.listen-address=:9001 --config.file /etc/postgres_exporter.yml
+    entrypoint: /run/postgres_exporter.sh
     networks:
-      - users_network
       - prometheus-network
+      - postgres_exporter-network
     volumes:
-      - ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
+      #- ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
+      - ./postgres_exporter/postgres_exporter.sh:/run/postgres_exporter.sh
     expose:
-      - "9001"
+      - "9187"
     restart: always
     depends_on:
        postgres_users:
@@ -62,6 +62,8 @@ services:
       - nginx
     depends_on:
       node_exporter:
+        condition: service_started
+      postgres_exporter:
         condition: service_started
     healthcheck:
       test: 
@@ -83,9 +85,11 @@ services:
     networks:
       - grafana-network
       - nginx
+      - vault_network
     volumes:
       - grafana-data:/usr/share/grafana/data
       - grafana-conf:/usr/share/grafana/conf
+      - vault_grafana:/opt
     depends_on:
       vault:
         condition: service_healthy
@@ -106,6 +110,9 @@ networks:
   
   grafana-network:
     driver: bridge 
+
+  postgres_exporter-network:
+    driver: bridge
 
 volumes:
   prometheus:

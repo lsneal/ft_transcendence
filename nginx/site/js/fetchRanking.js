@@ -1,6 +1,7 @@
 async function getRankingPlayers() {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
     try {
-        const response = await fetch('https://localhost/api/users/rank/', {
+        const response = await fetch('api/dashboard/player-ranking/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

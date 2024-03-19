@@ -21,7 +21,7 @@ async function EventChange () {
       return;
     }
     else if(pseudo != '' && oldpassword == ''){
-      const errorMessage = 'Please enter your atcually password for change your pseudo';
+      const errorMessage = 'Please enter your actually password for change your pseudo';
       const errorElement = document.getElementById('error-message-Login');
       errorElement.innerText = errorMessage;
       errorElement.style.display = 'block';
