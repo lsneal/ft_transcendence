@@ -1,6 +1,12 @@
 body{
 	height: 100vh;
-	background-color: #C499F3;
+	background-color: #867070;
+	/* AD88C6 */
+	/* de base C499F3 */
+	color: #272829;
+	font-family: "Tienne", serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .modal-content{
@@ -12,29 +18,44 @@ body{
 	color: #F2AFEF;
 }
 
+.fa-bars {
+	background-color: #561C24;
+}
+
 .btn:hover{
-	background-color: #7360DF;
+	background-color: #E4D0D0; 
+	/* B19470 */
 	border: #7360DF;
 	--bs-btn-bg: #7360DF;
 	--bs-btn-border-color: #7360DF;
-	color:#F2AFEF;
-
+	color:#272829;
+	/* de base  7360DF*/
+	/* de base  7360DF*/
+	/* de base  7360DF*/
+	/* de base  7360DF*/
+	/* de base  F2AFEF*/
 }
 
 
 .btn-primary {
-	--bs-btn-bg: #33186B;
-	--bs-btn-border-color: #C499F3;
-	--bs-btn-active-bg: #7360DF;
-	color: #F2AFEF;
+	--bs-btn-bg: #D5B4B4;
+	--bs-btn-border-color: #D5B4B4;
+	--bs-btn-active-bg: #272829;
+	color: #272829;
+	/* de base 33186B*/
+	/* de base C499F3*/
+	/* de base 7360DF*/
+	/* de base F2AFEF*/
 }
 
 .btn-secondary {
-	--bs-btn-bg: #33186B;
+	--bs-btn-bg: #B784B7;
+	/* B784B7 */
 	--bs-btn-border-color: #C499F3;
 	--bs-btn-active-bg: #7360DF;
-
-
+	/* de base 33186B*/
+	/* de base C499F3*/
+	/* de base C499F3*/
 }
 
 .big-button {

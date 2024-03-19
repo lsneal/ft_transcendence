@@ -1,10 +1,6 @@
-let keyP1 = undefined;
-let keyP2 = undefined;
-var Interval = undefined;
-
 function startGameLocal(gameId) {
-    //if (document.getElementById("resultMatch") != null)
-    //    document.getElementById("resultMatch").style.display = 'none';
+    if (document.getElementById("time") != null)
+        document.getElementById("time").style.display = 'none';
     if (document.getElementById("crown") != null)
         document.getElementById("crown").style.display = 'none';
     let button = document.getElementById("ButtonStart")
@@ -25,9 +21,8 @@ function startGameLocal(gameId) {
     })
 }
 
-function gameLoop(gameId, socket)
+function gameLoopLocal(gameId, socket)
 {
-    console.log("keyP and get");
     if (keyP1 != undefined)
     {
         socket.send(JSON.stringify({
@@ -48,6 +43,10 @@ function gameLoop(gameId, socket)
     }
 }
 
+let keyP1 = undefined;
+let keyP2 = undefined;
+var IntervalLocal = undefined;
+
 function playGameLocal(gameId, socket)
 { 
     let button = document.getElementById("ButtonStart")
@@ -62,6 +61,9 @@ function playGameLocal(gameId, socket)
     let rightBar = document.getElementById("rightBox")
 
     socket.onopen = () => {
+        IntervalLocal = setInterval(() => {
+            gameLoopLocal(gameId, socket);
+        }, 30)
         socket.send(JSON.stringify({
             'game':'local',
             'moov':'none',
@@ -75,9 +77,6 @@ function playGameLocal(gameId, socket)
             'gameId': gameId,
             'typeParty': 'game'
         }))
-        Interval = setInterval(() => {
-            gameLoop(gameId, socket);
-        }, 60)
     }
 
     document.addEventListener("keyup", function (e) {
@@ -154,6 +153,8 @@ function playGameLocal(gameId, socket)
         if (data.type === "time")
         {
             document.getElementById("time").style.display = 'block';
+            document.getElementById("time").style.fontSize = '7.0rem';
+            document.getElementById("time").style.left = '50%';
             document.getElementById("time").innerHTML = data.time;
             if (data.time == '-1')
             {
@@ -165,19 +166,19 @@ function playGameLocal(gameId, socket)
     socket.onclose = () => {
         keyP1 = undefined;
         keyP2 = undefined;
-        if (Interval != undefined)
-            clearInterval(Interval);
-        Interval = undefined
-        //resultMatch = document.getElementById("resultMatch")
-        //resultMatch.style.display = 'block';
+        if (IntervalLocal != undefined)
+            clearInterval(IntervalLocal);
+        IntervalLocal = undefined
+
         document.getElementById("time").style.display = 'block';
         document.getElementById("crown").style.display = 'block';
         if (winner == 'p1')
-            document.getElementById("time").innerHTML = "Le gagnant est Joueur1";
-          //  resultMatch.innerHTML = "Le gagnant est Joueur1"
+            document.getElementById("time").innerHTML = `Joueur1 gagne`;
         if (winner == 'p2')
-            document.getElementById("time").innerHTML = "Le gagnant est Joueur2";
-            //resultMatch.innerHTML = "Le gagnant est Joueur2"
+            document.getElementById("time").innerHTML = `Joueur2 gagne`;
+        document.getElementById("time").style.fontSize = 'xxx-large';
+        document.getElementById("time").style.left = '35%';
+
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
         posY = 250
@@ -194,25 +195,5 @@ function playGameLocal(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button.style.display = 'block';
-        document.getElementById("time").innerHTML = ``;
     }
 }
-
-
-
-function reportWindowSize() {
-    if (window.innerWidth < 1288)
-    {
-        document.getElementById("game").style.width = "500px";
-        document.getElementById("leftBox").style.left = "0%";
-        document.getElementById("rightBox").style.left = "95.1%";
-    }
-    else
-    {
-        document.getElementById("game").style.width = "1000px";
-        document.getElementById("leftBox").style.left = "2%";
-        document.getElementById("rightBox").style.left = "95.6%";
-    }
-}
-
-window.onresize = reportWindowSize;

@@ -6,7 +6,21 @@
     left: 25%;
     margin-left:-50px;
 	top: 40px;
+	border-radius: 10px;
 }
+
+#game-container {
+	display: block;
+}
+
+@keyframes rotating {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
+	}
+  }
 
 #users {
 	display: none;
@@ -46,20 +60,20 @@
 	position: absolute;
 	display: none;
 	left: 50%;
-	top: 200px;
-	margin-left:-30px;
+	top: 90px;
+	margin-left:-35px;
 	font-size: 7.0rem;
-	color: yellow;
+	color: #B19470;
+	font-family: "Candal", sans-serif;
 }
 
 #crown{ 
 	position: absolute;
-	background-image: url('./static/crown.png');
-	height: 30px;
-	width: 30px;
 	display: none;
-	left: 50%;
-	top: 100px;
+	width: 100px;
+	height: 100px;
+	left: 48.5%;
+	top: 150px;
 	margin-left:-30px;
 }
 
@@ -88,6 +102,7 @@
 	top: 250px;
 	left: 50%;
 	margin-left:-10px;
+	animation: rotating 2s linear infinite;
 }
 
 label {

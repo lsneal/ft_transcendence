@@ -1,12 +1,20 @@
-<button id="ButtonStart" style="display: block;" method="POST" onclick="JoinGameLocal()" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100">Jouer en Local</button>
-<!-- <h1 id="resultMatch" style="display: 'none';"></h1> -->
-<div class="game" id="game">
-	<div id="line"></div>
-	<h1 id="scoreP1">0</h1>
-	<div id="leftBox" class="block" id="block"></div>
-	<div id="ball" class="ball"></div>
-	<div id="crown"></div>
-	<h1 id="time"></h1>
-	<h1 id="scoreP2">0</h1>
-	<div id="rightBox" class="block" id="block"></div>
+
+<div id="game-container">
+	<div class="container">
+	    <div class="row justify-content-center main-buttons"> 
+			<div class="col-6">
+				<button id="ButtonStart" style="display: block;" method="POST" onclick="JoinGameLocal()" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100">Jouer en Local</button>
+			</div>
+		</div>
+	</div>
+	<div class="game" id="game">
+		<div id="line"></div>
+		<h1 id="scoreP1">0</h1>
+		<div id="leftBox" class="block" id="block"></div>
+		<img src="https://localhost/static/kaaris.jpg" id="ball" class="ball"/>
+		<img src="https://localhost/static/crown.png" id="crown"/>
+		<h6 id="time"></h6>
+		<h1 id="scoreP2">0</h1>
+		<div id="rightBox" class="block" id="block"></div>
+	</div>
 </div>

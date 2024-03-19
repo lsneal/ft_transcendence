@@ -16,18 +16,18 @@ class Pong:
     def bar_moov(self, moov, playerMoov):
         
         if moov == 'ArrowUp' and self.leftBoxTop > 20 and self.player1 == playerMoov != self.player2:
-            self.leftBoxTop -= 30
+            self.leftBoxTop -= 15
         if moov == 'ArrowDown' and self.leftBoxTop < 400 and self.player1 == playerMoov != self.player2:
-            self.leftBoxTop += 30
+            self.leftBoxTop += 15
         
         if moov == 'ArrowUp' and self.rightBoxTop > 20 and self.player2 == playerMoov:
-            self.rightBoxTop -= 30
+            self.rightBoxTop -= 15
         if moov == 'ArrowDown' and self.rightBoxTop < 400 and self.player2 == playerMoov:
-            self.rightBoxTop += 30
+            self.rightBoxTop += 15
         if moov == 'w' and self.leftBoxTop > 20 and self.player1 == playerMoov == self.player2:
-            self.leftBoxTop -= 30
+            self.leftBoxTop -= 15
         if moov == 's' and self.leftBoxTop < 400 and self.player1 == playerMoov == self.player2:
-            self.leftBoxTop += 30
+            self.leftBoxTop += 15
 
         self.barSendToJs(moov, self.leftBoxTop, self.rightBoxTop)
 
@@ -86,7 +86,7 @@ class Pong:
                         ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
-            #hit box 
+            
             if self.leftBoxTop - ballPosY < 30 and self.leftBoxTop - ballPosY > -90 and ballPosX <= hitLeft:
                 if self.leftBoxTop - ballPosY > -20:
                     hitWall = 0        
@@ -99,7 +99,7 @@ class Pong:
                             ballPosY -= 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
@@ -115,7 +115,7 @@ class Pong:
                             ballPosY += 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
@@ -143,7 +143,7 @@ class Pong:
                             ballPosY -= 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
@@ -159,7 +159,7 @@ class Pong:
                             ballPosY += 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)

@@ -4,8 +4,10 @@ let keyTournamentP2 = undefined;
 var IntervalTournament = undefined;
 
 function CreateTournament() {
-    if (document.getElementById("resultMatch") != null)
-        document.getElementById("resultMatch").style.display = 'none';
+    if (document.getElementById("time") != null)
+        document.getElementById("time").style.display = 'none';
+    if (document.getElementById("crown") != null)
+        document.getElementById("crown").style.display = 'none';
     let nbPlayer = document.getElementById("nbP");
     let button3 = document.getElementById("tournament");
     let users = document.getElementById("users");
@@ -144,7 +146,7 @@ function playTournament(gameId, socket, tournament) {
 
         IntervalTournament = setInterval(() => {
             gameLoop(gameId, socket);
-        }, 60)
+        }, 30)
     }
 
 
@@ -187,6 +189,8 @@ function playTournament(gameId, socket, tournament) {
         if (data.type === "time")
         {
             document.getElementById("time").style.display = 'block';
+            document.getElementById("time").style.fontSize = '7.0rem';
+            document.getElementById("time").style.left = '50%';
             document.getElementById("time").innerHTML = data.time;
             if (data.time == '-1')
             {
@@ -212,9 +216,11 @@ function playTournament(gameId, socket, tournament) {
         {
             const bracket = document.getElementById("bracket");
             bracket.innerHTML = ``
-            let resultMatch = document.getElementById("resultMatch");
-            resultMatch.style.display = 'block';
-            resultMatch.innerHTML = `Le gagnant du tournoi est ${data.winner}`;
+            document.getElementById("time").style.display = 'block';
+            document.getElementById("crown").style.display = 'block';
+            document.getElementById("time").innerHTML = `${data.winner} gagne`;
+            document.getElementById("time").style.fontSize = 'xxx-large';
+            document.getElementById("time").style.left = '38%';
             document.getElementById("scoreP1").innerHTML = 0;
             document.getElementById("scoreP2").innerHTML = 0;
             return
@@ -305,17 +311,26 @@ function playTournament(gameId, socket, tournament) {
 }
 
 function reportWindowSize() {
-    if (window.innerWidth < 1288)
+    if (document.getElementById("game") != null)
     {
-        document.getElementById("game").style.width = "500px";
-        document.getElementById("leftBox").style.left = "0%";
-        document.getElementById("rightBox").style.left = "95.1%";
-    }
-    else
-    {
-        document.getElementById("game").style.width = "1000px";
-        document.getElementById("leftBox").style.left = "2%";
-        document.getElementById("rightBox").style.left = "95.6%";
+        if (window.innerWidth < 606)
+        {
+            document.getElementById("game-container").style.display = 'none';
+        }
+        else if (window.innerWidth < 1288 && window.innerWidth > 606)
+        {
+            document.getElementById("game-container").style.display = 'block';
+            document.getElementById("game").style.width = "500px";
+            document.getElementById("leftBox").style.left = "0%";
+            document.getElementById("rightBox").style.left = "95.1%";
+        }
+        else
+        {
+            document.getElementById("game-container").style.display = 'block';
+            document.getElementById("game").style.width = "1000px";
+            document.getElementById("leftBox").style.left = "2%";
+            document.getElementById("rightBox").style.left = "95.6%";
+        }
     }
 }
 

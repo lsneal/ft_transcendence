@@ -25,7 +25,11 @@ class GameConsumer(WebsocketConsumer):
         gameId = text_data_json['gameId']
         typeParty = text_data_json['typeParty']
         gameIdx = gameId - 1
-
+        
+        
+        if gameIdx > len(manager.games):
+            gameIdx = len(manager.games) - 1
+        
         if game == 'tournament':
             tournamentId = text_data_json['tournamentId']
             tournamentId = tournamentId - 1
