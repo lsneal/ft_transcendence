@@ -4,5 +4,6 @@ FROM alpine:3.19
 
 COPY ./prometheus.yml /etc/prometheus/prometheus.yml
 COPY ./prometheus.sh /run/prometheus.sh
+COPY ./rules.yml /etc/prometheus/rules.yml
 
 ENTRYPOINT ["/run/prometheus.sh"]

@@ -3,9 +3,10 @@ version: "3.8"
 include:
   - users/common.yml
   - pong/common.yml
-  - dashboard/common.yml
   #- elk/common.yml
   #- logs/common.yml
+  - dashboard/common.yml
+
 
 services:
   nginx:
@@ -23,6 +24,7 @@ services:
     networks:
       - vault_network
       - nginx
+      - nginx-exporter
     depends_on:
       django_users:
         condition: service_healthy
@@ -37,6 +39,21 @@ services:
       interval: 10s
       retries: 10
       timeout: 10s
+
+  #nginx-exporter:
+  #  image: nginx/nginx-prometheus-exporter:1.0
+  #  container_name: nginx-exporter
+  #  restart: always
+  #  command:
+  #    - -nginx.scrape-uri=https://nginx:443/stub_status
+  #  expose: 
+  #    - 9113
+  #  networks:
+  #    - nginx-exporter
+  #    - prometheus-network
+  #  depends_on:
+  #    nginx:
+  #      condition: service_healthy
 
   vault:
     container_name: vault
@@ -74,6 +91,8 @@ networks:
   nginx:
     driver: bridge
   vault_network:
+    driver: bridge
+  nginx-exporter:
     driver: bridge
 
 volumes:
