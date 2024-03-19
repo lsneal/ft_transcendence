@@ -1,4 +1,4 @@
-path "kv/elasticsearch" 
+path "kv/grafana" 
 {
     capabilities = ["read"]
 }

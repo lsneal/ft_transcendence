@@ -383,7 +383,6 @@ class HealthView(APIView):
         }
         return response
 
-<<<<<<< HEAD
 class UserStats(APIView):
     def get(self, request):
         response, access_token_obj = getAccessToken(request)
@@ -426,5 +425,3 @@ class PlayerRanking(APIView):
 
         
         return Response(serialized_players)
-=======
->>>>>>> main

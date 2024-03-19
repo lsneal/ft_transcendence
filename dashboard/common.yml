@@ -37,7 +37,7 @@ services:
       - "8004"
     restart: always
     volumes:
-      #- vault_django_dashboard:/opt
+      - vault_django_dashboard:/opt
       #- static:/var/www/admin/css
       - ./dashboard/script/:/script/mysite #development purpose
     depends_on:

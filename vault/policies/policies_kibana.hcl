@@ -1,4 +1,4 @@
-path "kv/*" 
+path "kv/kibana" 
 {
     capabilities = ["read"]
 }

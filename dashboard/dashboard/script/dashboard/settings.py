@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", '10.11.249.157']
+ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition
@@ -72,42 +72,40 @@ WSGI_APPLICATION = 'dashboard.wsgi.application'
 
 #AUTH_USER_MODEL="dashboard.User"
 
-#VAULT_ADDR = 'http://vault:8200'
-#
-#token_file_path = "/opt/users_token"
-#
-#with open(token_file_path, "r") as file:
-#    TOKEN = file.read().strip()
-#
-#vault_client = hvac.Client(url='http://vault:8200', token=TOKEN)
-#
-#secret_key = vault_client.read('kv/django_secrets')
-#
-SECRET_KEY = "00000000000000000000000000000000000"
+VAULT_ADDR = 'http://vault:8200'
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django_postgres_vault',
-#        'NAME': 'postgres',
-#        'HOST': 'postgres_users',
-#        'PORT': '5432', 
-#        'VAULT_ADDR': VAULT_ADDR,
-#        'VAULT_TOKEN': TOKEN,
-#        'VAULT_ROLE_NAME': 'postgres_users',
-#        'VAULT_DB_MOUNT_POINT': 'database',   
-#    },
-#}
+token_file_path = "/opt/dashboard_token"
+
+with open(token_file_path, "r") as file:
+    VAULT_TOKEN = file.read().strip()
+
+vault_client = hvac.Client(url='http://vault:8200', token=VAULT_TOKEN)
+
+SECRET_KEY = vault_client.read('kv/django_secrets_dashboard')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django_postgres_vault',
         'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
         'HOST': 'postgres_dashboard',
-        'PORT': '5434',
-    }
+        'PORT': '5434', 
+        'VAULT_ADDR': VAULT_ADDR,
+        'VAULT_TOKEN': VAULT_TOKEN,
+        'VAULT_ROLE_NAME': 'postgres_dashboard',
+        'VAULT_DB_MOUNT_POINT': 'database',   
+    },
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'postgres',
+#        'USER': 'postgres',
+#        'PASSWORD': 'password',
+#        'HOST': 'postgres_dashboard',
+#        'PORT': '5434',
+#    }
+#}
 
 
 AUTH_PASSWORD_VALIDATORS = [
