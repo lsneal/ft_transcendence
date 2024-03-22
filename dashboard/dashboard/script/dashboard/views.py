@@ -1,17 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import F, Case, When, Value, FloatField
-from .models import Gamer  # Importez votre modèle User (assurez-vous que le chemin d'importation est correct)
+from .models import Gamer 
 from .serializers import GamerSerializer 
 
 class UserStats(APIView):
     def get(self, request):
-        #response, access_token_obj = getAccessToken(request)
-        #user_id=access_token_obj['user_id']
-        #user=Gamer.objects.get(id=user_id)
-        #serialiazer = GamerSerializer(user)
-
-
+        response = Response() 
+        serialiazer = GamerSerializer(user)
+        
         response.data = {
             'victory': serialiazer.data['victory'],
             'nb_game': serialiazer.data['nb_game'],
@@ -38,7 +35,6 @@ class PlayerRanking(APIView):
                 prc_win = 0
             serialized_player = {
                 'pseudo': player.pseudo,
-                'prc_win': player.prc_win,
                 'nb_game': player.nb_game,
                 'victory': player.victory,
             }

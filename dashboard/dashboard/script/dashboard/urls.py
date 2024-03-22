@@ -6,7 +6,7 @@ from .views import UserStats, PlayerRanking
 
 urlpatterns = [
     #path('health/', HealthView.as_view()),
-   path('api/dashboard/user-stats/', UserStats.as_view(), name='user-stats'),  
-    path('api/dashboard/player-ranking/', PlayerRanking.as_view(), name='player-ranking'),  
+   path('api/dashboard/user-stats/', UserStats.as_view()),  
+    path('api/dashboard/player-ranking/', PlayerRanking.as_view()),  
 ]
 
