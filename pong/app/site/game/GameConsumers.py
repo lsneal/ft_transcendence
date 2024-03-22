@@ -25,7 +25,11 @@ class GameConsumer(WebsocketConsumer):
         gameId = text_data_json['gameId']
         typeParty = text_data_json['typeParty']
         gameIdx = gameId - 1
-
+        
+        
+        if gameIdx > len(manager.games):
+            gameIdx = len(manager.games) - 1
+        
         if game == 'tournament':
             tournamentId = text_data_json['tournamentId']
             tournamentId = tournamentId - 1
@@ -34,14 +38,12 @@ class GameConsumer(WebsocketConsumer):
             managerTournament.tournaments[tournamentId].users = users
             managerTournament.tournaments[tournamentId].nb_user = nb_user
             managerTournament.tournaments[tournamentId].tournamentinit()
-            usersTournament = managerTournament.tournaments[tournamentId].tournamentUsers()
             managerTournament.tournaments[tournamentId].player1 = self
             managerTournament.tournaments[tournamentId].player2 = self
             managerTournament.tournaments[tournamentId].player1.send(text_data=json.dumps({
                 'type':'players',
                 'player1': managerTournament.tournaments[tournamentId].match[0],
                 'player2': managerTournament.tournaments[tournamentId].match[1],
-                'tournamentUsers': usersTournament,
             }))
             manager.games[gameIdx].player1 = self
             manager.games[gameIdx].player2 = self
@@ -63,8 +65,6 @@ class GameConsumer(WebsocketConsumer):
                     'winner': managerTournament.tournaments[tournamentId].arrWinner[0]
                 }))
                 manager.endGame(manager.games[gameIdx])
-                managerTournament.tournaments[tournamentId].player1.close()
-                managerTournament.tournaments[tournamentId].player2.close()
                 return
             managerTournament.tournaments[tournamentId].player1.send(text_data=json.dumps({
                 'type':'players',
@@ -85,7 +85,7 @@ class GameConsumer(WebsocketConsumer):
         elif manager.games[gameIdx].player2 == 'p2':
             manager.games[gameIdx].player2 = self
 
-        if type(manager.games[gameIdx].player1) != str and type(manager.games[gameIdx].player2) != str and manager.games[gameIdx].player2 != None:
+        if type(manager.games[gameIdx].player1) != str and type(manager.games[gameIdx].player2) != str and manager.games[gameIdx].player2 != None and type(manager.games[gameIdx].player2) == type(manager.games[gameIdx].player1):
             manager.games[gameIdx].player1.send(text_data=json.dumps({
                 'type':'start',
             }))
@@ -101,11 +101,15 @@ class GameConsumer(WebsocketConsumer):
         if close_code == 1001:
             for game in manager.games:
                 if game.player1 == self or game.player2 == self:
-                    if type(self.player1) != str: 
-                        self.player1.close()
-                    if type(self.player2) != str:
-                        self.player2.close()
-                    self.player2 = 'END'
-                    self.player1 = 'END'
+                    try:
+                        if type(game.player1) != str:
+                            game.player1.close()
+
+                        if type(game.player2) != str:
+                            game.player2.close()
+                    except:
+                        pass
+                    game.player2 = 'END'
+                    game.player1 = 'END'
         raise StopConsumer
 

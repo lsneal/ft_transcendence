@@ -2,7 +2,6 @@ import random
 import threading
 
 class Tournament:
-
     def __init__(self):
         self.users = None
         self.nb_user = None
@@ -10,27 +9,7 @@ class Tournament:
         self.have_played = None
         self.winner = None
         self.arrWinner = []
-        self.tournament = []
 
-    def tournamentUsers(self):
-        #self.users
-        while self.users != None:
-            r = random.randrange(0, len(self.users))
-            i = 0
-            while i < len(self.tournament):
-                if self.users[r] == self.tournament[i]:
-                    break
-                i += 1
-            if i == len(self.tournament): 
-                self.tournament.append(self.users[r])
-                self.users.pop(r)
-            if len(self.users) == 0:
-                self.users = None
-        return self.tournament
-        
-    def progressUsers(self):
-        return self.arrWinner
-    
     def tournamentinit(self):
         player1 = random.randrange(0, self.nb_user)
         player2 = random.randrange(0, self.nb_user)

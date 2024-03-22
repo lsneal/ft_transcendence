@@ -1,29 +1,31 @@
-<div id="tournament">
-	<label>Nombre de joueurs :</label>
-	<select id="nbP" class="btn btn-primary btn-lg" name="nbP" id="pet-select">
-	  <option>4 joueurs</option>
-	  <option>8 joueurs</option>
-	  <option>16 joueurs</option>
-	</select>
-	<button id="CreateTournament"  class="btn btn-primary btn-lg" style="display: block;" onclick="CreateTournament()">Creer un tournois</button>
-</div>
-<form id="users" style="display: 'none';">
-	<div id="error" style="display: none; color: red;">
-		<h6>* Tous les champs ne sont pas remplis</h6>
+<div id="game-container">
+	<div id="tournament">
+		<label>Nombre de joueurs :</label>
+		<select id="nbP" class="btn btn-primary btn-lg" name="nbP" id="pet-select">
+		  <option>4 joueurs</option>
+		  <option>8 joueurs</option>
+		  <option>16 joueurs</option>
+		</select>
+		<button id="CreateTournament"  class="btn btn-primary btn-lg" style="display: block;" onclick="CreateTournament()">Creer un tournois</button>
 	</div>
-</form>
+	<form id="users" style="display: 'none';">
+		<div id="error" style="display: none; color: red;">
+			<h6>* Tous les champs ne sont pas remplis</h6>
+		</div>
+	</form>
 
-<div id="list" style="display: none;">
-	<button onclick="getName()">Jouer le tournoi</button>
-</div>
-<div id="bracket">
-</div>
-<h1 id="resultMatch" style="display: 'none';"></h1>
-<div class="game" id="game">
-	<h1 id="scoreP1">0</h1>
-	<div id="leftBox" class="block"></div>
-	<div id="ball" class="ball"></div>
-	<h1 id="time"></h1>
-	<h1 id="scoreP2">0</h1>
-	<div id="rightBox" class="block"></div>
+	<div id="list" style="display: none;">
+		<button onclick="getName()">Jouer le tournoi</button>
+	</div>
+	<div id="bracket">
+	</div>
+	<div class="game" id="game">
+		<h1 id="scoreP1">0</h1>
+		<div id="leftBox" class="block"></div>
+		<img src="https://localhost/static/kaaris.jpg" id="ball" class="ball"/>
+		<img src="https://localhost/static/crown.png" id="crown"/>
+		<h6 id="time"></h6>
+		<h1 id="scoreP2">0</h1>
+		<div id="rightBox" class="block"></div>
+	</div>
 </div>
