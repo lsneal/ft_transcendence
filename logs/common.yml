@@ -18,22 +18,39 @@ services:
       retries: 10
       timeout: 10s
 
-    
-  #postgres_exporter:
-  #  container_name: postgres_exporter
-  #  image: quay.io/prometheuscommunity/postgres-exporter
-  #  command: --web.listen-address=:9001 --config.file /etc/postgres_exporter.yml
+  #alertmanager:
+  #  image: prom/alertmanager:v0.27.0
+  #  restart: always
+  #  expose:
+  #    - "9093"
   #  networks:
-  #    - users_network
   #    - prometheus-network
   #  volumes:
-  #    - ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
-  #  expose:
-  #    - "9001"
-  #  restart: always
-  #  depends_on:
-  #     postgres_users:
-  #      condition: service_healthy   
+  #    - "./alertmanager:/config"
+  #    - alertmanager-data:/data
+  #  command: --config.file=/config/alertmanager.yml --log.level=debug
+  #
+
+  postgres_exporter:
+    container_name: postgres_exporter
+    image: quay.io/prometheuscommunity/postgres-exporter
+    entrypoint: /run/postgres_exporter.sh
+    user: "0"
+    networks:
+      - prometheus-network
+      - postgres_exporter-network
+      - vault_network_logs
+    volumes:
+      #- ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
+      - ./postgres_exporter/postgres_exporter.sh:/run/postgres_exporter.sh
+      - vault_postgresExporter:/opt
+      - vault_hostname:/opt/host
+    expose:
+      - "9187"
+    restart: always
+    depends_on:
+       postgres_users:
+        condition: service_healthy   
 
   prometheus:
     container_name: prometheus
@@ -49,6 +66,8 @@ services:
       - nginx
     depends_on:
       node_exporter:
+        condition: service_started
+      postgres_exporter:
         condition: service_started
     healthcheck:
       test: 
@@ -70,7 +89,7 @@ services:
     networks:
       - grafana-network
       - nginx
-      - vault_network
+      - vault_network_logs
     volumes:
       - grafana-data:/usr/share/grafana/data
       - grafana-conf:/usr/share/grafana/conf
@@ -96,10 +115,14 @@ networks:
   grafana-network:
     driver: bridge 
 
+  postgres_exporter-network:
+    driver: bridge
+
 volumes:
   prometheus:
   grafana-data:
   grafana-conf:
+  alertmanager-data:
 
 
 

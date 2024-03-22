@@ -1,16 +1,27 @@
-auth_modules:
-  postgres_users: 
-    type: userpass
-    userpass:
-      username: first
-      password: firstpass
-    options:
-      sslmode: disable
-
-  postgres_pong: 
-    type: userpass
-    userpass:
-      username: first
-      password: firstpass
-    options:
-      sslmode: disable
+#auth_modules:
+#  postgres_users: 
+#    type: userpass
+#    userpass:
+#      username: 
+#      password: 
+#    options:
+#      database: postgres
+#      sslmode: disable
+#
+#  postgres_pong: 
+#    type: userpass
+#    userpass:
+#      username: 
+#      password:
+#    options:
+#      database: postgres
+#      sslmode: disable
+#
+#  postgres_dashboard: 
+#    type: userpass
+#    userpass:
+#      username: first
+#      password: firstpass
+#    options:
+#      database: postgres
+#      sslmode: disable

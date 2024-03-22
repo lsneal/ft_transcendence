@@ -99,6 +99,19 @@ else
     vault token create -policy="grafana_certif" | grep -o 'hvs\.[^\ ]*' > grafana_token
     mv grafana_token /token_grafana
 
+    # ESexporter
+    vault policy write es_exporter_certif policies_es_exporter.hcl
+    vault token create -policy="es_exporter_certif" | grep -o 'hvs\.[^\ ]*' > es_exporter_token
+    mv es_exporter_token /token_ESexporter
+
+    # postgresExporter
+    vault policy write postgres_exporter_certif policies_postgres_exporter.hcl
+    vault token create -policy="postgres_exporter_certif" | grep -o 'hvs\.[^\ ]*' > postgres_exporter_token
+    mv postgres_exporter_token /token_postgresExporter
+
+    mkdir host
+    cp /etc/hostname /host
+
     vault secrets enable pki
 
     wait $!

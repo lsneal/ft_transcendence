@@ -8,19 +8,24 @@ async function EventGetQRCode() {
     });
 
     try {
-        const response = await fetch('/api/users/activate2fa', {
+        const response = await fetch('https://localhost/api/users/activate2fa/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
         const data = await response.json();
-        console.log('message: ', data.message);
+      
+        console.log('message: ', data.url);
         if (data.message === 'error') {
-            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
             Modal2faAcif.show();
+<<<<<<< HEAD
         } else if (!Modal2faAcif._isShown) {
             console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', data.url);
+=======
+        } 
+        else if (!Modal2faAcif._isShown) {
+>>>>>>> main
             var qrcode = document.createElement("img");
             qrcode.src = data.url;
             var imgElement = document.getElementById("2FA-link");
@@ -30,4 +35,4 @@ async function EventGetQRCode() {
     } catch (error) {
         alert('Erreur de déconnexion');
     }
-}
+}   

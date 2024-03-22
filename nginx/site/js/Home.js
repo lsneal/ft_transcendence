@@ -29,7 +29,7 @@ export default class extends AbstractView {
       });
 
       document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
-      document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
+      document.getElementById("modallogin2fa").addEventListener('click', send2facode);
 
      
     }

@@ -53,9 +53,10 @@ async function EventLogin () {
                     else{
                         console.log('pas active');
                         modal.hide();
-                        window.history.pushState(null, "Profile", "/profile/");
-                        window.dispatchEvent(new Event('popstate'));
+                       
                     }
+                    window.history.pushState(null, "Profile", "/profile/");
+                    window.dispatchEvent(new Event('popstate'));
                     });
                 }
                 catch (error) {
@@ -70,13 +71,6 @@ async function EventLogin () {
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
 
-            // If it fails put error in modal 
-
-
-            // You can look at that doc to know everything you can use with you response https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-            // Here I use https://developer.mozilla.org/en-US/docs/Web/API/Response/json
-            // To retrieve and parse the errors correctly
-
         });
     }
     catch (error) {
@@ -84,7 +78,6 @@ async function EventLogin () {
     };
 
   
-    // If login fail then don't do that and add the message in the modal with js
     
 }
 
