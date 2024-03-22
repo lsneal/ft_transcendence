@@ -9,9 +9,17 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-      if (window.innerWidth < 1288)
+      if (window.innerWidth < 1288 && window.innerWidth > 606)
       {
+        document.getElementById("game-container").style.display = 'block';
         document.getElementById("game").style.width = "500px";
+        document.getElementById("leftBox").style.left = "0%";
+        document.getElementById("rightBox").style.left = "95.1%";
+        document.getElementById("time").style.fontSize = '1.0rem';
+      }
+      else if (window.innerWidth < 606)
+      {
+        document.getElementById("game-container").style.display = 'none';
       }
     }
 

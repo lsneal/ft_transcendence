@@ -1,8 +1,13 @@
 let arrPlayer = new Array();
+let keyTournamentP1 = undefined;
+let keyTournamentP2 = undefined;
+var IntervalTournament = undefined;
 
 function CreateTournament() {
-    if (document.getElementById("resultMatch") != null)
-        document.getElementById("resultMatch").style.display = 'none';
+    if (document.getElementById("time") != null)
+        document.getElementById("time").style.display = 'none';
+    if (document.getElementById("crown") != null)
+        document.getElementById("crown").style.display = 'none';
     let nbPlayer = document.getElementById("nbP");
     let button3 = document.getElementById("tournament");
     let users = document.getElementById("users");
@@ -91,27 +96,22 @@ function beforeStart(gameId, value) {
     })
 }
 
-let keyP1 = undefined;
-let keyP2 = undefined;
-var Interval = undefined
-
 function gameLoop(gameId, socket)
 {
-    console.log("Je suis dedans")
-    if (keyP1 != undefined)
+    if (keyTournamentP1 != undefined)
     {
         socket.send(JSON.stringify({
             'game':'in progress',
-            'moov': keyP1,
+            'moov': keyTournamentP1,
             'gameId': gameId,
             'typeParty': 'game'
         }))
     }
-    if (keyP2 != undefined)
+    if (keyTournamentP2 != undefined)
     {
         socket.send(JSON.stringify({
             'game':'in progress',
-            'moov': keyP2,
+            'moov': keyTournamentP2,
             'gameId': gameId,
             'typeParty': 'game'
         }))
@@ -144,27 +144,16 @@ function playTournament(gameId, socket, tournament) {
             'typeParty': 'tournament'
         }))
 
-        //window.addEventListener("keydown", function (e) {
-        //    if (e.key === "w" || e.key === "s" || e.key === "ArrowUp" || e.key === "ArrowDown")
-        //    {
-        //        socket.send(JSON.stringify({
-        //            'game':'in progress',
-        //            'moov':e.key,
-        //            'gameId': gameId,
-        //            'typeParty': 'tournament'
-        //        }))
-        //    }
-        //})
-        Interval = setInterval(() => {
+        IntervalTournament = setInterval(() => {
             gameLoop(gameId, socket);
-        }, 60)
+        }, 30)
     }
 
 
     document.addEventListener("keyup", function (e) {
         e.preventDefault();
         if  (e.key === "w" || e.key === "s")
-            keyP1 = undefined;
+            keyTournamentP1 = undefined;
     })
 
     document.addEventListener("keydown", function (e) {
@@ -173,7 +162,7 @@ function playTournament(gameId, socket, tournament) {
             e.preventDefault();
             if  (e.key === "w" || e.key === "s")
             {
-                keyP1 = e.key;    
+                keyTournamentP1 = e.key;    
             }
         }
     })
@@ -182,7 +171,7 @@ function playTournament(gameId, socket, tournament) {
         e.preventDefault();
         if (e.key === "ArrowUp" || e.key === "ArrowDown")
         {
-            keyP2 = undefined;
+            keyTournamentP2 = undefined;
         }
     })
 
@@ -191,7 +180,7 @@ function playTournament(gameId, socket, tournament) {
         {
             e.preventDefault();
             if (e.key === "ArrowUp" || e.key === "ArrowDown")
-                keyP2 = e.key;
+                keyTournamentP2 = e.key;
         }
     })
 
@@ -200,15 +189,16 @@ function playTournament(gameId, socket, tournament) {
         if (data.type === "time")
         {
             document.getElementById("time").style.display = 'block';
+            document.getElementById("time").style.fontSize = '7.0rem';
+            document.getElementById("time").style.left = '50%';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '4')
+            if (data.time == '-1')
             {
                 document.getElementById("time").style.display = 'none';
             }
         }
         if (data.type === "players")
         {
-            console.log("tournois = ", data.tournamentUsers);
             const bracket = document.getElementById("bracket");
             if (data.player1 != undefined)
             {    
@@ -226,11 +216,13 @@ function playTournament(gameId, socket, tournament) {
         {
             const bracket = document.getElementById("bracket");
             bracket.innerHTML = ``
-            let resultMatch = document.getElementById("resultMatch");
-            resultMatch.style.display = 'block';
-            resultMatch.innerHTML += `Le gagnant du tournoi est ${data.winner}`
-            document.getElementById("scoreP1").innerHTML = 0
-            document.getElementById("scoreP2").innerHTML = 0
+            document.getElementById("time").style.display = 'block';
+            document.getElementById("crown").style.display = 'block';
+            document.getElementById("time").innerHTML = `${data.winner} gagne`;
+            document.getElementById("time").style.fontSize = 'xxx-large';
+            document.getElementById("time").style.left = '38%';
+            document.getElementById("scoreP1").innerHTML = 0;
+            document.getElementById("scoreP2").innerHTML = 0;
             return
         }
         if (data.type === "game")
@@ -281,18 +273,24 @@ function playTournament(gameId, socket, tournament) {
                             'gameId': gameId,
                             'typeParty': 'tournament'
                         }))
-                    }            
+                        if (IntervalTournament != undefined)
+                            clearInterval(IntervalTournament);
+                            IntervalTournament = undefined
+                        IntervalTournament = setInterval(() => {
+                            gameLoop(gameId, socket);
+                        }, 60)
+                    }  
                 }
             }
         }
     }
 
     socket.onclose = () => {
-        keyP1 = undefined;
-        keyP2 = undefined;
-        if (Interval != undefined)
-            clearInterval(Interval);
-        Interval = undefined
+        keyTournamentP1 = undefined;
+        keyTournamentP2 = undefined;
+        if (IntervalTournament != undefined)
+            clearInterval(IntervalTournament);
+            IntervalTournament = undefined
         posY = 250
         posX = 499
         if (window.innerWidth < 1288)
@@ -313,13 +311,28 @@ function playTournament(gameId, socket, tournament) {
 }
 
 function reportWindowSize() {
-    if (window.innerWidth < 1288)
+    if (document.getElementById("game") != null)
     {
-        document.getElementById("game").style.width = "500px";
-    }
-    else
-    {
-        document.getElementById("game").style.width = "1000px";
+        if (window.innerWidth < 606)
+        {
+            document.getElementById("game-container").style.display = 'none';
+        }
+        else if (window.innerWidth < 1288 && window.innerWidth > 606)
+        {
+            document.getElementById("game-container").style.display = 'block';
+            document.getElementById("game").style.width = "500px";
+            document.getElementById("leftBox").style.left = "0%";
+            document.getElementById("rightBox").style.left = "95.1%";
+            document.getElementById("time").style.fontSize = "x-small";
+        }
+        else
+        {
+            document.getElementById("game-container").style.display = 'block';
+            document.getElementById("game").style.width = "1000px";
+            document.getElementById("leftBox").style.left = "2%";
+            document.getElementById("rightBox").style.left = "95.6%";
+            document.getElementById("time").style.fontSize = "x-large";
+        }
     }
 }
 
