@@ -3,8 +3,8 @@ version: "3.8"
 include:
   - users/common.yml
   - pong/common.yml
-  #- elk/common.yml
-  #- logs/common.yml
+  - elk/common.yml
+  - logs/common.yml
   - dashboard/common.yml
 
 
@@ -24,36 +24,20 @@ services:
     networks:
       - vault_network
       - nginx
-      - nginx-exporter
     depends_on:
       django_users:
         condition: service_healthy
       django_pong:
         condition: service_healthy
-      #grafana:
-      #  condition: service_healthy
-      #kibana:
-      #  condition: service_healthy
+      grafana:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
     healthcheck:
       test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
       retries: 10
       timeout: 10s
-
-  #nginx-exporter:
-  #  image: nginx/nginx-prometheus-exporter:1.0
-  #  container_name: nginx-exporter
-  #  restart: always
-  #  command:
-  #    - -nginx.scrape-uri=https://nginx:443/stub_status
-  #  expose: 
-  #    - 9113
-  #  networks:
-  #    - nginx-exporter
-  #    - prometheus-network
-  #  depends_on:
-  #    nginx:
-  #      condition: service_healthy
 
   vault:
     container_name: vault
@@ -61,6 +45,7 @@ services:
     networks:
       - vault_network
       - nginx
+      - vault-postgres-exporter_network
     expose:
       - "8200"
     environment:
@@ -91,8 +76,6 @@ networks:
   nginx:
     driver: bridge
   vault_network:
-    driver: bridge
-  nginx-exporter:
     driver: bridge
 
 volumes:

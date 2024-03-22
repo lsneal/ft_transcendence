@@ -35,14 +35,14 @@ services:
     container_name: postgres_exporter
     image: quay.io/prometheuscommunity/postgres-exporter
     entrypoint: /run/postgres_exporter.sh
+    user: "0"
     networks:
       - prometheus-network
       - postgres_exporter-network
+      - vault-postgres-exporter_network
     volumes:
       #- ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
       - ./postgres_exporter/postgres_exporter.sh:/run/postgres_exporter.sh
-    expose:
-      - "9187"
     restart: always
     depends_on:
        postgres_users:
@@ -112,6 +112,9 @@ networks:
     driver: bridge 
 
   postgres_exporter-network:
+    driver: bridge
+
+  vault-postgres-exporter_network:
     driver: bridge
 
 volumes:

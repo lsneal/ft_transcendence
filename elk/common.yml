@@ -125,6 +125,7 @@ services:
       - elk
       #- users_network
       - vault_network
+      - logstash_network
     expose:
       - 5044/udp
     environment:
@@ -157,8 +158,6 @@ services:
       - ./es_exporter/es_exporter.sh:/run/es_exporter.sh
     entrypoint: /run/es_exporter.sh
     restart: always
-    expose:
-      - "9114"
     depends_on:
       es01:
         condition: service_healthy
@@ -178,4 +177,6 @@ networks:
   es_exporter-network:
     driver: bridge 
   elk:
-    driver: bridge  
+    driver: bridge
+  logstash_network:
+    driver: bridge
