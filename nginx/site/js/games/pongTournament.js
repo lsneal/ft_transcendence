@@ -323,6 +323,7 @@ function reportWindowSize() {
             document.getElementById("game").style.width = "500px";
             document.getElementById("leftBox").style.left = "0%";
             document.getElementById("rightBox").style.left = "95.1%";
+            document.getElementById("time").style.fontSize = "x-small";
         }
         else
         {
@@ -330,6 +331,7 @@ function reportWindowSize() {
             document.getElementById("game").style.width = "1000px";
             document.getElementById("leftBox").style.left = "2%";
             document.getElementById("rightBox").style.left = "95.6%";
+            document.getElementById("time").style.fontSize = "x-large";
         }
     }
 }

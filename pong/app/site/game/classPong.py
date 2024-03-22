@@ -132,7 +132,7 @@ class Pong:
                 winner = 'p2'
             
             if self.rightBoxTop - ballPosY < 30 and self.rightBoxTop - ballPosY > -90 and ballPosX >= hitRight:
-                if self.rightBoxTop - ballPosY > -20 or self.rightBoxTop - ballPosY < -50:
+                if self.rightBoxTop - ballPosY > -20:
                     hitWall = 0        
                     while ballPosX > hitLeft:
                         if hitWall == 2:
@@ -159,7 +159,7 @@ class Pong:
                             ballPosY += 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: 
+                        elif ballPosY > 460:
                             hitWall = 2
                         ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)

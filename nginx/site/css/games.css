@@ -62,7 +62,7 @@
 	left: 50%;
 	top: 90px;
 	margin-left:-35px;
-	font-size: 7.0rem;
+	font-size: x-large;
 	color: #B19470;
 	font-family: "Candal", sans-serif;
 }
@@ -83,6 +83,7 @@
 	width: 25px;
 	height: 80px;
 	top: 250px;
+	border-radius: 10px;
 }
 
 #leftBox{
