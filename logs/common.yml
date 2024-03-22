@@ -39,10 +39,14 @@ services:
     networks:
       - prometheus-network
       - postgres_exporter-network
-      - vault-postgres-exporter_network
+      - vault_network_logs
     volumes:
       #- ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
       - ./postgres_exporter/postgres_exporter.sh:/run/postgres_exporter.sh
+      - vault_postgresExporter:/opt
+      - vault_hostname:/opt/host
+    expose:
+      - "9187"
     restart: always
     depends_on:
        postgres_users:
@@ -85,7 +89,7 @@ services:
     networks:
       - grafana-network
       - nginx
-      - vault_network
+      - vault_network_logs
     volumes:
       - grafana-data:/usr/share/grafana/data
       - grafana-conf:/usr/share/grafana/conf

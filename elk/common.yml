@@ -2,6 +2,9 @@ version: "3.8"
 
 services:
   setup:
+  #  depends_on:
+  #    vault:
+  #      condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
@@ -10,7 +13,7 @@ services:
     user: "0"
     networks:
       - elk
-      - vault_network
+      - vault_network_elk
     entrypoint: ["bash", "/setup_entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
@@ -34,7 +37,7 @@ services:
       - ./entrypoint/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
     networks:
       - elk
-      - vault_network
+      - vault_network_elk
       - es_exporter-network
     expose:
       - 9200
@@ -83,7 +86,7 @@ services:
     networks:
       - elk
       - nginx
-      - vault_network
+      - vault_network_elk
     restart: always
     expose:
       - 5601
@@ -156,9 +159,11 @@ services:
     networks:
       - prometheus-network
       - es_exporter-network
+      - vault_network_elk
     volumes:
       - certs:/certs
       - ./es_exporter/es_exporter.sh:/run/es_exporter.sh
+      - vault_ESexporter:/opt
     entrypoint: /run/es_exporter.sh
     restart: always
     depends_on:

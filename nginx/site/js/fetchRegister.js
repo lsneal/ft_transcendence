@@ -16,13 +16,22 @@ async function EventRegister () {
         modal.hide();
         return; 
     }
-    if(password != confirmPassword){
+    if (password != confirmPassword){
         const errorMessage = 'Not Same Password';
         const errorElement = document.getElementById('error-message-ConfirmPass');
         errorElement.innerText = errorMessage;
         errorElement.style.display = 'block';
         return;
     }
+    /*else {
+        if (password.length != 8) {
+            const errorMessage = 'Size min password 8';
+            const errorElement = document.getElementById('error-message-password');
+            errorElement.innerText = errorMessage;
+            errorElement.style.display = 'block';
+            return;
+        }
+    }*/
 
     const formData = {
         email: email,

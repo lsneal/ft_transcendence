@@ -5,7 +5,7 @@ services:
     image: postgres:16.1-alpine3.19
     networks:
       - dashboard_network
-      - vault_network
+      - vault_network_dashboard
     environment:
       - POSTGRES_PASSWORD=password
       - PGPORT=5434
@@ -31,7 +31,7 @@ services:
     build: ./dashboard
     networks:
       - dashboard_network
-      - vault_network
+      - vault_network_dashboard
       - nginx
     expose:
       - "8004"

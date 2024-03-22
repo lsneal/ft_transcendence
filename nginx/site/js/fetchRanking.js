@@ -1,5 +1,4 @@
 async function getRankingPlayers() {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
     try {
         const response = await fetch('api/dashboard/player-ranking/', {
             method: 'GET',
@@ -17,9 +16,7 @@ async function getRankingPlayers() {
         console.log('Classement des joueurs:', data);
 
         // Calculer prc_win pour chaque joueur
-        data.forEach(player => {
-            player.prc_win = player.nb_game === 0 ? 0 : (player.victory / player.nb_game) * 100;
-        });
+        const prc_win = player.nb_game === 0 ? 0 : (player.victory / player.nb_game) * 100;
 
         // Trier les joueurs par leur pourcentage de victoire (prc_win)
         data.sort((a, b) => b.prc_win - a.prc_win);
@@ -40,7 +37,7 @@ async function getRankingPlayers() {
                 <td>${player.pseudo}</td>
                 <td>${player.victory}</td>
                 <td>${player.nb_game}</td>
-                <td>${player.prc_win}%</td>
+                <td>${prc_win}%</td>
             `;
             
             tbody.appendChild(row);

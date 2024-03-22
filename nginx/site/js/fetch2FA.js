@@ -15,12 +15,17 @@ async function EventGetQRCode() {
             }
         });
         const data = await response.json();
+      
         console.log('message: ', data.url);
         if (data.message === 'error') {
             Modal2faAcif.show();
+<<<<<<< HEAD
+        } else if (!Modal2faAcif._isShown) {
+            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', data.url);
+=======
         } 
         else if (!Modal2faAcif._isShown) {
-            console.log('bbbbb');
+>>>>>>> main
             var qrcode = document.createElement("img");
             qrcode.src = data.url;
             var imgElement = document.getElementById("2FA-link");

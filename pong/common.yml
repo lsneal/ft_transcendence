@@ -5,7 +5,7 @@ services:
     image: postgres:16.1-alpine3.19
     networks:
       - pong_network #change
-      - vault_network
+      - vault_network_pong
       - postgres_exporter-network
     env_file:
       - ../.env
@@ -35,7 +35,7 @@ services:
     networks:
       - pong_network #change
       - nginx
-      - vault_network
+      - vault_network_pong
     expose:
       - "8003"  #change the port
     restart: always
