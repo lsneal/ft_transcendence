@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 
+
+
 class Gamer(models.Model):
     pseudo = models.CharField(max_length=50)
     victory = models.IntegerField(default=95)

@@ -154,7 +154,7 @@ body{
 	position: relative;
 	width: 320px;
 	margin: 0 auto;
-	font-size: x-large;
+	font-size: large;
 }
 
 .otc fieldset {
@@ -197,8 +197,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -254,4 +252,3 @@ input::-webkit-inner-spin-button {
 #nbPartiesBar{
 	background-color: #7360DF;
 }
->>>>>>> origin/frontAxel
