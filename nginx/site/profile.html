@@ -16,24 +16,31 @@
   <div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
     <div class="modal-dialog modal-dialog-centered modalchart">
         <div class="modal-content">
-			<h2 class="text-center my-3" id="textdash">DashBoard</h2>
+            <h2 class="text-center my-3" id="textdash">DashBoard</h2>
             <div class="modal-body">
-                
-				<!-- Canvas pour le pie chart -->
-                <div class="pie-chart my-5" style="width: 50%; float: left;">
-					<p class="text-center">En Pourcentage</p>
-                    <canvas id="myChart" width="200" height="200"></canvas>
-                </div>
-
                 <!-- Bar chart horizontal -->
-                <div class="bar-chart my-5" style="width: 50%; float: left;">
-                    <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
-                    <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
+                <div class="chart-container">
+                    <div class="bar-chart my-5">
+                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
+                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
+                    </div>
+                </div>
+                
+                <!-- Canvas pour le pie chart -->
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                    <div id="legend" class="legend-container">
+                        <ul class="legend-list">
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #F2AFEF;"></span> Victoires: <span id="victoriesPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #7360DF;"></span> Défaites: <span id="defeatsPercentage"></span>%</li></div>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 

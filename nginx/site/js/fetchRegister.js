@@ -39,6 +39,31 @@ async function EventRegister () {
         password: password,
     };
 
+   // const userData = {
+   //     pseudo : pseudo,
+   // }
+//
+//
+   // 
+   // try {
+   //       const dashboardResponse = await fetch('/api/dashboard/connectUser/', {
+   //         method: 'POST',
+   //         headers: {
+   //             'Content-Type': 'application/json',
+   //         },
+   //         body: JSON.stringify(userData)
+   //     });
+   // 
+   // 
+   //     const dashboardData = await dashboardResponse.json();
+   //     console.log('dashboard data: ', dashboardData)
+//
+   // 
+   // } catch (error) {
+   //     console.log('Erreur : ' + error.message);
+   // }
+//
+
     try {
         const response = await fetch('/api/users/register/', {
             method: 'POST',
@@ -50,7 +75,7 @@ async function EventRegister () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data.email[0]);
+            console.log(data.email);
             console.log(data);
             if(data.id !== undefined){
                 modal.hide();
