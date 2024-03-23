@@ -9,6 +9,7 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=255)
     modification_time = models.DateTimeField(auto_now=True)
     username = None
+    token_refresh = models.CharField(max_length=255, null=True, blank=True)
 
     profile_image = models.ImageField(upload_to='./default_img/', default='default.jpeg')
 

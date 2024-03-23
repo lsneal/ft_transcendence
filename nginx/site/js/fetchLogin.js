@@ -23,6 +23,7 @@ async function EventLogin () {
     };
 
     try {
+
         const response = await fetch('/api/users/login/', {
             method: 'POST',
             mode: "cors",
@@ -43,20 +44,19 @@ async function EventLogin () {
                         }
                     }).then((response) => response.json())
                     .then((data) =>{
-                    console.log('message: ', data.message);
-                    if (data.message == 'True'){
-                        console.log('active');
-                        modal.hide();
-                        Modal2fa.show();
-
-                    }    
-                    else{
-                        console.log('pas active');
-                        modal.hide();
-                       
-                    }
-                    window.history.pushState(null, "Profile", "/profile/");
-                    window.dispatchEvent(new Event('popstate'));
+                        console.log('message: ', data.message);
+                        if (data.message == 'True'){
+                            console.log('active');
+                            modal.hide();
+                            Modal2fa.show();
+                        
+                        }    
+                        else{
+                            console.log('pas active');
+                            modal.hide();
+                            window.history.pushState(null, "Profile", "/profile/");
+                            window.dispatchEvent(new Event('popstate'));
+                        }
                     });
                 }
                 catch (error) {
@@ -70,7 +70,6 @@ async function EventLogin () {
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
-
         });
     }
     catch (error) {
