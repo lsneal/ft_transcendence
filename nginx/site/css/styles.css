@@ -263,12 +263,7 @@ body{
 	position: relative;
 	width: 320px;
 	margin: 0 auto;
-<<<<<<< HEAD
-	font-size: x-large;
-	font-size: x-large;
-=======
 	font-size: large;
->>>>>>> main
 }
 
 .otc fieldset {
@@ -311,8 +306,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -329,10 +322,16 @@ input::-webkit-inner-spin-button {
 		0 0 151px #7360DF;
 }
 
->>>>>>> main
+.chart-container {
+    width: 50%;
+    margin: 0 auto;
+	float: left;
+	text-align: center;
+}
+
 
 .bar-chart {
-    width: 300px; /* Largeur totale du bar chart */
+    width: 100%; /* Ajuste la largeur totale du bar chart selon tes besoins */
     margin: 20px auto; /* Centrer horizontalement */
     background-color: #fff; /* Fond blanc */
 }
@@ -346,6 +345,8 @@ input::-webkit-inner-spin-button {
     border-radius: 5px;
     transition: width 0.5s ease;
 }
+
+
 
 .bar:hover {
     background-color: #ddd; /* Couleur de fond au survol */
@@ -366,10 +367,29 @@ input::-webkit-inner-spin-button {
 #nbVictoiresBar {
     background-color: #F2AFEF; /* Couleur différente pour les victoires */
 }
-<<<<<<< HEAD
-=======
 
 #nbPartiesBar{
 	background-color: #7360DF;
 }
->>>>>>> main
+
+
+.legend-container {
+    margin-top: 10px;
+}
+
+.legend-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.legend-item {
+    margin-bottom: 5px;
+	align-items: center;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    margin-right: 5px;
+}

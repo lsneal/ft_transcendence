@@ -32,12 +32,9 @@ export default class extends AbstractView {
       document.getElementById("flexSwitchTwoFA").addEventListener('click', EventGetQRCode);
       
       document.getElementById("Valid2FA").addEventListener('click', EventActiveTwoFA);
-<<<<<<< HEAD
-=======
       document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
       document.getElementById("confirmDisable2FA").addEventListener('click', EventDisableTwoFA);
 
->>>>>>> main
     }
 
     async getHtml() {
