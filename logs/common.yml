@@ -49,7 +49,9 @@ services:
       - "9187"
     restart: always
     depends_on:
-       postgres_users:
+      postgres_users:
+        condition: service_healthy
+      vault:
         condition: service_healthy   
 
   prometheus:

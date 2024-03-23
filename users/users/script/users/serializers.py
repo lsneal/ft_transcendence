@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User
+from django.utils import timezone
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         if password is not None:
             instance.set_password(password)
+        instance.modification_time = timezone.now()
         instance.save()
         return instance
     
@@ -25,5 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         if pseudo is not None:
             instance.pseudo = pseudo
+        instance.modification_time = timezone.now()
         instance.save()
         return instance

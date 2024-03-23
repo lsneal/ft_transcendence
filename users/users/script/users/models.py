@@ -7,7 +7,7 @@ class User(AbstractBaseUser):
     a2f = models.BooleanField(default=False)
     totp_key = models.CharField(default="", max_length=32)
     password = models.CharField(max_length=255)
-    modification_time = models.DateTimeField(auto_now=True)
+    modification_time = models.DateTimeField()
     username = None
     token_refresh = models.CharField(max_length=255, null=True, blank=True)
 
