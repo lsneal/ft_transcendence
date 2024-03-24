@@ -10,6 +10,25 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
+
+      try {
+        const userresponse = await fetch('/api/users/user/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const userData = await userresponse.json();
+        console.log('data :', userData);
+        if (userData.detail != "Unauthenticated!") {
+          window.history.pushState(null, "Profile", "/profile/");
+          window.dispatchEvent(new Event('popstate'));
+        }
+      }catch(error){
+        console.error('Erreur: ', error.message)
+      }
+
       document.getElementById("btnLogin42").addEventListener('click', EventLogin42);
 
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
