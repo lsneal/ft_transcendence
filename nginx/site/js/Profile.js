@@ -30,7 +30,7 @@ export default class extends AbstractView {
             alert('Erreur : ' + error.message);
         }
 
-        if (!isAuthenticated) {
+        if (isAuthenticated === false) {
             return; 
         }
 
