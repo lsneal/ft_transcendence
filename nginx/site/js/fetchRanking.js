@@ -6,30 +6,30 @@ async function getRankingPlayers() {
                 'Content-Type': 'application/json',
             }
         });
-        
+         console.log(response);
         if (!response.ok) {
-            throw new Error('Erreur de récupération du classement des joueurs');
+            throw new Error('Erreur de recuperation du classement des joueurs');
         }
 
         const data = await response.json();
-        
-        console.log('Classement des joueurs:', data);
 
-        // Calculer prc_win pour chaque joueur
-        const prc_win = player.nb_game === 0 ? 0 : (player.victory / player.nb_game) * 100;
+        console.log('Classement des joueurs:', data);
 
         // Trier les joueurs par leur pourcentage de victoire (prc_win)
         data.sort((a, b) => b.prc_win - a.prc_win);
 
-        // Sélectionner le corps du tableau
+        // Selectionner le corps du tableau
         const tbody = document.querySelector('#scoreboard-table tbody');
 
-        // Réinitialiser le contenu du corps du tableau
+        // Reinitialiser le contenu du corps du tableau
         tbody.innerHTML = '';
 
-        // Ajouter chaque joueur au tableau avec son numéro de classement
+        // Ajouter chaque joueur au tableau avec son numero de classement
         data.forEach((player, index) => {
-            // Créer une nouvelle ligne pour le joueur
+            // Calculer prc_fwin pour chaque joueur
+            const prc_win = player.nb_game === 0 ? 0 : (player.victory / player.nb_game) * 100;
+
+            // Creer une nouvelle ligne pour le joueur
             const row = document.createElement('tr');
 
             row.innerHTML = `
@@ -37,13 +37,14 @@ async function getRankingPlayers() {
                 <td>${player.pseudo}</td>
                 <td>${player.victory}</td>
                 <td>${player.nb_game}</td>
-                <td>${prc_win}%</td>
+                <td>${prc_win.toFixed(2)}%</td>
             `;
-            
+
             tbody.appendChild(row);
         });
 
     } catch (error) {
-        alert('Erreur de récupération du classement des joueurs: ' + error.message);
+        alert('Erreur de recuperation du classement des joueurs: ' + error.message);
     }
 }
+

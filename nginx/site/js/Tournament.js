@@ -9,6 +9,10 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
+
+      document.getElementById("btnLogout").addEventListener('click', EventLogout);
+    
+
       if (window.innerWidth < 1288 && window.innerWidth > 606)
       {
         document.getElementById("game").style.display = 'block';

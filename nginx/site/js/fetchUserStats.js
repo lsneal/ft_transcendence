@@ -22,7 +22,7 @@ async function getUserStats() {
         });
         dataDashboard = await responseDashboard.json();
         drawChart(dataDashboard);
-        console.log('Données : ', dataDashboard);
+        console.log('Donnees : ', dataDashboard);
        
     } catch (error) {
         alert('Erreur : ' + error.message);
@@ -32,10 +32,11 @@ async function getUserStats() {
 async function drawChart(dataDashboard) {
     const nbGames = dataDashboard.nb_game;
     const nbVictories = dataDashboard.victory;
+    const nbTournaments = dataDashboard.nb_tournament;
 
     if (nbGames === 0) {
         
-        const legend = document.getElementById('legend');
+        const legend = document.querySelector('.legend');
         if (legend) {
             legend.style.display = 'none';
         }
@@ -43,18 +44,30 @@ async function drawChart(dataDashboard) {
         document.getElementById('nbVictoiresBar').style.display = 'none';
         document.getElementById('nbPartiesBar').style.display = 'none';
         
-        const errorMessage = "Vous n\'avez pas encore joué de parties.";
+        const errorMessage = "Vous n\'avez pas encore joue de parties.";
         const errorElement = document.getElementById('errormessageStat');
         errorElement.innerText = errorMessage;
         errorElement.style.display = 'block'; 
         return; 
     }
 
+    
+
+
     document.getElementById('myChart').style.display = 'block';
     
-    legend = document.getElementById('legend');
-    if (legend) {
-        legend.style.display = 'block';
+
+
+
+    const existingLegend = document.querySelector('.legend');
+    if (existingLegend) {
+        existingLegend.parentNode.removeChild(existingLegend);
+    }
+
+
+    let legends = document.getElementById('legend');
+    if (legends) {
+        legends.style.display = 'block';
     }
     
     document.getElementById('nbVictoiresBar').style.display = 'block';
@@ -63,7 +76,7 @@ async function drawChart(dataDashboard) {
     const prc_win = (nbVictories / nbGames) * 100;
 
     const pieChartData = {
-        labels: ['Victoires', 'Défaites'],
+        labels: ['Victoires', 'Defaites'],
         datasets: [{
             data: [prc_win, 100 - prc_win],
             backgroundColor: ['#F2AFEF', '#7360DF']
@@ -99,7 +112,7 @@ async function drawChart(dataDashboard) {
 
     drawChart();
 
-    // Afficher les pourcentages dans la légende en dessous du graphique
+    // Afficher les pourcentages dans la legende en dessous du graphique
     const legend = document.createElement('div');
     legend.classList.add('legend');
     legend.innerHTML = `
@@ -114,6 +127,7 @@ async function drawChart(dataDashboard) {
 
     // Mettre à jour les titres des barres de progression
     document.getElementById('nbVictoiresBar').title = `Nombre de victoires : ${nbVictories}`;
-    document.getElementById('nbPartiesBar').title = `Nombre de parties jouées : ${nbGames}`;
-}
+    document.getElementById('nbPartiesBar').title = `Nombre de parties jouees : ${nbGames}`;
 
+   
+}
