@@ -30,7 +30,37 @@ async function getUserStats() {
 }
 
 async function drawChart(dataDashboard) {
-    const prc_win = (dataDashboard.victory / dataDashboard.nb_game) * 100;
+    const nbGames = dataDashboard.nb_game;
+    const nbVictories = dataDashboard.victory;
+
+    if (nbGames === 0) {
+        
+        const legend = document.getElementById('legend');
+        if (legend) {
+            legend.style.display = 'none';
+        }
+        
+        document.getElementById('nbVictoiresBar').style.display = 'none';
+        document.getElementById('nbPartiesBar').style.display = 'none';
+        
+        const errorMessage = "Vous n\'avez pas encore joué de parties.";
+        const errorElement = document.getElementById('errormessageStat');
+        errorElement.innerText = errorMessage;
+        errorElement.style.display = 'block'; 
+        return; 
+    }
+
+    document.getElementById('myChart').style.display = 'block';
+    
+    legend = document.getElementById('legend');
+    if (legend) {
+        legend.style.display = 'block';
+    }
+    
+    document.getElementById('nbVictoiresBar').style.display = 'block';
+    document.getElementById('nbPartiesBar').style.display = 'block';
+
+    const prc_win = (nbVictories / nbGames) * 100;
 
     const pieChartData = {
         labels: ['Victoires', 'Défaites'],
@@ -83,6 +113,7 @@ async function drawChart(dataDashboard) {
     document.getElementById('nbPartiesBar').style.width = '100%'; // La largeur de la barre pour le nombre de parties est toujours à 100%
 
     // Mettre à jour les titres des barres de progression
-    document.getElementById('nbVictoiresBar').title = `Nombre de victoires : ${dataDashboard.victory}`;
-    document.getElementById('nbPartiesBar').title = `Nombre de parties jouées : ${dataDashboard.nb_game}`;
+    document.getElementById('nbVictoiresBar').title = `Nombre de victoires : ${nbVictories}`;
+    document.getElementById('nbPartiesBar').title = `Nombre de parties jouées : ${nbGames}`;
 }
+

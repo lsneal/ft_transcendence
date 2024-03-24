@@ -11,7 +11,7 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-
+      
       EventProfile();
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
       //EventProfile()
