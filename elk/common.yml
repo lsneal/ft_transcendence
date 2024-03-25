@@ -10,6 +10,7 @@ services:
       - certs:/usr/share/elasticsearch/config/certs
       - vault_elastic:/opt
       - ./entrypoint/setup_entrypoint.sh:/setup_entrypoint.sh
+      - ./kibana/dashboards:/etc/dashboards
     user: "0"
     networks:
       - elk

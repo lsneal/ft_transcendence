@@ -24,12 +24,12 @@
       "references": [
         {
           "type": "index-pattern",
-          "id": "3a2534e3-635f-40bb-9fae-0b1eb290611a",
+          "id": "dataview_id_to_replace",
           "name": "9e841d16-58fd-47ac-9876-2489d9f3fed8:indexpattern-datasource-layer-78375280-fbab-4d89-ad48-7fec45e94f36"
         },
         {
           "type": "index-pattern",
-          "id": "3a2534e3-635f-40bb-9fae-0b1eb290611a",
+          "id": "dataview_id_to_replace",
           "name": "b3e5f71d-149e-4db2-899b-ed43ac836b6b:indexpattern-datasource-layer-0e5041d8-2d0b-4d1a-84e5-6ff713624206"
         }
       ],
@@ -38,7 +38,7 @@
       "typeMigrationVersion": "8.9.0"
     },
     {
-      "id": "3a2534e3-635f-40bb-9fae-0b1eb290611a",
+      "id": "dataview_id_to_replace",
       "type": "index-pattern",
       "namespaces": [
         "default"

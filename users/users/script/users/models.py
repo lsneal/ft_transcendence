@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
+from django.utils import timezone
 
 class User(AbstractBaseUser):
     pseudo = models.CharField(max_length=50)
@@ -16,7 +17,6 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    def save(self, instance, validated_data):
-        instance.modification_time = timezone.now()
-        instance.save()
-        return instance
+    def save(self, *args, **kwargs):
+        self.modification_time = timezone.now()
+        super().save(*args, **kwargs)

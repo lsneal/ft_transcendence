@@ -45,4 +45,34 @@ echo "Waiting for Elasticsearch availability";
 until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
 echo "Setting kibana_system password";
 until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"$KIBANA_PASSWORD\"}" | grep -q "^{}"; do sleep 10; done;
-echo "All done!";
+echo "Setting done!";
+
+until curl -s -I http://kibana:5601 | grep -q 'HTTP/1.1 302 Found'; do sleep 10; done;
+echo "Kibana can be accessed";
+
+dataview=$(until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/data_views/data_view -d '{
+  "data_view": {
+     "title": "users*",
+     "name": "Users Data View"
+  }
+}'; do sleep 10; done;)
+USER_ID=$(echo $dataview | sed -n 's/.*"id":"\([^"]*\).*/\1/p')
+dataview=$(until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/data_views/data_view -d '{
+  "data_view": {
+     "title": "nginx*",
+     "name": "Nginx Data View"
+  }
+}'; do sleep 10; done;)
+NGINX_ID=$(echo $dataview | sed -n 's/.*"id":"\([^"]*\).*/\1/p')
+dataview=$(until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/data_views/data_view -d '{
+  "data_view": {
+     "title": "modsec*",
+     "name": "ModSecurity Data View"
+  }
+}'; do sleep 10; done;)
+MODSEC_ID=$(echo $dataview | sed -n 's/.*"id":"\([^"]*\).*/\1/p')
+echo "Data Views Created";
+
+until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/kibana/dashboards/import?exclude=index-pattern -d "$(sed 's/dataview_id_to_replace/'${USER_ID}'/g' /etc/dashboards/kibana-dashboards.postgres.json)"; do sleep 10; done;
+until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/kibana/dashboards/import?exclude=index-pattern -d "$(sed 's/dataview_id_to_replace/'${NGINX_ID}'/g' /etc/dashboards/kibana-dashboards.nginx.json)"; do sleep 10; done;
+echo "Dashboards Imported";

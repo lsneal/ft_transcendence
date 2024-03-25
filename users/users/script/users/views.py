@@ -213,7 +213,7 @@ class ActivateA2F(APIView):
         response.data = { 'message': 'success disable 2fa'}
 
         return response
-        
+       
 class LoginA2F(APIView):
     def get(self, request):
         token = request.COOKIES.get('access_token')
