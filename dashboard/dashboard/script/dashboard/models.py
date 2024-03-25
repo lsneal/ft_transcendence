@@ -5,9 +5,9 @@ from django.db import models
 
 class Gamer(models.Model):
     pseudo = models.CharField(max_length=50)
-    victory = models.IntegerField(default=15)
-    nb_game = models.IntegerField(default=150)
-    nb_tournament = models.IntegerField(default=0)
+    victory = models.IntegerField(default=0)
+    nb_game = models.IntegerField(default= 20)
+    nb_tournament = models.IntegerField(default=10)
     class Game(models.Model):
         conceded_point = models.IntegerField()
         marked_point = models.IntegerField()

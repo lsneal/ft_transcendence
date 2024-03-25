@@ -393,3 +393,9 @@ input::-webkit-inner-spin-button {
     height: 10px;
     margin-right: 5px;
 }
+
+
+.carousel-item {
+    background-color: black;
+    color: white; /* Changez la couleur du texte si nécessaire */
+}
