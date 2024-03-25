@@ -1,4 +1,7 @@
-function startGameOnline(gameId) {
+player1 = null;
+player2 = null;
+
+function startGameOnline(gameId, player, pseudo, name1, name2) {
     if (document.getElementById("time") != null)
         document.getElementById("time").style.display = 'none';
     if (document.getElementById("crown") != null)
@@ -9,19 +12,21 @@ function startGameOnline(gameId) {
     if (!gameId)
         return ;
     gameId = Number(gameId)
-
-    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
-        method: "GET",
-    })
-    .then((response) => response.json())
-    .then(data => {
-        let url = `wss://localhost/api/pong/ws/` + data.id 
-        const socket = new WebSocket(url)
-        playGameOnline(gameId, socket)
-    })
+    
+    fetch("/api/users/user/", {
+            method: "GET",
+        })
+        .then((response) => response.json())
+        .then(data => {
+            let url = `wss://localhost/api/pong/ws/` + data.data.id 
+            const socket = new WebSocket(url)
+            player1 = name1
+            player2 = name2
+            playGameOnline(gameId, socket, pseudo, player)
+        })
 }
 
-function playGameOnline(gameId, socket)
+function playGameOnline(gameId, socket, pseudo, player)
 { 
     let button2 = document.getElementById("JoinGameOnline");
 
@@ -36,6 +41,7 @@ function playGameOnline(gameId, socket)
 
 
     socket.onopen = () => {
+        console.log("player1 = ", player1, "player2 = ", player2);
         socket.send(JSON.stringify({
             'game':'start',
             'moov':'none',
@@ -83,9 +89,15 @@ function playGameOnline(gameId, socket)
                 document.getElementById("scoreP1").innerHTML = data.scoreP1;
                 document.getElementById("scoreP2").innerHTML = data.scoreP2;
                 if (data.scoreP1 == 5)
+                {
                     winner = "p1";
+                    UserStatsGame(pseudo, 'p1', player, 'p2', data.scoreP1, data.scoreP2);
+                }
                 if (data.scoreP2 == 5)
+                {
                     winner = "p2";
+                    UserStatsGame(pseudo, 'p2', player, 'p1', data.scoreP1, data.scoreP2);
+                }
             }
         }
         if (data.type === "time")
@@ -128,5 +140,63 @@ function playGameOnline(gameId, socket)
         }
         button2.style.display = 'block';
         document.getElementById("time").innerHTML = ``;
+    }
+}
+
+async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score) {
+    if (winner === player || looser === player)
+    {   
+        console.log("wine = ", winner);
+        console.log("loose = ", looser)
+        await  fetch("/api/users/user/", {
+            method: "GET",
+        })
+        .then((response) => response.json())
+        .then(data => {            
+            if (data.data.pseudo === pseudo && winner === player)
+            {
+                const conceded_point = (player == 'p1') ?  p2Score : p1Score
+                const marked_point = (player == 'p1') ?  p1Score : p2Score
+                const opponent = (player == 'p1') ? player2 : player1  
+                console.log(conceded_point, marked_point, opponent)
+                fetch('/api/dashboard/connectUser/', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'pseudo': pseudo, 
+                        'gameEnd': 'true',
+                        'win' : 'true',
+                    },
+                    body: JSON.stringify({
+                        'conceded_point': conceded_point,
+                        'marked_point': marked_point,
+                        'opponent': opponent
+                    })
+                });
+            }
+            else if (data.data.pseudo === pseudo && looser === player)
+            {
+
+                const conceded_point = (player == 'p1') ?  p2Score : p1Score
+                const marked_point = (player == 'p1') ?  p1Score : p2Score
+                const opponent = (player == 'p1') ? player2 : player1
+                console.log(conceded_point, marked_point, opponent)
+                fetch('/api/dashboard/connectUser/', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'pseudo': pseudo, 
+                        'gameEnd': 'true',
+                        'win' : 'false',
+                    },
+                    body: {
+                        'conceded_point': conceded_point,
+                        'marked_point': marked_point,
+                        'opponent': opponent 
+                    }
+                });
+            }
+            return
+        })
     }
 }

@@ -3,7 +3,6 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from .views import manager
 from .views import managerTournament
-from django.contrib.auth.models import AnonymousUser
 from channels.exceptions import StopConsumer
 
 class GameConsumer(WebsocketConsumer):

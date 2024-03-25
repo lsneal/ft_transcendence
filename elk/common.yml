@@ -107,7 +107,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 200 OK'",
         ]
       interval: 10s
       timeout: 10s
@@ -164,7 +164,7 @@ services:
     user: "0"
     image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
     networks:
-      - prometheus-network
+      #- prometheus-network
       - es_exporter-network
       - vault_network_elk
     volumes:

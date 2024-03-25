@@ -3,11 +3,13 @@ import threading
 import time
 
 class Pong:
-    def __init__(self, Player1, id):
+    def __init__(self, Player1, id, p1_name):
         self.leftBoxTop = 250
         self.rightBoxTop = 250
         self.player1 = Player1
         self.player2 = None
+        self.player1_name = p1_name
+        self.player2_name = None
         self.id = id
         self.status = None
         self.scoreP1 = 0
