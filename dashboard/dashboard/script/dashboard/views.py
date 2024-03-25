@@ -7,17 +7,7 @@ from .serializers import GamerSerializer, GameSerializer
 from django.http import JsonResponse
 import json
 
-class UserStats(APIView):
-    def get(self, request):
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ", dict(request.data))
-        #gamer = Gamer.objects.get(pseudo= request.data.)
-        #response = Response() 
-        #response.data = {
-        #    'pseudo':  gamer.pseudo,
-        #    'victory': gamer.victory,
-        #    'nb_game': gamer.nb_game,
-        #}
-        return response
+
 
 class ConnectUserStats(APIView):
     def post(self, request):
@@ -84,20 +74,17 @@ class PlayerRanking(APIView):
             When(nb_game__gt=0, then=(F('victory') / F('nb_game')) * 100),
             default=Value(0),
             output_field=FloatField()
-        )).filter(nb_game__gt=0).order_by('-prc_win')[:5]
-        
+        )).filter(nb_game__gt=0).order_by('-prc_win').distinct()[:5]
+
         serialized_players = []
         for player in players:
-            if player.nb_game != 0:
-                prc_win = player.prc_win
-            else:
-                prc_win = 0
             serialized_player = {
                 'pseudo': player.pseudo,
                 'nb_game': player.nb_game,
                 'victory': player.victory,
+                'prc_win': player.prc_win if player.nb_game != 0 else 0,
             }
             serialized_players.append(serialized_player)
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa : ", serialized_players)
 
-        
         return Response(serialized_players)

@@ -34,7 +34,8 @@ async function EventLogin () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log('data ', data);
+            console.log("OUI")
+            console.log(data.email)
             if (data.detail === undefined)
             {
                 try {
@@ -43,21 +44,22 @@ async function EventLogin () {
                         headers: {
                             'Content-Type': 'application/json',
                         }
+
                     }).then((response) => response.json())
                     .then((data) =>{
-                        console.log('message: ', data.message);
-                        if (data.message == 'True'){
-                            console.log('active');
-                            modal.hide();
-                            Modal2fa.show();
-                        
-                        }    
-                        else{
-                            console.log('pas active');
-                            modal.hide();
-                            window.history.pushState(null, "Profile", "/profile/");
-                            window.dispatchEvent(new Event('popstate'));
-                        }
+                    console.log('message: ', data.message);
+                    if (data.message == 'True'){
+                        console.log('active');
+                        modal.hide();
+                        Modal2fa.show();
+
+                    }    
+                    else {
+                        console.log('pas active');
+                        modal.hide();
+                        window.history.pushState(null, "Profile", "/profile/");
+                        window.dispatchEvent(new Event('popstate'));
+                    }
                     });
                 }
                 catch (error) {

@@ -16,7 +16,7 @@ services:
       - ./users/users/script/static/:/var/www/django/ #development purpose
       - ./pong/app/site/static/:/var/www
       - ./nginx/site/:/var/www/html/ #development purpose
-      - vault_nginx:/opt # CHANGER OPT !!
+      - vault_nginx:/opt
       - nginx_logs:/var/log/
     restart: always
     ports:

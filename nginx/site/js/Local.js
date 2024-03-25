@@ -9,6 +9,38 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
+      let isAuthenticated = false;
+
+      try {
+          const userresponse = await fetch('/api/users/user/', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+              }
+          });
+
+          const userData = await userresponse.json();
+
+          if (userData.detail === "Unauthenticated!") {
+              window.history.pushState(null, "Local", "/local");
+              window.dispatchEvent(new Event('popstate'));
+              isAuthenticated = false; 
+          } else {
+              isAuthenticated = true; 
+          }
+      } catch (error) {
+          alert('Erreur : ' + error.message);
+      }
+
+      if (isAuthenticated === false) {
+          return; 
+      }
+
+
+      document.getElementById("btnLogout").addEventListener('click', EventLogout);
+
+
+      
       if (window.innerWidth < 1288 && window.innerWidth > 606)
       {
         document.getElementById("game-container").style.display = 'block';
