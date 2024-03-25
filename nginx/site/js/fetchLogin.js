@@ -23,7 +23,6 @@ async function EventLogin () {
     };
 
     try {
-
         const response = await fetch('/api/users/login/', {
             method: 'POST',
             mode: "cors",
@@ -34,8 +33,7 @@ async function EventLogin () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log("OUI")
-            console.log(data.email)
+            console.log('data ', data);
             if (data.detail === undefined)
             {
                 try {
@@ -44,7 +42,6 @@ async function EventLogin () {
                         headers: {
                             'Content-Type': 'application/json',
                         }
-
                     }).then((response) => response.json())
                     .then((data) =>{
                     console.log('message: ', data.message);
@@ -54,12 +51,13 @@ async function EventLogin () {
                         Modal2fa.show();
 
                     }    
-                    else {
+                    else{
                         console.log('pas active');
                         modal.hide();
-                        window.history.pushState(null, "Profile", "/profile/");
-                        window.dispatchEvent(new Event('popstate'));
+                       
                     }
+                    window.history.pushState(null, "Profile", "/profile/");
+                    window.dispatchEvent(new Event('popstate'));
                     });
                 }
                 catch (error) {
@@ -73,6 +71,7 @@ async function EventLogin () {
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
+
         });
     }
     catch (error) {
@@ -82,6 +81,3 @@ async function EventLogin () {
   
     
 }
-
-
-
