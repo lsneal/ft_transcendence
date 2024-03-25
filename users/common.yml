@@ -6,7 +6,7 @@ services:
     networks:
       - users_network
       - vault_network_users
-      - postgres_exporter-network
+      #- postgres_exporter-network
     env_file:
       - ../.env
     environment:

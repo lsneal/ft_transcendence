@@ -92,11 +92,16 @@ class Login42View(APIView):
 
 class LoginView(APIView):
     def get(self, request):
-        token = request.COOKIES.get('access_token')
+        #token = request.COOKIES.get('access_token')
 
-        access_token_obj = AccessToken(token)
-        user_id=access_token_obj['user_id']
-        user=User.objects.get(id=user_id)
+        #access_token_obj = AccessToken(token)
+        #user_id=access_token_obj['user_id']
+        #user=User.objects.get(id=user_id)
+        
+        email = request.data.get('email', None)
+        user = User.objects.filter(email=email).first()
+
+        print(f"email  {email}")
 
         response = Response()
         if user.a2f is True:
@@ -119,6 +124,11 @@ class LoginView(APIView):
         
         if not user.check_password(password):
             raise AuthenticationFailed('Incorrect password')
+
+        print(user.a2f)
+        if user.a2f is True:
+            response.data = { 'email': user.email }
+            return response
 
         data = get_tokens_for_user(user)
         response.set_cookie(
@@ -245,9 +255,7 @@ class LoginA2F(APIView):
         totp = pyotp.TOTP(user.totp_key)
 
         response = Response()
-        print(str(user_code))
-        print("a")
-        print(totp.now)
+
         if totp.now() == user_code:
             response.data = { 'message': 'success' }
         else:

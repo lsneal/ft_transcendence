@@ -33,6 +33,8 @@ async function EventLogin () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
+            console.log("OUI")
+            console.log(data.email)
             if (data.detail === undefined)
             {
                 try {
@@ -41,6 +43,7 @@ async function EventLogin () {
                         headers: {
                             'Content-Type': 'application/json',
                         }
+
                     }).then((response) => response.json())
                     .then((data) =>{
                     console.log('message: ', data.message);
@@ -50,7 +53,7 @@ async function EventLogin () {
                         Modal2fa.show();
 
                     }    
-                    else{
+                    else {
                         console.log('pas active');
                         modal.hide();
                         window.history.pushState(null, "Profile", "/profile/");
