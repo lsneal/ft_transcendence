@@ -6,4 +6,4 @@ sleep 1
 
 mkdir /var/log/nginx/
 
-/usr/sbin/nginx -g "daemon off;"
+exec /usr/sbin/nginx -g "daemon off;"

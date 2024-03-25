@@ -2,7 +2,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import F, Case, When, Value, FloatField
 from .models import Gamer 
-from .serializers import GamerSerializer 
+from .serializers import GamerSerializer
+
+class HealthView(APIView):
+    def get(self, request):
+        response = Response()
+        response.data = {
+            'status': 'healthy'
+        }
+        return response
 
 class UserStats(APIView):
     def get(self, request):

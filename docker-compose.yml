@@ -29,6 +29,8 @@ services:
         condition: service_healthy
       django_pong:
         condition: service_healthy
+      django_dashboard:
+        condition: service_healthy
       grafana:
         condition: service_healthy
       kibana:

@@ -15,3 +15,8 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def save(self, instance, validated_data):
+        instance.modification_time = timezone.now()
+        instance.save()
+        return instance
