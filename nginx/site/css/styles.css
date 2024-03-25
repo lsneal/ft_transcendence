@@ -1,6 +1,100 @@
 body{
 	height: 100vh;
-	background-color: #C499F3;
+	background-color: #33186B;
+	/* AD88C6 */
+	/* de base C499F3 */
+	color: #F2AFEF;
+	font-family: "Tienne", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.navbar{
+	background-color: #33186B;
+	color: #F2AFEF;
+}
+
+.text-logo{
+	color: #F2AFEF;
+	text-shadow:
+		0 0 7px #F2AFEF,
+		0 0 10px #F2AFEF,
+		0 0 21px #F2AFEF,
+		0 0 42px #7360DF,
+		0 0 82px #7360DF,
+		0 0 92px #7360DF,
+		0 0 102px #7360DF,
+		0 0 151px #7360DF;
+} 	
+
+.fa-solid{
+	color: #F2AFEF;
+}
+
+.navbar{
+	background-color: #33186B;
+	color: #F2AFEF;
+}
+
+.text-logo{
+	color: #F2AFEF;
+	text-shadow:
+		0 0 7px #F2AFEF,
+		0 0 10px #F2AFEF,
+		0 0 21px #F2AFEF,
+		0 0 42px #7360DF,
+		0 0 82px #7360DF,
+		0 0 92px #7360DF,
+		0 0 102px #7360DF,
+		0 0 151px #7360DF;
+} 	
+
+.fa-solid{
+	color: #F2AFEF;
+}
+
+.navbar{
+	background-color: #33186B;
+	color: #F2AFEF;
+}
+
+.text-logo{
+	color: #F2AFEF;
+	text-shadow:
+		0 0 7px #F2AFEF,
+		0 0 10px #F2AFEF,
+		0 0 21px #F2AFEF,
+		0 0 42px #7360DF,
+		0 0 82px #7360DF,
+		0 0 92px #7360DF,
+		0 0 102px #7360DF,
+		0 0 151px #7360DF;
+} 	
+
+.fa-solid{
+	color: #F2AFEF;
+}
+
+.navbar{
+	background-color: #33186B;
+	color: #F2AFEF;
+}
+
+.text-logo{
+	color: #F2AFEF;
+	text-shadow:
+		0 0 7px #F2AFEF,
+		0 0 10px #F2AFEF,
+		0 0 21px #F2AFEF,
+		0 0 42px #7360DF,
+		0 0 82px #7360DF,
+		0 0 92px #7360DF,
+		0 0 102px #7360DF,
+		0 0 151px #7360DF;
+} 	
+
+.fa-solid{
+	color: #F2AFEF;
 }
 
 .navbar{
@@ -35,13 +129,22 @@ body{
 }
 
 
+.fa-bars {
+	background-color: #561C24;
+}
+
 .btn:hover{
-	background-color: #7360DF;
+	background-color: #B19470; 
+	/* B19470 */
 	border: #7360DF;
 	--bs-btn-bg: #7360DF;
 	--bs-btn-border-color: #7360DF;
 	color:#F2AFEF;
-
+	/* de base  7360DF*/
+	/* de base  7360DF*/
+	/* de base  7360DF*/
+	/* de base  7360DF*/
+	/* de base  F2AFEF*/
 }
 
 
@@ -50,14 +153,20 @@ body{
 	--bs-btn-border-color: #C499F3;
 	--bs-btn-active-bg: #7360DF;
 	color: #F2AFEF;
+	/* de base 33186B*/
+	/* de base C499F3*/
+	/* de base 7360DF*/
+	/* de base F2AFEF*/
 }
 
 .btn-secondary {
-	--bs-btn-bg: #33186B;
-	--bs-btn-border-color: #C499F3;
-	--bs-btn-active-bg: #7360DF;
-
-
+	--bs-btn-bg: #B784B7;
+	/* B784B7 */
+	--bs-btn-border-color: #33186B;
+	--bs-btn-active-bg: #C499F3;
+	/* de base 33186B*/
+	/* de base C499F3*/
+	/* de base C499F3*/
 }
 
 .big-button {
@@ -154,7 +263,7 @@ body{
 	position: relative;
 	width: 320px;
 	margin: 0 auto;
-	font-size: x-large;
+	font-size: large;
 }
 
 .otc fieldset {
@@ -197,8 +306,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -215,10 +322,18 @@ input::-webkit-inner-spin-button {
 		0 0 151px #7360DF;
 }
 
+.chart-container {
+    width: 50%;
+    margin: 0 auto;
+	float: left;
+	text-align: center;
+}
+
 
 .bar-chart {
-    width: 300px; /* Largeur totale du bar chart */
+    width: 100%; /* Ajuste la largeur totale du bar chart selon tes besoins */
     margin: 20px auto; /* Centrer horizontalement */
+    background-color: #fff; /* Fond blanc */
 }
 
 .bar {
@@ -230,6 +345,8 @@ input::-webkit-inner-spin-button {
     border-radius: 5px;
     transition: width 0.5s ease;
 }
+
+
 
 .bar:hover {
     background-color: #ddd; /* Couleur de fond au survol */
@@ -254,4 +371,25 @@ input::-webkit-inner-spin-button {
 #nbPartiesBar{
 	background-color: #7360DF;
 }
->>>>>>> origin/frontAxel
+
+
+.legend-container {
+    margin-top: 10px;
+}
+
+.legend-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.legend-item {
+    margin-bottom: 5px;
+	align-items: center;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    margin-right: 5px;
+}

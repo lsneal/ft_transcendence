@@ -28,16 +28,9 @@ export default class extends AbstractView {
         }
       });
 
-      document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
-      document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
+      //document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
+      document.getElementById("modallogin2fa").addEventListener('click', send2facode);
 
-
-      // Handle redirection error when wrong url
-      /*if (window.location != 'https://localhost/')
-      {
-        window.history.pushState(null, "Error Page 404", "/error/");
-        window.dispatchEvent(new Event('popstate'));
-      }*/
      
     }
 

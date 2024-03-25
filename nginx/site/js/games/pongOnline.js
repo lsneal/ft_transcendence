@@ -1,6 +1,8 @@
 function startGameOnline(gameId) {
-    if (document.getElementById("resultMatch") != null)
-        document.getElementById("resultMatch").style.display = 'none';
+    if (document.getElementById("time") != null)
+        document.getElementById("time").style.display = 'none';
+    if (document.getElementById("crown") != null)
+        document.getElementById("crown").style.display = 'none';
     let button2 = document.getElementById("JoinGameOnline");
 
     button2.style.display = 'none'
@@ -40,21 +42,9 @@ function playGameOnline(gameId, socket)
             'gameId': gameId,
             'typeParty': 'game'
         }))
-
-        window.addEventListener("keydown", function (e) {
-            if (e.key === "ArrowUp" || e.key === "ArrowDown")
-            {
-                socket.send(JSON.stringify({
-                    'game':'in progress',
-                    'moov':e.key,
-                    'gameId': gameId,
-                    'typeParty': 'game'
-                }))
-            }
-        })
         
         window.addEventListener("keydown", function (e) {
-            if (e.key === "w" || e.key === "s")
+            if (e.key === "ArrowUp" || e.key === "ArrowDown")
             {
                 socket.send(JSON.stringify({
                     'game':'in progress',
@@ -81,7 +71,6 @@ function playGameOnline(gameId, socket)
             {
                 if (window.innerWidth < 1288)
                 {
-                    //data.posY /= 2;
                     data.posX /= 2;
                     ball.style.top = data.posY.toString() + "px";
                     ball.style.left = data.posX.toString() + "px";
@@ -102,20 +91,26 @@ function playGameOnline(gameId, socket)
         if (data.type === "time")
         {
             document.getElementById("time").style.display = 'block';
+            document.getElementById("time").style.fontSize = '7.0rem';
+            document.getElementById("time").style.left = '50%';
             document.getElementById("time").innerHTML = data.time;
-            if (data.time == '4')
+            if (data.time == '-1')
             {
                 document.getElementById("time").style.display = 'none';
             }
         }
     }
     socket.onclose = () => {
-        let resultMatch = document.getElementById("resultMatch");
-        resultMatch.style.display = 'block';
+        
+        document.getElementById("time").style.display = 'block';
+        document.getElementById("crown").style.display = 'block';
         if (winner == 'p1')
-            resultMatch.innerHTML += "Le gagnant est Joueur1"
+            document.getElementById("time").innerHTML = `Joueur1 gagne`;
         if (winner == 'p2')
-            resultMatch.innerHTML += "Le gagnant est Joueur2"
+            document.getElementById("time").innerHTML = `Joueur2 gagne`;
+        document.getElementById("time").style.fontSize = 'xxx-large';
+        document.getElementById("time").style.left = '38%';
+
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
         posY = 250
@@ -132,19 +127,6 @@ function playGameOnline(gameId, socket)
             ball.style.left = posX.toString() + "px";
         }
         button2.style.display = 'block';
-        document.getElementById("time").innerHTML = '0';
+        document.getElementById("time").innerHTML = ``;
     }
 }
-
-function reportWindowSize() {
-    if (window.innerWidth < 1288)
-    {
-        document.getElementById("game").style.width = "500px";
-    }
-    else
-    {
-        document.getElementById("game").style.width = "1000px";
-    }
-}
-
-window.onresize = reportWindowSize;

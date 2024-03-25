@@ -7,9 +7,9 @@ async function EventLogin () {
     let modal = bootstrap.Modal.getInstance(myModalEl);
 
 
-    //var Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
-    //    keyboard: false
-    //  });
+    var Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
+        keyboard: false
+      });
 
     if (!email || !password) {
         alert('Veuillez remplir tous les champs !');
@@ -23,6 +23,7 @@ async function EventLogin () {
     };
 
     try {
+
         const response = await fetch('/api/users/login/', {
             method: 'POST',
             mode: "cors",
@@ -46,6 +47,7 @@ async function EventLogin () {
 
                     }).then((response) => response.json())
                     .then((data) =>{
+<<<<<<< HEAD
                     console.log('message: ', data.message);
                     if (data.message == 'True'){
                         console.log('active');
@@ -59,6 +61,21 @@ async function EventLogin () {
                         window.history.pushState(null, "Profile", "/profile/");
                         window.dispatchEvent(new Event('popstate'));
                     }
+=======
+                        console.log('message: ', data.message);
+                        if (data.message == 'True'){
+                            console.log('active');
+                            modal.hide();
+                            Modal2fa.show();
+                        
+                        }    
+                        else{
+                            console.log('pas active');
+                            modal.hide();
+                            window.history.pushState(null, "Profile", "/profile/");
+                            window.dispatchEvent(new Event('popstate'));
+                        }
+>>>>>>> 03d3766240d7f329a28a309a6cc2f39bffed3424
                     });
                 }
                 catch (error) {
@@ -72,14 +89,6 @@ async function EventLogin () {
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
-
-            // If it fails put error in modal 
-
-
-            // You can look at that doc to know everything you can use with you response https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-            // Here I use https://developer.mozilla.org/en-US/docs/Web/API/Response/json
-            // To retrieve and parse the errors correctly
-
         });
     }
     catch (error) {
@@ -87,7 +96,6 @@ async function EventLogin () {
     };
 
   
-    // If login fail then don't do that and add the message in the modal with js
     
 }
 

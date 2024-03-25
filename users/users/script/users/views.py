@@ -5,6 +5,7 @@ from rest_framework.exceptions import AuthenticationFailed
 import rest_framework_simplejwt, datetime, jwt
 import json
 
+from .settings import SECRET_KEY
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user
 from django.middleware import csrf
@@ -125,11 +126,6 @@ class LoginView(APIView):
         if not user.check_password(password):
             raise AuthenticationFailed('Incorrect password')
 
-        print(user.a2f)
-        if user.a2f is True:
-            response.data = { 'email': user.email }
-            return response
-
         data = get_tokens_for_user(user)
         response.set_cookie(
             key = settings.SIMPLE_JWT['AUTH_COOKIE'],
@@ -139,14 +135,15 @@ class LoginView(APIView):
             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
-        response.set_cookie(
-            key = settings.SIMPLE_JWT['REFRESH_COOKIE'],
-            value = data["refresh"],
-            expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+        user.token_refresh = response.set_cookie(
+                 key = settings.SIMPLE_JWT['REFRESH_COOKIE'],
+                 value = data["refresh"],
+                 expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                 secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                 httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
+        user.save() 
         csrf.get_token(request)
         response.data = {"Success" : "Login successfully","data":data}
         return response
@@ -262,17 +259,18 @@ class LoginA2F(APIView):
             response.data = { 'message': 'failure' }
         return response
     
-def getAccessToken(request):
+def getAccessToken(self, request):
     token = request.COOKIES.get('access_token')
     if not token:
         raise AuthenticationFailed('Unauthenticated!')
 
     response = Response()
-
     try:
         access_token_obj = AccessToken(token)
     except:
-        refresh_token = request.COOKIES.get('refresh_token')
+        token = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=["HS256"], options={"verify_signature": False})
+        user = User.objects.get(id=token['user_id'])
+        refresh_token = user.token_refresh
         try:
             refresh = RefreshToken(refresh_token)
             access_token_obj = refresh.access_token
@@ -340,9 +338,9 @@ class UserView(APIView):
             }
             
         else:
-            response, access_token_obj = getAccessToken(request)
+            response, access_token_obj = getAccessToken(self, request)
 
-        
+
             user_id=access_token_obj['user_id']
             user=User.objects.get(id=user_id)
             serialiazer = UserSerializer(user)
@@ -390,46 +388,3 @@ class HealthView(APIView):
             'status': 'healthy'
         }
         return response
-
-class UserStats(APIView):
-    def get(self, request):
-        response, access_token_obj = getAccessToken(request)
-        user_id=access_token_obj['user_id']
-        user=User.objects.get(id=user_id)
-        serialiazer = UserSerializer(user)
-
-
-        response.data = {
-            'victory': serialiazer.data['victory'],
-            'nb_game': serialiazer.data['nb_game'],
-            'img': serialiazer.data['profile_image'],
-            'prc_win': ['serialiazer.prc_win'],
-        }
-        return response
-
-
-
-class PlayerRanking(APIView):
-    def get(self, request):
-        players = User.objects.annotate(prc_win=Case(
-            When(nb_game__gt=0, then=(F('victory') / F('nb_game')) * 100),
-            default=Value(0),
-            output_field=FloatField()
-        )).filter(nb_game__gt=0).order_by('-prc_win')[:5]
-        
-        serialized_players = []
-        for player in players:
-            if player.nb_game != 0:
-                prc_win = player.prc_win
-            else:
-                prc_win = 0
-            serialized_player = {
-                'pseudo': player.pseudo,
-                'prc_win': player.prc_win,
-                'nb_game': player.nb_game,
-                'victory': player.victory,
-            }
-            serialized_players.append(serialized_player)
-
-        
-        return Response(serialized_players)

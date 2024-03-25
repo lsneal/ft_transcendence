@@ -16,18 +16,18 @@ class Pong:
     def bar_moov(self, moov, playerMoov):
         
         if moov == 'ArrowUp' and self.leftBoxTop > 20 and self.player1 == playerMoov != self.player2:
-            self.leftBoxTop -= 30
+            self.leftBoxTop -= 15
         if moov == 'ArrowDown' and self.leftBoxTop < 400 and self.player1 == playerMoov != self.player2:
-            self.leftBoxTop += 30
+            self.leftBoxTop += 15
         
         if moov == 'ArrowUp' and self.rightBoxTop > 20 and self.player2 == playerMoov:
-            self.rightBoxTop -= 30
+            self.rightBoxTop -= 15
         if moov == 'ArrowDown' and self.rightBoxTop < 400 and self.player2 == playerMoov:
-            self.rightBoxTop += 30
+            self.rightBoxTop += 15
         if moov == 'w' and self.leftBoxTop > 20 and self.player1 == playerMoov == self.player2:
-            self.leftBoxTop -= 30
+            self.leftBoxTop -= 15
         if moov == 's' and self.leftBoxTop < 400 and self.player1 == playerMoov == self.player2:
-            self.leftBoxTop += 30
+            self.leftBoxTop += 15
 
         self.barSendToJs(moov, self.leftBoxTop, self.rightBoxTop)
 
@@ -62,13 +62,31 @@ class Pong:
                     'time':i,
                 }))
             time.sleep(0.5)
-            i += 1
+            i -= 1
         while self.scoreP1 < 5 and self.scoreP2 < 5:
+            if type(self.player1) is not type(self.player2) or type(self.player1) == 'END' or type(self.player1) == 'END':
+                from .views import manager
+                manager.endGame(self)
+                return
             if ballPosX == 499 and ballPosY == 250:
-                while ballPosX > hitLeft:
-                    ballPosX -= 15
-                    self.ballSendToJs(ballPosX, ballPosY, typeParty)
-                    time.sleep(0.03)            
+                if winner == 'p2':
+                    while ballPosX > hitLeft:
+                        ballPosX -= 13
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
+                        time.sleep(0.03)
+                        winner = None            
+                elif winner == 'p1':
+                    while ballPosX < hitRight:
+                        ballPosX += 13
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
+                        time.sleep(0.03)
+                        winner = None
+                else:
+                    while ballPosX > hitLeft:
+                        ballPosX -= 13
+                        self.ballSendToJs(ballPosX, ballPosY, typeParty)
+                        time.sleep(0.03)
+            
             if self.leftBoxTop - ballPosY < 30 and self.leftBoxTop - ballPosY > -90 and ballPosX <= hitLeft:
                 if self.leftBoxTop - ballPosY > -20:
                     hitWall = 0        
@@ -81,7 +99,7 @@ class Pong:
                             ballPosY -= 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
@@ -97,23 +115,24 @@ class Pong:
                             ballPosY += 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 else:
                     while ballPosX < hitRight:
-                        ballPosX += 18
+                        ballPosX += 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
             elif ballPosX < hitLeft:
                 ballPosX = 499
                 ballPosY = 250
                 self.scoreP2 += 1
+                winner = 'p2'
             
             if self.rightBoxTop - ballPosY < 30 and self.rightBoxTop - ballPosY > -90 and ballPosX >= hitRight:
-                if self.rightBoxTop - ballPosY > -20 or self.rightBoxTop - ballPosY < -50:
+                if self.rightBoxTop - ballPosY > -20:
                     hitWall = 0        
                     while ballPosX > hitLeft:
                         if hitWall == 2:
@@ -124,7 +143,7 @@ class Pong:
                             ballPosY -= 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460: 
                             hitWall = 2
                         ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
@@ -140,39 +159,33 @@ class Pong:
                             ballPosY += 10
                         if ballPosY <  0:
                             hitWall = 1
-                        elif ballPosY > 460: #460
+                        elif ballPosY > 460:
                             hitWall = 2
                         ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
                 else:
                     while ballPosX > hitLeft:
-                        ballPosX -= 18
+                        ballPosX -= 13
                         self.ballSendToJs(ballPosX, ballPosY, typeParty)
                         time.sleep(0.03)
             elif ballPosX > hitRight:
                 ballPosX = 499
                 ballPosY = 250
                 self.scoreP1 += 1
+                winner = 'p1'
         self.ballSendToJs(499, 250, typeParty)
         self.barSendToJs('ArrowUp', 250, 250)
+        self.leftBoxTop = 250
+        self.rightBoxTop = 250
         if typeParty == 'game':
             from .views import manager
             manager.endGame(self)
             return
 
     def ballSendToJs(self, ballPosX, ballPosY, typeParty):
-        
-        self.player1.send(text_data=json.dumps({
-            'type':'game',
-            'moov':'ball',
-            'posX':ballPosX,
-            'posY':ballPosY,
-            'scoreP1':self.scoreP1,
-            'scoreP2':self.scoreP2
-        }))
-        if typeParty == 'game':
-            self.player2.send(text_data=json.dumps({
+        try:
+            self.player1.send(text_data=json.dumps({
                 'type':'game',
                 'moov':'ball',
                 'posX':ballPosX,
@@ -180,23 +193,38 @@ class Pong:
                 'scoreP1':self.scoreP1,
                 'scoreP2':self.scoreP2
             }))
-        
+            if typeParty == 'game':
+                self.player2.send(text_data=json.dumps({
+                    'type':'game',
+                    'moov':'ball',
+                    'posX':ballPosX,
+                    'posY':ballPosY,
+                    'scoreP1':self.scoreP1,
+                    'scoreP2':self.scoreP2
+                }))
+        except:
+            pass
         if self.scoreP1 == 5 or self.scoreP2 == 5:
             self.barSendToJs('ArrowUp', 250, 250)
+            self.leftBoxTop = 250
+            self.rightBoxTop = 250
         return
         
     def barSendToJs(self, moov, leftBoxTop, rightBoxTop):
-        self.player1.send(text_data=json.dumps({
-            'type':'game',
-            'moov':moov,
-            'leftBoxTop': leftBoxTop,
-            'rightBoxTop': rightBoxTop
-        }))
-        
-        self.player2.send(text_data=json.dumps({
-            'type':'game',
-            'moov':moov,
-            'leftBoxTop': leftBoxTop,
-            'rightBoxTop': rightBoxTop
-        }))    
+        try:
+            self.player1.send(text_data=json.dumps({
+                'type':'game',
+                'moov':moov,
+                'leftBoxTop': leftBoxTop,
+                'rightBoxTop': rightBoxTop
+            }))
+
+            self.player2.send(text_data=json.dumps({
+                'type':'game',
+                'moov':moov,
+                'leftBoxTop': leftBoxTop,
+                'rightBoxTop': rightBoxTop
+            }))
+        except:
+            pass 
         return
