@@ -47,7 +47,6 @@ async function EventLogin () {
 
                     }).then((response) => response.json())
                     .then((data) =>{
-<<<<<<< HEAD
                     console.log('message: ', data.message);
                     if (data.message == 'True'){
                         console.log('active');
@@ -61,21 +60,6 @@ async function EventLogin () {
                         window.history.pushState(null, "Profile", "/profile/");
                         window.dispatchEvent(new Event('popstate'));
                     }
-=======
-                        console.log('message: ', data.message);
-                        if (data.message == 'True'){
-                            console.log('active');
-                            modal.hide();
-                            Modal2fa.show();
-                        
-                        }    
-                        else{
-                            console.log('pas active');
-                            modal.hide();
-                            window.history.pushState(null, "Profile", "/profile/");
-                            window.dispatchEvent(new Event('popstate'));
-                        }
->>>>>>> 03d3766240d7f329a28a309a6cc2f39bffed3424
                     });
                 }
                 catch (error) {
