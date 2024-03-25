@@ -22,7 +22,7 @@ export default class extends AbstractView {
           const userData = await userresponse.json();
 
           if (userData.detail === "Unauthenticated!") {
-              window.history.pushState(null, "Logout", "/");
+              window.history.pushState(null, "Local", "/local");
               window.dispatchEvent(new Event('popstate'));
               isAuthenticated = false; 
           } else {
