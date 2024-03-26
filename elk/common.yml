@@ -107,7 +107,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 200 OK'",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s
@@ -167,6 +167,9 @@ services:
       #- prometheus-network
       - es_exporter-network
       - vault_network_elk
+      - prometheus_elastic-network
+    expose:
+      - 9114
     volumes:
       - certs:/certs
       - ./es_exporter/es_exporter.sh:/run/es_exporter.sh
