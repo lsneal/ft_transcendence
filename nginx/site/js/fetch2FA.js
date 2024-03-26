@@ -19,8 +19,8 @@ async function EventGetQRCode() {
         console.log('message: ', data.url);
         if (data.message === 'error') {
             Modal2faAcif.show();
-        } else if (!Modal2faAcif._isShown) {
-            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', data.url);
+        } 
+        else if (!Modal2faAcif._isShown) {
             var qrcode = document.createElement("img");
             qrcode.src = data.url;
             var imgElement = document.getElementById("2FA-link");

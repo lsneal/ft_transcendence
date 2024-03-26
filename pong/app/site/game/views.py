@@ -6,10 +6,8 @@ from django.http import JsonResponse
 from rest_framework import permissions, viewsets
 
 from .models import Game
-from .models import User
-from .serializers import UserGameSerializer
+# from .serializers import UserGameSerializer
 from .serializers import GameSerializer
-from .serializers import UserSerializer
 from .serializers import TournamentSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
@@ -26,15 +24,6 @@ class HealthView(APIView):
         }
         return response
 
-class UserIdGameView(APIView):
-    def get(self, request):
-        if request.method == 'GET':
-            serializer = UserGameSerializer(data={'user_id': 'Join'})
-            serializer.is_valid()
-            serializer.save()
-            return Response(serializer.data)
-
-
 class CreateTournamentView(APIView):
     def post(self, request):
         if request.method == 'POST':
@@ -47,15 +36,19 @@ class CreateTournamentView(APIView):
 class JoinGameView(APIView):
     def post(self, request):
         if request.method == 'POST':
-            game = manager.joinGame()
-            if game.player1 is not None and game.player2 is 'p2':
+            player = request.data.get('pseudo', None)
+            if type(player) == str:
+                game = manager.joinGameOnline(player)
+            else:
+                game = manager.joinGame()
+            if game.player1 != None and game.player2 == 'p2':
                 serializer = Game.objects.get(pk=Game.objects.latest('id').id)
-                serializer = GameSerializer(serializer, data={'player2': game.player2})
+                serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
                 serializer.is_valid()
                 serializer.save()
                 return Response(serializer.data)
-            elif game.player1 is 'p1' and game.player2 is not 'p2':
-                serializer = GameSerializer(data={'player1': game.player1})
+            elif game.player1 == 'p1' and game.player2 != 'p2':
+                serializer = GameSerializer(data={'player1': game.player1, 'player1_name': game.player1_name})
                 serializer.is_valid()
                 serializer.save()
                 return Response(serializer.data)

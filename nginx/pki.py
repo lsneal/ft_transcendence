@@ -38,7 +38,7 @@ def sign_intermediate_certif(intermediate_csr):
 
     return signed_intermediate_cert
 
-create_or_update_role_response = client.secrets.pki.create_or_update_role(
+client.secrets.pki.create_or_update_role(
     'pki_cert_role',
     {
         'ttl': '31d',
@@ -56,20 +56,113 @@ def generate_final_certif():
     private_key = generate_certificate_response['data']['private_key']
     final_certif = generate_certificate_response['data']['certificate']
     
-    certificate_file_path = "/opt/server.key"
+    certificate_file_path = "/etc/nginx/certs/server.key"
     with open(certificate_file_path, "w") as file:
         file.write(private_key)
 
-    certificate_file_path = "/opt/server.crt"
+    certificate_file_path = "/etc/nginx/certs/server.crt"
     with open(certificate_file_path, "w") as file:
         file.write(final_certif) 
 
     return (final_certif)
 
 root_cert = generate_root_certif()
-
 cert_intermediate = generate_intermediate_certif()
 sign_intermediate_certif(cert_intermediate)
+generate_final_certif()
+print("Nginx certificate create")
 
-final_cert = generate_final_certif()
-print("Certificate create")
+client.secrets.pki.create_or_update_role(
+    'pki_vault',
+    {
+        'ttl': '31d',
+        'allow_localhost': 'true',
+        'enforce_hostnames': 'false'
+    }
+)
+
+def generate_final_certif_vault():
+
+    generate_certificate_response = client.secrets.pki.generate_certificate(
+        name='pki_vault',
+        common_name='localhost'
+    )
+    private_key = generate_certificate_response['data']['private_key']
+    final_certif = generate_certificate_response['data']['certificate']
+    
+    certificate_file_path = "/etc/nginx/certs/vault.key"
+    with open(certificate_file_path, "w") as file:
+        file.write(private_key)
+
+    certificate_file_path = "/etc/nginx/certs/vault.crt"
+    with open(certificate_file_path, "w") as file:
+        file.write(final_certif) 
+
+    return (final_certif)
+
+generate_final_certif_vault()
+print("Vault certificate create")
+
+client.secrets.pki.create_or_update_role(
+    'pki_kibana',
+    {
+        'ttl': '31d',
+        'allow_localhost': 'true',
+        'enforce_hostnames': 'false'
+    }
+)
+
+def generate_final_certif_kibana():
+
+    generate_certificate_response = client.secrets.pki.generate_certificate(
+        name='pki_kibana',
+        common_name='localhost'
+    )
+    private_key = generate_certificate_response['data']['private_key']
+    final_certif = generate_certificate_response['data']['certificate']
+    
+    certificate_file_path = "/etc/nginx/certs/kibana.key"
+    with open(certificate_file_path, "w") as file:
+        file.write(private_key)
+
+    certificate_file_path = "/etc/nginx/certs/kibana.crt"
+    with open(certificate_file_path, "w") as file:
+        file.write(final_certif) 
+
+    return (final_certif)
+
+generate_final_certif_kibana()
+print("Kibana certificate create")
+
+client.secrets.pki.create_or_update_role(
+    'pki_grafana',
+    {
+        'ttl': '31d',
+        'allow_localhost': 'true',
+        'enforce_hostnames': 'false'
+    }
+)
+
+def generate_final_certif_grafana():
+
+    generate_certificate_response = client.secrets.pki.generate_certificate(
+        name='pki_grafana',
+        common_name='localhost'
+    )
+    private_key = generate_certificate_response['data']['private_key']
+    final_certif = generate_certificate_response['data']['certificate']
+    
+    certificate_file_path = "/etc/nginx/certs/grafana.key"
+    with open(certificate_file_path, "w") as file:
+        file.write(private_key)
+
+    certificate_file_path = "/etc/nginx/certs/grafana.crt"
+    with open(certificate_file_path, "w") as file:
+        file.write(final_certif) 
+
+    return (final_certif)
+
+generate_final_certif_grafana()
+print("Grafana certificate create")
+
+print("All Certificate create")

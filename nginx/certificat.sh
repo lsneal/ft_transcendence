@@ -1,5 +1,6 @@
 #!/bin/sh
 
+mkdir /etc/nginx/certs
 python /opt/pki.py
 
 sleep 1

@@ -114,6 +114,32 @@ else
 
     vault secrets enable pki
 
+    
+    # Création de la CA dans Vault
+    #vault write pki/root/generate/internal \
+    #    common_name="MyCA" \
+    #    ttl="600h" \
+    #    key_bits=4096 \
+    #    exclude_cn_from_sans=true
+    #    
+    #vault write pki/issue/pki \
+    #    @instances.json \
+    #    common_name="es01" \
+    #    ttl="600h" \
+    #    format="pem_bundle"
+    #
+    #vault read pki/issue/pki \
+    #    common_name="es01" \
+    #    ttl="600h" \
+    #    format="json" | jq -r '.data.certificate' > es01.crt
+    #vault read pki/issue/pki \
+    #    common_name="es01" \
+    #    ttl="600h" \
+    #    format="json" | jq -r '.data.private_key' > es01.key
+    #vault read pki/cert/ca | jq -r '.data.certificate' > ca.crt
+    
+
+
     wait $!
 
 fi
