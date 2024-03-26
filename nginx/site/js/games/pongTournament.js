@@ -85,12 +85,12 @@ function buildBracket(value) {
 }
 
 function beforeStart(gameId, value) {
-    fetch("/api/pong/UserIdGameView", {
+    fetch("/api/users/user/", {
         method: "GET",
     })
     .then((response) => response.json())
-    .then(dataUser => {
-        let url = `wss://localhost/api/pong/ws/` + dataUser.id 
+    .then(data => {
+        let url = `wss://localhost/api/pong/ws/` + data.data.id 
         const socket = new WebSocket(url)
         playTournament(gameId, socket, value)
     })
