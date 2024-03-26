@@ -107,6 +107,7 @@ class Login42View(APIView):
 
         code = request.data.get('code', None)
         token_info = client.get_token(code)
+        print (code, " " ,token_info)
         
         response = Response()
         response.set_cookie(
@@ -347,7 +348,7 @@ class UserView(APIView):
                 client = AuthorizationCodeClient(
                     client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
                     client_secret="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",
-                    redirect_uri="https://10.11.249.157/login42/",
+                    redirect_uri="https://localhost/login42/",
                     auth_endpoint="https://api.intra.42.fr/oauth/authorize",
                     token_endpoint="https://api.intra.42.fr/oauth/token"
                 )
