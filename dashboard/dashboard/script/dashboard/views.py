@@ -7,8 +7,6 @@ from .serializers import GamerSerializer, GameSerializer
 from django.http import JsonResponse
 import json
 
-
-
 class HealthView(APIView):
     def get(self, request):
         response = Response()
