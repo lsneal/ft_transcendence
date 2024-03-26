@@ -1,4 +1,3 @@
-
 async function EventActiveTwoFA() {
 
     let myModalEl = document.getElementById('modaltwoFA');
@@ -17,6 +16,8 @@ async function EventActiveTwoFA() {
     const formData = {
         totp_code: final_code
     };
+
+
 
     try {
         const response = await fetch('https://localhost/api/users/activate2fa/', {
@@ -40,8 +41,11 @@ async function EventActiveTwoFA() {
                 errorElement.style.display = 'block';
             }
         });
-    }
-    catch (error) {
+
+        const data = await response.json();
+        console.log(data);
+        console.log(data.pseudo);
+    }catch (error) {
         console.error(error.message)
       
     }
