@@ -10,12 +10,12 @@ function startGameLocal(gameId) {
         return ;
     gameId = Number(gameId)
 
-    fetch("/api/pong/UserIdGameView", {//TODO: fetch sur user
+    fetch("/api/users/user/", {
         method: "GET",
     })
     .then((response) => response.json())
     .then(data => {
-        let url = `wss://localhost/api/pong/ws/` + data.id 
+        let url = `wss://localhost/api/pong/ws/` + data.data.id 
         const socket = new WebSocket(url)
         playGameLocal(gameId, socket)
     })
