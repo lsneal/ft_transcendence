@@ -11,9 +11,21 @@ class Matchmaking():
                 game.player2 = 'p2'
                 return game
             nbGame += 1
-        self.games.append(Pong('p1', nbGame))
+        self.games.append(Pong('p1', nbGame, 'p1'))
         return self.games[nbGame]
     
+    def joinGameOnline(self, player):
+        nbGame = 0
+
+        for game in self.games:
+            if game.player2 == None:
+                game.player2 = 'p2'
+                game.player2_name = player
+                return game
+            nbGame += 1
+        self.games.append(Pong('p1', nbGame, player))
+        return self.games[nbGame]
+
     def endGame(self, game):
         if game.player1 == game.player2 and game.player1  is not 'END':
             game.player1.close()

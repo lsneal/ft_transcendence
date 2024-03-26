@@ -78,6 +78,15 @@ async function EventRegister () {
             console.log(data.email);
             console.log(data);
             if(data.id !== undefined){
+                fetch('/api/dashboard/connectUser/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        pseudo: data.pseudo,
+                    })
+                });
                 modal.hide();
                 window.history.pushState(null, "Register", "/");
                 window.dispatchEvent(new Event('popstate'));

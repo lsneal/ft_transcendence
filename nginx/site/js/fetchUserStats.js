@@ -8,22 +8,18 @@ async function getUserStats() {
             } 
         });
         const userData = await userresponse.json();
-        console.log('data :', userData.data.email);
+
 
         const responseDashboard = await fetch('/api/dashboard/connectUser/', {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'pseudo': userData.data.pseudo 
             },
-            body: JSON.stringify({
-                email: userData.data.email,
-                pseudo: userData.data.pseudo,
-            })
         });
         dataDashboard = await responseDashboard.json();
+        console.log(dataDashboard)
         drawChart(dataDashboard);
-        console.log('Donnees : ', dataDashboard);
-       
     } catch (error) {
         alert('Erreur : ' + error.message);
     }
@@ -115,6 +111,8 @@ async function drawChart(dataDashboard) {
     // Afficher les pourcentages dans la legende en dessous du graphique
     const legend = document.createElement('div');
     legend.classList.add('legend');
+    if (prc_win == NaN)
+        prc_win = 0
     legend.innerHTML = `
         <span class="legend-item">${pieChartData.labels[0]}: ${prc_win.toFixed(2)}%</span>
         <span class="legend-item">${pieChartData.labels[1]}: ${(100 - prc_win).toFixed(2)}%</span>

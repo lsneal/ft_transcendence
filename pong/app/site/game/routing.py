@@ -1,6 +1,5 @@
 from django.urls import re_path, path
 from . import GameConsumers
-from . import Matchmaking
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 
