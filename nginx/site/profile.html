@@ -6,12 +6,52 @@
 			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-volume-high"></i>Profile</button></div>
 			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal"><i class="fa-solid fa-gear"></i>   2FA</button></div>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore">Personal Stats</a>
+		
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
+			<div class="dropdown text-center">
+				<a class="btn btn-lg btn-primary mb-3 w-100 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				  Historic
+				</a>
+			  
+				<ul class="dropdown-menu text-center " aria-labelledby="dropdownMenuLink">
+				  <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTournament" aria-controls="offcanvasRight">Tournament</a></li>
+				  <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasOnline" aria-controls="offcanvasRight">Online</a></li>
+				</ul>
+			  </div>
+			</div>
+			
         </div>
        
       </div>
     </div>
   </div>
+
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasTournament" aria-labelledby="offcanvasRightLabel">
+	<div class="offcanvas-header">
+	  <h5 id="offcanvasRightLabel">Tournament Historic</h5>
+	  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+	  ...
+	</div>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasOnline" aria-labelledby="offcanvasRightLabel">
+	<div class="offcanvas-header">
+	  <h5 id="offcanvasRightLabel">Online Historic</h5>
+	  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+	  ...
+	</div>
+  </div>
+
+  
+
+
+
+
 
   <div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
     <div class="modal-dialog modal-dialog-centered modalchart">
@@ -131,6 +171,9 @@
     </div>
 </div>
 
+
+
+
 <div class="button-with-background container my-5">
 
 		<div class="row text-center">
@@ -247,8 +290,8 @@
 			</div>
 
 		</div>
-	</div>
 
+	
 
 </div>
 </div>

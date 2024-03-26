@@ -14,6 +14,14 @@ body{
 	color: #F2AFEF;
 }
 
+.offcanvas{
+	background-color: #7360DF ;
+	color: #F2AFEF;
+	font-family: "Tienne", serif ;
+	font-weight: 600;
+	
+}
+
 .text-logo{
 	color: #F2AFEF;
 	text-shadow:
