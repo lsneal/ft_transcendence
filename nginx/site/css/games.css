@@ -96,7 +96,6 @@
 
 .ball {
 	position:absolute;
-	background-color: white;
 	height: 30px;
 	width: 30px;
 	border-radius: 50%;

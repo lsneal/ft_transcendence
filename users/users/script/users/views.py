@@ -98,7 +98,7 @@ class LoginView(APIView):
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
         
-        #email = request.data.get('email', None)
+        email = request.data.get('email', None)
         #user = User.objects.filter(email=email).first()
 
         print("email  {email}")

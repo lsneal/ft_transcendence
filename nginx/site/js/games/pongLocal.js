@@ -5,6 +5,9 @@ function startGameLocal(gameId) {
         document.getElementById("crown").style.display = 'none';
     let button = document.getElementById("ButtonStart")
     button.style.display = 'none'
+    document.getElementById("ball").style.height = "30px";
+    document.getElementById("ball").style.width = "30px";
+
 
     if (!gameId)
         return ;
@@ -181,6 +184,8 @@ function playGameLocal(gameId, socket)
 
         document.getElementById("scoreP1").innerHTML = 0
         document.getElementById("scoreP2").innerHTML = 0
+        document.getElementById("ball").style.width = "100px";
+        document.getElementById("ball").style.height = "100px";
         posY = 250
         posX = 499
         if (window.innerWidth < 1288)
