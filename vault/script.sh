@@ -109,6 +109,7 @@ else
     vault token create -policy="postgres_exporter_certif" | grep -o 'hvs\.[^\ ]*' > postgres_exporter_token
     mv postgres_exporter_token /token_postgresExporter
 
+    # exporter
     mkdir host
     cp /etc/hostname /host
 

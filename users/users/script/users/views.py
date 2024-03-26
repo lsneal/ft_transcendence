@@ -20,6 +20,45 @@ import pyotp
 from django.shortcuts import render
 import qrcode
 
+from functools import wraps
+from rest_framework.decorators import api_view
+
+#def jwt_authentication(view_func):
+#    @wraps(view_func)
+#    def wrapper(request, *args, **kwargs):
+#        token = request.COOKIES.get('access_token')
+#
+#        if not token:
+#            raise AuthenticationFailed('Unauthenticated!')
+#
+#        try:
+#            access_token_obj = AccessToken(token)
+#        except:
+#            try:
+#                token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+#                user = User.objects.get(id=token['user_id'])
+#                refresh_token = user.token_refresh
+#                refresh = RefreshToken(refresh_token)
+#                access_token_obj = refresh.access_token
+#
+#                response = view_func(request, *args, **kwargs)
+#
+#                response.set_cookie(
+#                    key=settings.SIMPLE_JWT['AUTH_COOKIE'],
+#                    value=str(access_token_obj),
+#                    expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+#                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+#                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+#                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+#                )
+#
+#                return response
+#            except Exception as e:
+#                print('Error:', e)
+#                raise AuthenticationFailed('Invalid Token!')
+#
+#    return wrapper
+
 def qr_code(request):
     def get(request):
         img = 'users/qr_image/img.png'
@@ -43,7 +82,7 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
+
 class Login42View(APIView):
     def get(self, request):    
         client = AuthorizationCodeClient(
@@ -93,16 +132,20 @@ class Login42View(APIView):
 
 class LoginView(APIView):
     def get(self, request):
-        #token = request.COOKIES.get('access_token')
-
-        #access_token_obj = AccessToken(token)
-        #user_id=access_token_obj['user_id']
-        #user=User.objects.get(id=user_id)
+        token = request.COOKIES.get('access_token')
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
         
+        access_token_obj = AccessToken(token)
+        
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+    
         email = request.data.get('email', None)
-        user = User.objects.filter(email=email).first()
+        #user = User.objects.filter(email=email).first()
 
-        print(f"email  {email}")
+        print("email  {email}")
 
         response = Response()
         if user.a2f is True:
@@ -258,7 +301,9 @@ class LoginA2F(APIView):
         else:
             response.data = { 'message': 'failure' }
         return response
-    
+
+
+
 def getAccessToken(self, request):
     token = request.COOKIES.get('access_token')
     if not token:

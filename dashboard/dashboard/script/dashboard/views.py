@@ -17,6 +17,7 @@ class HealthView(APIView):
 
 class ConnectUserStats(APIView):
     def get(self, request):
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         pseudo = request.headers.get('pseudo', None)
         user_info = None
         if pseudo is not None:
@@ -37,6 +38,7 @@ class ConnectUserStats(APIView):
                 'nb_tournament': gamer.nb_tournament,
                 'game_data': game_data,
             }
+            print(dir(user_info))
         return Response(user_info)
     
     def put(self, request):

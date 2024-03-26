@@ -1,176 +1,101 @@
 body{
 	height: 100vh;
-	background-color: #33186B;
+	background-color: #43766C;
 	/* AD88C6 */
-	/* de base C499F3 */
-	color: #F2AFEF;
+	/* de base 76453B */
+	color: #F8FAE5;
 	font-family: "Tienne", serif;
 	font-weight: 400;
 	font-style: normal;
 }
 
 .navbar{
-	background-color: #33186B;
-	color: #F2AFEF;
+	color: #F8FAE5;
+	background-color: #561C24;
+}
+
+.offcanvas{
+	background-color: #561C24 ;
+	color: #F8FAE5;
+	font-family: "Tienne", serif ;
+	font-weight: 600;
+	
 }
 
 .text-logo{
-	color: #F2AFEF;
+	color: #F8FAE5;
 	text-shadow:
-		0 0 7px #F2AFEF,
-		0 0 10px #F2AFEF,
-		0 0 21px #F2AFEF,
-		0 0 42px #7360DF,
-		0 0 82px #7360DF,
-		0 0 92px #7360DF,
-		0 0 102px #7360DF,
-		0 0 151px #7360DF;
+		0 0 7px #F8FAE5,
+		0 0 10px #F8FAE5,
+		0 0 21px #F8FAE5,
+		0 0 42px #B19470,
+		0 0 82px #B19470,
+		0 0 92px #B19470,
+		0 0 102px #B19470,
+		0 0 151px #B19470;
 } 	
 
 .fa-solid{
-	color: #F2AFEF;
-}
-
-.navbar{
-	background-color: #33186B;
-	color: #F2AFEF;
-}
-
-.text-logo{
-	color: #F2AFEF;
-	text-shadow:
-		0 0 7px #F2AFEF,
-		0 0 10px #F2AFEF,
-		0 0 21px #F2AFEF,
-		0 0 42px #7360DF,
-		0 0 82px #7360DF,
-		0 0 92px #7360DF,
-		0 0 102px #7360DF,
-		0 0 151px #7360DF;
-} 	
-
-.fa-solid{
-	color: #F2AFEF;
-}
-
-.navbar{
-	background-color: #33186B;
-	color: #F2AFEF;
-}
-
-.text-logo{
-	color: #F2AFEF;
-	text-shadow:
-		0 0 7px #F2AFEF,
-		0 0 10px #F2AFEF,
-		0 0 21px #F2AFEF,
-		0 0 42px #7360DF,
-		0 0 82px #7360DF,
-		0 0 92px #7360DF,
-		0 0 102px #7360DF,
-		0 0 151px #7360DF;
-} 	
-
-.fa-solid{
-	color: #F2AFEF;
-}
-
-.navbar{
-	background-color: #33186B;
-	color: #F2AFEF;
-}
-
-.text-logo{
-	color: #F2AFEF;
-	text-shadow:
-		0 0 7px #F2AFEF,
-		0 0 10px #F2AFEF,
-		0 0 21px #F2AFEF,
-		0 0 42px #7360DF,
-		0 0 82px #7360DF,
-		0 0 92px #7360DF,
-		0 0 102px #7360DF,
-		0 0 151px #7360DF;
-} 	
-
-.fa-solid{
-	color: #F2AFEF;
-}
-
-.navbar{
-	background-color: #33186B;
-	color: #F2AFEF;
-}
-
-.text-logo{
-	color: #F2AFEF;
-	text-shadow:
-		0 0 7px #F2AFEF,
-		0 0 10px #F2AFEF,
-		0 0 21px #F2AFEF,
-		0 0 42px #7360DF,
-		0 0 82px #7360DF,
-		0 0 92px #7360DF,
-		0 0 102px #7360DF,
-		0 0 151px #7360DF;
-} 	
-
-.fa-solid{
-	color: #F2AFEF;
+	color: #F8FAE5;
 }
 
 .modal-content{
-	background-color: #33186B;
-	color: #F2AFEF;
+	background-color: #B19470;
+	color: #F8FAE5;
 }
 
 .form-text{
-	color: #F2AFEF;
+	color: #F8FAE5;
 }
 
 
 .fa-bars {
-	background-color: #561C24;
+	background-color: #B19470;
+	color: #F8FAE5;
+}
+
+.navbar-toggler{
+	background-color: #B19470;
 }
 
 .btn:hover{
 	background-color: #B19470; 
 	/* B19470 */
-	border: #7360DF;
-	--bs-btn-bg: #7360DF;
-	--bs-btn-border-color: #7360DF;
-	color:#F2AFEF;
-	/* de base  7360DF*/
-	/* de base  7360DF*/
-	/* de base  7360DF*/
-	/* de base  7360DF*/
-	/* de base  F2AFEF*/
+	border: #B19470;
+	--bs-btn-bg: #B19470;
+	--bs-btn-border-color: #B19470;
+	color:#F8FAE5;
+	/* de base  B19470*/
+	/* de base  B19470*/
+	/* de base  B19470*/
+	/* de base  B19470*/
+	/* de base  F8FAE5*/
 }
 
 
 .btn-primary {
-	--bs-btn-bg: #33186B;
-	--bs-btn-border-color: #C499F3;
-	--bs-btn-active-bg: #7360DF;
-	color: #F2AFEF;
-	/* de base 33186B*/
-	/* de base C499F3*/
-	/* de base 7360DF*/
-	/* de base F2AFEF*/
+	--bs-btn-bg: #B19470;
+	--bs-btn-border-color: #76453B;
+	--bs-btn-active-bg: #B19470;
+	color: #F8FAE5;
+	/* de base B19470*/
+	/* de base 76453B*/
+	/* de base B19470*/
+	/* de base F8FAE5*/
 }
 
 .btn-secondary {
-	--bs-btn-bg: #B784B7;
+	--bs-btn-bg: #76453B;
 	/* B784B7 */
-	--bs-btn-border-color: #33186B;
-	--bs-btn-active-bg: #C499F3;
-	/* de base 33186B*/
-	/* de base C499F3*/
-	/* de base C499F3*/
+	--bs-btn-border-color: #B19470;
+	--bs-btn-active-bg: #76453B;
+	/* de base B19470*/
+	/* de base 76453B*/
+	/* de base 76453B*/
 }
 
 .big-button {
-	background-color: #33186B;
+	background-color: #B19470;
 	color: #fff;
 	height: 80vh;
 }
@@ -189,7 +114,7 @@ body{
 }
 
 .custom-tournament .match div {
-	border: 1px solid #C499F3;
+	border: 1px solid #76453B;
 	margin: 0 3px;
 	padding: 5px 0;
 }
@@ -199,7 +124,7 @@ body{
 	display: block;
 	width: 1px;
 	height: 45px;
-	background: #C499F3;
+	background: #76453B;
 	bottom: 0;
 	left: 50%;
 	position: absolute;
@@ -212,7 +137,7 @@ body{
 	display: block;
 	width: 1px;
 	height: 45px;
-	background: #C499F3;
+	background: #76453B;
 	bottom: 0;
 	left: 50%;
 	position: absolute;
@@ -231,7 +156,7 @@ body{
 
 .custom-background-error {
 	background-image: url('../static/pong_logo.png');
-	background-color: #C499F3;
+	background-color: #76453B;
 	background-size: cover;
 	height: 550px;
 	background-position: center;
@@ -279,7 +204,7 @@ body{
 
 .otc legend {
 	margin: 0 auto 1em;
-	color: #5555FF;
+	color: #76453B;
 }
 
 
@@ -295,8 +220,8 @@ input[type="tel"] {
 	text-align: center;
 	appearance: textfield;
 	-webkit-appearance: textfield;
-	border: 2px solid #7360DF;
-	color: #33186B;
+	border: 2px solid #B19470;
+	color: #B19470;
 	border-radius: 4px;
 }
 
@@ -310,16 +235,16 @@ input::-webkit-inner-spin-button {
 
 
 #textdash{
-	color: #F2AFEF;
+	color: #F8FAE5;
 	text-shadow:
-		0 0 7px #F2AFEF,
-		0 0 10px #F2AFEF,
-		0 0 21px #F2AFEF,
-		0 0 42px #7360DF,
-		0 0 82px #7360DF,
-		0 0 92px #7360DF,
-		0 0 102px #7360DF,
-		0 0 151px #7360DF;
+		0 0 7px #F8FAE5,
+		0 0 10px #F8FAE5,
+		0 0 21px #F8FAE5,
+		0 0 42px #B19470,
+		0 0 82px #B19470,
+		0 0 92px #B19470,
+		0 0 102px #B19470,
+		0 0 151px #B19470;
 }
 
 .chart-container {
@@ -339,7 +264,7 @@ input::-webkit-inner-spin-button {
 .bar {
     height: 30px; /* Hauteur des barres */
     margin-bottom: 10px; /* Espacement entre les barres */
-    background-color: #7360DF; /* Couleur de base des barres */
+    background-color: #9B4444; /* Couleur de base des barres */
     position: relative; /* Permet de positionner le nom sur la barre */
     color: #000;
     border-radius: 5px;
@@ -360,16 +285,16 @@ input::-webkit-inner-spin-button {
     transform: translate(10px, -50%); /* Décalage pour le nom */
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Ombre */
+    box-shadow: 0 0 5px A3C9AA(0, 0, 0, 0.3); /* Ombre */
     white-space: nowrap; /* Empêche le saut de ligne pour les noms longs */
 }
 
 #nbVictoiresBar {
-    background-color: #F2AFEF; /* Couleur différente pour les victoires */
+    background-color: #A3C9AA; /* Couleur différente pour les victoires */
 }
 
 #nbPartiesBar{
-	background-color: #7360DF;
+	background-color: #9B4444;
 }
 
 
@@ -398,4 +323,10 @@ input::-webkit-inner-spin-button {
 .carousel-item {
     background-color: black;
     color: white; /* Changez la couleur du texte si nécessaire */
+}
+
+
+.logoenhaut {
+	height: 50px;
+	width: 50px;
 }
