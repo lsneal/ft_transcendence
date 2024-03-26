@@ -43,7 +43,7 @@ services:
     volumes:
       #- ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
       - ./postgres_exporter/postgres_exporter.sh:/run/postgres_exporter.sh
-      - vault_postgresExporter:/opt
+      - vault_postgresExporter:/opt 
       - vault_hostname:/opt/host
     expose:
       - "9187"
