@@ -8,7 +8,8 @@ class User(AbstractBaseUser):
     a2f = models.BooleanField(default=False)
     totp_key = models.CharField(default="", max_length=32)
     password = models.CharField(max_length=255)
-    modification_time = models.DateTimeField()
+    modification_time = models.DateTimeField(auto_now=True)
+    creation_time = models.DateTimeField(auto_now_add=True)
     username = None
     token_refresh = models.CharField(max_length=255, null=True, blank=True)
 
@@ -17,6 +18,6 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    def save(self, *args, **kwargs):
-        self.modification_time = timezone.now()
-        super().save(*args, **kwargs)
+    #def save(self, *args, **kwargs):
+    #    self.modification_time = timezone.now()
+    #    super().save(*args, **kwargs)

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import  PlayerRanking, ConnectUserStats
+from .views import  PlayerRanking, ConnectUserStats, HealthView
 
 
 

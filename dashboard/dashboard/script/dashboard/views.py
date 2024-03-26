@@ -17,7 +17,7 @@ class HealthView(APIView):
         }
         return response
 
-class UserStats(APIView):
+class ConnectUserStats(APIView):
     def get(self, request):
         pseudo = request.headers.get('pseudo', None)
         user_info = None

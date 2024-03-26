@@ -7,9 +7,9 @@
       "namespaces": [
         "default"
       ],
-      "updated_at": "2024-03-24T12:22:47.944Z",
-      "created_at": "2024-03-24T12:22:47.944Z",
-      "version": "WzkwLDVd",
+      "updated_at": "2024-03-26T11:11:47.838Z",
+      "created_at": "2024-03-26T11:11:47.838Z",
+      "version": "WzY3LDFd",
       "attributes": {
         "version": 1,
         "kibanaSavedObjectMeta": {
@@ -18,7 +18,7 @@
         "description": "",
         "timeRestore": false,
         "optionsJSON": "{\"useMargins\":true,\"syncColors\":false,\"syncCursor\":true,\"syncTooltips\":false,\"hidePanelTitles\":false}",
-        "panelsJSON": "[{\"type\":\"LOG_STREAM_EMBEDDABLE\",\"gridData\":{\"x\":0,\"y\":0,\"w\":15,\"h\":12,\"i\":\"d54fd7fd-4b25-48f3-b0b8-4e658ef8c5be\"},\"panelIndex\":\"d54fd7fd-4b25-48f3-b0b8-4e658ef8c5be\",\"embeddableConfig\":{\"hidePanelTitles\":false,\"enhancements\":{}},\"title\":\"Log stream\"},{\"type\":\"lens\",\"gridData\":{\"x\":15,\"y\":0,\"w\":7,\"h\":8,\"i\":\"9e841d16-58fd-47ac-9876-2489d9f3fed8\"},\"panelIndex\":\"9e841d16-58fd-47ac-9876-2489d9f3fed8\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsLegacyMetric\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"3a2534e3-635f-40bb-9fae-0b1eb290611a\",\"name\":\"indexpattern-datasource-layer-78375280-fbab-4d89-ad48-7fec45e94f36\"}],\"state\":{\"visualization\":{\"layerId\":\"78375280-fbab-4d89-ad48-7fec45e94f36\",\"accessor\":\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\",\"layerType\":\"data\",\"colorMode\":\"Background\",\"palette\":{\"name\":\"custom\",\"type\":\"palette\",\"params\":{\"steps\":3,\"name\":\"custom\",\"reverse\":false,\"rangeType\":\"number\",\"rangeMin\":null,\"rangeMax\":null,\"progression\":\"fixed\",\"stops\":[{\"color\":\"#209280\",\"stop\":15},{\"color\":\"#d6bf57\",\"stop\":30},{\"color\":\"#E7664C\",\"stop\":31}],\"colorStops\":[{\"color\":\"#209280\",\"stop\":null},{\"color\":\"#d6bf57\",\"stop\":15},{\"color\":\"#E7664C\",\"stop\":30}],\"continuity\":\"all\",\"maxSteps\":5}}},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"78375280-fbab-4d89-ad48-7fec45e94f36\":{\"columns\":{\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\":{\"label\":\"Users\",\"dataType\":\"number\",\"operationType\":\"unique_count\",\"scale\":\"ratio\",\"sourceField\":\"email.keyword\",\"isBucketed\":false,\"params\":{\"emptyAsNull\":true},\"customLabel\":true}},\"columnOrder\":[\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\"],\"incompleteColumns\":{},\"sampling\":1}}},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"hidePanelTitles\":false,\"timeRange\":{\"from\":\"now-2h\",\"to\":\"now\"},\"enhancements\":{}},\"title\":\"Numbers of Users\"},{\"type\":\"lens\",\"gridData\":{\"x\":22,\"y\":0,\"w\":6,\"h\":8,\"i\":\"b3e5f71d-149e-4db2-899b-ed43ac836b6b\"},\"panelIndex\":\"b3e5f71d-149e-4db2-899b-ed43ac836b6b\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsLegacyMetric\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"3a2534e3-635f-40bb-9fae-0b1eb290611a\",\"name\":\"indexpattern-datasource-layer-0e5041d8-2d0b-4d1a-84e5-6ff713624206\"}],\"state\":{\"visualization\":{\"layerId\":\"0e5041d8-2d0b-4d1a-84e5-6ff713624206\",\"accessor\":\"ff895b4e-c4b1-43b9-9669-5482fd763b55\",\"layerType\":\"data\"},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"0e5041d8-2d0b-4d1a-84e5-6ff713624206\":{\"columns\":{\"ff895b4e-c4b1-43b9-9669-5482fd763b55\":{\"label\":\"2FA activated\",\"dataType\":\"number\",\"operationType\":\"count\",\"isBucketed\":false,\"scale\":\"ratio\",\"sourceField\":\"email.keyword\",\"filter\":{\"query\":\"a2f : true \",\"language\":\"kuery\"},\"params\":{\"emptyAsNull\":true},\"customLabel\":true}},\"columnOrder\":[\"ff895b4e-c4b1-43b9-9669-5482fd763b55\"],\"sampling\":1,\"ignoreGlobalFilters\":false,\"incompleteColumns\":{}}}},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"enhancements\":{}}}]",
+        "panelsJSON": "[{\"type\":\"lens\",\"gridData\":{\"x\":0,\"y\":0,\"w\":7,\"h\":8,\"i\":\"9e841d16-58fd-47ac-9876-2489d9f3fed8\"},\"panelIndex\":\"9e841d16-58fd-47ac-9876-2489d9f3fed8\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsLegacyMetric\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"dataview_id_to_replace\",\"name\":\"indexpattern-datasource-layer-78375280-fbab-4d89-ad48-7fec45e94f36\"}],\"state\":{\"visualization\":{\"layerId\":\"78375280-fbab-4d89-ad48-7fec45e94f36\",\"accessor\":\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\",\"layerType\":\"data\",\"colorMode\":\"Background\",\"palette\":{\"name\":\"custom\",\"type\":\"palette\",\"params\":{\"steps\":3,\"name\":\"custom\",\"reverse\":false,\"rangeType\":\"number\",\"rangeMin\":null,\"rangeMax\":null,\"progression\":\"fixed\",\"stops\":[{\"color\":\"#209280\",\"stop\":15},{\"color\":\"#d6bf57\",\"stop\":30},{\"color\":\"#E7664C\",\"stop\":31}],\"colorStops\":[{\"color\":\"#209280\",\"stop\":null},{\"color\":\"#d6bf57\",\"stop\":15},{\"color\":\"#E7664C\",\"stop\":30}],\"continuity\":\"all\",\"maxSteps\":5}}},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"78375280-fbab-4d89-ad48-7fec45e94f36\":{\"columns\":{\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\":{\"label\":\"Users\",\"dataType\":\"number\",\"operationType\":\"unique_count\",\"scale\":\"ratio\",\"sourceField\":\"email.keyword\",\"isBucketed\":false,\"params\":{\"emptyAsNull\":true},\"customLabel\":true}},\"columnOrder\":[\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\"],\"incompleteColumns\":{},\"sampling\":1}}},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"hidePanelTitles\":false,\"enhancements\":{}},\"title\":\"Numbers of Users\"},{\"type\":\"lens\",\"gridData\":{\"x\":7,\"y\":0,\"w\":11,\"h\":8,\"i\":\"116bf154-c634-4b66-9b3a-fa891df9361b\"},\"panelIndex\":\"116bf154-c634-4b66-9b3a-fa891df9361b\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsLegacyMetric\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"dataview_id_to_replace\",\"name\":\"indexpattern-datasource-layer-2bca7cb6-8b41-4cc9-b5d3-4cd309d62830\"}],\"state\":{\"visualization\":{\"layerId\":\"2bca7cb6-8b41-4cc9-b5d3-4cd309d62830\",\"accessor\":\"288e97b0-7982-484a-969e-82c5af6a9734\",\"layerType\":\"data\"},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"2bca7cb6-8b41-4cc9-b5d3-4cd309d62830\":{\"columns\":{\"288e97b0-7982-484a-969e-82c5af6a9734\":{\"label\":\"Last User Created\",\"dataType\":\"string\",\"operationType\":\"last_value\",\"isBucketed\":false,\"scale\":\"ordinal\",\"sourceField\":\"email.keyword\",\"filter\":{\"query\":\"\\\"email.keyword\\\": *\",\"language\":\"kuery\"},\"params\":{\"sortField\":\"creation_time\"},\"customLabel\":true}},\"columnOrder\":[\"288e97b0-7982-484a-969e-82c5af6a9734\"],\"incompleteColumns\":{},\"sampling\":1,\"indexPatternId\":\"dataview_id_to_replace\"}},\"currentIndexPatternId\":\"dataview_id_to_replace\"},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"enhancements\":{}}}]",
         "title": "User DB Dashboard"
       },
       "references": [
@@ -30,7 +30,7 @@
         {
           "type": "index-pattern",
           "id": "dataview_id_to_replace",
-          "name": "b3e5f71d-149e-4db2-899b-ed43ac836b6b:indexpattern-datasource-layer-0e5041d8-2d0b-4d1a-84e5-6ff713624206"
+          "name": "116bf154-c634-4b66-9b3a-fa891df9361b:indexpattern-datasource-layer-2bca7cb6-8b41-4cc9-b5d3-4cd309d62830"
         }
       ],
       "managed": false,
@@ -43,18 +43,17 @@
       "namespaces": [
         "default"
       ],
-      "updated_at": "2024-03-24T11:49:31.432Z",
-      "created_at": "2024-03-24T11:49:31.432Z",
-      "version": "WzUsM10=",
+      "updated_at": "2024-03-26T10:30:49.236Z",
+      "created_at": "2024-03-26T10:30:49.236Z",
+      "version": "WzUsMV0=",
       "attributes": {
         "fieldAttrs": "{}",
         "title": "users*",
-        "timeFieldName": "@timestamp",
         "sourceFilters": "[]",
         "fields": "[]",
         "fieldFormatMap": "{}",
         "runtimeFieldMap": "{}",
-        "name": "users",
+        "name": "Users Data View",
         "allowHidden": false
       },
       "references": [],

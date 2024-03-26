@@ -74,5 +74,9 @@ MODSEC_ID=$(echo $dataview | sed -n 's/.*"id":"\([^"]*\).*/\1/p')
 echo "Data Views Created";
 
 until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/kibana/dashboards/import?exclude=index-pattern -d "$(sed 's/dataview_id_to_replace/'${USER_ID}'/g' /etc/dashboards/kibana-dashboards.postgres.json)"; do sleep 10; done;
+echo "Dashboard Postgres Imported"
+
 until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/kibana/dashboards/import?exclude=index-pattern -d "$(sed 's/dataview_id_to_replace/'${NGINX_ID}'/g' /etc/dashboards/kibana-dashboards.nginx.json)"; do sleep 10; done;
-echo "Dashboards Imported";
+echo "Dashboard Nginx Imported"
+
+echo "Dashboards Imported Done!";
