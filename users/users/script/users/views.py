@@ -245,9 +245,6 @@ class LoginA2F(APIView):
         totp = pyotp.TOTP(user.totp_key)
 
         response = Response()
-        print(str(user_code))
-        print("a")
-        print(totp.now)
         if totp.now() == user_code:
             response.data = { 'message': 'success' }
         else:

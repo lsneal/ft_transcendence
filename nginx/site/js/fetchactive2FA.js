@@ -1,4 +1,3 @@
-
 async function EventActiveTwoFA() {
 
     const code1 = document.querySelector('#code1').value;
@@ -15,6 +14,8 @@ async function EventActiveTwoFA() {
         totp_code: final_code
     };
 
+
+
     try {
         const response = await fetch('https://localhost/api/users/activate2fa/', {
             method: 'POST',
@@ -22,13 +23,13 @@ async function EventActiveTwoFA() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
-        }).then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            console.log(data.pseudo);
         });
-    }
-    catch (error) {
-        alert('Error code')
+
+        const data = await response.json();
+        console.log(data);
+        console.log(data.pseudo);
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error code');
     }
 }
