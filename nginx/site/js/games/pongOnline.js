@@ -189,11 +189,11 @@ async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score) {
                         'gameEnd': 'true',
                         'win' : 'false',
                     },
-                    body: {
+                    body: JSON.stringify({
                         'conceded_point': conceded_point,
                         'marked_point': marked_point,
                         'opponent': opponent 
-                    }
+                    })
                 });
             }
             return

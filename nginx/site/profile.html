@@ -14,8 +14,8 @@
 				</a>
 			  
 				<ul class="dropdown-menu text-center " aria-labelledby="dropdownMenuLink">
-				  <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTournament" aria-controls="offcanvasRight">Tournament</a></li>
-				  <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasOnline" aria-controls="offcanvasRight">Online</a></li>
+				  <li><a class="dropdown-item" id="btnDropdown1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTournament" aria-controls="offcanvasRight">Tournament</a></li>
+				  <li><a class="dropdown-item" id="btnDropdown2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasOnline" aria-controls="offcanvasRight">Online</a></li>
 				</ul>
 			  </div>
 			</div>
@@ -101,7 +101,11 @@
 			<div class="modal-body">
 				<form>
 					<div class="mb-3">
-					  <label for="ChangePseudo" class="form-label">Pseudo</label>
+						<label for="ActuallyPseudo" class="form-label">Current Pseudo</label>
+						<input type="email" class="form-control" id="ActuallyPseudo" aria-describedby="emailHelp">
+					  </div>
+					<div class="mb-3">
+					  <label for="ChangePseudo" class="form-label"> New Pseudo</label>
 					  <input type="email" class="form-control" id="ChangePseudo" aria-describedby="emailHelp">
 					</div>
 					<div class="mb-3">
@@ -151,7 +155,7 @@
 				  </div>
 				</form>
 			  </div>
-			<div id="validation-qrcode" class="text" style="display: none;"></div>
+			<div id="errormactive2fa" class="text-danger text-center" style="display: none;"></div>
 		</div>
 	  </div>
 	</div>
@@ -295,3 +299,13 @@
 
 </div>
 </div>
+
+
+
+
+<div class="alert alert-success alert-dismissible fade show" id="successAlert" role="alert">
+	<strong>2FA ACTIVATE</strong>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+  </div>

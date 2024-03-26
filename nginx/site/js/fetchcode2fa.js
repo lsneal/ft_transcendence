@@ -35,9 +35,8 @@ try {
             window.dispatchEvent(new Event('popstate'));
         }
         else{
-            console.log('data.message: ', data.message);
             const errorMessage = 'Wrong Code';
-            const errorElement = document.getElementById('error-message-2fa');
+            const errorElement = document.getElementById('errormessage2fa');
             errorElement.innerText = errorMessage;
             errorElement.style.display = 'block';
         }

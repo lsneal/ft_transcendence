@@ -1,6 +1,9 @@
 
 async function EventActiveTwoFA() {
 
+    let myModalEl = document.getElementById('modaltwoFA');
+    let modal = bootstrap.Modal.getInstance(myModalEl);
+
     const code1 = document.querySelector('#code1').value;
     const code2 = document.querySelector('#code2').value;
     const code3 = document.querySelector('#code3').value;
@@ -25,10 +28,21 @@ async function EventActiveTwoFA() {
         }).then((response) => response.json())
         .then((data) => {
             console.log(data);
-            console.log(data.pseudo);
+            if(data.message === "success"){
+                const errorMessage = '2FA Actif';
+                const errorElement = document.getElementById('errormactive2fa');
+                errorElement.innerText = errorMessage;
+                modal.hide();
+            }else{
+                const errorMessage = 'Wrong Code';
+                const errorElement = document.getElementById('errormactive2fa');
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block';
+            }
         });
     }
     catch (error) {
-        alert('Error code')
+        console.error(error.message)
+      
     }
 }

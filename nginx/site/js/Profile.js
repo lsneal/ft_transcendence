@@ -7,32 +7,7 @@ export default class extends AbstractView {
     }
 
     async executeViewScript() {
-        let isAuthenticated = false;
 
-        try {
-            const userresponse = await fetch('/api/users/user/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            const userData = await userresponse.json();
-
-            if (userData.detail === "Unauthenticated!") {
-                window.history.pushState(null, "Logout", "/");
-                window.dispatchEvent(new Event('popstate'));
-                isAuthenticated = false; 
-            } else {
-                isAuthenticated = true; 
-            }
-        } catch (error) {
-            alert('Erreur : ' + error.message);
-        }
-
-        if (isAuthenticated === false) {
-            return; 
-        }
 
         EventProfile();
         document.getElementById("btnLogout").addEventListener('click', EventLogout);
@@ -56,6 +31,8 @@ export default class extends AbstractView {
         document.getElementById("Valid2FA").addEventListener('click', EventActiveTwoFA);
         document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
         document.getElementById("confirmDisable2FA").addEventListener('click', EventDisableTwoFA);
+        document.getElementById("btnDropdown2").addEventListener('click', getHistoricOnline);
+        
     }
 
     async getHtml() {
