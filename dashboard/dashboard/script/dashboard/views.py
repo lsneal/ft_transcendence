@@ -7,7 +7,13 @@ from .serializers import GamerSerializer, GameSerializer
 from django.http import JsonResponse
 import json
 
-
+class HealthView(APIView):
+    def get(self, request):
+        response = Response()
+        response.data = {
+            'status': 'healthy'
+        }
+        return response
 
 class ConnectUserStats(APIView):
     def post(self, request):
@@ -30,7 +36,6 @@ class ConnectUserStats(APIView):
         if pseudo is not None:
             gamer = Gamer.objects.get(pseudo=pseudo)
             games = Game.objects.filter(gamer=gamer)
-
             game_data = []
             for game in games:
                 game_data.append({
@@ -58,7 +63,7 @@ class ConnectUserStats(APIView):
 
         if pseudo is not None:
             gamer = Gamer.objects.get(pseudo=pseudo)
-            newGame = Game.objects.create(gamer=gamer, conceded_point= conceded_point,marked_point= marked_point,opponent= opponent)
+            newGame = Game.objects.create(gamer=gamer, conceded_point=conceded_point, marked_point=marked_point, opponent=opponent)
             newGame.save()
             if gameEnd == "true":
                 win = request.headers.get('win', None)

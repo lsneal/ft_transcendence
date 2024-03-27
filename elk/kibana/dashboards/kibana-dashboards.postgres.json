@@ -1,0 +1,65 @@
+{
+  "version": "8.12.2",
+  "objects": [
+    {
+      "id": "12af42d0-bbc8-495c-9cb3-aad6581b9289",
+      "type": "dashboard",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-03-26T11:11:47.838Z",
+      "created_at": "2024-03-26T11:11:47.838Z",
+      "version": "WzY3LDFd",
+      "attributes": {
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+        },
+        "description": "",
+        "timeRestore": false,
+        "optionsJSON": "{\"useMargins\":true,\"syncColors\":false,\"syncCursor\":true,\"syncTooltips\":false,\"hidePanelTitles\":false}",
+        "panelsJSON": "[{\"type\":\"lens\",\"gridData\":{\"x\":0,\"y\":0,\"w\":7,\"h\":8,\"i\":\"9e841d16-58fd-47ac-9876-2489d9f3fed8\"},\"panelIndex\":\"9e841d16-58fd-47ac-9876-2489d9f3fed8\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsLegacyMetric\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"dataview_id_to_replace\",\"name\":\"indexpattern-datasource-layer-78375280-fbab-4d89-ad48-7fec45e94f36\"}],\"state\":{\"visualization\":{\"layerId\":\"78375280-fbab-4d89-ad48-7fec45e94f36\",\"accessor\":\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\",\"layerType\":\"data\",\"colorMode\":\"Background\",\"palette\":{\"name\":\"custom\",\"type\":\"palette\",\"params\":{\"steps\":3,\"name\":\"custom\",\"reverse\":false,\"rangeType\":\"number\",\"rangeMin\":null,\"rangeMax\":null,\"progression\":\"fixed\",\"stops\":[{\"color\":\"#209280\",\"stop\":15},{\"color\":\"#d6bf57\",\"stop\":30},{\"color\":\"#E7664C\",\"stop\":31}],\"colorStops\":[{\"color\":\"#209280\",\"stop\":null},{\"color\":\"#d6bf57\",\"stop\":15},{\"color\":\"#E7664C\",\"stop\":30}],\"continuity\":\"all\",\"maxSteps\":5}}},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"78375280-fbab-4d89-ad48-7fec45e94f36\":{\"columns\":{\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\":{\"label\":\"Users\",\"dataType\":\"number\",\"operationType\":\"unique_count\",\"scale\":\"ratio\",\"sourceField\":\"email.keyword\",\"isBucketed\":false,\"params\":{\"emptyAsNull\":true},\"customLabel\":true}},\"columnOrder\":[\"c160c3fb-c6b5-4822-9ae0-0ed931794d6d\"],\"incompleteColumns\":{},\"sampling\":1}}},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"hidePanelTitles\":false,\"enhancements\":{}},\"title\":\"Numbers of Users\"},{\"type\":\"lens\",\"gridData\":{\"x\":7,\"y\":0,\"w\":11,\"h\":8,\"i\":\"116bf154-c634-4b66-9b3a-fa891df9361b\"},\"panelIndex\":\"116bf154-c634-4b66-9b3a-fa891df9361b\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsLegacyMetric\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"dataview_id_to_replace\",\"name\":\"indexpattern-datasource-layer-2bca7cb6-8b41-4cc9-b5d3-4cd309d62830\"}],\"state\":{\"visualization\":{\"layerId\":\"2bca7cb6-8b41-4cc9-b5d3-4cd309d62830\",\"accessor\":\"288e97b0-7982-484a-969e-82c5af6a9734\",\"layerType\":\"data\"},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"2bca7cb6-8b41-4cc9-b5d3-4cd309d62830\":{\"columns\":{\"288e97b0-7982-484a-969e-82c5af6a9734\":{\"label\":\"Last User Created\",\"dataType\":\"string\",\"operationType\":\"last_value\",\"isBucketed\":false,\"scale\":\"ordinal\",\"sourceField\":\"email.keyword\",\"filter\":{\"query\":\"\\\"email.keyword\\\": *\",\"language\":\"kuery\"},\"params\":{\"sortField\":\"creation_time\"},\"customLabel\":true}},\"columnOrder\":[\"288e97b0-7982-484a-969e-82c5af6a9734\"],\"incompleteColumns\":{},\"sampling\":1,\"indexPatternId\":\"dataview_id_to_replace\"}},\"currentIndexPatternId\":\"dataview_id_to_replace\"},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"enhancements\":{}}}]",
+        "title": "User DB Dashboard"
+      },
+      "references": [
+        {
+          "type": "index-pattern",
+          "id": "dataview_id_to_replace",
+          "name": "9e841d16-58fd-47ac-9876-2489d9f3fed8:indexpattern-datasource-layer-78375280-fbab-4d89-ad48-7fec45e94f36"
+        },
+        {
+          "type": "index-pattern",
+          "id": "dataview_id_to_replace",
+          "name": "116bf154-c634-4b66-9b3a-fa891df9361b:indexpattern-datasource-layer-2bca7cb6-8b41-4cc9-b5d3-4cd309d62830"
+        }
+      ],
+      "managed": false,
+      "coreMigrationVersion": "8.8.0",
+      "typeMigrationVersion": "8.9.0"
+    },
+    {
+      "id": "dataview_id_to_replace",
+      "type": "index-pattern",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2024-03-26T10:30:49.236Z",
+      "created_at": "2024-03-26T10:30:49.236Z",
+      "version": "WzUsMV0=",
+      "attributes": {
+        "fieldAttrs": "{}",
+        "title": "users*",
+        "sourceFilters": "[]",
+        "fields": "[]",
+        "fieldFormatMap": "{}",
+        "runtimeFieldMap": "{}",
+        "name": "Users Data View",
+        "allowHidden": false
+      },
+      "references": [],
+      "managed": false,
+      "coreMigrationVersion": "8.8.0",
+      "typeMigrationVersion": "8.0.0"
+    }
+  ]
+}

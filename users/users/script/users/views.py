@@ -39,9 +39,7 @@ def jwt_authentication(view_func):
                 response = Response()
                 token = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=["HS256"])
                 user = User.objects.get(id=token['user_id'])
-                refresh_token = user.token_refresh
-                refresh = RefreshToken(refresh_token)
-                access_token_obj = refresh.access_token
+                refresh = RefreshToken(user.token_refresh)
                 response.set_cookie(
                     key = settings.SIMPLE_JWT['AUTH_COOKIE'],
                     value = access_token_obj,
@@ -96,14 +94,7 @@ class LoginView(APIView):
             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
-        user.token_refresh = response.set_cookie(
-                 key = settings.SIMPLE_JWT['REFRESH_COOKIE'],
-                 value = data["refresh"],
-                 expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-                 secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                 httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
+        user.token_refresh = data["refresh"]
         user.save() 
         csrf.get_token(request)
         response.data = {"Success" : "Login successfully","data":data, "a2f": user.a2f}
@@ -170,8 +161,26 @@ class ActivateA2F(APIView):
         response.data = { 'message': 'success disable 2fa'}
 
         return response
-        
+       
 class LoginA2F(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('access_token')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+    
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+
+        response = Response()
+
+        if user.a2f is True:
+            response.data = { 'message': 'True' }
+        else:
+            response.data = { 'message': 'False' }
+        return response
+
     def post(self, request):
         email = request.headers.get('email', None)
         user = User.objects.filter(email=email).first()
@@ -209,36 +218,6 @@ class LoginA2F(APIView):
         response.data = {"Success" : "Login successfully","data":data, "status": "success"}
         return response
 
-
-def getAccessToken(self, request):
-    token = request.COOKIES.get('access_token')
-    if not token:
-        raise AuthenticationFailed('Unauthenticated!')
-
-    response = Response()
-    try:
-        access_token_obj = AccessToken(token)
-    except:
-        token = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=["HS256"], options={"verify_signature": False})
-        user = User.objects.get(id=token['user_id'])
-        refresh_token = user.token_refresh
-        try:
-            refresh = RefreshToken(refresh_token)
-            access_token_obj = refresh.access_token
-            response.set_cookie(
-                key = settings.SIMPLE_JWT['AUTH_COOKIE'],
-                value = access_token_obj,
-                expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-            )
-        except:
-            print ('Error Refresh Token')
-
-    return response, access_token_obj
-    
-
 class UserView(APIView):
     @jwt_authentication
     def get(self, request):
@@ -270,12 +249,13 @@ class UserView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+############ Need to check if connected and raise expection ###################
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
         response.delete_cookie('access_token')
         response.delete_cookie('csrftoken')
-        response.delete_cookie('refresh_token')
         response.data = {
             'message': 'success'
         }

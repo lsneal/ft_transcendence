@@ -28,45 +28,13 @@ scrape_configs:
     static_configs:
       - targets: ['es_exporter:9114']
 
-  - job_name: "nginx"
-    scrape_interval: 20s
-    static_configs:
-      - targets: ['nginx-exporter:9113']
+  #- job_name: "nginx"
+  #  scrape_interval: 20s
+  #  metrics_path: '/metrics'
+  #  static_configs:
+  #    - targets: ['nginx:443']
 
-  - job_name: 'postgres_users'
+  - job_name: 'postgres_exporter'
     scrape_interval: 20s
     static_configs:
       - targets: ['postgres_exporter:9187']
-
-
-
-  #- job_name: 'postgres_pong'
-  #  static_configs:
-  #    - targets:
-  #      - postgres_pong:5433
-  #  metrics_path: /probe
-  #  params:
-  #    auth_module: [postgres_pong]
-  #  relabel_configs:
-  #    - source_labels: [__address__]
-  #      target_label: __param_target
-  #    - source_labels: [__param_target]
-  #      target_label: instance
-  #    - target_label: __address__
-  #      replacement: postgres_exporter:9187
-#
-  #- job_name: 'postgres_dashboard'
-  #  static_configs:
-  #    - targets:
-  #      - postgres_dashboard:5434
-  #  metrics_path: /probe
-  #  params:
-  #    auth_module: [postgres_dashboard]
-  #  relabel_configs:
-  #    - source_labels: [__address__]
-  #      target_label: __param_target
-  #    - source_labels: [__param_target]
-  #      target_label: instance
-  #    - target_label: __address__
-  #      replacement: postgres_exporter:9187
-#

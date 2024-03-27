@@ -1,5 +1,8 @@
 async function EventActiveTwoFA() {
 
+    let myModalEl = document.getElementById('modaltwoFA');
+    let modal = bootstrap.Modal.getInstance(myModalEl);
+
     const code1 = document.querySelector('#code1').value;
     const code2 = document.querySelector('#code2').value;
     const code3 = document.querySelector('#code3').value;
@@ -21,13 +24,27 @@ async function EventActiveTwoFA() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
+        }).then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            if(data.message === "success"){
+                const errorMessage = '2FA Actif';
+                const errorElement = document.getElementById('errormactive2fa');
+                errorElement.innerText = errorMessage;
+                modal.hide();
+            }else{
+                const errorMessage = 'Wrong Code';
+                const errorElement = document.getElementById('errormactive2fa');
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block';
+            }
         });
 
         const data = await response.json();
         console.log(data);
         console.log(data.pseudo);
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error code');
+    }catch (error) {
+        console.error(error.message)
+      
     }
 }
