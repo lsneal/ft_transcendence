@@ -24,11 +24,12 @@ services:
     networks:
       - vault_network_nginx
       - nginx
-      - nginx-exporter
     depends_on:
       django_users:
         condition: service_healthy
       django_pong:
+        condition: service_healthy
+      django_dashboard:
         condition: service_healthy
       #grafana:
       #  condition: service_healthy
@@ -39,21 +40,6 @@ services:
       interval: 10s
       retries: 10
       timeout: 10s
-
-  #nginx-exporter:
-  #  image: nginx/nginx-prometheus-exporter:1.0
-  #  container_name: nginx-exporter
-  #  restart: always
-  #  command:
-  #    - -nginx.scrape-uri=https://nginx:443/stub_status
-  #  expose: 
-  #    - 9113
-  #  networks:
-  #    - nginx-exporter
-  #    - prometheus-network
-  #  depends_on:
-  #    nginx:
-  #      condition: service_healthy
 
   vault:
     container_name: vault
@@ -66,6 +52,7 @@ services:
       - vault_network_elk
       - vault_network_logs
       - nginx
+      #- vault-postgres-exporter_network
     expose:
       - "8200"
     environment:
@@ -111,8 +98,6 @@ networks:
   vault_network_nginx:
     driver: bridge
   nginx:
-    driver: bridge
-  nginx-exporter:
     driver: bridge
 
 volumes:

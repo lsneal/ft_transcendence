@@ -75,7 +75,7 @@ async function drawChart(dataDashboard) {
         labels: ['Victoires', 'Defaites'],
         datasets: [{
             data: [prc_win, 100 - prc_win],
-            backgroundColor: ['#F2AFEF', '#7360DF']
+            backgroundColor: ['#A3C9AA', '#9B4444']
         }]
     };
 

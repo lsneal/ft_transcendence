@@ -49,7 +49,9 @@ services:
       - "9187"
     restart: always
     depends_on:
-       postgres_users:
+      postgres_users:
+        condition: service_healthy
+      vault:
         condition: service_healthy   
 
   prometheus:
@@ -62,6 +64,7 @@ services:
       - prometheus:/data
     networks:
       - prometheus-network
+      - prometheus_elastic-network
       - grafana-network
       - nginx
     depends_on:
@@ -94,8 +97,13 @@ services:
       - grafana-data:/usr/share/grafana/data
       - grafana-conf:/usr/share/grafana/conf
       - vault_grafana:/opt
+      - ./grafana/datasources:/usr/share/grafana/conf/provisioning/datasources
+      - ./grafana/dashboards.yaml:/usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     depends_on:
       vault:
+        condition: service_healthy
+      prometheus:
         condition: service_healthy
     healthcheck:
       test: 
@@ -117,6 +125,13 @@ networks:
 
   postgres_exporter-network:
     driver: bridge
+
+  vault-postgres-exporter_network:
+    driver: bridge
+
+  prometheus_elastic-network:
+    driver: bridge
+
 
 volumes:
   prometheus:

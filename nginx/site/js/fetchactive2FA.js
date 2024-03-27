@@ -1,5 +1,7 @@
-
 async function EventActiveTwoFA() {
+
+    let myModalEl = document.getElementById('modaltwoFA');
+    let modal = bootstrap.Modal.getInstance(myModalEl);
 
     const code1 = document.querySelector('#code1').value;
     const code2 = document.querySelector('#code2').value;
@@ -15,6 +17,8 @@ async function EventActiveTwoFA() {
         totp_code: final_code
     };
 
+
+
     try {
         const response = await fetch('https://localhost/api/users/activate2fa/', {
             method: 'POST',
@@ -25,10 +29,24 @@ async function EventActiveTwoFA() {
         }).then((response) => response.json())
         .then((data) => {
             console.log(data);
-            console.log(data.pseudo);
+            if(data.message === "success"){
+                const errorMessage = '2FA Actif';
+                const errorElement = document.getElementById('errormactive2fa');
+                errorElement.innerText = errorMessage;
+                modal.hide();
+            }else{
+                const errorMessage = 'Wrong Code';
+                const errorElement = document.getElementById('errormactive2fa');
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block';
+            }
         });
-    }
-    catch (error) {
-        alert('Error code')
+
+        const data = await response.json();
+        console.log(data);
+        console.log(data.pseudo);
+    }catch (error) {
+        console.error(error.message)
+      
     }
 }

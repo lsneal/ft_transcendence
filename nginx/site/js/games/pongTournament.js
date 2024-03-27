@@ -42,9 +42,22 @@ function getName(nbPlayer)
     for (let i = 0; i < nbPlayer; i++)
     {
         let name = document.getElementById(`name${i}`);
-        if (name === null || name.value === "")
+        if (name === null || name.value === "" || name.value === "")
             break ;
         arrPlayer[i] = name.value
+    }
+    for (let i = 0; i < nbPlayer; i++)
+    {
+        for (let j = 0; j < nbPlayer; j++)
+        {
+            if (arrPlayer[i] ==  arrPlayer[j])
+            {
+                arrPlayer = [];
+                break;
+            }
+        }
+        if (arraPlayer.length != nbPlaye)
+            break;
     }
     if (nbPlayer == arrPlayer.length)
     {
@@ -67,8 +80,10 @@ function getName(nbPlayer)
         })
     }
     else
+    {
         document.getElementById("error").style.display = 'block';
-
+        arraPlayer = [];
+    }
 }
 
 function buildBracket(value) {
@@ -250,8 +265,13 @@ function playTournament(gameId, socket, tournament) {
                     ball.style.top = data.posY.toString() + "px";
                     ball.style.left = data.posX.toString() + "px";
                 }
-                document.getElementById("scoreP1").innerHTML = data.scoreP1;
-                document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                if (document.getElementById("scoreP1") == null || document.getElementById("scoreP2") == null)
+                    socket.close()
+                else
+                {
+                    document.getElementById("scoreP1").innerHTML = data.scoreP1;
+                    document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                }
                 if (data.scoreP1 == 5)
                     winner = "p1";
                 if (data.scoreP2 == 5)
