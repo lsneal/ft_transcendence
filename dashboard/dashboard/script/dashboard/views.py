@@ -7,17 +7,22 @@ from .serializers import GamerSerializer, GameSerializer
 from django.http import JsonResponse
 import json
 
-class HealthView(APIView):
-    def get(self, request):
-        response = Response()
-        response.data = {
-            'status': 'healthy'
-        }
-        return response
-
 class ConnectUserStats(APIView):
+    def post(self, request):
+        pseudo = request.data.get('pseudo', None)
+        user_id = request.data.get('id', None)
+        
+        gamer_serializer = GamerSerializer(data={'pseudo': pseudo, 'id': user_id,})
+        gamer_serializer.is_valid(raise_exception=True)
+        gamer = gamer_serializer.save()
+
+        game_serializer = GameSerializer(data={'id': user_id,
+                                            'gamer': gamer.pk})  
+        game_serializer.is_valid(raise_exception=True)
+        game_serializer.save()
+        return Response(gamer_serializer.data)
+    
     def get(self, request):
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         pseudo = request.headers.get('pseudo', None)
         user_info = None
         if pseudo is not None:
@@ -37,7 +42,6 @@ class ConnectUserStats(APIView):
                 'nb_tournament': gamer.nb_tournament,
                 'game_data': game_data,
             }
-            print(dir(user_info))
         return Response(user_info)
     
     def put(self, request):
