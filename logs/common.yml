@@ -18,19 +18,6 @@ services:
       retries: 10
       timeout: 10s
 
-  #alertmanager:
-  #  image: prom/alertmanager:v0.27.0
-  #  restart: always
-  #  expose:
-  #    - "9093"
-  #  networks:
-  #    - prometheus-network
-  #  volumes:
-  #    - "./alertmanager:/config"
-  #    - alertmanager-data:/data
-  #  command: --config.file=/config/alertmanager.yml --log.level=debug
-  #
-
   postgres_exporter:
     container_name: postgres_exporter
     image: quay.io/prometheuscommunity/postgres-exporter
@@ -41,7 +28,6 @@ services:
       - postgres_exporter-network
       - vault_network_logs
     volumes:
-      #- ./postgres_exporter/postgres_exporter.yml:/etc/postgres_exporter.yml:ro
       - ./postgres_exporter/postgres_exporter.sh:/run/postgres_exporter.sh
       - vault_postgresExporter:/opt 
       - vault_hostname:/opt/host
@@ -50,6 +36,10 @@ services:
     restart: always
     depends_on:
       postgres_users:
+        condition: service_healthy
+      postgres_dashboard:
+        condition: service_healthy
+      postgres_pong:
         condition: service_healthy
       vault:
         condition: service_healthy   
@@ -65,8 +55,8 @@ services:
     networks:
       - prometheus-network
       - prometheus_elastic-network
+      - postgres_exporter-network
       - grafana-network
-      - nginx
     depends_on:
       node_exporter:
         condition: service_started
@@ -130,6 +120,9 @@ networks:
     driver: bridge
 
   prometheus_elastic-network:
+    driver: bridge
+
+  prometheus_nginx-network:
     driver: bridge
 
 

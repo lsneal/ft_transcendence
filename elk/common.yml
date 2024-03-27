@@ -16,8 +16,6 @@ services:
       - elk
       - vault_network_elk
     entrypoint: ["bash", "/setup_entrypoint.sh"]
-    env_file:
-      - ./.env
     healthcheck:
       test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
       interval: 5s
@@ -42,8 +40,6 @@ services:
       - es_exporter-network
     expose:
       - 9200
-    env_file:
-      - ./.env
     restart: always
     environment:
       - node.name=es01
@@ -91,8 +87,6 @@ services:
       - nginx
       - vault_network_elk
     restart: always
-    env_file:
-      - ./.env
     expose:
       - 5601
     environment:
@@ -123,7 +117,7 @@ services:
     volumes:
       - certs:/usr/share/logstash/config/certs
       - ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
-      - ./nginx:/usr/share/logstash/pattern/nginx:ro
+      #- ./nginx:/usr/share/logstash/pattern/nginx:ro
       - ./logstash/config:/usr/share/logstash/pipeline/
       - ./logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:st
       - logstashdata:/usr/share/logstash/data
@@ -133,8 +127,6 @@ services:
     labels:
       co.elastic.logs/module: logstash
     restart: always
-    env_file:
-      - ./.env
     networks:
       - elk
       - vault_network_elk
@@ -164,7 +156,6 @@ services:
     user: "0"
     image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
     networks:
-      #- prometheus-network
       - es_exporter-network
       - vault_network_elk
       - prometheus_elastic-network
