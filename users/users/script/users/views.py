@@ -179,14 +179,7 @@ class LoginView(APIView):
             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
-        user.token_refresh = response.set_cookie(
-                 key = settings.SIMPLE_JWT['REFRESH_COOKIE'],
-                 value = data["refresh"],
-                 expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-                 secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                 httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
+        user.token_refresh = data["refresh"]
         user.save() 
         csrf.get_token(request)
         response.data = {"Success" : "Login successfully","data":data}
@@ -279,7 +272,7 @@ class LoginA2F(APIView):
         if user.a2f is True:
             response.data = { 'message': 'True' }
         else:
-            reponse.data = { 'message': 'False' }
+            response.data = { 'message': 'False' }
         return response
 
     def post(self, request):
@@ -318,8 +311,8 @@ def getAccessToken(self, request):
         user = User.objects.get(id=token['user_id'])
         refresh_token = user.token_refresh
         try:
-            refresh = RefreshToken(refresh_token)
-            access_token_obj = refresh.access_token
+            refresh = RefreshToken(str(refresh_token))
+            access_token_obj = AccessToken(str(refresh.access_token))
             response.set_cookie(
                 key = settings.SIMPLE_JWT['AUTH_COOKIE'],
                 value = access_token_obj,
@@ -329,71 +322,23 @@ def getAccessToken(self, request):
                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
             )
         except:
-            print ('Error Refresh Token')
+            print ('Error Refresh Token') #Need to Raise Exception in case refresh token doesn't work and disconnect the person 
 
     return response, access_token_obj
     
 
 class UserView(APIView):
     def get(self, request):
-        token = request.COOKIES.get('42access_token')
-        if token:
-            response = Response()
-            connectedClient = getInfoClient(
-                access_token=token,
-            )
-            login = connectedClient.get_name_client('https://api.intra.42.fr/v2/me')
-            print(login)
-            if login.get('error', []):
-                client = AuthorizationCodeClient(
-                    client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-                    client_secret="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",
-                    redirect_uri="https://localhost/login42/",
-                    auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-                    token_endpoint="https://api.intra.42.fr/oauth/token"
-                )
-                refresh_token = request.COOKIES.get('42refresh_token')
-                token_info = client.refresh_token(refresh_token)
-                print(token_info)
-                response.set_cookie(
-                    key = '42access_token',
-                    value = token_info['access_token'],
-                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
-                response.set_cookie(
-                    key = '42refresh_token',
-                    value = token_info['refresh_token'],
-                    expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
-                connectedClient = getInfoClient(
-                    access_token=token_info['access_token'],
-                )
-                login = connectedClient.get_name_client('https://api.intra.42.fr/v2/me')
+        response, access_token_obj = getAccessToken(self, request)
 
-            print('id = ' + str(login['id']) + '\npseudo = ' + login['login'])
-            response.data = {
-                'token_data': login,
-                'user_id': login['id'],
-                'pseudo': login['login'],
-            }
-            
-        else:
-            response, access_token_obj = getAccessToken(self, request)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        serialiazer = UserSerializer(user)
 
-
-            user_id=access_token_obj['user_id']
-            user=User.objects.get(id=user_id)
-            serialiazer = UserSerializer(user)
-
-            response.data = {'data' : serialiazer.data}
+        response.data = {'data' : serialiazer.data}
         return response
     
+    #Change get cookie
     def put(self, request):
         oldpassword = request.data.get('oldpassword', None)
 
@@ -415,13 +360,12 @@ class UserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+############ Need to check if connected and raise expection ###################
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
         response.delete_cookie('access_token')
         response.delete_cookie('csrftoken')
-        response.delete_cookie('refresh_token')
         response.data = {
             'message': 'success'
         }

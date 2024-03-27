@@ -6,8 +6,7 @@ include:
   #- elk/common.yml
   #- logs/common.yml
   - dashboard/common.yml
-
-
+  
 services:
   nginx:
     container_name: nginx
