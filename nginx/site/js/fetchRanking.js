@@ -16,7 +16,7 @@ async function getRankingPlayers() {
         console.log('Classement des joueurs:', data);
 
         // Trier les joueurs par leur pourcentage de victoire (prc_win)
-        data.sort((a, b) => b.prc_win - a.prc_win);
+        data.sort((a, b) => (b.victory / b.nb_game *100) - (a.victory / b.nb_game *100));
 
         // Selectionner le corps du tableau
         const tbody = document.querySelector('#scoreboard-table tbody');
