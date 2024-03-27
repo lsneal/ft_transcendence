@@ -30,6 +30,7 @@ export default class extends AbstractView {
       }
 
       document.getElementById("btnLogin42").addEventListener('click', EventLogin42);
+      document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
 
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
       // Handle enter in modal
@@ -48,7 +49,7 @@ export default class extends AbstractView {
       });
 
       //document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
-      document.getElementById("modallogin2fa").addEventListener('click', send2facode);
+      //document.getElementById("modallogin2fa").addEventListener('click', send2facode);
 
      
     }
