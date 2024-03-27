@@ -83,54 +83,6 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-class Login42View(APIView):
-    def get(self, request):    
-        client = AuthorizationCodeClient(
-            client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-            client_secret="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",
-            redirect_uri="https://localhost/login42/",
-            auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-            token_endpoint="https://api.intra.42.fr/oauth/token"
-        )
-
-        auth_url = client.get_authorization_url()
-        return Response(auth_url)
-
-    def post(self, request):
-        client = AuthorizationCodeClient(
-            client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-            client_secret="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",
-            redirect_uri="https://localhost/login42/",
-            auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-            token_endpoint="https://api.intra.42.fr/oauth/token"
-        )
-
-        code = request.data.get('code', None)
-        token_info = client.get_token(code)
-        print (code, " " ,token_info)
-        
-        response = Response()
-        response.set_cookie(
-            key = '42access_token',
-            value = token_info['access_token'],
-            expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
-        response.set_cookie(
-            key = '42refresh_token',
-            value = token_info['refresh_token'],
-            expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
-        csrf.get_token(request)
-
-        return response
-
-
 class LoginView(APIView):
     def get(self, request):
         token = request.COOKIES.get('access_token')
