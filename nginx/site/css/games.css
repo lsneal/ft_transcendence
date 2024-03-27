@@ -48,7 +48,19 @@
 	left: 10%;
 }
 
+#player1{
+	color: white;
+	position: absolute;
+	left: 0%;
+	top : -30px;
+}
 
+#player2{
+	color: white;
+	position: absolute;
+	left: 80%;
+	top : -30px;
+}
 
 #scoreP2{
 	color: white;

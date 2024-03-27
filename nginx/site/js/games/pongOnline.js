@@ -1,6 +1,3 @@
-player1 = null;
-player2 = null;
-
 function startGameOnline(gameId, player, pseudo, name1, name2) {
     if (document.getElementById("time") != null)
         document.getElementById("time").style.display = 'none';
@@ -20,8 +17,8 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
         .then(data => {
             let url = `wss://localhost/api/pong/ws/` + data.data.id 
             const socket = new WebSocket(url)
-            player1 = name1
-            player2 = name2
+            let player1 = name1
+            let player2 = name2
             if (player1 != player2)
             {
                 playGameOnline(gameId, socket, pseudo, player)
@@ -44,7 +41,6 @@ function playGameOnline(gameId, socket, pseudo, player)
 
 
     socket.onopen = () => {
-        console.log("player1 = ", player1, "player2 = ", player2);
         socket.send(JSON.stringify({
             'game':'start',
             'moov':'none',
@@ -99,17 +95,18 @@ function playGameOnline(gameId, socket, pseudo, player)
                 if (data.scoreP1 == 5)
                 {
                     winner = "p1";
-                    UserStatsGame(pseudo, 'p1', player, 'p2', data.scoreP1, data.scoreP2);
+                    UserStatsGame(pseudo, 'p1', player, 'p2', data.scoreP1, data.scoreP2, gameId);
                 }
                 if (data.scoreP2 == 5)
                 {
                     winner = "p2";
-                    UserStatsGame(pseudo, 'p2', player, 'p1', data.scoreP1, data.scoreP2);
+                    UserStatsGame(pseudo, 'p2', player, 'p1', data.scoreP1, data.scoreP2, gameId);
                 }
             }
         }
         if (data.type === "time")
         {
+            displayName(gameId)
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").style.fontSize = '7.0rem';
             document.getElementById("time").style.left = '50%';
@@ -123,19 +120,16 @@ function playGameOnline(gameId, socket, pseudo, player)
     socket.onclose = () => {
         if (document.getElementById("time") != null)
         {
+            document.getElementById("player1").innerHTML = ``
+            document.getElementById("player2").innerHTML = ``
             document.getElementById("time").style.display = 'block';
             document.getElementById("crown").style.display = 'block';
-            if (winner == 'p1')
-                document.getElementById("time").innerHTML = `Joueur1 gagne`;
-            if (winner == 'p2')
-                document.getElementById("time").innerHTML = `Joueur2 gagne`;
             document.getElementById("time").style.fontSize = 'xxx-large';
             document.getElementById("time").style.left = '38%';
 
             document.getElementById("scoreP1").innerHTML = 0
             document.getElementById("scoreP2").innerHTML = 0
             button2.style.display = 'block';
-            document.getElementById("time").innerHTML = ``;
         }
         posY = 250
         posX = 499
@@ -153,11 +147,25 @@ function playGameOnline(gameId, socket, pseudo, player)
     }
 }
 
-async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score) {
+async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score, gameId) {
+    
+    let player1 = null
+    let player2 = null
+    await fetch("/api/pong/getGame/" + gameId, {
+        method: "GET",
+    })
+    .then((response) => response.json())
+    .then(data => {
+        player1 = data.player1_name
+        player2 = data.player2_name
+        document.getElementById("time").style.display = 'block';
+        if (data.player2 == winner)
+            document.getElementById("time").innerHTML = `${data.player2_name} gagne`
+        if (data.player1 == winner)
+            document.getElementById("time").innerHTML = `${data.player1_name} gagne`
+    })
     if (winner === player || looser === player)
     {   
-        console.log("wine = ", winner);
-        console.log("loose = ", looser)
         await  fetch("/api/users/user/", {
             method: "GET",
         })
@@ -168,7 +176,6 @@ async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score) {
                 const conceded_point = (player == 'p1') ?  p2Score : p1Score
                 const marked_point = (player == 'p1') ?  p1Score : p2Score
                 const opponent = (player == 'p1') ? player2 : player1  
-                console.log(conceded_point, marked_point, opponent)
                 fetch('/api/dashboard/connectUser/', {
                     method: 'PUT',
                     headers: {
@@ -190,7 +197,6 @@ async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score) {
                 const conceded_point = (player == 'p1') ?  p2Score : p1Score
                 const marked_point = (player == 'p1') ?  p1Score : p2Score
                 const opponent = (player == 'p1') ? player2 : player1
-                console.log(conceded_point, marked_point, opponent)
                 fetch('/api/dashboard/connectUser/', {
                     method: 'PUT',
                     headers: {
@@ -209,4 +215,17 @@ async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score) {
             return
         })
     }
+}
+
+
+async function displayName(gameId) {
+    await fetch("/api/pong/getGame/" + gameId, {
+        method: "GET",
+    })
+    .then((response) => response.json())
+    .then(data => {
+        document.getElementById("player1").innerHTML = data.player1_name
+        document.getElementById("player2").innerHTML = data.player2_name
+    })
+    
 }
