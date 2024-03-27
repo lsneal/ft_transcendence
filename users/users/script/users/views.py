@@ -69,53 +69,6 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-class Login42View(APIView):
-    def get(self, request):    
-        client = AuthorizationCodeClient(
-            client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-            client_secret="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",
-            redirect_uri="https://10.11.249.157/login42/",
-            auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-            token_endpoint="https://api.intra.42.fr/oauth/token"
-        )
-
-        auth_url = client.get_authorization_url()
-        return Response(auth_url)
-
-    def post(self, request):
-        client = AuthorizationCodeClient(
-            client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-            client_secret="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",
-            redirect_uri="https://10.11.249.157/login42/",
-            auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-            token_endpoint="https://api.intra.42.fr/oauth/token"
-        )
-
-        code = request.data.get('code', None)
-        token_info = client.get_token(code)
-        
-        response = Response()
-        response.set_cookie(
-            key = '42access_token',
-            value = token_info['access_token'],
-            expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
-        response.set_cookie(
-            key = '42refresh_token',
-            value = token_info['refresh_token'],
-            expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
-        csrf.get_token(request)
-
-        return response
-
-
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get('email', None)
@@ -159,10 +112,8 @@ class LoginView(APIView):
 class ActivateA2F(APIView):
     @jwt_authentication
     def post(self, request):
-        token = request.COOKIES.get('access_token')
+        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
         user_code = request.data['totp_code']
-
-        access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
 
@@ -206,14 +157,9 @@ class ActivateA2F(APIView):
         response.data = { 'url': qr }
         return response
     
-    #@jwt_authentication
+    @jwt_authentication
     def put(self, request):
-        token = request.COOKIES.get('access_token')
-
-        if not token:
-           raise AuthenticationFailed('Unauthenticated!')
-
-        access_token_obj = AccessToken(token)
+        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
         response = Response()
@@ -306,15 +252,12 @@ class UserView(APIView):
         response.data = {'data' : serialiazer.data}
         return response
 
-
+    @jwt_authentication
     def put(self, request):
         oldpassword = request.data.get('oldpassword', None)
 
-        token = request.COOKIES.get('access_token')
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
+        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
         
-        access_token_obj = AccessToken(token)
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
 
@@ -326,8 +269,6 @@ class UserView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 class LogoutView(APIView):
     def post(self, request):
