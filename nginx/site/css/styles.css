@@ -117,6 +117,7 @@ body{
 	border: 1px solid #76453B;
 	margin: 0 3px;
 	padding: 5px 0;
+	font-size: 1vw ;
 }
 
 .tournament-row:not(:last-child) .match div:before {
