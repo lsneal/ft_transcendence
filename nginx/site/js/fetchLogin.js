@@ -102,6 +102,7 @@ async function EventLogin () {
                     Modal2fa.show();
                 }
                 else {
+                    modal.hide();
                     window.history.pushState(null, "Profile", "/profile/");
                     window.dispatchEvent(new Event('popstate'));
                 }

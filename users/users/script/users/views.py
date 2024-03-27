@@ -26,37 +26,33 @@ from rest_framework.decorators import api_view
 def jwt_authentication(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        token = request.COOKIES.get('access_token')
-
+        token = args[0].COOKIES.get('access_token')
+        
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
-
+        
         try:
             access_token_obj = AccessToken(token)
+            return view_func(request, *args, **kwargs)
         except:
             try:
-                token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+                response = Response()
+                token = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=["HS256"])
                 user = User.objects.get(id=token['user_id'])
                 refresh_token = user.token_refresh
                 refresh = RefreshToken(refresh_token)
                 access_token_obj = refresh.access_token
-
-                response = view_func(request, *args, **kwargs)
-
                 response.set_cookie(
-                    key=settings.SIMPLE_JWT['AUTH_COOKIE'],
-                    value=str(access_token_obj),
-                    expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                    key = settings.SIMPLE_JWT['AUTH_COOKIE'],
+                    value = access_token_obj,
+                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
                 )
-
-                return response
-            except Exception as e:
-                print('Error:', e)
-                raise AuthenticationFailed('Invalid Token!')
-
+                return view_func(request, *args, **kwargs)
+            except:
+                raise AuthenticationFailed('Unauthenticated!')
     return wrapper
 
 def get_tokens_for_user(user):
@@ -121,20 +117,6 @@ class Login42View(APIView):
 
 
 class LoginView(APIView):
-    def get(self, request):
-        email = request.headers.get('email', None)
-        user = User.objects.filter(email=email).first()
-
-        response = Response()
-        if user.a2f is True:
-            response.data = {
-                'message': 'True'
-            }
-        else:
-            response.data = {
-                'message': 'False'
-            }
-        return response
     def post(self, request):
         email = request.data.get('email', None)
         password = request.data.get('password', None)
@@ -175,6 +157,7 @@ class LoginView(APIView):
         return response
 
 class ActivateA2F(APIView):
+    @jwt_authentication
     def post(self, request):
         token = request.COOKIES.get('access_token')
         user_code = request.data['totp_code']
@@ -201,14 +184,10 @@ class ActivateA2F(APIView):
         else:
             response.data = { 'message': 'failure' }
         return response 
-    
+
+    @jwt_authentication
     def get(self, request):
-        token = request.COOKIES.get('access_token')
-
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
-
-        access_token_obj = AccessToken(token)
+        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
         user_id=access_token_obj['user_id']
         user=User.objects.get(id=user_id)
         response = Response()
@@ -225,8 +204,9 @@ class ActivateA2F(APIView):
         qr = 'https://api.qrserver.com/v1/create-qr-code/?data=' + otp_url
 
         response.data = { 'url': qr }
-        return response 
+        return response
     
+    #@jwt_authentication
     def put(self, request):
         token = request.COOKIES.get('access_token')
 
@@ -314,65 +294,19 @@ def getAccessToken(self, request):
     
 
 class UserView(APIView):
+    @jwt_authentication
     def get(self, request):
-        token = request.COOKIES.get('42access_token')
-        if token:
-            response = Response()
-            connectedClient = getInfoClient(
-                access_token=token,
-            )
-            login = connectedClient.get_name_client('https://api.intra.42.fr/v2/me')
-            print(login)
-            if login.get('error', []):
-                client = AuthorizationCodeClient(
-                    client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-                    client_secret="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",
-                    redirect_uri="https://10.11.249.157/login42/",
-                    auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-                    token_endpoint="https://api.intra.42.fr/oauth/token"
-                )
-                refresh_token = request.COOKIES.get('42refresh_token')
-                token_info = client.refresh_token(refresh_token)
-                print(token_info)
-                response.set_cookie(
-                    key = '42access_token',
-                    value = token_info['access_token'],
-                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
-                response.set_cookie(
-                    key = '42refresh_token',
-                    value = token_info['refresh_token'],
-                    expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
-                connectedClient = getInfoClient(
-                    access_token=token_info['access_token'],
-                )
-                login = connectedClient.get_name_client('https://api.intra.42.fr/v2/me')
+        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
+        response = Response()
 
-            print('id = ' + str(login['id']) + '\npseudo = ' + login['login'])
-            response.data = {
-                'token_data': login,
-                'user_id': login['id'],
-                'pseudo': login['login'],
-            }
-            
-        else:
-            response, access_token_obj = getAccessToken(self, request)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
+        serialiazer = UserSerializer(user)
 
-
-            user_id=access_token_obj['user_id']
-            user=User.objects.get(id=user_id)
-            serialiazer = UserSerializer(user)
-
-            response.data = {'data' : serialiazer.data}
+        response.data = {'data' : serialiazer.data}
         return response
-    
+
+
     def put(self, request):
         oldpassword = request.data.get('oldpassword', None)
 
