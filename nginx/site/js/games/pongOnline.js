@@ -22,7 +22,10 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
             const socket = new WebSocket(url)
             player1 = name1
             player2 = name2
-            playGameOnline(gameId, socket, pseudo, player)
+            if (player1 != player2)
+            {
+                playGameOnline(gameId, socket, pseudo, player)
+            }
         })
 }
 
@@ -86,8 +89,13 @@ function playGameOnline(gameId, socket, pseudo, player)
                     ball.style.top = data.posY.toString() + "px";
                     ball.style.left = data.posX.toString() + "px";
                 }
-                document.getElementById("scoreP1").innerHTML = data.scoreP1;
-                document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                if (document.getElementById("scoreP1") == null || document.getElementById("scoreP2") == null)
+                    socket.close()
+                else
+                {
+                    document.getElementById("scoreP1").innerHTML = data.scoreP1;
+                    document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                }
                 if (data.scoreP1 == 5)
                 {
                     winner = "p1";
@@ -113,18 +121,22 @@ function playGameOnline(gameId, socket, pseudo, player)
         }
     }
     socket.onclose = () => {
-        
-        document.getElementById("time").style.display = 'block';
-        document.getElementById("crown").style.display = 'block';
-        if (winner == 'p1')
-            document.getElementById("time").innerHTML = `Joueur1 gagne`;
-        if (winner == 'p2')
-            document.getElementById("time").innerHTML = `Joueur2 gagne`;
-        document.getElementById("time").style.fontSize = 'xxx-large';
-        document.getElementById("time").style.left = '38%';
+        if (document.getElementById("time") != null)
+        {
+            document.getElementById("time").style.display = 'block';
+            document.getElementById("crown").style.display = 'block';
+            if (winner == 'p1')
+                document.getElementById("time").innerHTML = `Joueur1 gagne`;
+            if (winner == 'p2')
+                document.getElementById("time").innerHTML = `Joueur2 gagne`;
+            document.getElementById("time").style.fontSize = 'xxx-large';
+            document.getElementById("time").style.left = '38%';
 
-        document.getElementById("scoreP1").innerHTML = 0
-        document.getElementById("scoreP2").innerHTML = 0
+            document.getElementById("scoreP1").innerHTML = 0
+            document.getElementById("scoreP2").innerHTML = 0
+            button2.style.display = 'block';
+            document.getElementById("time").innerHTML = ``;
+        }
         posY = 250
         posX = 499
         if (window.innerWidth < 1288)
@@ -138,8 +150,6 @@ function playGameOnline(gameId, socket, pseudo, player)
             ball.style.top = posY.toString() + "px";
             ball.style.left = posX.toString() + "px";
         }
-        button2.style.display = 'block';
-        document.getElementById("time").innerHTML = ``;
     }
 }
 

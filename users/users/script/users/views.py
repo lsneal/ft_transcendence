@@ -93,14 +93,14 @@ class Login42View(APIView):
 
 class LoginView(APIView):
     def get(self, request):
-        #token = request.COOKIES.get('access_token')
-
-        #access_token_obj = AccessToken(token)
-        #user_id=access_token_obj['user_id']
-        #user=User.objects.get(id=user_id)
+        token = request.COOKIES.get('access_token')
+# 
+        access_token_obj = AccessToken(token)
+        user_id=access_token_obj['user_id']
+        user=User.objects.get(id=user_id)
         
         email = request.data.get('email', None)
-        user = User.objects.filter(email=email).first()
+        #user = User.objects.filter(email=email).first()
 
         print(f"email  {email}")
 
