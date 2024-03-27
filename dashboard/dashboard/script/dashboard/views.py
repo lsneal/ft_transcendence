@@ -7,6 +7,14 @@ from .serializers import GamerSerializer, GameSerializer
 from django.http import JsonResponse
 import json
 
+class HealthView(APIView):
+    def get(self, request):
+        response = Response()
+        response.data = {
+            'status': 'healthy'
+        }
+        return response
+
 class ConnectUserStats(APIView):
     def post(self, request):
         pseudo = request.data.get('pseudo', None)
