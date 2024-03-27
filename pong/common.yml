@@ -1,10 +1,10 @@
 version: "3.8"
 services:
-  postgres_pong: #change the name
-    container_name: postgres_pong #change the name
+  postgres_pong:
+    container_name: postgres_pong
     image: postgres:16.1-alpine3.19
     networks:
-      - pong_network #change
+      - pong_network
       - vault_network_pong
       #- postgres_exporter-network
       #- logstash_network
@@ -30,15 +30,15 @@ services:
       retries: 5
     
     
-  django_pong: #change the name
-    container_name: django_pong #change the name
+  django_pong:
+    container_name: django_pong
     build: ./app
     networks:
-      - pong_network #change
+      - pong_network 
       - nginx
       - vault_network_pong
     expose:
-      - "8003"  #change the port
+      - "8003" 
     restart: always
     volumes:
       - vault_django_pong:/opt
@@ -53,5 +53,5 @@ services:
       retries: 5
 
 networks:
-  pong_network: #change the name
+  pong_network:
     driver: bridge

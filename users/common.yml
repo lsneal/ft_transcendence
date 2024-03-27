@@ -41,7 +41,6 @@ services:
     restart: always
     volumes:
       - vault_django_users:/opt
-      #- static:/var/www/admin/css
       - ./users/script/:/script/mysite #development purpose
     depends_on:
       vault:

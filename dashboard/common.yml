@@ -6,6 +6,7 @@ services:
     networks:
       - dashboard_network
       - vault_network_dashboard
+      #- postgres_exporter-network
     environment:
       - POSTGRES_PASSWORD=password
       - PGPORT=5434

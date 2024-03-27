@@ -7,8 +7,8 @@ export VAULT_TOKEN=$(cat /opt/postgres_exporter_token)
 export USERNAME='devops'
 export USER_PASSWORD=$(wget --header="X-Vault-Token: $VAULT_TOKEN" -qO - http://$vaulthostname:8200/v1/database/static-creds/devops_users | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
 export PONG_PASSWORD=$(wget --header="X-Vault-Token: $VAULT_TOKEN" -qO - http://$vaulthostname:8200/v1/database/static-creds/devops_pong | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
+export DASHBOARD_PASSWORD=$(wget --header="X-Vault-Token: $VAULT_TOKEN" -qO - http://$vaulthostname:8200/v1/database/static-creds/devops_dashboard | sed -n 's/.*"password":"\([^"]*\).*/\1/p')
 
-export DATA_SOURCE_NAME="postgresql://${USERNAME}:${USER_PASSWORD}@postgres_users:5432/postgres?sslmode=disable,postgresql://${USERNAME}:${PONG_PASSWORD}@postgres_pong:5433/postgres?sslmode=disable"
-
+export DATA_SOURCE_NAME="postgresql://${USERNAME}:${USER_PASSWORD}@postgres_users:5432/postgres?sslmode=disable,postgresql://${USERNAME}:${PONG_PASSWORD}@postgres_pong:5433/postgres?sslmode=disable,postgresql://${USERNAME}:${DASHBOARD_PASSWORD}@postgres_dashboard:5434/postgres?sslmode=disable"
 
 exec /bin/postgres_exporter
