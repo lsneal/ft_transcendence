@@ -10,7 +10,6 @@ export default class extends AbstractView {
     async executeViewScript()
     {
 
-      console.log("TESTTTT Event listen OK")
     
     }
 

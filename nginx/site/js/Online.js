@@ -52,6 +52,13 @@ export default class extends AbstractView {
       {
         document.getElementById("game").style.display = 'none';
       }
+
+
+      document.getElementById("logoenhaut").addEventListener('click', event => {
+        window.history.pushState(null, "Profile", "/profile/");
+        window.dispatchEvent(new Event('popstate'));
+      });
+      
     }
 
 

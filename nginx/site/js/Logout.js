@@ -9,7 +9,6 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-      console.log("Logged out");
     }
 
     async getHtml() {

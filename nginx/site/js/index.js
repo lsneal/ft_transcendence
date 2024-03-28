@@ -1,7 +1,6 @@
 import Home from "./Home.js";
 import Register from "./Register.js";
 import Login from "./Login.js";
-import Login42 from "./Login42.js";
 import Logout from "./Logout.js";
 import Profile from "./Profile.js";
 import Error from "./Error.js";
@@ -29,7 +28,6 @@ const navigateTo = url => {
 const router = async () => {
     const routes = [
         {   path: "/", view:  Home },
-        {   path: "/login42/", view: Login42 },
         {   path: "/logout/", view: Logout },
         {   path: "/profile/", view: Profile },
         {   path: "/tournament/", view: Tournament },
@@ -75,37 +73,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     router();
 });
-
-/*function changeLocation(name, url)
-{
-    window.history.pushState(null, name, url);
-    window.dispatchEvent(new Event('popstate'));
-}*/
-
-
-
-/*document.addEventListener('click', listenModal);
-
-function listenModal(event)
-{
-    if (event.target.closest("#modalHome"))
-    {
-        console.log("Modal Charge")
-        document.getElementById("btnLogin").addEventListener('click', EventLogin);
-        document.getElementById("btnRegister").addEventListener('click', EventRegister);
-        
-    }
-
-
-}*/
-
-/*document.addEventListener("popstate", logoutBtn);
-function logoutBtn(event)
-{
-    if (event.target.closest("#logoutDiv"))
-    {
-        console.log("Logout Charge")
-        document.getElementById("btnLogout").addEventListener('click', EventLogout);
-    }
-}*/
 

@@ -10,13 +10,11 @@ export default class extends AbstractView {
     async executeViewScript()
     {
 
-      console.log("Event Listener OK")
     async function EventError() {
       window.history.pushState(null, "Error", "/");
                 window.dispatchEvent(new Event('popstate'));
 
       };
-      console.log("Error Page Charge")
     document.getElementById("image404").addEventListener('click', EventError);
     }
 

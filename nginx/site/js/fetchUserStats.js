@@ -18,7 +18,6 @@ async function getUserStats() {
             },
         });
         dataDashboard = await responseDashboard.json();
-        console.log(dataDashboard)
         drawChart(dataDashboard);
     } catch (error) {
         alert('Erreur : ' + error.message);
@@ -108,7 +107,6 @@ async function drawChart(dataDashboard) {
 
     drawChart();
 
-    // Afficher les pourcentages dans la legende en dessous du graphique
     const legend = document.createElement('div');
     legend.classList.add('legend');
     if (prc_win == NaN)
@@ -119,11 +117,9 @@ async function drawChart(dataDashboard) {
     `;
     canvas.parentNode.insertBefore(legend, canvas.nextSibling);
 
-    // Mettre à jour les barres de progression
     document.getElementById('nbVictoiresBar').style.width = prc_win + '%';
     document.getElementById('nbPartiesBar').style.width = '100%'; // La largeur de la barre pour le nombre de parties est toujours à 100%
 
-    // Mettre à jour les titres des barres de progression
     document.getElementById('nbVictoiresBar').title = `Nombre de victoires : ${nbVictories}`;
     document.getElementById('nbPartiesBar').title = `Nombre de parties jouees : ${nbGames}`;
 

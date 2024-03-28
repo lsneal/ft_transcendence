@@ -120,7 +120,6 @@ function playGameLocal(gameId, socket)
 
 
     socket.onmessage = function (event) {
-        console.log("couc")
         let data = JSON.parse(event.data)
         if (data.type === "game")
         {

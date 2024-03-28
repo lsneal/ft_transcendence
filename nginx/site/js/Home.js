@@ -5,7 +5,6 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Home");
 
-        console.log("Home");
     }
 
     async executeViewScript()
@@ -20,7 +19,6 @@ export default class extends AbstractView {
         });
 
         const userData = await userresponse.json();
-        console.log('data :', userData);
         if (userData.detail != "Unauthenticated!") {
           window.history.pushState(null, "Profile", "/profile/");
           window.dispatchEvent(new Event('popstate'));
@@ -30,8 +28,6 @@ export default class extends AbstractView {
       }
 
 
-
-      document.getElementById("btnLogin42").addEventListener('click', EventLogin42);
 
       document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
 

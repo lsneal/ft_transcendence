@@ -6,7 +6,6 @@ async function getRankingPlayers() {
                 'Content-Type': 'application/json',
             }
         });
-         console.log(response);
         if (!response.ok) {
             throw new Error('Erreur de recuperation du classement des joueurs');
         }
