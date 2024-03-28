@@ -56,7 +56,7 @@ function getName(nbPlayer)
                 break;
             }
         }
-        if (arraPlayer.length != nbPlaye)
+        if (arrPlayer.length != nbPlaye)
             break;
     }
     if (nbPlayer == arrPlayer.length)
@@ -82,7 +82,7 @@ function getName(nbPlayer)
     else
     {
         document.getElementById("error").style.display = 'block';
-        arraPlayer = [];
+        arrPlayer = [];
     }
 }
 

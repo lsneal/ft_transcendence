@@ -56,6 +56,10 @@ export default class extends AbstractView {
       {
         document.getElementById("game-container").style.display = 'none';
       }
+
+      document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+
+
     }
 
 

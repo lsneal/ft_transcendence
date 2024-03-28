@@ -1,3 +1,5 @@
+/*--------------------BODY ET NAVBAR--------------------------*/
+
 body{
 	height: 100vh;
 	background-color: #43766C;
@@ -26,6 +28,7 @@ body{
 .logoenhaut {
 	height: 50px;
 	width: 50px;
+	cursor: -moz-grab;
 }
 
 .text-logo{
@@ -39,7 +42,12 @@ body{
 		0 0 92px #B19470,
 		0 0 102px #B19470,
 		0 0 151px #B19470;
+	font: italic small-caps bold 60px cursive;
+	
 } 	
+
+/*----------------------------------------------*/
+
 
 
 /*--------------------- TABLEU --------------------------*/
@@ -94,49 +102,19 @@ body{
     white-space: nowrap; 
 }
 
-
-
-
-
-
-/*--------------------- TABLEU --------------------------*/
-
-
 #historicTable{
 	margin-right: 3rem;
 }
 
-
-
-
-
-
-
 /*----------------------------------------------*/
 
 
-.fa-solid{
-	color: #F8FAE5;
-}
-
-.modal-content{
-	background-color: #B19470;
-	color: #F8FAE5;
-}
-
-.form-text{
-	color: #F8FAE5;
-}
 
 
 /*--------------------------BOUTONS----------------------------*/
 
-
-
-
 .btn:hover{
 	background-color: #B19470; 
-	/* B19470 */
 	border: #B19470;
 	--bs-btn-bg: #B19470;
 	--bs-btn-border-color: #B19470;
@@ -149,16 +127,17 @@ body{
 	--bs-btn-border-color: #76453B;
 	--bs-btn-active-bg: #B19470;
 	color: #F8FAE5;
+    border-radius: 5px;
+
 }
 
 .btn-secondary {
 	--bs-btn-bg: #76453B;
-	/* B784B7 */
 	--bs-btn-border-color: #B19470;
 	--bs-btn-active-bg: #76453B;
-	/* de base B19470*/
-	/* de base 76453B*/
-	/* de base 76453B*/
+    border-radius: 5px;
+
+
 }
 
 .button-error-404 {
@@ -173,14 +152,20 @@ body{
 	color: #fff;
 	height: 80vh;
 	border-width: 2px;
+    border-radius: 5px;
+
 }
 
 
 #LocalGameButton{
 	border-width: 2px;
+    border-radius: 5px;
+
 }
 #OnlineGameButton{
 	border-width: 2px;
+    border-radius: 5px;
+
 }
 /*----------------------------------------------*/
 
@@ -257,9 +242,10 @@ body{
 	color: #561C24;
 }
 
+
+
+
 /*--------------------------CHART----------------------------*/
-
-
 
 .chart-container {
     width: 50%;
@@ -272,7 +258,7 @@ body{
 .bar-chart {
     width: 100%; /* Ajuste la largeur totale du bar chart selon tes besoins */
     margin: 20px auto; /* Centrer horizontalement */
-    background-color: #fff; /* Fond blanc */
+    background-color: #F8FAE5; /* Fond blanc */
 }
 
 .bar {
@@ -304,10 +290,15 @@ body{
 }
 
 #nbVictoiresBar {
-    background-color: #A3C9AA; /* Couleur différente pour les victoires */
+    background-color: #76453B;
 }
 
 #nbPartiesBar{
+	background-color: #000;
+	color: #F8FAE5;
+}
+
+#nbDefaiteBar{
 	background-color: #9B4444;
 }
 
@@ -401,6 +392,21 @@ input::-webkit-inner-spin-button {
 
 /*------------------------------------------------------*/
 
+
+
+
+.fa-solid{
+	color: #F8FAE5;
+}
+
+.modal-content{
+	background-color: #B19470;
+	color: #F8FAE5;
+}
+
+.form-text{
+	color: #F8FAE5;
+}
 
 
 

@@ -59,6 +59,8 @@ export default class extends AbstractView {
         window.dispatchEvent(new Event('popstate'));
       });
       
+      document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+
     }
 
 
