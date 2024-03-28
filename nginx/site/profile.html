@@ -5,11 +5,11 @@
       <div class="modal-content">
        
         <div class="modal-body">
-			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-volume-high"></i>Profile</button></div>
-			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal"><i class="fa-solid fa-gear"></i>   2FA</button></div>
-			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore">Personal Stats</a>
-			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnDropdown2"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasOnline">Historique</a>
-			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link >Logout</a>
+			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-user"></i> Profile</button></div>
+			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal"><i class="fa-solid fa-shield-halved"></i> 2FA</button></div>
+			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore"><i class="fa-solid fa-chart-pie"></i> Personal statistic</a>
+			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnDropdown2"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasOnline"><i class="fa-solid fa-book"></i> Historic</a>
+			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnLogout" data-link ><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 			</div>
 			
         </div>
@@ -52,17 +52,16 @@
   <div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
     <div class="modal-dialog modal-dialog-centered modalchart">
         <div class="modal-content">
-            <h2 class="text-center my-3" id="textdash">DashBoard</h2>
-			<div id="errormessageStat" class="text-erreur font-weight-bold text-center my-3"  style="display: none;"></div>
+            <h2 class="text-center my-3" id="textdash">Dashboard</h2>
+			<div id="errormessageStat" class="text-danger font-weight-bold text-center my-3"  style="display: none;"></div>
             <div class="modal-body" >
               
 				
 				<!-- Bar chart horizontal -->
                 <div class="chart-container">
                     <div class="bar-chart my-5">
-                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
-                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
-                        <div class="bar my-2" id="nbDefaiteBar" title="number of losses">&nbsp;Loose</div>
+                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Play part</div>
+                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victory</div>
                     </div>
                 </div>
                 
@@ -71,8 +70,8 @@
                     <canvas id="myChart"></canvas>
                     <div id="legend" class="legend-container">
                         <ul class="legend-list">
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victoires: <span id="victoriesPercentage"></span>%</li></div>
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Défaites: <span id="defeatsPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victory: <span id="victoriesPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Looses: <span id="defeatsPercentage"></span>%</li></div>
                         </ul>
                     </div>
                 </div>
@@ -144,7 +143,7 @@
 					<input type="tel" id="code6" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
 				  </div>
 				  <div class="form__buttons">
-					<a class="btn btn-lg mb-3 w-100 btn-primary" id="Valid2FA" disabled>Validatation</a>
+					<a class="btn btn-lg mb-3 w-100 btn-primary" id="Valid2FA" disabled>Validation</a>
 				  </div>
 				</form>
 			  </div>
@@ -194,88 +193,88 @@
 							</div>
 							<div class="tournament-row d-flex justify-content-around">
 								<div class="match">
-									<div>Joueur 1 
+									<div>Player 1 
 										vs 
-										Joueur 9</div>
+										Player 9</div>
 								</div>
 							</div>
 	
 							<div class="tournament-row d-flex justify-content-around">
 								<div class="match">
-									<div>Joueur 1 
+									<div>Player 1 
 										vs 
-										Joueur 5</div>
+										Player 5</div>
 								</div>
 								<div class="match">
-									<div>Joueur 9 
+									<div>Player 9 
 										vs 
-										Joueur 13</div>
-								</div>
-							</div>
-	
-							<div class="tournament-row d-flex justify-content-around">
-								<div class="match">
-									<div>Joueur 1 
-										vs 
-										Joueur 3</div>
-								</div>
-								<div class="match">
-									<div>Joueur 5 
-										vs 
-										Joueur 7</div>
-								</div>
-								<div class="match">
-									<div>Joueur 9 
-										vs 
-										Joueur 11</div>
-								</div>
-								<div class="match">
-									<div>Joueur 13 
-										vs 
-										Joueur 15</div>
+										Player 13</div>
 								</div>
 							</div>
 	
 							<div class="tournament-row d-flex justify-content-around">
 								<div class="match">
-									<div>Joueur 1 
+									<div>Player 1 
 										vs 
-										Joueur 2</div>
+										Player 3</div>
 								</div>
 								<div class="match">
-									<div>Joueur 3 
+									<div>Player 5 
 										vs 
-										Joueur 4</div>
+										Player 7</div>
 								</div>
 								<div class="match">
-									<div>Joueur 5 
+									<div>Player 9 
 										vs 
-										Joueur 6</div>
+										Player 11</div>
 								</div>
 								<div class="match">
-									<div>Joueur 7 
+									<div>Player 13 
 										vs 
-										Joueur 8</div>
+										Player 15</div>
+								</div>
+							</div>
+	
+							<div class="tournament-row d-flex justify-content-around">
+								<div class="match">
+									<div>Player 1 
+										vs 
+										Player 2</div>
 								</div>
 								<div class="match">
-									<div>Joueur 9 
+									<div>Player 3 
 										vs 
-										Joueur 10</div>
+										Player 4</div>
 								</div>
 								<div class="match">
-									<div>Joueur 11 
+									<div>Player 5 
 										vs 
-										Joueur 12</div>
+										Player 6</div>
 								</div>
 								<div class="match">
-									<div>Joueur 13 
+									<div>Player 7 
 										vs 
-										Joueur 14</div>
+										Player 8</div>
 								</div>
 								<div class="match">
-									<div>Joueur 15 
+									<div>Player 9 
 										vs 
-										Joueur 16</div>
+										Player 10</div>
+								</div>
+								<div class="match">
+									<div>Player 11 
+										vs 
+										Player 12</div>
+								</div>
+								<div class="match">
+									<div>Player 13 
+										vs 
+										Player 14</div>
+								</div>
+								<div class="match">
+									<div>Player 15 
+										vs 
+										Player 16</div>
 								</div>
 							</div>
 						</div>

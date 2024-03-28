@@ -3,7 +3,7 @@
     <div class="modal-content">
      
       <div class="modal-body">
-        <div><button type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-person-praying"></i>    Paypal</button></div>
+        <div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" onclick="window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' > <i class="fa-solid fa-person-praying"></i>    Paypal</button></div>
       </div>
      
     </div>
@@ -15,8 +15,8 @@
     <div class="row justify-content-center main-buttons">    
       <div class="col-6 my-5">
         <div><button id="Buttonlogin" data-bs-toggle="modal" data-bs-target="#modalLogin" type="button" class="btn btn-lg btn-primary mb-3 w-100">Login</button></div>
-        <div><button id="ButtonRegistrer" data-bs-toggle="modal" data-bs-target="#modalRegistrer" type="button" class="btn btn-lg btn-primary mb-3 w-100">Registrer</button></div>
-        <div><button id="BtnRank" data-bs-toggle="modal" data-bs-target="#modalScoreboard" type="button" class="btn btn-lg btn-primary w-100">Scoreboard</button></div>
+        <div><button id="ButtonRegistrer" data-bs-toggle="modal" data-bs-target="#modalRegistrer" type="button" class="btn btn-lg btn-primary mb-3 w-100">Register</button></div>
+        <div><button id="BtnRank" data-bs-toggle="modal" data-bs-target="#modalScoreboard" type="button" class="btn btn-lg btn-primary w-100">Dashboard</button></div>
       </div>
     </div>
 </div>
@@ -43,7 +43,7 @@
           <div class="modal-body">
           <form id="formLogin">
               <div class="mb-3">
-              <label for="emailLogin" class="form-label">Email address</label>
+              <label for="emailLogin" class="form-label">Email</label>
               <input type="email" class="form-control" id="emailLogin" aria-describedby="emailHelp">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
               </div>
@@ -80,7 +80,7 @@
             <div id="error-message-password" class="text-erreur" style="display: none;"></div>
           </div>
           <div class="col-md-4">
-            <label for="ConfirmPassword" class="form-label">Confirm Password</label>
+            <label for="ConfirmPassword" class="form-label">Confirm password</label>
             <input type="password" class="form-control" id="ConfirmPassword" required>
             <div id="error-message-ConfirmPass" class="text-erreur" style="display: none;"></div>
         </div>
@@ -105,8 +105,8 @@
 			<th scope="col">Rank</th>
 			<th scope="col">Pseudo</th>
 			<th scope="col">Victory</th>
-			<th scope="col">Nb_game</th>
-			<th scope="col">Pourcentage de victoire</th>
+			<th scope="col">Number of game</th>
+			<th scope="col">Victory percentage</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -134,7 +134,7 @@
           <input type="tel" id="codelog6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·" autocomplete="off">
           </div>
         <div class="form__buttons">
-        <a class="btn btn-lg mb-3 w-100 btn-primary" id="Validlogin2fa" type="submit" data-link>Validatation</a>
+        <a class="btn btn-lg mb-3 w-100 btn-primary" id="Validlogin2fa" type="submit" data-link>Validation</a>
       </div>
       <div id="error-message-2fa" class="text-erreur" style="display: none;"></div>	
       </form>

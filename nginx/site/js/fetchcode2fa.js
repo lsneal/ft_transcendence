@@ -41,7 +41,7 @@ try {
     });
 }
 catch (error) {
-    comsole.log(error);
+    console.log(error);
 };
 
 }

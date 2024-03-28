@@ -4,7 +4,7 @@ import os
 from datetime import timedelta
 import hvac
 from .test import creds
-from .vault import *
+#from .vault import *
 import threading
 import time
 from django.db import connections   

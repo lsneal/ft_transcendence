@@ -15,6 +15,12 @@ async function EventActiveTwoFA() {
     const formData = {
         totp_code: final_code
     };
+    document.querySelector('#code1').value = '';
+    document.querySelector('#code2').value = '';
+    document.querySelector('#code3').value = '';
+    document.querySelector('#code4').value = '';
+    document.querySelector('#code5').value = '';
+    document.querySelector('#code6').value = '';
 
     try {
         const response = await fetch('https://localhost/api/users/activate2fa/', {
@@ -38,8 +44,8 @@ async function EventActiveTwoFA() {
             }
         });
 
-        const data = await response.json();
-    }catch (error) {
-      
+    }
+    catch (error) {
+        console.log(error.message) 
     }
 }
