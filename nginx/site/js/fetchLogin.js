@@ -87,12 +87,10 @@ async function EventLogin () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data)
             if (data.detail === undefined)
             {
                 if (data.a2f === true) {
                     emailGlob = formData.email
-                    console.log('active');
                     modal.hide();
                     Modal2fa.show();
                 }
@@ -113,6 +111,6 @@ async function EventLogin () {
         });
     }
     catch (error) {
-      console.log(error);
+      console.error(error);
     };
 }

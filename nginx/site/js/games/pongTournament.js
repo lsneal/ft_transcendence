@@ -83,6 +83,7 @@ function getName(nbPlayer)
     {
         document.getElementById("error").style.display = 'block';
         arrPlayer = [];
+        arrPlayer = [];
     }
 }
 

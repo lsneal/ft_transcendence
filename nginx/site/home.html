@@ -24,26 +24,15 @@
 
 <!-- MODAL LOGIN -->
 <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLogin" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-	<div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
 
-	<div class="modal-body">
-		<div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
-		<div><button type="button" id="btnLogin42" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
-	
-	</div>
-	</div>
-</div>
-<div class="modal-dialog modal-dialog-centered">
-	<div class="modal-content">
-
-	<div class="modal-body">
-		<div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
-		<div><button type="button" id="btnLogin42" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-at"></i>   with 42</button></div>
-	
-	</div>
-	</div>
-</div>
+	  <div class="modal-body">
+	  	<div><button type="button"  data-bs-toggle="modal" data-bs-target="#modalEmail" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-at"></i>   with email</button></div>
+	  </div>
+	  
+    </div>
+  </div>
 </div>
 
 <!-- MODAL LOGIN EMAIL-->
@@ -63,7 +52,7 @@
               <input type="password" class="form-control" id="PasswordLogin">
               </div>
               <a class="btn btn-primary" id="btnLogin" type="submit" data-bs-target="#modaltwoFA" data-link >Submit</a>
-              <div id="error-message-Login" class="text-danger" style="display: none;"></div>
+              <div id="error-message-Login" class="text-erreur" style="display: none;"></div>
               
             </form>
           </div>
@@ -88,16 +77,16 @@
           <div class="col-md-4">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" required>
-            <div id="error-message-password" class="text-danger" style="display: none;"></div>
+            <div id="error-message-password" class="text-erreur" style="display: none;"></div>
           </div>
           <div class="col-md-4">
             <label for="ConfirmPassword" class="form-label">Confirm password</label>
             <input type="password" class="form-control" id="ConfirmPassword" required>
-            <div id="error-message-ConfirmPass" class="text-danger" style="display: none;"></div>
+            <div id="error-message-ConfirmPass" class="text-erreur" style="display: none;"></div>
         </div>
           <div class="col-md-12">
             <a class="btn btn-primary" id="btnRegister" type="submit" data-link >Submit</a>
-            <div id="error-message-Register" class="text-danger" style="display: none;"></div>
+            <div id="error-message-Register" class="text-erreur" style="display: none;"></div>
           </div>
         </form>
       </div>
@@ -128,7 +117,7 @@
 </div>
 </div>
 
-
+<!-- MODAL 2FA -->
 <div class="modal fade" id="modallogin2fa" tabindex="-1" aria-labelledby="modaltwoFA" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -147,7 +136,7 @@
         <div class="form__buttons">
         <a class="btn btn-lg mb-3 w-100 btn-primary" id="Validlogin2fa" type="submit" data-link>Validation</a>
       </div>
-      <div id="error-message-2fa" class="text-danger" style="display: none;"></div>	
+      <div id="error-message-2fa" class="text-erreur" style="display: none;"></div>	
       </form>
       </div>
   </div>

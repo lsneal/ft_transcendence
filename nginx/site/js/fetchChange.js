@@ -32,7 +32,6 @@ async function EventChange () {
       });
 
       const userData = await userresponse.json();
-      console.log(userData.data)
       if (userData.data.pseudo != CurrentPseudo){
         const errorMessage = 'Please enter your pseudo for change your password';
         const errorElement = document.getElementById('error-message-Login');
@@ -52,7 +51,6 @@ async function EventChange () {
 
     const jsonString = JSON.stringify(formData);
 
-    console.log('json ', jsonString);
     
     const url = '/api/users/user/';
 
@@ -69,7 +67,6 @@ async function EventChange () {
         return response.json();
     })
     .then(data => {
-        console.log(data)
         if (data === 'Wrong Password'){
           const errorMessage = 'Wrong Actual Password';
           const errorElement = document.getElementById('error-message-Login');

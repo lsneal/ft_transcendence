@@ -10,9 +10,7 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
-      //console.log("Logout Charge")
-      //document.getElementById("btnLogout").addEventListener('click', EventLogout);
-
+      
       
     }
 

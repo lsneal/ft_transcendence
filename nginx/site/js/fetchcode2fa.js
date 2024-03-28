@@ -15,7 +15,6 @@ async function send2facode() {
 
     const totalcode = code1 + code2 + code3 + code4 + code5 + code6;
     const formData = { totp: totalcode };
-    console.log('totalcode', totalcode);
 try {
     const response = await fetch('https://localhost/api/users/2fa/', {
         method: 'POST',
@@ -28,9 +27,7 @@ try {
         body: JSON.stringify(formData)
     }).then((response) => response.json())
     .then((data) =>{
-        console.log(data)
         if (data.status == 'success'){
-            console.log('data.message: ', data.message)
             modal2fa.hide();
             window.history.pushState(null, "Profile", "/profile/");
             window.dispatchEvent(new Event('popstate'));

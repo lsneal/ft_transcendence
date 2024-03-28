@@ -11,7 +11,6 @@ async function EventActiveTwoFA() {
     const code6 = document.querySelector('#code6').value;
     const final_code = code1 + code2 + code3 + code4 + code5 + code6;
 
-    console.log(final_code)
 
     const formData = {
         totp_code: final_code
@@ -32,7 +31,6 @@ async function EventActiveTwoFA() {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) => {
-            console.log(data.message);
             if(data.message === "success"){
                 const errorMessage = '2FA Actif';
                 const errorElement = document.getElementById('errormactive2fa');
