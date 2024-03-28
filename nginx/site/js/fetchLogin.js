@@ -1,3 +1,5 @@
+emailGlob = null
+
 async function EventLogin () {
 
     const email = document.querySelector('#emailLogin').value;
@@ -17,10 +19,7 @@ async function EventLogin () {
         return; 
     }
 
-    const formData = {
-        email: email,
-        password: password,
-    };
+
     const codeInputs = [
         document.querySelector('#codelog1'),
         document.querySelector('#codelog2'),
@@ -29,6 +28,12 @@ async function EventLogin () {
         document.querySelector('#codelog5'),
         document.querySelector('#codelog6')
     ];
+
+    const formData = {
+        email: email,
+        password: password,
+    };
+
     document.addEventListener('input', function () {
     
         codeInputs.forEach((input, index) => {
@@ -74,7 +79,7 @@ async function EventLogin () {
                 codeInputs[index - 1].focus();
             }
         });
-        
+     
     });
     try {
         const response = await fetch('/api/users/login/', {
@@ -82,41 +87,54 @@ async function EventLogin () {
             mode: "cors",
             credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log('data ', data);
+            console.log(data)
             if (data.detail === undefined)
             {
-                try {
-                    const response =  fetch('/api/users/login/', {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    }).then((response) => response.json())
-                    .then((data) =>{
-                    console.log('message: ', data.message);
-                    if (data.message == 'True'){
-                        console.log('active');
-                        modal.hide();
-                        Modal2fa.show();
-
-                    }    
-                    else{
-                        console.log('pas active');
-                        modal.hide();
-                       
-                    }
+                if (data.a2f === true) {
+                    emailGlob = formData.email
+                    console.log('active');
+                    modal.hide();
+                    Modal2fa.show();
+                }
+                else {
+                    modal.hide();
                     window.history.pushState(null, "Profile", "/profile/");
                     window.dispatchEvent(new Event('popstate'));
-                    });
                 }
-                catch (error) {
-                  console.log('Erreur');
-                };
+                //try {
+                //    const response =  fetch('/api/users/login/', {
+                //        method: 'GET',
+                //        headers: {
+                //            'Content-Type': 'application/json',
+                //            'email': formData.email
+                //        }
+                //    }).then((response) => response.json())
+                //    .then((data) =>{
+                //    console.log('message: ', data.message);
+                //    if (data.message == 'True'){
+                //        emailGlob = formData.email
+                //        console.log('active');
+                //        modal.hide();
+                //        Modal2fa.show();
+                //    }    
+                //    else{
+                //        console.log('pas active');
+                //        modal.hide();
+                //        window.history.pushState(null, "Profile", "/profile/");
+                //        window.dispatchEvent(new Event('popstate'));
+                //       
+                //    }
+                //    
+                //    });
+                //}
+                //catch (error) {
+                //  console.log('Erreur');
+                //};
             }
             else
             {
@@ -129,9 +147,6 @@ async function EventLogin () {
         });
     }
     catch (error) {
-      console.log('Erreur');
+      console.log(error);
     };
-
-  
-    
 }
