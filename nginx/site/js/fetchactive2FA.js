@@ -17,8 +17,6 @@ async function EventActiveTwoFA() {
         totp_code: final_code
     };
 
-
-
     try {
         const response = await fetch('https://localhost/api/users/activate2fa/', {
             method: 'POST',
