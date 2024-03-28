@@ -42,7 +42,7 @@ function getName(nbPlayer)
     for (let i = 0; i < nbPlayer; i++)
     {
         let name = document.getElementById(`name${i}`);
-        if (name === null || name.value === "" || name.value === "")
+        if (name === null || name.value === "" || name.value === " ")
             break ;
         arrPlayer[i] = name.value
     }
@@ -50,13 +50,13 @@ function getName(nbPlayer)
     {
         for (let j = 0; j < nbPlayer; j++)
         {
-            if (arrPlayer[i] ==  arrPlayer[j])
+            if (arrPlayer[i] ==  arrPlayer[j] && i != j)
             {
                 arrPlayer = [];
                 break;
             }
         }
-        if (arraPlayer.length != nbPlaye)
+        if (arrPlayer.length != nbPlayer)
             break;
     }
     if (nbPlayer == arrPlayer.length)
@@ -82,7 +82,7 @@ function getName(nbPlayer)
     else
     {
         document.getElementById("error").style.display = 'block';
-        arraPlayer = [];
+        arrPlayer = [];
     }
 }
 

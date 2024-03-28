@@ -38,10 +38,8 @@ async function EventLogin () {
     
         codeInputs.forEach((input, index) => {
             input.addEventListener('input', function (event) {
-                // Remplace tout ce qui n'est pas un chiffre par une chaîne vide
                 this.value = this.value.replace(/\D/g, '');
     
-                // Déplacement automatique vers le champ suivant si la longueur maximale est atteinte
                 const maxLength = parseInt(this.getAttribute('maxlength'));
                 if (this.value.length >= maxLength) {
                     const nextInput = this.nextElementSibling;
@@ -49,18 +47,15 @@ async function EventLogin () {
                         nextInput.focus();
                     }
                 } else {
-                    // Empêcher le déplacement automatique du focus vers le champ suivant
                     event.preventDefault();
                 }
             });
     
             input.addEventListener('keydown', function (event) {
-                // Vérifie si la touche pressée est la touche "Backspace" et que le champ est vide
                 if (event.key === 'Backspace' && this.value.length === 0) {
                     const prevInput = this.previousElementSibling;
                     if (prevInput && prevInput.tagName === 'INPUT') {
                         prevInput.focus();
-                        // Empêcher le comportement par défaut du backspace (navigation en arrière)
                         event.preventDefault();
                     }
                 }
@@ -106,42 +101,13 @@ async function EventLogin () {
                     window.history.pushState(null, "Profile", "/profile/");
                     window.dispatchEvent(new Event('popstate'));
                 }
-                //try {
-                //    const response =  fetch('/api/users/login/', {
-                //        method: 'GET',
-                //        headers: {
-                //            'Content-Type': 'application/json',
-                //            'email': formData.email
-                //        }
-                //    }).then((response) => response.json())
-                //    .then((data) =>{
-                //    console.log('message: ', data.message);
-                //    if (data.message == 'True'){
-                //        emailGlob = formData.email
-                //        console.log('active');
-                //        modal.hide();
-                //        Modal2fa.show();
-                //    }    
-                //    else{
-                //        console.log('pas active');
-                //        modal.hide();
-                //        window.history.pushState(null, "Profile", "/profile/");
-                //        window.dispatchEvent(new Event('popstate'));
-                //       
-                //    }
-                //    
-                //    });
-                //}
-                //catch (error) {
-                //  console.log('Erreur');
-                //};
             }
             else
             {
                 const errorMessage = data.detail;
                 const errorElement = document.getElementById('error-message-Login');
                 errorElement.innerText = errorMessage;
-                errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
+                errorElement.style.display = 'block';
             }
 
         });
