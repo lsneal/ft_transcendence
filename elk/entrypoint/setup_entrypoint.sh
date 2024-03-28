@@ -52,7 +52,7 @@ echo "Kibana can be accessed";
 
 dataview=$(until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/data_views/data_view -d '{
   "data_view": {
-     "title": "users*",
+     "title": "postgres_*",
      "name": "Users Data View"
   }
 }'; do sleep 10; done;)

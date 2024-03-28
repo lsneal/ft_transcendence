@@ -6,8 +6,8 @@ services:
     networks:
       - pong_network
       - vault_network_pong
-      #- postgres_exporter-network
-      #- logstash_network
+      - postgres_exporter-network
+      - logstash_network
     env_file:
       - ../.env
     environment:

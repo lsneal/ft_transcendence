@@ -6,7 +6,7 @@ from django.utils import timezone
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'pseudo', 'password', 'profile_image', 'token_refresh']
+        fields = ['id', 'email', 'pseudo', 'password', 'profile_image']
         extra_kwargs= {
             'password': {'write_only': True}
         }  

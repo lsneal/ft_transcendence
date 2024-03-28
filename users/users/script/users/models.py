@@ -17,7 +17,3 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
-    #def save(self, *args, **kwargs):
-    #    self.modification_time = timezone.now()
-    #    super().save(*args, **kwargs)
