@@ -27,8 +27,7 @@ async function getUserStats() {
 async function drawChart(dataDashboard) {
     const nbGames = dataDashboard.nb_game;
     const nbVictories = dataDashboard.victory;
-    const nbTournaments = dataDashboard.nb_tournament;
-
+    const nbDefaite = nbGames - nbVictories;
     if (nbGames === 0) {
         
         const legend = document.querySelector('.legend');
@@ -38,6 +37,8 @@ async function drawChart(dataDashboard) {
         
         document.getElementById('nbVictoiresBar').style.display = 'none';
         document.getElementById('nbPartiesBar').style.display = 'none';
+        document.getElementById('nbDefaiteBar').style.display = 'none';
+
         
         const errorMessage = "Vous n\'avez pas encore joue de parties.";
         const errorElement = document.getElementById('errormessageStat');
@@ -67,9 +68,11 @@ async function drawChart(dataDashboard) {
     
     document.getElementById('nbVictoiresBar').style.display = 'block';
     document.getElementById('nbPartiesBar').style.display = 'block';
+    document.getElementById('nbDefaiteBar').style.display = 'block';
+
 
     const prc_win = (nbVictories / nbGames) * 100;
-
+    const prc_loose = 100 - prc_win;
     const pieChartData = {
         labels: ['Victoires', 'Defaites'],
         datasets: [{
@@ -109,8 +112,10 @@ async function drawChart(dataDashboard) {
 
     const legend = document.createElement('div');
     legend.classList.add('legend');
-    if (prc_win == NaN)
+    if (prc_win == NaN){
         prc_win = 0
+        prc_loose = 0
+    }    
     legend.innerHTML = `
         <span class="legend-item">${pieChartData.labels[0]}: ${prc_win.toFixed(2)}%</span>
         <span class="legend-item">${pieChartData.labels[1]}: ${(100 - prc_win).toFixed(2)}%</span>
@@ -118,9 +123,11 @@ async function drawChart(dataDashboard) {
     canvas.parentNode.insertBefore(legend, canvas.nextSibling);
 
     document.getElementById('nbVictoiresBar').style.width = prc_win + '%';
-    document.getElementById('nbPartiesBar').style.width = '100%'; // La largeur de la barre pour le nombre de parties est toujours à 100%
+    document.getElementById('nbDefaiteBar').style.width = prc_loose + '%';
+    document.getElementById('nbPartiesBar').style.width = '100%'; 
 
     document.getElementById('nbVictoiresBar').title = `Nombre de victoires : ${nbVictories}`;
+    document.getElementById('nbDefaiteBar').title = `Number of losses : ${nbDefaite}`;
     document.getElementById('nbPartiesBar').title = `Nombre de parties jouees : ${nbGames}`;
 
    
