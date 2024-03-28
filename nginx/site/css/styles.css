@@ -1,8 +1,6 @@
 body{
 	height: 100vh;
 	background-color: #43766C;
-	/* AD88C6 */
-	/* de base 76453B */
 	color: #F8FAE5;
 	font-family: "Tienne", serif;
 	font-weight: 400;
@@ -14,12 +12,20 @@ body{
 	background-color: #561C24;
 }
 
-.offcanvas{
-	background-color: #561C24 ;
+.navbar-toggler{
+	background-color: #B19470;
+}
+
+
+.fa-bars {
+	background-color: #B19470;
 	color: #F8FAE5;
-	font-family: "Tienne", serif ;
-	font-weight: 600;
-	
+}
+
+
+.logoenhaut {
+	height: 50px;
+	width: 50px;
 }
 
 .text-logo{
@@ -35,6 +41,80 @@ body{
 		0 0 151px #B19470;
 } 	
 
+
+/*--------------------- TABLEU --------------------------*/
+
+.offcanvas{
+	background-color: #B19470 ;
+	color: #F8FAE5;
+	font-family: "Tienne", serif ;
+	
+}
+
+.offcanvas.offcanvas-end{
+	width: 520px;
+}
+
+
+.tableStat {
+    width: 250px; /* Utilisation de 100% de la largeur disponible */
+}
+
+#table-primaire{
+	background-color: #561C24;
+	border-color: #B19470;
+	color: #F8FAE5;
+	width: 100px; /* Réglez la largeur selon vos besoins */
+    white-space: nowrap; 
+}
+
+
+#table-secondaire{
+	background-color: #43766C;
+	border-color: #B19470;
+	color: #F8FAE5;
+	width: 50px; /* Réglez la largeur selon vos besoins */
+    white-space: nowrap; 
+}
+
+#table-tertiaire{
+	background-color: #561C24;
+	border-color: #B19470;
+	color: #F8FAE5;
+	width: 50px; /* Réglez la largeur selon vos besoins */
+    white-space: nowrap; 
+}
+
+
+#table-quaternaire{
+	background-color: #43766C;
+	border-color: #B19470;
+	color: #F8FAE5;
+	width: 100px; /* Réglez la largeur selon vos besoins */
+    white-space: nowrap; 
+}
+
+
+
+
+
+
+/*--------------------- TABLEU --------------------------*/
+
+
+#historicTable{
+	margin-right: 3rem;
+}
+
+
+
+
+
+
+
+/*----------------------------------------------*/
+
+
 .fa-solid{
 	color: #F8FAE5;
 }
@@ -49,14 +129,10 @@ body{
 }
 
 
-.fa-bars {
-	background-color: #B19470;
-	color: #F8FAE5;
-}
+/*--------------------------BOUTONS----------------------------*/
 
-.navbar-toggler{
-	background-color: #B19470;
-}
+
+
 
 .btn:hover{
 	background-color: #B19470; 
@@ -65,11 +141,6 @@ body{
 	--bs-btn-bg: #B19470;
 	--bs-btn-border-color: #B19470;
 	color:#F8FAE5;
-	/* de base  B19470*/
-	/* de base  B19470*/
-	/* de base  B19470*/
-	/* de base  B19470*/
-	/* de base  F8FAE5*/
 }
 
 
@@ -78,10 +149,6 @@ body{
 	--bs-btn-border-color: #76453B;
 	--bs-btn-active-bg: #B19470;
 	color: #F8FAE5;
-	/* de base B19470*/
-	/* de base 76453B*/
-	/* de base B19470*/
-	/* de base F8FAE5*/
 }
 
 .btn-secondary {
@@ -94,12 +161,31 @@ body{
 	/* de base 76453B*/
 }
 
+.button-error-404 {
+	text-align: center;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-weight: 500;
+
+}
+
 .big-button {
 	background-color: #B19470;
 	color: #fff;
 	height: 80vh;
+	border-width: 2px;
 }
- 
+
+
+#LocalGameButton{
+	border-width: 2px;
+}
+#OnlineGameButton{
+	border-width: 2px;
+}
+/*----------------------------------------------*/
+
+
+
 
 /*--------------------------TOURNAMENT----------------------------*/
 
@@ -146,14 +232,10 @@ body{
 	transform-origin: bottom;
 }
 
-/*--------------------------TOURNAMENT----------------------------*/
+/*------------------------------------------------------*/
 
-.button-error-404 {
-	text-align: center;
-	font-family: Georgia, 'Times New Roman', Times, serif;
-	font-weight: 500;
 
-}
+/*--------------------------ERREUR----------------------------*/
 
 .custom-background-error {
 	background-image: url('../static/pong_logo.png');
@@ -171,82 +253,13 @@ body{
 	margin: 0;
 }
 
-.otc label {
-	border: 0;
-	clip: rect(1px, 1px, 1px, 1px);
-	-webkit-clip-path: inset(50%);
-	clip-path: inset(50%);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
-	white-space: nowrap;
+.text-erreur{
+	color: #561C24;
 }
 
-.otc {
-	position: relative;
-	width: 320px;
-	margin: 0 auto;
-	font-size: large;
-}
-
-.otc fieldset {
-	border: 0;
-	padding: 0;
-	margin: 0;
-}
-
-.otc div {
-	display: flex;
-	align-items: center;
-}
-
-.otc legend {
-	margin: 0 auto 1em;
-	color: #76453B;
-}
+/*--------------------------CHART----------------------------*/
 
 
-
-
-
-input[type="tel"] {
-	width: .82em;
-	line-height: 1;
-	margin: .1em;
-	padding: 8px 0 4px;
-	font-size: 2.65em;
-	text-align: center;
-	appearance: textfield;
-	-webkit-appearance: textfield;
-	border: 2px solid #B19470;
-	color: #B19470;
-	border-radius: 4px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-
-
-
-#textdash{
-	color: #F8FAE5;
-	text-shadow:
-		0 0 7px #F8FAE5,
-		0 0 10px #F8FAE5,
-		0 0 21px #F8FAE5,
-		0 0 42px #B19470,
-		0 0 82px #B19470,
-		0 0 92px #B19470,
-		0 0 102px #B19470,
-		0 0 151px #B19470;
-}
 
 .chart-container {
     width: 50%;
@@ -298,7 +311,6 @@ input::-webkit-inner-spin-button {
 	background-color: #9B4444;
 }
 
-
 .legend-container {
     margin-top: 10px;
 }
@@ -325,9 +337,73 @@ input::-webkit-inner-spin-button {
     background-color: black;
     color: white; /* Changez la couleur du texte si nécessaire */
 }
+/*------------------------------------------------------*/
 
 
-.logoenhaut {
-	height: 50px;
-	width: 50px;
+
+/*--------------------------2FA----------------------------*/
+.otc label {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
 }
+
+.otc {
+	position: relative;
+	width: 320px;
+	margin: 0 auto;
+	font-size: large;
+}
+
+.otc fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.otc div {
+	display: flex;
+	align-items: center;
+}
+
+.otc legend {
+	margin: 0 auto 1em;
+	color: #76453B;
+}
+
+input[type="tel"] {
+	width: .82em;
+	line-height: 1;
+	margin: .1em;
+	padding: 8px 0 4px;
+	font-size: 2.65em;
+	text-align: center;
+	appearance: textfield;
+	-webkit-appearance: textfield;
+	border: 2px solid #B19470;
+	color: #B19470;
+	border-radius: 4px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*------------------------------------------------------*/
+
+
+
+
+
+
+
