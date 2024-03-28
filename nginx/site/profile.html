@@ -26,18 +26,20 @@
 	  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	</div>
 	<div class="offcanvas-body">
-		<table id="historicTable" class="table table-dark table-striped table-xl my-4">
+		<div>
+			<table id="historicTable" class="table tableStat">
 			<thead>
 			<tr>
-			<th scope="col">Game vs</th>
-			<th scope="col">conceded_point</th>
-			<th scope="col">Marked_point</th>
+			<div><th id="table-primaire" scope="col">Game vs</th></div>
+			<div><th id="table-secondaire" scope="col">conceded_point</th></div>
+			<div><th id="table-tertiaire" scope="col">Marked_point</th></div>
+			<div><th id="table-quaternaire" scope="col">Resultat</th></div>
 			</tr>
 			</thead>
 			<tbody>
-			<!-- Les données du tableau seront ajoutées ici dynamiquement -->
 			</tbody>
-		</table>
+			</table>
+		</div>
 	</div>
   </div>
 
@@ -51,7 +53,7 @@
     <div class="modal-dialog modal-dialog-centered modalchart">
         <div class="modal-content">
             <h2 class="text-center my-3" id="textdash">DashBoard</h2>
-			<div id="errormessageStat" class="text-danger font-weight-bold text-center my-3"  style="display: none;"></div>
+			<div id="errormessageStat" class="text-erreur font-weight-bold text-center my-3"  style="display: none;"></div>
             <div class="modal-body" >
               
 				
@@ -105,17 +107,17 @@
 					<div class="mb-3">
 						<label for="ChangePassword" class="form-label">New Password</label>
 						<input type="password" class="form-control" id="ChangePassword">
-						<div id="error-message-nochange" class="text-danger" style="display: none;"></div>
+						<div id="error-message-nochange" class="text-erreur" style="display: none;"></div>
 
 					</div>
 					<div class="mb-3">
 						<label for="ConfirmChangePassword" class="form-label">Confirm New Password</label>
 						<input type="password" class="form-control" id="ConfirmChangePassword">
-						<div id="error-message-Confirmchange" class="text-danger" style="display: none;"></div>
+						<div id="error-message-Confirmchange" class="text-erreur" style="display: none;"></div>
 
 					</div>
 					<a id="ButtonChange" type="submit" class="btn btn-primary" data-link >Submit</a>
-					<div id="error-message-Login" class="text-danger" style="display: none;"></div>
+					<div id="error-message-Login" class="text-erreur" style="display: none;"></div>
 				</form>
 			</div>
 		</div>
@@ -145,7 +147,7 @@
 				  </div>
 				</form>
 			  </div>
-			<div id="errormactive2fa" class="text-danger text-center" style="display: none;"></div>
+			<div id="errormactive2fa" class="text-erreur text-center" style="display: none;"></div>
 		</div>
 	  </div>
 	</div>
