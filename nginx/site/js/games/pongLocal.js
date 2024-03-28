@@ -197,19 +197,9 @@ function playGameLocal(gameId, socket)
             document.getElementById("ball").style.width = "100px";
             document.getElementById("ball").style.height = "100px";
         }
-        posY = 250
-        posX = 499
-        if (window.innerWidth < 1288)
-        {
-            posX /= 2;
-            ball.style.top = posY.toString() + "px";
-            ball.style.left = posX.toString() + "px";
-        }
-        else
-        {
-            ball.style.top = posY.toString() + "px";
-            ball.style.left = posX.toString() + "px";
-        }
-        
+        ball.style.top = "240px";
+        ball.style.left ="45%";
+        ball.style.animation = "none";
+
     }
 }

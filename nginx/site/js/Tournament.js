@@ -57,6 +57,10 @@ export default class extends AbstractView {
         window.history.pushState(null, "Profile", "/profile/");
         window.dispatchEvent(new Event('popstate'));
       });
+     
+     
+      document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+
     }
 
 

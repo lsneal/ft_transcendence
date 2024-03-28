@@ -9,7 +9,15 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
     if (!gameId)
         return ;
     gameId = Number(gameId)
-    
+   
+    if (document.getElementById("ball") != null)
+    {
+        document.getElementById("ball").style.height = "30px";
+        document.getElementById("ball").style.width = "30px";
+    }
+
+
+
     fetch("/api/users/user/", {
             method: "GET",
         })
@@ -125,25 +133,19 @@ function playGameOnline(gameId, socket, pseudo, player)
             document.getElementById("time").style.display = 'block';
             document.getElementById("crown").style.display = 'block';
             document.getElementById("time").style.fontSize = 'xxx-large';
-            document.getElementById("time").style.left = '38%';
+            document.getElementById("time").style.left = '35%';
 
             document.getElementById("scoreP1").innerHTML = 0
             document.getElementById("scoreP2").innerHTML = 0
             button2.style.display = 'block';
+            document.getElementById("ball").style.width = "100px";
+            document.getElementById("ball").style.height = "100px";
         }
-        posY = 250
-        posX = 499
-        if (window.innerWidth < 1288)
-        {
-            posX /= 2;
-            ball.style.top = posY.toString() + "px";
-            ball.style.left = posX.toString() + "px";
-        }
-        else
-        {
-            ball.style.top = posY.toString() + "px";
-            ball.style.left = posX.toString() + "px";
-        }
+        ball.style.top = "240px";
+        ball.style.left ="45%";
+        ball.style.animation = "none";
+
+     
     }
 }
 
