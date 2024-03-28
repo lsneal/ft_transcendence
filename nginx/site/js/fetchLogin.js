@@ -92,12 +92,10 @@ async function EventLogin () {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) =>{
-            console.log(data)
             if (data.detail === undefined)
             {
                 if (data.a2f === true) {
                     emailGlob = formData.email
-                    console.log('active');
                     modal.hide();
                     Modal2fa.show();
                 }
@@ -106,47 +104,19 @@ async function EventLogin () {
                     window.history.pushState(null, "Profile", "/profile/");
                     window.dispatchEvent(new Event('popstate'));
                 }
-                //try {
-                //    const response =  fetch('/api/users/login/', {
-                //        method: 'GET',
-                //        headers: {
-                //            'Content-Type': 'application/json',
-                //            'email': formData.email
-                //        }
-                //    }).then((response) => response.json())
-                //    .then((data) =>{
-                //    console.log('message: ', data.message);
-                //    if (data.message == 'True'){
-                //        emailGlob = formData.email
-                //        console.log('active');
-                //        modal.hide();
-                //        Modal2fa.show();
-                //    }    
-                //    else{
-                //        console.log('pas active');
-                //        modal.hide();
-                //        window.history.pushState(null, "Profile", "/profile/");
-                //        window.dispatchEvent(new Event('popstate'));
-                //       
-                //    }
-                //    
-                //    });
-                //}
-                //catch (error) {
-                //  console.log('Erreur');
-                //};
+               
             }
             else
             {
                 const errorMessage = data.detail;
                 const errorElement = document.getElementById('error-message-Login');
                 errorElement.innerText = errorMessage;
-                errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
+                errorElement.style.display = 'block'; 
             }
 
         });
     }
     catch (error) {
-      console.log(error);
+      console.error(error);
     };
 }

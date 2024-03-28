@@ -39,7 +39,10 @@ export default class extends AbstractView {
 
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
 
-
+      document.getElementById("logoenhaut").addEventListener('click', event => {
+        window.history.pushState(null, "Profile", "/profile/");
+        window.dispatchEvent(new Event('popstate'));
+      });
       
       if (window.innerWidth < 1288 && window.innerWidth > 606)
       {

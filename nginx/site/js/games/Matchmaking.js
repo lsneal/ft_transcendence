@@ -20,13 +20,11 @@ function JoinGameOnline() {
             player2 = null;
             if (data.player2 == 'null')
             {
-                console.log(data.player1_name, data.player2_name)
                 player1 = user.data.pseudo
                 startGameOnline(gameId, 'p1', player1, data.player1_name, data.player2_name)
             }
             else
             {
-                console.log(data.player1_name, "2 = ", data.player2_name)
                 player2 = user.data.pseudo
                 startGameOnline(gameId, 'p2', player2 , data.player1_name, data.player2_name)
             }

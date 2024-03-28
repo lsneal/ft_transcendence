@@ -23,8 +23,6 @@ async function getHistoricOnline () {
             },
         });
         dataDashboard = await responseDashboard.json();
-        console.log(dataDashboard.pseudo)
-        console.log(dataDashboard.game_data)
         modal.hide();
         const tbody = document.querySelector('#historicTable tbody');
         tbody.innerHTML = '';

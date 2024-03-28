@@ -114,8 +114,6 @@ class ActivateA2F(APIView):
             response.data = { 'message': 'error' }
             return response
 
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
 
         totp = pyotp.TOTP(user.totp_key)
 
