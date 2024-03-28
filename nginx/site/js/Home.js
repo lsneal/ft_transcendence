@@ -29,11 +29,14 @@ export default class extends AbstractView {
         console.error('Erreur: ', error.message)
       }
 
+
+
       document.getElementById("btnLogin42").addEventListener('click', EventLogin42);
+
       document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
 
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
-      // Handle enter in modal
+      
       document.getElementById('modalRegistrer').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnRegister').click();
@@ -41,15 +44,14 @@ export default class extends AbstractView {
       });
 
       document.getElementById("btnLogin").addEventListener('click', EventLogin);
-      // Handle enter in modal
+     
       document.getElementById('modalEmail').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnLogin').click();
         }
       });
 
-      //document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
-      //document.getElementById("modallogin2fa").addEventListener('click', send2facode);
+      document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
 
      
     }
