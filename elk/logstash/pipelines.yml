@@ -10,4 +10,8 @@
   path.config: "/usr/share/logstash/pipeline/nginx_error.conf"
   pipeline.workers: 2
 
+- pipeline.id: postgres_users
+  path.config: "/usr/share/logstash/pipeline/postgres_users.conf"
+  pipeline.workers: 2
+
 

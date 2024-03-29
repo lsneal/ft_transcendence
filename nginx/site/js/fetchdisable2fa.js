@@ -1,5 +1,4 @@
 async function EventDisableTwoFA() {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaab');
 
     let myModalEl = document.getElementById('modalActivateOrDeactivateTwoFA');
     let modal = bootstrap.Modal.getInstance(myModalEl);
@@ -15,7 +14,6 @@ async function EventDisableTwoFA() {
         });
 
         const data = await response.json();
-        console.log(data.message);
         modal.hide();
     } catch (error) {
         console.error('Erreur lors de la désactivation du 2FA :', error);

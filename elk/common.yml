@@ -2,11 +2,15 @@ version: "3.8"
 
 services:
   setup:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    depends_on:
+      vault:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - vault_elastic:/opt
       - ./entrypoint/setup_entrypoint.sh:/setup_entrypoint.sh
+      - ./kibana/dashboards:/etc/dashboards
     user: "0"
     networks:
       - elk
@@ -18,12 +22,13 @@ services:
       timeout: 5s
       retries: 10
 
+
   es01:
     depends_on:
       setup:
         condition: service_healthy
     container_name: es01
-    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
@@ -38,7 +43,7 @@ services:
     restart: always
     environment:
       - node.name=es01
-      - cluster.name=${CLUSTER_NAME}
+      - cluster.name=docker-cluster
       - cluster.initial_master_nodes=es01
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
@@ -51,8 +56,8 @@ services:
       - xpack.security.transport.ssl.certificate=certs/es01/es01.crt
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
-      - xpack.license.self_generated.type=${LICENSE}
-    mem_limit: ${ES_MEM_LIMIT}
+      - xpack.license.self_generated.type=basic
+    mem_limit: 4294967296
     ulimits:
       memlock:
         soft: -1
@@ -85,17 +90,18 @@ services:
     expose:
       - 5601
     environment:
-      - SERVERNAME=kibana
+      - SERVERNAME=kibana.localhost
       - xpack.reporting.roles.enabled=false
       - ELASTICSEARCH_HOSTS=https://es01:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-    mem_limit: ${MEM_LIMIT}
+      - SERVER_PUBLICBASEURL=https://kibana.localhost
+    mem_limit: 1073741824
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 200 OK'",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s
@@ -106,12 +112,12 @@ services:
       es01:
         condition: service_healthy
     container_name: logstash
-    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+    image: docker.elastic.co/logstash/logstash:8.12.2
     user: "1000"
     volumes:
       - certs:/usr/share/logstash/config/certs
       - ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
-      - ./nginx:/usr/share/logstash/pattern/nginx:ro
+      #- ./nginx:/usr/share/logstash/pattern/nginx:ro
       - ./logstash/config:/usr/share/logstash/pipeline/
       - ./logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:st
       - logstashdata:/usr/share/logstash/data
@@ -123,8 +129,8 @@ services:
     restart: always
     networks:
       - elk
-      #- users_network
       - vault_network_elk
+      - logstash_network
     expose:
       - 5044/udp
     environment:
@@ -134,7 +140,7 @@ services:
       - ELASTIC_HOSTS=https://es01:9200
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
     entrypoint: ["bash", "/logstash_entrypoint"]
-    mem_limit: ${MEM_LIMIT}
+    mem_limit: 1073741824
     healthcheck:
       test:
         [
@@ -150,17 +156,17 @@ services:
     user: "0"
     image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
     networks:
-      #- prometheus-network
       - es_exporter-network
       - vault_network_elk
+      - prometheus_elastic-network
+    expose:
+      - 9114
     volumes:
       - certs:/certs
       - ./es_exporter/es_exporter.sh:/run/es_exporter.sh
       - vault_ESexporter:/opt
     entrypoint: /run/es_exporter.sh
     restart: always
-    expose:
-      - "9114"
     depends_on:
       es01:
         condition: service_healthy
@@ -180,4 +186,6 @@ networks:
   es_exporter-network:
     driver: bridge 
   elk:
-    driver: bridge  
+    driver: bridge
+  logstash_network:
+    driver: bridge

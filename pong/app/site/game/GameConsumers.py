@@ -83,7 +83,7 @@ class GameConsumer(WebsocketConsumer):
             manager.games[gameIdx].player1 = self
         elif manager.games[gameIdx].player2 == 'p2':
             manager.games[gameIdx].player2 = self
-
+        
         if type(manager.games[gameIdx].player1) != str and type(manager.games[gameIdx].player2) != str and manager.games[gameIdx].player2 != None and type(manager.games[gameIdx].player2) == type(manager.games[gameIdx].player1):
             manager.games[gameIdx].player1.send(text_data=json.dumps({
                 'type':'start',

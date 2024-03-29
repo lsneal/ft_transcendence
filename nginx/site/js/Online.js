@@ -39,6 +39,8 @@ export default class extends AbstractView {
 
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
 
+      
+
       if (window.innerWidth < 1288 && window.innerWidth > 606)
       {
         document.getElementById("game").style.display = 'block';
@@ -50,6 +52,15 @@ export default class extends AbstractView {
       {
         document.getElementById("game").style.display = 'none';
       }
+
+
+      document.getElementById("logoenhaut").addEventListener('click', event => {
+        window.history.pushState(null, "Profile", "/profile/");
+        window.dispatchEvent(new Event('popstate'));
+      });
+      
+      document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+
     }
 
 

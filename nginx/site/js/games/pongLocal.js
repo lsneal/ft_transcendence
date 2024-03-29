@@ -5,6 +5,11 @@ function startGameLocal(gameId) {
         document.getElementById("crown").style.display = 'none';
     let button = document.getElementById("ButtonStart")
     button.style.display = 'none'
+    if (document.getElementById("ball") != null)
+    {
+        document.getElementById("ball").style.height = "30px";
+        document.getElementById("ball").style.width = "30px";
+    }
 
     if (!gameId)
         return ;
@@ -141,8 +146,13 @@ function playGameLocal(gameId, socket)
                     ball.style.top = data.posY.toString() + "px";
                     ball.style.left = data.posX.toString() + "px";
                 }
-                document.getElementById("scoreP1").innerHTML = data.scoreP1;
-                document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                if (document.getElementById("scoreP1") == null || document.getElementById("scoreP2") == null)
+                    socket.close()
+                else
+                {
+                    document.getElementById("scoreP1").innerHTML = data.scoreP1;
+                    document.getElementById("scoreP2").innerHTML = data.scoreP2;
+                }
                 if (data.scoreP1 == 5)
                     winner = "p1";
                 if (data.scoreP2 == 5)
@@ -170,30 +180,26 @@ function playGameLocal(gameId, socket)
             clearInterval(IntervalLocal);
         IntervalLocal = undefined
 
-        document.getElementById("time").style.display = 'block';
-        document.getElementById("crown").style.display = 'block';
-        if (winner == 'p1')
-            document.getElementById("time").innerHTML = `Joueur1 gagne`;
-        if (winner == 'p2')
-            document.getElementById("time").innerHTML = `Joueur2 gagne`;
-        document.getElementById("time").style.fontSize = 'xxx-large';
-        document.getElementById("time").style.left = '35%';
+        if (document.getElementById("time") != null)
+        {
+            document.getElementById("time").style.display = 'block';
+            document.getElementById("crown").style.display = 'block';
+            if (winner == 'p1')
+                document.getElementById("time").innerHTML = `Joueur1 gagne`;
+            if (winner == 'p2')
+                document.getElementById("time").innerHTML = `Joueur2 gagne`;
+            document.getElementById("time").style.fontSize = 'xxx-large';
+            document.getElementById("time").style.left = '35%';
 
-        document.getElementById("scoreP1").innerHTML = 0
-        document.getElementById("scoreP2").innerHTML = 0
-        posY = 250
-        posX = 499
-        if (window.innerWidth < 1288)
-        {
-            posX /= 2;
-            ball.style.top = posY.toString() + "px";
-            ball.style.left = posX.toString() + "px";
+            document.getElementById("scoreP1").innerHTML = 0
+            document.getElementById("scoreP2").innerHTML = 0
+            button.style.display = 'block';
+            document.getElementById("ball").style.width = "100px";
+            document.getElementById("ball").style.height = "100px";
         }
-        else
-        {
-            ball.style.top = posY.toString() + "px";
-            ball.style.left = posX.toString() + "px";
-        }
-        button.style.display = 'block';
+        ball.style.top = "240px";
+        ball.style.left ="45%";
+        ball.style.animation = "none";
+
     }
 }

@@ -5,7 +5,6 @@ export default class extends AbstractView {
         super(params);
         this.setTitle("Home");
 
-        console.log("Home");
     }
 
     async executeViewScript()
@@ -20,7 +19,6 @@ export default class extends AbstractView {
         });
 
         const userData = await userresponse.json();
-        console.log('data :', userData);
         if (userData.detail != "Unauthenticated!") {
           window.history.pushState(null, "Profile", "/profile/");
           window.dispatchEvent(new Event('popstate'));
@@ -29,10 +27,12 @@ export default class extends AbstractView {
         console.error('Erreur: ', error.message)
       }
 
-      document.getElementById("btnLogin42").addEventListener('click', EventLogin42);
+
+
+      document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
 
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
-      // Handle enter in modal
+      
       document.getElementById('modalRegistrer').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnRegister').click();
@@ -40,15 +40,14 @@ export default class extends AbstractView {
       });
 
       document.getElementById("btnLogin").addEventListener('click', EventLogin);
-      // Handle enter in modal
+     
       document.getElementById('modalEmail').addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
           document.getElementById('btnLogin').click();
         }
       });
 
-      //document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
-      document.getElementById("modallogin2fa").addEventListener('click', send2facode);
+      document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
 
      
     }

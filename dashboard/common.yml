@@ -6,6 +6,7 @@ services:
     networks:
       - dashboard_network
       - vault_network_dashboard
+      #- postgres_exporter-network
     environment:
       - POSTGRES_PASSWORD=password
       - PGPORT=5434
@@ -45,11 +46,11 @@ services:
         condition: service_healthy
       postgres_dashboard:
         condition: service_healthy
-    #healthcheck:
-    #  test: wget -qO- http://localhost:8002/health/
-    #  interval: 10s
-    #  timeout: 5s
-    #  retries: 5
+    healthcheck:
+      test: wget -qO- http://localhost:8004/health/
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   dashboard_network:
