@@ -19,6 +19,7 @@ class ConnectUserStats(APIView):
     def post(self, request):
         pseudo = request.data.get('pseudo', None)
         user_id = request.data.get('id', None)
+       
         
         gamer_serializer = GamerSerializer(data={'pseudo': pseudo, 'id': user_id,})
         gamer_serializer.is_valid(raise_exception=True)
@@ -32,6 +33,7 @@ class ConnectUserStats(APIView):
     
     def get(self, request):
         pseudo = request.headers.get('pseudo', None)
+
         user_info = None
         if pseudo is not None:
             gamer = Gamer.objects.get(pseudo=pseudo)
@@ -90,6 +92,5 @@ class PlayerRanking(APIView):
                 'prc_win': player.prc_win if player.nb_game != 0 else 0,
             }
             serialized_players.append(serialized_player)
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa : ", serialized_players)
 
         return Response(serialized_players)

@@ -221,6 +221,9 @@ function playTournament(gameId, socket, tournament) {
                 bracket.innerHTML = `<div class="d-flex align-items-center justify-content-center">
                                         <h1 class="p-3 mb-2 bg-dark text-white rounded"> ${data.player1}    vs    ${data.player2}</h1>
                                     </div>`;
+                let num = 250;
+                leftBar.style.top = num.toString() + "px";
+                rightBar.style.top = num.toString() + "px";    
             }
             else
             {

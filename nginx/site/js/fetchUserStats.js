@@ -9,7 +9,6 @@ async function getUserStats() {
         });
         const userData = await userresponse.json();
 
-        console.log("userdata = ", userData);
         const responseDashboard = await fetch('/api/dashboard/connectUser/', {
             method: 'GET',
             headers: {
