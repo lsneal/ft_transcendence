@@ -1,6 +1,6 @@
-- pipeline.id: modsec_audit
-  path.config: "/usr/share/logstash/pipeline/modsecurity.conf"
-  pipeline.workers: 2
+#- pipeline.id: modsec_audit
+#  path.config: "/usr/share/logstash/pipeline/modsecurity.conf"
+#  pipeline.workers: 2
   
 - pipeline.id: nginx_access
   path.config: "/usr/share/logstash/pipeline/nginx_access.conf"

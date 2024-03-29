@@ -23,7 +23,7 @@ async function EventActiveTwoFA() {
     document.querySelector('#code6').value = '';
 
     try {
-        const response = await fetch('https://localhost/api/users/activate2fa/', {
+        const response = await fetch('/api/users/activate2fa/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

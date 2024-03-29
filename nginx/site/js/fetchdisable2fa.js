@@ -6,7 +6,7 @@ async function EventDisableTwoFA() {
 
 
     try {
-        const response = await fetch('https://localhost/api/users/activate2fa/', {
+        const response = await fetch('/api/users/activate2fa/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

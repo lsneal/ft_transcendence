@@ -16,7 +16,7 @@ async function send2facode() {
     const totalcode = code1 + code2 + code3 + code4 + code5 + code6;
     const formData = { totp: totalcode };
 try {
-    const response = await fetch('https://localhost/api/users/2fa/', {
+    const response = await fetch('/api/users/2fa/', {
         method: 'POST',
         mode: "cors",
         credentials: 'include',

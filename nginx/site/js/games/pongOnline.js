@@ -23,7 +23,7 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
         })
         .then((response) => response.json())
         .then(data => {
-            let url = `wss://localhost/api/pong/ws/` + data.data.id 
+            let url = `wss://10.13.249.106/api/pong/ws/` + data.data.id 
             const socket = new WebSocket(url)
             let player1 = name1
             let player2 = name2
