@@ -85,14 +85,17 @@ class GameConsumer(WebsocketConsumer):
             manager.games[gameIdx].player2 = self
         
         if type(manager.games[gameIdx].player1) != str and type(manager.games[gameIdx].player2) != str and manager.games[gameIdx].player2 != None and type(manager.games[gameIdx].player2) == type(manager.games[gameIdx].player1):
-            manager.games[gameIdx].player1.send(text_data=json.dumps({
-                'type':'start',
-            }))
-            manager.games[gameIdx].player2.send(text_data=json.dumps({
-                'type':'start',
-            }))
-            manager.games[gameIdx].bar_moov(moov, self)
-            manager.games[gameIdx].game(game, typeParty)
+            try:
+                manager.games[gameIdx].player1.send(text_data=json.dumps({
+                    'type':'start',
+                }))
+                manager.games[gameIdx].player2.send(text_data=json.dumps({
+                    'type':'start',
+                }))
+                manager.games[gameIdx].bar_moov(moov, self)
+                manager.games[gameIdx].game(game, typeParty)
+            except:
+                pass
         else:
             print("Waiting room....")
     

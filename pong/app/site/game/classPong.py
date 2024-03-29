@@ -65,6 +65,10 @@ class Pong:
                 }))
             time.sleep(0.5)
             i -= 1
+        if type(self.player1) is not type(self.player2) or type(self.player1) == 'END' or type(self.player1) == 'END':
+                from .views import manager
+                manager.endGame(self)
+                return
         while self.scoreP1 < 5 and self.scoreP2 < 5:
             if type(self.player1) is not type(self.player2) or type(self.player1) == 'END' or type(self.player1) == 'END':
                 from .views import manager

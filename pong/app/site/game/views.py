@@ -33,14 +33,29 @@ class CreateTournamentView(APIView):
             serializer.save()
             return Response(serializer.data)
 
-class JoinGameView(APIView):
+class JoinGameOnlineView(APIView):
     def post(self, request):
         if request.method == 'POST':
             player = request.data.get('pseudo', None)
-            if type(player) == str:
-                game = manager.joinGameOnline(player)
+            game = manager.joinGameOnline(player)
+            if game.player1 != None and game.player2 == 'p2':
+                serializer = Game.objects.get(pk=Game.objects.latest('id').id)
+                serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
+                serializer.is_valid()
+                serializer.save()
+                return Response(serializer.data)
+            elif game.player1 == 'p1' and game.player2 != 'p2':
+                serializer = GameSerializer(data={'player1': game.player1, 'player1_name': game.player1_name})
+                serializer.is_valid()
+                serializer.save()
+                return Response(serializer.data)
             else:
-                game = manager.joinGame()
+                return Response("Error")
+
+class JoinGameView(APIView):
+    def post(self, request):
+        if request.method == 'POST':
+            game = manager.joinGame()
             if game.player1 != None and game.player2 == 'p2':
                 serializer = Game.objects.get(pk=Game.objects.latest('id').id)
                 serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
