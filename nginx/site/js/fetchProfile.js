@@ -1,20 +1,22 @@
 
 
 async function EventProfile() {
+    
     try {
-        const response = await fetch('/api/users/user/', {
+        const userresponse = await fetch('/api/users/user/', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
-        }).then((response) => response.json())
-        .then((data) =>{
         });
 
-    } catch (error) {
-        alert('Erreur de déconnexion');
-    }
+        const userData = await userresponse.json();
 
-    /*window.history.pushState(null, "Profile", "/profile/");
-    window.dispatchEvent(new Event('popstate'));*/
+        if (userData.detail === "Unauthenticated!") {
+            window.history.pushState(null, "Logout", "/");
+            window.dispatchEvent(new Event('popstate'));
+        }
+    } catch (error) {
+        alert('Erreur : ' + error.message);
+    }
 }

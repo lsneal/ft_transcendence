@@ -7,6 +7,9 @@ export default class extends AbstractView {
     }
 
     async executeViewScript() {
+
+        document.getElementById("btnLogout").addEventListener('click', EventLogout);
+
         let isAuthenticated = false;
 
         try {
@@ -20,7 +23,7 @@ export default class extends AbstractView {
             const userData = await userresponse.json();
 
             if (userData.detail === "Unauthenticated!") {
-                window.history.pushState(null, "Logout", "/");
+                window.history.pushState(null, "Home", "/home");
                 window.dispatchEvent(new Event('popstate'));
                 isAuthenticated = false; 
             } else {
@@ -35,7 +38,7 @@ export default class extends AbstractView {
         }
 
         EventProfile();
-        document.getElementById("btnLogout").addEventListener('click', EventLogout);
+      
         //EventProfile()
 
         document.getElementById("TournamentButton").addEventListener('click', event => {
@@ -56,6 +59,8 @@ export default class extends AbstractView {
         document.getElementById("Valid2FA").addEventListener('click', EventActiveTwoFA);
         document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
         document.getElementById("confirmDisable2FA").addEventListener('click', EventDisableTwoFA);
+        document.getElementById("btnDropdown2").addEventListener('click', getHistoricOnline);
+        
     }
 
     async getHtml() {

@@ -37,10 +37,45 @@
 	<div class="game" id="game">
 		<h1 id="scoreP1">0</h1>
 		<div id="leftBox" class="block"></div>
-		<img src="https://localhost/static/kaaris.jpg" id="ball" class="ball"/>
+		<img src="https://localhost/static/kaaris.png" id="ball" class="ball"/>
 		<img src="https://localhost/static/crown.png" id="crown"/>
 		<h6 id="time"></h6>
 		<h1 id="scoreP2">0</h1>
 		<div id="rightBox" class="block"></div>
 	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalScore" tabindex="-1" aria-labelledby="modalScore" aria-hidden="true"> 
+    <div class="modal-dialog modal-dialog-centered modalchart">
+        <div class="modal-content">
+            <h2 class="text-center my-3" id="textdash">DashBoard</h2>
+			<div id="errormessageStat" class="text-erreur font-weight-bold text-center my-3"  style="display: none;"></div>
+            <div class="modal-body" >
+              
+				
+				<!-- Bar chart horizontal -->
+                <div class="chart-container">
+                    <div class="bar-chart my-5">
+                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
+                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
+                        <div class="bar my-2" id="nbDefaiteBar" title="number of losses">&nbsp;Loose</div>
+                    </div>
+                </div>
+                
+                <!-- Canvas pour le pie chart -->
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                    <div id="legend" class="legend-container">
+                        <ul class="legend-list">
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victoires: <span id="victoriesPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Défaites: <span id="defeatsPercentage"></span>%</li></div>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>

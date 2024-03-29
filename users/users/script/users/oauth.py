@@ -79,29 +79,4 @@ class getInfoClient(connectedClient):
         return self.get_to_api(endpoint)
 
     
-#creds = ClientCredentialsClient(
-#    client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-#    client_secret="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",
-#    redirect_uri="https%3A%2F%2Flocalhost%2F",
-#    auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-#    token_endpoint="https://api.intra.42.fr/oauth/token"
-#)
-#    
-## Define your OAuth2 client
-#client = AuthorizationCodeClient(
-#    client_id="u-s4t2ud-11f2f99d539fd7e0882f03a1a9d8956a5e81f1122575411181eff146d684e7f3",
-#    client_secret="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",
-#    redirect_uri="https://localhost/",
-#    auth_endpoint="https://api.intra.42.fr/oauth/authorize",
-#    token_endpoint="https://api.intra.42.fr/oauth/token"
-#)
 
-# Get the authorization URL and redirect the user
-
-#auth_url = client.get_authorization_url()
-#print(f"Redirect the user to: {auth_url}")
-#
-## After redirect, exchange the code for a token
-#code = "c0ae6e6d1a0481b3883a349c6afddff15f82415c16571ece0d27c9439df7bd12"
-#token_info = client.get_token(code)
-#print(token_info)
