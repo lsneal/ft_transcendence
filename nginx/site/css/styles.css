@@ -113,11 +113,19 @@ body{
 
 /*--------------------------BOUTONS----------------------------*/
 
+.btn:active{
+	background-color: #B19470; 
+	--bs-btn-bg: #B19470;
+	border-color: #76453B!important;
+	box-shadow: inset 1px 1px 5px #76453B;
+	color:#F8FAE5;
+}
+
 .btn:hover{
 	background-color: #B19470; 
-	border: #B19470;
 	--bs-btn-bg: #B19470;
-	--bs-btn-border-color: #B19470;
+	border-color: #76453B;
+	box-shadow: inset 1px 1px 5px #76453B;
 	color:#F8FAE5;
 }
 
@@ -127,7 +135,6 @@ body{
 	--bs-btn-border-color: #76453B;
 	--bs-btn-active-bg: #B19470;
 	color: #F8FAE5;
-    border-radius: 5px;
 
 }
 
@@ -135,9 +142,6 @@ body{
 	--bs-btn-bg: #76453B;
 	--bs-btn-border-color: #B19470;
 	--bs-btn-active-bg: #76453B;
-    border-radius: 5px;
-
-
 }
 
 .button-error-404 {
@@ -290,7 +294,7 @@ body{
 }
 
 #nbVictoiresBar {
-    background-color: #76453B;
+    background-color: #A3C9AA;
 }
 
 #nbPartiesBar{
