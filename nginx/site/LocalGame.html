@@ -17,7 +17,7 @@
 	<div class="container">
 	    <div class="row justify-content-center main-buttons"> 
 			<div class="col-6">
-				<button id="ButtonStart" style="display: block;" method="POST" onclick="JoinGameLocal()" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary w-100">Jouer en Local</button>
+				<button id="ButtonStart" style="display: block;" method="POST" onclick="JoinGameLocal()" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary w-100">Play</button>
 			</div>
 		</div>
 	</div>
@@ -46,9 +46,9 @@
 				<!-- Bar chart horizontal -->
                 <div class="chart-container">
                     <div class="bar-chart my-5">
-                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
-                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
-                        <div class="bar my-2" id="nbDefaiteBar" title="number of losses">&nbsp;Loose</div>
+                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;&nbsp;Play part</div>
+                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victory</div>
+                        <div class="bar my-2" id="nbDefaiteBar" title="number of losses">&nbsp;Lose</div>
                     </div>
                 </div>
                 
@@ -57,8 +57,8 @@
                     <canvas id="myChart"></canvas>
                     <div id="legend" class="legend-container">
                         <ul class="legend-list">
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victoires: <span id="victoriesPercentage"></span>%</li></div>
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Défaites: <span id="defeatsPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victory: <span id="victoriesPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Lose: <span id="defeatsPercentage"></span>%</li></div>
                         </ul>
                     </div>
                 </div>

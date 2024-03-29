@@ -34,6 +34,12 @@
 	top: 20px;
 }
 
+#tournament{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .center {
 	position: absolute;
 	width: 10px;
