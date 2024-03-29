@@ -11,11 +11,16 @@ async function EventActiveTwoFA() {
     const code6 = document.querySelector('#code6').value;
     const final_code = code1 + code2 + code3 + code4 + code5 + code6;
 
-    console.log(final_code)
 
     const formData = {
         totp_code: final_code
     };
+    document.querySelector('#code1').value = '';
+    document.querySelector('#code2').value = '';
+    document.querySelector('#code3').value = '';
+    document.querySelector('#code4').value = '';
+    document.querySelector('#code5').value = '';
+    document.querySelector('#code6').value = '';
 
     try {
         const response = await fetch('https://localhost/api/users/activate2fa/', {
@@ -26,7 +31,6 @@ async function EventActiveTwoFA() {
             body: JSON.stringify(formData)
         }).then((response) => response.json())
         .then((data) => {
-            console.log(data);
             if(data.message === "success"){
                 const errorMessage = '2FA Actif';
                 const errorElement = document.getElementById('errormactive2fa');
@@ -40,11 +44,8 @@ async function EventActiveTwoFA() {
             }
         });
 
-        const data = await response.json();
-        console.log(data);
-        console.log(data.pseudo);
-    }catch (error) {
-        console.error(error.message)
-      
+    }
+    catch (error) {
+        console.log(error.message) 
     }
 }

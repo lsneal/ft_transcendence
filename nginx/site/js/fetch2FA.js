@@ -72,7 +72,6 @@ async function EventGetQRCode() {
         });
         const data = await response.json();
       
-        console.log('message: ', data.url);
         if (data.message === 'error') {
             Modal2faAcif.show();
         } 

@@ -23,18 +23,23 @@ async function getHistoricOnline () {
             },
         });
         dataDashboard = await responseDashboard.json();
-        console.log(dataDashboard.pseudo)
-        console.log(dataDashboard.game_data)
         modal.hide();
         const tbody = document.querySelector('#historicTable tbody');
         tbody.innerHTML = '';
         for (let i = 1; i < dataDashboard.game_data.length; i++) {
             const game = dataDashboard.game_data[i];
+            let result;
+            if (game.marked_point === 5){
+                result = 'victoire'
+            }else{
+                result = 'defaite'
+            }
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${game.opponent}</td>
-                <td>${game.marked_point}</td>
-                <td>${game.conceded_point}</td>
+                <td id="table-primaire">${game.opponent}</td>
+                <td id="table-secondaire">${game.marked_point}</td>
+                <td id="table-tertiaire">${game.conceded_point}</td>
+                <td id="table-quaternaire">${result}</td>
             `;
             tbody.appendChild(row);
         }

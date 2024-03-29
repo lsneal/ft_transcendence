@@ -57,7 +57,7 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class LoginView(APIView):
     def post(self, request):
@@ -113,7 +113,8 @@ class ActivateA2F(APIView):
             response.data = { 'message': 'success' }
         else:
             response.data = { 'message': 'failure' }
-        return response 
+            return Response(response.data, status=status.HTTP_400_BAD_REQUEST)
+        return response
 
     @jwt_authentication
     def get(self, request, access_token):
@@ -146,7 +147,7 @@ class ActivateA2F(APIView):
 
         response.data = { 'message': 'success disable 2fa'}
 
-        return response
+        return Response(response.data, status=status.HTTP_200_OK)
        
 class LoginA2F(APIView):
     def get(self, request):
@@ -165,7 +166,7 @@ class LoginA2F(APIView):
             response.data = { 'message': 'True' }
         else:
             response.data = { 'message': 'False' }
-        return response
+        return Response(response.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         email = request.headers.get('email', None)
@@ -177,9 +178,8 @@ class LoginA2F(APIView):
         response = Response()
 
         if totp.now() != user_code:
-            #raise AuthenticationFailed('Code error')
             response.data = { 'status': 'failure' }
-            return response
+            return Response(response.data, status=status.HTTP_400_BAD_REQUEST)
 
         # connexion et creation du cookies si le code est bon
         data = get_tokens_for_user(user)
