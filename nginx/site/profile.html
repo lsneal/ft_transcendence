@@ -5,7 +5,7 @@
       <div class="modal-content">
        
         <div class="modal-body">
-			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-user"></i> Profile</button></div>
+			<div><button id="ButtonProfile" data-bs-toggle="modal" data-bs-target="#modalProfile" type="button" class="btn btn-lg btn-primary mb-3 w-100"><i class="fa-solid fa-user"></i> Chang your password</button></div>
 			<div><button type="button" class="btn btn-lg btn-primary mb-3 w-100" id="flexSwitchTwoFA" data-bs-toggle="modal"><i class="fa-solid fa-shield-halved"></i> 2FA</button></div>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnScoreboard"  data-bs-toggle="modal" data-bs-target="#modalScore"><i class="fa-solid fa-chart-pie"></i> Personal statistic</a>
 			<a class="btn btn-lg mb-3 w-100 btn-primary" type="submit" id="btnDropdown2"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasOnline"><i class="fa-solid fa-book"></i> Historic</a>
@@ -33,7 +33,7 @@
 			<div><th id="table-primaire" scope="col">Game vs</th></div>
 			<div><th id="table-secondaire" scope="col">Marked_point</th></div>
 			<div><th id="table-tertiaire" scope="col">conceded_point</th></div>
-			<div><th id="table-quaternaire" scope="col">Resultat</th></div>
+			<div><th id="table-quaternaire" scope="col">Result</th></div>
 			</tr>
 			</thead>
 			<tbody>
@@ -62,6 +62,7 @@
                     <div class="bar-chart my-5">
                         <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Play part</div>
                         <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victory</div>
+                        <div class="bar my-2" id="nbDefaiteBar" title="Nombre de victoires">Lose</div>
                     </div>
                 </div>
                 
@@ -71,7 +72,7 @@
                     <div id="legend" class="legend-container">
                         <ul class="legend-list">
                             <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victory: <span id="victoriesPercentage"></span>%</li></div>
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Looses: <span id="defeatsPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Loses: <span id="defeatsPercentage"></span>%</li></div>
                         </ul>
                     </div>
                 </div>

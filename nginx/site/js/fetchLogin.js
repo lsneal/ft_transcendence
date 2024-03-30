@@ -14,8 +14,11 @@ async function EventLogin () {
       });
 
     if (!email || !password) {
-        alert('Veuillez remplir tous les champs !');
-        modal.hide();
+        
+        const errorMessage = 'Please fill all fields !';
+        const errorElement = document.getElementById('error-message-Login');
+        errorElement.innerText = errorMessage;
+        errorElement.style.display = 'block';
         return; 
     }
 

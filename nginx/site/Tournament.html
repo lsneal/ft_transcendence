@@ -15,22 +15,22 @@
 
 <div id="game-container">
 	<div id="tournament">
-		<label>Nombre de joueurs :</label>
-		<select id="nbP" class="btn btn-primary btn-lg" name="nbP" id="pet-select">
-		  <option>4 joueurs</option>
-		  <option>8 joueurs</option>
-		  <option>16 joueurs</option>
+		<label>Number players :</label>
+		<select id="nbP" class="btn btn-primary btn-lg col-5" name="nbP" id="pet-select">
+		  <option>4 players</option>
+		  <option>8 players</option>
+		  <option>16 players</option>
 		</select>
 		<button id="CreateTournament"  class="btn btn-primary btn-lg" style="display: block;" onclick="CreateTournament()">Creer un tournois</button>
 	</div>
 	<form id="users" style="display: 'none';">
 		<div id="error" style="display: none; color: red;">
-			<h6>* Tous les champs ne sont pas remplis</h6>
+			<h6>* Not all fields are filled in</h6>
 		</div>
 	</form>
 
 	<div id="list" style="display: none;">
-		<button onclick="getName()">Jouer le tournoi</button>
+		<button onclick="getName()">PLAY</button>
 	</div>
 	<div id="bracket">
 	</div>
@@ -58,9 +58,9 @@
 				<!-- Bar chart horizontal -->
                 <div class="chart-container">
                     <div class="bar-chart my-5">
-                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Partie jouées</div>
-                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victoires</div>
-                        <div class="bar my-2" id="nbDefaiteBar" title="number of losses">&nbsp;Loose</div>
+                        <div class="bar my-2" id="nbPartiesBar" title="Nombre de parties jouées">&nbsp;Play part</div>
+                        <div class="bar my-2" id="nbVictoiresBar" title="Nombre de victoires">Victory</div>
+                        <div class="bar my-2" id="nbDefaiteBar" title="number of losses">&nbsp;Lose</div>
                     </div>
                 </div>
                 
@@ -69,8 +69,8 @@
                     <canvas id="myChart"></canvas>
                     <div id="legend" class="legend-container">
                         <ul class="legend-list">
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victoires: <span id="victoriesPercentage"></span>%</li></div>
-                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Défaites: <span id="defeatsPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #A3C9AA;"></span> Victory: <span id="victoriesPercentage"></span>%</li></div>
+                            <div><li class="legend-item"><span class="legend-color" style="background-color: #9B4444;"></span> Lose: <span id="defeatsPercentage"></span>%</li></div>
                         </ul>
                     </div>
                 </div>

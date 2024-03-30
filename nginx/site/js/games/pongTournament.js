@@ -12,11 +12,14 @@ function CreateTournament() {
     let button3 = document.getElementById("tournament");
     let users = document.getElementById("users");
     
+    nbPlayer = nbPlayer.value.split(' ');
+    nbPlayer = Number(nbPlayer[0]);
+    if (nbPlayer != 4 && nbPlayer != 8 && nbPlayer != 16)
+        return ;
     button3.style.display = 'none';
     users.style.display = 'block';
 
-    nbPlayer = nbPlayer.value.split(' ');
-    nbPlayer = Number(nbPlayer[0]);
+
     for (let i = 0; i < nbPlayer; i+=2)
     {
         users.innerHTML += `<div class="row mb-4">
@@ -221,6 +224,9 @@ function playTournament(gameId, socket, tournament) {
                 bracket.innerHTML = `<div class="d-flex align-items-center justify-content-center">
                                         <h1 class="p-3 mb-2 bg-dark text-white rounded"> ${data.player1}    vs    ${data.player2}</h1>
                                     </div>`;
+                let num = 250;
+                leftBar.style.top = num.toString() + "px";
+                rightBar.style.top = num.toString() + "px";    
             }
             else
             {

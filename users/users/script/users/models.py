@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 class User(AbstractBaseUser):
-    pseudo = models.CharField(max_length=50)
+    pseudo = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=254, unique=True)
     a2f = models.BooleanField(default=False)
     totp_key = models.CharField(default="", max_length=32)

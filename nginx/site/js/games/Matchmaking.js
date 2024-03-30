@@ -5,11 +5,10 @@ function JoinGameOnline() {
     })
     .then((response) => response.json())
     .then(user => {
-        fetch("/api/pong/joinGame/", {
+        fetch("/api/pong/joinGameOnline/", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                //'pseudo': res.data.pseudo
             },
             body: JSON.stringify({'pseudo': user.data.pseudo}),
         })
@@ -36,6 +35,9 @@ async function JoinGameLocal() {
 
     await fetch("/api/pong/joinGame/", {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        }
     })
     .then((response) => response.json())
     .then(data => {

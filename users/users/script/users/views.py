@@ -12,6 +12,7 @@ from django.middleware import csrf
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from .oauth import AuthorizationCodeClient, getInfoClient
+from django.core.exceptions import ValidationError
 from .authenticate import CustomAuthentication
 
 from .models import User
@@ -56,6 +57,8 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        if len(serializer.validated_data['password']) < 6:
+            return Response({"password": "Password length must be greater than 6 character."}, status=status.HTTP_400_BAD_REQUEST)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -100,10 +103,6 @@ class ActivateA2F(APIView):
         user=User.objects.get(id=user_id)
 
         response = Response()
-
-        if user.a2f is True:
-            response.data = { 'message': 'error' }
-            return response
 
         totp = pyotp.TOTP(user.totp_key)
 

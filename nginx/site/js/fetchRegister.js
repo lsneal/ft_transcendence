@@ -13,12 +13,15 @@ async function EventRegister () {
 
     if (!email || !pseudo ||!password || !confirmPassword) {
         //alert('Veuillez remplir tous les champs !');
-        modal.hide();
+        const errorMessage = 'Empty fields';
+        const errorElement = document.getElementById('error-message-Register');
+        errorElement.innerText = errorMessage;
+        errorElement.style.display = 'block';
         return; 
     }
     if (password != confirmPassword){
         const errorMessage = 'Not Same Password';
-        const errorElement = document.getElementById('error-message-ConfirmPass');
+        const errorElement = document.getElementById('error-message-Register');
         errorElement.innerText = errorMessage;
         errorElement.style.display = 'block';
         return;
@@ -63,19 +66,25 @@ async function EventRegister () {
                 modal.hide();
                 window.history.pushState(null, "Register", "/");
                 window.dispatchEvent(new Event('popstate'));
-            }
-            else{
-                const errorMessage = data.email[0];
-                    const errorElement = document.getElementById('error-message-Register');
-                    errorElement.innerText = errorMessage;
-                    errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
+            } 
+            else {
+                errorMessage = "";
+                if (data.pseudo)
+                    errorMessage = data.pseudo;
+                else if (data.email)
+                    errorMessage = data.email;
+                else
+                    errorMessage = data.message
+                const errorElement = document.getElementById('error-message-Register');
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
             }
 
 
         });
     }
     catch (error) {
-        alert('An unexepected error occured. Please try again!');
+        alert(error)
     };
 
 

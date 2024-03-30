@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 
 class UserSerializer(serializers.ModelSerializer):
