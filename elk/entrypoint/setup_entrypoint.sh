@@ -42,12 +42,12 @@ chown -R 1000:1000 config/certs;
 find . -type d -exec chmod 750 \{\} \;;
 find . -type f -exec chmod 640 \{\} \;;
 echo "Waiting for Elasticsearch availability";
-until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do echo "Waiting for elasticsearch..."; sleep 10; done;
 echo "Setting kibana_system password";
 until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"$KIBANA_PASSWORD\"}" | grep -q "^{}"; do sleep 10; done;
 echo "Setting done!";
 
-until curl -s -I http://kibana:5601 | grep -q 'HTTP/1.1 302 Found'; do sleep 10; done;
+until curl -s -I http://kibana:5601 | grep -q 'HTTP/1.1 302 Found'; do echo "Waiting for kibana..." ; sleep 5; done;
 echo "Kibana can be accessed";
 
 dataview=$(until curl -s --cacert config/certs/ca/ca.crt -u "elastic:$ELASTIC_PASSWORD" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -X POST http://kibana:5601/api/data_views/data_view -d '{

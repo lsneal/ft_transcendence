@@ -89,6 +89,8 @@ services:
       - ./grafana/datasources:/usr/share/grafana/conf/provisioning/datasources
       - ./grafana/dashboards.yaml:/usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
       - ./grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_LOG_LEVEL=debug
     depends_on:
       vault:
         condition: service_healthy

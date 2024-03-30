@@ -56,6 +56,7 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=basic
+      - logger.level=WARN
     mem_limit: 4294967296
     ulimits:
       memlock:
@@ -95,6 +96,7 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
       - SERVER_PUBLICBASEURL=https://kibana.localhost
+      - logger.level=WARN
     mem_limit: 1073741824
     healthcheck:
       test:
