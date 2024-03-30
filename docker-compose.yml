@@ -30,9 +30,9 @@ services:
       django_dashboard:
         condition: service_healthy
       grafana:
-        condition: service_healthy
+        condition: service_started
       kibana:
-        condition: service_healthy
+        condition: service_started
     healthcheck:
       test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
