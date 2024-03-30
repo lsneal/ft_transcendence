@@ -26,16 +26,7 @@ async function EventRegister () {
         errorElement.style.display = 'block';
         return;
     }
-    /*else {
-        if (password.length != 8) {
-            const errorMessage = 'Size min password 8';
-            const errorElement = document.getElementById('error-message-password');
-            errorElement.innerText = errorMessage;
-            errorElement.style.display = 'block';
-            return;
-        }
-    }*/
-
+ 
     const formData = {
         email: email,
         pseudo: pseudo,
@@ -74,7 +65,7 @@ async function EventRegister () {
                 else if (data.email)
                     errorMessage = data.email;
                 else
-                    errorMessage = data.message
+                    errorMessage = data.password    
                 const errorElement = document.getElementById('error-message-Register');
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché

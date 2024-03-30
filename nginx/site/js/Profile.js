@@ -10,9 +10,7 @@ export default class extends AbstractView {
 
         document.getElementById("btnLogout").addEventListener('click', EventLogout);
 
-        let isAuthenticated = false;
 
-        try {
             const userresponse = await fetch('/api/users/user/', {
                 method: 'GET',
                 headers: {
@@ -25,21 +23,10 @@ export default class extends AbstractView {
             if (userData.detail === "Unauthenticated!") {
                 window.history.pushState(null, "Home", "/home");
                 window.dispatchEvent(new Event('popstate'));
-                isAuthenticated = false; 
-            } else {
-                isAuthenticated = true; 
             }
-        } catch (error) {
-            alert('Erreur : ' + error.message);
-        }
-
-        if (isAuthenticated === false) {
-            return; 
-        }
 
         EventProfile();
       
-        //EventProfile()
 
         document.getElementById("TournamentButton").addEventListener('click', event => {
             window.history.pushState(null, "Tournament", "/tournament/");
@@ -53,13 +40,28 @@ export default class extends AbstractView {
             window.history.pushState(null, "local", "/local/");
             window.dispatchEvent(new Event('popstate'));
         });
-        document.getElementById("ButtonChange").addEventListener('click', EventChange);
+
         document.getElementById("flexSwitchTwoFA").addEventListener('click', EventGetQRCode);
+        document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+        document.getElementById("btnDropdown2").addEventListener('click', getHistoricOnline);
+
+        
+        document.getElementById("ButtonChange").addEventListener('click', EventChange);
+        document.getElementById('modalProfile').addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+              document.getElementById('ButtonChange').click();
+            }
+          });
+
 
         document.getElementById("Valid2FA").addEventListener('click', EventActiveTwoFA);
-        document.getElementById("btnScoreboard").addEventListener('click', getUserStats);
+        document.getElementById('modaltwoFA').addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+              document.getElementById('Valid2FA').click();
+            }
+          });
+
         document.getElementById("confirmDisable2FA").addEventListener('click', EventDisableTwoFA);
-        document.getElementById("btnDropdown2").addEventListener('click', getHistoricOnline);
         
     }
 

@@ -7,28 +7,26 @@ export default class extends AbstractView {
 
     }
 
+
+    checkLog(){
+      const userresponse =  fetch('/api/users/user/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((userresponse) => userresponse.json())
+    .then((data) =>{
+      if (data.detail != "Unauthenticated!") {
+        window.history.pushState(null, "Profile", "/profile/");
+        window.dispatchEvent(new Event('popstate'));
+      }
+    });
+    }
+
     async executeViewScript()
     {
-
-      try {
-        const userresponse = await fetch('/api/users/user/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        const userData = await userresponse.json();
-        if (userData.detail != "Unauthenticated!") {
-          window.history.pushState(null, "Profile", "/profile/");
-          window.dispatchEvent(new Event('popstate'));
-        }
-      }catch(error){
-        console.error('Erreur: ', error.message)
-      }
-
-
-
+      this.checkLog()
+      
       document.getElementById("Validlogin2fa").addEventListener('click', send2facode);
 
       document.getElementById("btnRegister").addEventListener('click', EventRegister);
