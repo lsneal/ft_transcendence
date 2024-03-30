@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from django.db.models import F, Case, When, Value, FloatField
 from .models import Gamer 
 from .models import Game 
@@ -19,8 +20,13 @@ class ConnectUserStats(APIView):
     def post(self, request):
         pseudo = request.data.get('pseudo', None)
         user_id = request.data.get('id', None)
-       
-        
+
+        try:
+            user = Gamer.objects.get(pseudo=pseudo)
+            return Response({'user': 'user already exist'}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            pass
+
         gamer_serializer = GamerSerializer(data={'pseudo': pseudo, 'id': user_id,})
         gamer_serializer.is_valid(raise_exception=True)
         gamer = gamer_serializer.save()
@@ -36,8 +42,13 @@ class ConnectUserStats(APIView):
 
         user_info = None
         if pseudo is not None:
-            gamer = Gamer.objects.get(pseudo=pseudo)
-            games = Game.objects.filter(gamer=gamer)
+            try:
+                gamer = Gamer.objects.get(pseudo=pseudo)
+                games = Game.objects.filter(gamer=gamer)
+            except:
+                return Response({'error': 'An error occured'}, status=status.HTTP_400_BAD_REQUEST)
+
+
             game_data = []
             for game in games:
                 game_data.append({
@@ -58,21 +69,28 @@ class ConnectUserStats(APIView):
         pseudo = request.headers.get('pseudo', None)
         gameEnd = request.headers.get('gameEnd', None)
 
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+        except:
+            return Response({'error': 'An error occured here'}, status=status.HTTP_400_BAD_REQUEST)
+        
         conceded_point = data.get('conceded_point')
         marked_point = data.get('marked_point')
         opponent = data.get('opponent')
 
         if pseudo is not None:
-            gamer = Gamer.objects.get(pseudo=pseudo)
-            newGame = Game.objects.create(gamer=gamer, conceded_point=conceded_point, marked_point=marked_point, opponent=opponent)
-            newGame.save()
-            if gameEnd == "true":
-                win = request.headers.get('win', None)
-                if win == "true":
-                    gamer.victory += 1
-                gamer.nb_game += 1
-                gamer.save()
+            try:
+                gamer = Gamer.objects.get(pseudo=pseudo)
+                newGame = Game.objects.create(gamer=gamer, conceded_point=conceded_point, marked_point=marked_point, opponent=opponent)
+                newGame.save()
+                if gameEnd == "true":
+                    win = request.headers.get('win', None)
+                    if win == "true":
+                        gamer.victory += 1
+                    gamer.nb_game += 1
+                    gamer.save()
+            except:
+                return Response({'error': 'An error occured with models'}, status=status.HTTP_400_BAD_REQUEST)
         return Response()
 
 class PlayerRanking(APIView):

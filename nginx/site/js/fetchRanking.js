@@ -36,7 +36,6 @@ async function getRankingPlayers() {
         });
 
     } catch (error) {
-        alert('Erreur de recuperation du classement des joueurs: ' + error.message);
     }
 }
 

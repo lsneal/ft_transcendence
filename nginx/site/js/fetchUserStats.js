@@ -19,7 +19,6 @@ async function getUserStats() {
         dataDashboard = await responseDashboard.json();
         drawChart(dataDashboard);
     } catch (error) {
-        alert('Erreur : ' + error.message);
     }
 }
 

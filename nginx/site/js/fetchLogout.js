@@ -19,7 +19,6 @@ async function EventLogout() {
         });
 
     } catch (error) {
-        alert('Erreur de déconnexion');
         
     }
 

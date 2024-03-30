@@ -29,7 +29,6 @@ export default class extends AbstractView {
               isAuthenticated = true; 
           }
       } catch (error) {
-          alert('Erreur : ' + error.message);
       }
 
       if (isAuthenticated === false) {

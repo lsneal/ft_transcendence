@@ -58,7 +58,6 @@ const router = async () => {
 
     document.querySelector("#app").innerHTML = await view.getHtml();
     await view.executeViewScript();
-    //Luis m'envoie bon ou pas -> il reste sur la modal ou lui affiche la suite
 };
 
 window.addEventListener("popstate", router);

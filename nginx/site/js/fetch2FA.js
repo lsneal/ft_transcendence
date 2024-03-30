@@ -83,6 +83,5 @@ async function EventGetQRCode() {
             Modal2faInacif.show();
         }
     } catch (error) {
-        alert('Erreur de déconnexion');
     }
 }   

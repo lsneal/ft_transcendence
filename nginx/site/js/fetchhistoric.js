@@ -44,6 +44,5 @@ async function getHistoricOnline () {
             tbody.appendChild(row);
         }
     } catch (error) {
-        alert('Erreur : ' + error.message);
     }
 }  

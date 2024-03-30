@@ -32,16 +32,15 @@ try {
             window.history.pushState(null, "Profile", "/profile/");
             window.dispatchEvent(new Event('popstate'));
         }
-        else{
+        else {
             const errorMessage = 'Wrong Code';
-            const errorElement = document.getElementById('errormessage2fa');
+            const errorElement = document.getElementById('error-message-2fa');
             errorElement.innerText = errorMessage;
             errorElement.style.display = 'block';
         }
     });
 }
 catch (error) {
-    console.log(error);
 };
 
 }
