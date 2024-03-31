@@ -2,3 +2,4 @@
 users/users/script/users/migrations
 pong/app/site/app/migrations
 dashboard/dashboard/script/dashboard/migrations
+.env
