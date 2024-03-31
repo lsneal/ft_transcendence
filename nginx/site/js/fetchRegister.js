@@ -25,7 +25,7 @@ async function EventRegister () {
         errorElement.style.display = 'block';
         return;
     }
-
+ 
     const formData = {
         email: email,
         pseudo: pseudo,
@@ -64,7 +64,7 @@ async function EventRegister () {
                 else if (data.email)
                     errorMessage = data.email;
                 else
-                    errorMessage = data.password
+                    errorMessage = data.password    
                 const errorElement = document.getElementById('error-message-Register');
                 errorElement.innerText = errorMessage;
                 errorElement.style.display = 'block';

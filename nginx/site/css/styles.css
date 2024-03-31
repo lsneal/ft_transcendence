@@ -2,26 +2,26 @@
 
 body{
 	height: 100vh;
-	background-color: #43766C;
-	color: #F8FAE5;
+	background-color: #222831;
+	color: #EEEEEE;
 	font-family: "Tienne", serif;
 	font-weight: 400;
 	font-style: normal;
 }
 
 .navbar{
-	color: #F8FAE5;
-	background-color: #561C24;
+	color: #EEEEEE;
+	background-color: #31363F;
 }
 
 .navbar-toggler{
-	background-color: #B19470;
+	background-color: #31363F;
 }
 
 
 .fa-bars {
-	background-color: #B19470;
-	color: #F8FAE5;
+	background-color: #31363F;
+	color: #EEEEEE;
 }
 
 
@@ -32,16 +32,7 @@ body{
 }
 
 .text-logo{
-	color: #F8FAE5;
-	text-shadow:
-		0 0 7px #F8FAE5,
-		0 0 10px #F8FAE5,
-		0 0 21px #F8FAE5,
-		0 0 42px #B19470,
-		0 0 82px #B19470,
-		0 0 92px #B19470,
-		0 0 102px #B19470,
-		0 0 151px #B19470;
+	color: #EEEEEE;
 	font: italic small-caps bold 60px cursive;
 	
 } 	
@@ -53,8 +44,8 @@ body{
 /*--------------------- TABLEU --------------------------*/
 
 .offcanvas{
-	background-color: #B19470 ;
-	color: #F8FAE5;
+	background-color: #31363F ;
+	color: #EEEEEE;
 	font-family: "Tienne", serif ;
 	
 }
@@ -69,35 +60,35 @@ body{
 }
 
 #table-primaire{
-	background-color: #561C24;
-	border-color: #B19470;
-	color: #F8FAE5;
+	background-color: #31363F;
+	border-color: #31363F;
+	color: #EEEEEE;
 	width: 100px; /* Réglez la largeur selon vos besoins */
     white-space: nowrap; 
 }
 
 
 #table-secondaire{
-	background-color: #43766C;
-	border-color: #B19470;
-	color: #F8FAE5;
+	background-color: #222831;
+	border-color: #31363F;
+	color: #EEEEEE;
 	width: 50px; /* Réglez la largeur selon vos besoins */
     white-space: nowrap; 
 }
 
 #table-tertiaire{
-	background-color: #561C24;
-	border-color: #B19470;
-	color: #F8FAE5;
+	background-color: #31363F;
+	border-color: #31363F;
+	color: #EEEEEE;
 	width: 50px; /* Réglez la largeur selon vos besoins */
     white-space: nowrap; 
 }
 
 
 #table-quaternaire{
-	background-color: #43766C;
-	border-color: #B19470;
-	color: #F8FAE5;
+	background-color: #222831;
+	border-color: #31363F;
+	color: #EEEEEE;
 	width: 100px; /* Réglez la largeur selon vos besoins */
     white-space: nowrap; 
 }
@@ -114,34 +105,34 @@ body{
 /*--------------------------BOUTONS----------------------------*/
 
 .btn:active{
-	background-color: #B19470; 
-	--bs-btn-bg: #B19470;
-	border-color: #76453B!important;
-	box-shadow: inset 1px 1px 5px #76453B;
-	color:#F8FAE5;
+	background-color: #31363F; 
+	--bs-btn-bg: #31363F;
+	border-color: #76ABAE!important;
+	box-shadow: inset 1px 1px 5px #76ABAE;
+	color:#EEEEEE;
 }
 
 .btn:hover{
-	background-color: #B19470; 
-	--bs-btn-bg: #B19470;
-	border-color: #76453B;
-	box-shadow: inset 1px 1px 5px #76453B;
-	color:#F8FAE5;
+	background-color: #31363F; 
+	--bs-btn-bg: #31363F;
+	border-color: #76ABAE;
+	box-shadow: inset 1px 1px 5px #76ABAE;
+	color:#EEEEEE;
 }
 
 
 .btn-primary {
-	--bs-btn-bg: #B19470;
-	--bs-btn-border-color: #76453B;
-	--bs-btn-active-bg: #B19470;
-	color: #F8FAE5;
+	--bs-btn-bg: #31363F;
+	--bs-btn-border-color: #76ABAE;
+	--bs-btn-active-bg: #31363F;
+	color: #EEEEEE;
 
 }
 
 .btn-secondary {
-	--bs-btn-bg: #76453B;
-	--bs-btn-border-color: #B19470;
-	--bs-btn-active-bg: #76453B;
+	--bs-btn-bg: #76ABAE;
+	--bs-btn-border-color: #31363F;
+	--bs-btn-active-bg: #76ABAE;
 }
 
 .button-error-404 {
@@ -152,8 +143,8 @@ body{
 }
 
 .big-button {
-	background-color: #B19470;
-	color: #fff;
+	background-color: #31363F;
+	color: #EEEEEE;
 	height: 80vh;
 	border-width: 2px;
     border-radius: 5px;
@@ -189,7 +180,7 @@ body{
 }
 
 .custom-tournament .match div {
-	border: 1px solid #76453B;
+	border: 1px solid #76ABAE;
 	margin: 0 3px;
 	padding: 5px 0;
 	font-size: 1vw ;
@@ -200,7 +191,7 @@ body{
 	display: block;
 	width: 1px;
 	height: 45px;
-	background: #76453B;
+	background: #76ABAE;
 	bottom: 0;
 	left: 50%;
 	position: absolute;
@@ -213,7 +204,7 @@ body{
 	display: block;
 	width: 1px;
 	height: 45px;
-	background: #76453B;
+	background: #76ABAE;
 	bottom: 0;
 	left: 50%;
 	position: absolute;
@@ -228,7 +219,7 @@ body{
 
 .custom-background-error {
 	background-image: url('../static/pong_logo.png');
-	background-color: #76453B;
+	background-color: #76ABAE;
 	background-size: cover;
 	height: 550px;
 	background-position: center;
@@ -243,7 +234,7 @@ body{
 }
 
 .text-erreur{
-	color: #561C24;
+	color: #9B4444;
 }
 
 
@@ -262,7 +253,7 @@ body{
 .bar-chart {
     width: 100%; /* Ajuste la largeur totale du bar chart selon tes besoins */
     margin: 20px auto; /* Centrer horizontalement */
-    background-color: #F8FAE5; /* Fond blanc */
+    background-color: #EEEEEE; /* Fond blanc */
 }
 
 .bar {
@@ -270,7 +261,7 @@ body{
     margin-bottom: 10px; /* Espacement entre les barres */
     background-color: #9B4444; /* Couleur de base des barres */
     position: relative; /* Permet de positionner le nom sur la barre */
-    color: #000;
+    color: #31363F;
     border-radius: 5px;
     transition: width 0.5s ease;
 }
@@ -298,8 +289,8 @@ body{
 }
 
 #nbPartiesBar{
-	background-color: #000;
-	color: #F8FAE5;
+	background-color: #31363F;
+	color: #EEEEEE;
 }
 
 #nbDefaiteBar{
@@ -327,11 +318,6 @@ body{
     margin-right: 5px;
 }
 
-
-.carousel-item {
-    background-color: black;
-    color: white; /* Changez la couleur du texte si nécessaire */
-}
 /*------------------------------------------------------*/
 
 
@@ -371,7 +357,7 @@ body{
 
 .otc legend {
 	margin: 0 auto 1em;
-	color: #76453B;
+	color: #76ABAE;
 }
 
 input[type="tel"] {
@@ -383,8 +369,8 @@ input[type="tel"] {
 	text-align: center;
 	appearance: textfield;
 	-webkit-appearance: textfield;
-	border: 2px solid #B19470;
-	color: #B19470;
+	border: 2px solid #31363F;
+	color: #31363F;
 	border-radius: 4px;
 }
 
@@ -400,20 +386,64 @@ input::-webkit-inner-spin-button {
 
 
 .fa-solid{
-	color: #F8FAE5;
+	color: #EEEEEE;
 }
 
 .modal-content{
-	background-color: #B19470;
-	color: #F8FAE5;
+	background-color: #222831	;
+	color: #EEEEEE;
 }
 
 .form-text{
-	color: #F8FAE5;
+	color: #EEEEEE;
 }
 
 
+.sphere {
+	background-size: contain; 
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+  }
 
+  .sphere1 {
+	width: 50px;
+	height: 50px;
+	background-image: url('../static/poisson.png');
+  }
+  
+  .sphere2 {
+	width: 80px;
+	height: 80px;
+	background-image: url('../static/blobfish.png');
+  }
+  
+  .sphere3 {
+	width: 150px; 
+	height: 150px;
+	background-image: url('../static/orque.png');
+  }
+ 
+  .sphere4 {
+	width: 75px;
+	height: 75px;
+	background-image: url('../static/ssonpoi.png');
+  }
+  
+  .sphere5 {
+	width: 175px;
+	height: 175px;
+	background-image: url('../static/baleine.png');
+  }
+  
 
-
-
+  .bubble {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	background-size: contain; 
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('../static/bulle.png');
+	position: absolute;
+  }

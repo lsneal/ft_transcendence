@@ -8,7 +8,16 @@ export default class extends AbstractView {
     }
 
     async executeViewScript()
-    {
+    { 
+      const container = document.querySelector('#body');
+      function clearSpheres() {
+        const spheres = document.querySelectorAll('.sphere');
+        spheres.forEach(sphere => {
+          sphere.remove();
+        });
+      }
+    
+      clearSpheres();
       let isAuthenticated = false;
 
       try {

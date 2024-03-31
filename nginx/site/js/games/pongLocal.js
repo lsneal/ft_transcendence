@@ -7,8 +7,8 @@ function startGameLocal(gameId) {
     button.style.display = 'none'
     if (document.getElementById("ball") != null)
     {
-        document.getElementById("ball").style.height = "30px";
-        document.getElementById("ball").style.width = "30px";
+        document.getElementById("ball").style.height = "35px";
+        document.getElementById("ball").style.width = "35px";
     }
 
     if (!gameId)
