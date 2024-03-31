@@ -9,9 +9,15 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
+      const container = document.querySelector('#body');
+      function clearSpheres() {
+        const spheres = document.querySelectorAll('.sphere');
+        spheres.forEach(sphere => {
+          sphere.remove();
+        });
+      }
 
-      let isAuthenticated = false;
-
+      clearSpheres();
       try {
           const userresponse = await fetch('/api/users/user/', {
               method: 'GET',
@@ -25,16 +31,10 @@ export default class extends AbstractView {
           if (userData.detail === "Unauthenticated!") {
               window.history.pushState(null, "Logout", "/");
               window.dispatchEvent(new Event('popstate'));
-              isAuthenticated = false; 
-          } else {
-              isAuthenticated = true; 
           }
       } catch (error) {
       }
 
-      if (isAuthenticated === false) {
-          return; 
-      }
 
       document.getElementById("btnLogout").addEventListener('click', EventLogout);
 

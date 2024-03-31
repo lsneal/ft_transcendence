@@ -6,7 +6,7 @@ services:
       - users_network
       - vault_network_users
       - postgres_exporter-network
-      - logstash_network
+      #- logstash_network
     env_file:
       - ../.env
     environment:

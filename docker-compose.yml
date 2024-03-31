@@ -2,7 +2,7 @@
 include:
   - users/common.yml
   - pong/common.yml
-  - elk/common.yml
+  #- elk/common.yml
   - logs/common.yml
   - dashboard/common.yml
   
@@ -30,8 +30,8 @@ services:
         condition: service_healthy
       grafana:
         condition: service_healthy
-      kibana:
-        condition: service_healthy
+   #   kibana:
+        # condition: service_healthy
     healthcheck:
       test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s

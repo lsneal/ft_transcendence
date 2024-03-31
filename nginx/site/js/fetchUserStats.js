@@ -38,7 +38,7 @@ async function drawChart(dataDashboard) {
         document.getElementById('nbDefaiteBar').style.display = 'none';
 
         
-        const errorMessage = "Vous n\'avez pas encore joue de parties.";
+        const errorMessage = "No game played";
         const errorElement = document.getElementById('errormessageStat');
         errorElement.innerText = errorMessage;
         errorElement.style.display = 'block'; 
@@ -72,7 +72,7 @@ async function drawChart(dataDashboard) {
     const prc_win = (nbVictories / nbGames) * 100;
     const prc_loose = 100 - prc_win;
     const pieChartData = {
-        labels: ['Victoires', 'Defaites'],
+        labels: ['Victories', 'Loses'],
         datasets: [{
             data: [prc_win, 100 - prc_win],
             backgroundColor: ['#A3C9AA', '#9B4444']
@@ -124,9 +124,9 @@ async function drawChart(dataDashboard) {
     document.getElementById('nbDefaiteBar').style.width = prc_loose + '%';
     document.getElementById('nbPartiesBar').style.width = '100%'; 
 
-    document.getElementById('nbVictoiresBar').title = `Nombre de victoires : ${nbVictories}`;
+    document.getElementById('nbVictoiresBar').title = `Victories : ${nbVictories}`;
     document.getElementById('nbDefaiteBar').title = `Number of losses : ${nbDefaite}`;
-    document.getElementById('nbPartiesBar').title = `Nombre de parties jouees : ${nbGames}`;
+    document.getElementById('nbPartiesBar').title = `Number of games : ${nbGames}`;
 
    
 }

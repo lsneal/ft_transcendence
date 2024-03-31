@@ -234,7 +234,7 @@ body{
 }
 
 .text-erreur{
-	color: #31363F;
+	color: #9B4444;
 }
 
 
@@ -318,11 +318,6 @@ body{
     margin-right: 5px;
 }
 
-
-.carousel-item {
-    background-color: black;
-    color: white; /* Changez la couleur du texte si nécessaire */
-}
 /*------------------------------------------------------*/
 
 
@@ -395,7 +390,7 @@ input::-webkit-inner-spin-button {
 }
 
 .modal-content{
-	background-color: #31363F;
+	background-color: #222831	;
 	color: #EEEEEE;
 }
 
@@ -404,6 +399,51 @@ input::-webkit-inner-spin-button {
 }
 
 
+.sphere {
+	background-size: contain; 
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+  }
 
+  .sphere1 {
+	width: 50px;
+	height: 50px;
+	background-image: url('../static/poisson.png');
+  }
+  
+  .sphere2 {
+	width: 80px;
+	height: 80px;
+	background-image: url('../static/blobfish.png');
+  }
+  
+  .sphere3 {
+	width: 150px; 
+	height: 150px;
+	background-image: url('../static/orque.png');
+  }
+ 
+  .sphere4 {
+	width: 75px;
+	height: 75px;
+	background-image: url('../static/ssonpoi.png');
+  }
+  
+  .sphere5 {
+	width: 175px;
+	height: 175px;
+	background-image: url('../static/baleine.png');
+  }
+  
 
-
+  .bubble {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	background-size: contain; 
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('../static/bulle.png');
+	position: absolute;
+  }
