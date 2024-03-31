@@ -1,10 +1,9 @@
-version: "3.8"
 
 include:
   - users/common.yml
   - pong/common.yml
-  #- elk/common.yml
-  #- logs/common.yml
+  - elk/common.yml
+  - logs/common.yml
   - dashboard/common.yml
   
 services:
@@ -21,7 +20,6 @@ services:
     ports:
       - "443:443"
     networks:
-      - vault_network_nginx
       - nginx
     depends_on:
       django_users:
@@ -30,10 +28,10 @@ services:
         condition: service_healthy
       django_dashboard:
         condition: service_healthy
-      #grafana:
-      #  condition: service_healthy
-      #kibana:
-      #  condition: service_healthy
+      grafana:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
     healthcheck:
       test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
@@ -44,14 +42,12 @@ services:
     container_name: vault
     build: vault
     networks:
-      - vault_network_exporter
       - vault_network_users
       - vault_network_pong
       - vault_network_dashboard
       - vault_network_elk
       - vault_network_logs
       - nginx
-      #- vault-postgres-exporter_network
     expose:
       - "8200"
     environment:
@@ -88,13 +84,9 @@ networks:
     driver: bridge
   vault_network_dashboard:
     driver: bridge
-  vault_network_exporter:
-    driver: bridge
   vault_network_elk:
     driver: bridge
   vault_network_logs:
-    driver: bridge
-  vault_network_nginx:
     driver: bridge
   nginx:
     driver: bridge
@@ -112,8 +104,4 @@ volumes:
   vault_nginx:
   vault_hostname:
   nginx_logs:
-  static:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
+

@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   postgres_users:
     container_name: postgres_users
@@ -6,14 +5,12 @@ services:
     networks:
       - users_network
       - vault_network_users
-      #- postgres_exporter-network
-      #- logstash_network
+      - postgres_exporter-network
+      - logstash_network
     env_file:
       - ../.env
     environment:
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
       - PGPORT=5432
-      - PGUSER=${PG_USER}
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:

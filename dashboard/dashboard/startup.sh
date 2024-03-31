@@ -8,6 +8,6 @@ fi
 
 python manage.py makemigrations dashboard
 python manage.py migrate dashboard
-#exec python manage.py runserver 0.0.0.0:8002
-exec gunicorn --reload --bind 0.0.0.0:8004 dashboard.wsgi:application
+
+exec gunicorn --bind 0.0.0.0:8004 dashboard.wsgi:application
 

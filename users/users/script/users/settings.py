@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", '10.11.249.157']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -179,7 +179,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 from datetime import timedelta
 SIMPLE_JWT = {
-  'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+  'ACCESS_TOKEN_LIFETIME': timedelta(hours=4),
   'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
   'ROTATE_REFRESH_TOKENS': True,
   'BLACKLIST_AFTER_ROTATION': True,

@@ -20,7 +20,7 @@ function startGameLocal(gameId) {
     })
     .then((response) => response.json())
     .then(data => {
-        let url = `wss://localhost/api/pong/ws/` + data.data.id 
+        let url = `wss://10.13.249.106/api/pong/ws/` + data.data.id 
         const socket = new WebSocket(url)
         playGameLocal(gameId, socket)
     })
@@ -160,7 +160,7 @@ function playGameLocal(gameId, socket)
             }
 
         }
-        if (data.type === "time")
+        if (data.type === "time" && document.getElementById("time"))
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").style.fontSize = '7.0rem';

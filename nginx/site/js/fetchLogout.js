@@ -2,8 +2,8 @@
 
 async function EventLogout() {
 
-    let myModalEl = document.getElementById('modalBurger');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
+    const myModalEl = document.getElementById('modalBurger');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
     try {
         const response = await fetch('/api/users/logout/', {
             method: 'POST',
@@ -19,7 +19,6 @@ async function EventLogout() {
         });
 
     } catch (error) {
-        alert('Erreur de déconnexion');
         
     }
 

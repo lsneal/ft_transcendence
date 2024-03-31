@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from rest_framework import permissions, viewsets
 
 from .models import Game
+from rest_framework import status
 # from .serializers import UserGameSerializer
 from .serializers import GameSerializer
 from .serializers import TournamentSerializer
@@ -27,27 +28,37 @@ class HealthView(APIView):
 class CreateTournamentView(APIView):
     def post(self, request):
         if request.method == 'POST':
-            managerTournament.joinTournament()
-            serializer = TournamentSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+            try:
+                managerTournament.joinTournament()
+                serializer = TournamentSerializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+            except:
+                return Response({'error': 'An error occured when creating a tournament'}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data)
 
 class JoinGameOnlineView(APIView):
     def post(self, request):
         if request.method == 'POST':
+
             player = request.data.get('pseudo', None)
             game = manager.joinGameOnline(player)
             if game.player1 != None and game.player2 == 'p2':
-                serializer = Game.objects.get(pk=Game.objects.latest('id').id)
-                serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
-                serializer.is_valid()
-                serializer.save()
+                try:
+                    serializer = Game.objects.get(pk=Game.objects.latest('id').id)
+                    serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
+                    serializer.is_valid()
+                    serializer.save()
+                except:
+                    return Response({'error': 'An error occured when joining an online game'}, status=status.HTTP_400_BAD_REQUEST)
                 return Response(serializer.data)
             elif game.player1 == 'p1' and game.player2 != 'p2':
-                serializer = GameSerializer(data={'player1': game.player1, 'player1_name': game.player1_name})
-                serializer.is_valid()
-                serializer.save()
+                try:
+                    serializer = GameSerializer(data={'player1': game.player1, 'player1_name': game.player1_name})
+                    serializer.is_valid()
+                    serializer.save()
+                except:
+                    return Response({'error': 'An error occured when joining an online game'}, status=status.HTTP_400_BAD_REQUEST)
                 return Response(serializer.data)
             else:
                 return Response("Error")
@@ -57,15 +68,22 @@ class JoinGameView(APIView):
         if request.method == 'POST':
             game = manager.joinGame()
             if game.player1 != None and game.player2 == 'p2':
-                serializer = Game.objects.get(pk=Game.objects.latest('id').id)
-                serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
-                serializer.is_valid()
-                serializer.save()
+                try:
+                    serializer = Game.objects.get(pk=Game.objects.latest('id').id)
+                    serializer = GameSerializer(serializer, data={'player2': game.player2, 'player2_name': game.player2_name})
+                    serializer.is_valid()
+                    serializer.save()
+                except:
+                    return Response({'error': 'An error occured when joining a local game'}, status=status.HTTP_400_BAD_REQUEST)
+
                 return Response(serializer.data)
             elif game.player1 == 'p1' and game.player2 != 'p2':
-                serializer = GameSerializer(data={'player1': game.player1, 'player1_name': game.player1_name})
-                serializer.is_valid()
-                serializer.save()
+                try:
+                    serializer = GameSerializer(data={'player1': game.player1, 'player1_name': game.player1_name})
+                    serializer.is_valid()
+                    serializer.save()
+                except:
+                    return Response({'error': 'An error occured when joining a local game'}, status=status.HTTP_400_BAD_REQUEST)
                 return Response(serializer.data)
             else:
                 return Response("Error")

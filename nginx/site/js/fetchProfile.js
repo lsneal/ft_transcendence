@@ -17,6 +17,5 @@ async function EventProfile() {
             window.dispatchEvent(new Event('popstate'));
         }
     } catch (error) {
-        alert('Erreur : ' + error.message);
     }
 }

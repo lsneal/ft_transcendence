@@ -33,22 +33,14 @@ def jwt_authentication(view_func):
             raise AuthenticationFailed('Unauthenticated!')
         
         try:
-            access_token_obj = AccessToken(token)
+            kwargs['access_token'] = AccessToken(token)
             return view_func(request, *args, **kwargs)
         except:
             try:
-                response = Response()
-                token = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=["HS256"])
+                token = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=["HS256"], options={"verify_signature": False})
                 user = User.objects.get(id=token['user_id'])
                 refresh = RefreshToken(user.token_refresh)
-                response.set_cookie(
-                    key = settings.SIMPLE_JWT['AUTH_COOKIE'],
-                    value = access_token_obj,
-                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
+                kwargs['access_token'] = AccessToken(refresh.access_token)
                 return view_func(request, *args, **kwargs)
             except:
                 raise AuthenticationFailed('Unauthenticated!')
@@ -98,17 +90,16 @@ class LoginView(APIView):
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
         user.token_refresh = data["refresh"]
-        user.save() 
+        user.save()
         csrf.get_token(request)
         response.data = {"Success" : "Login successfully","data":data, "a2f": user.a2f}
         return response
 
 class ActivateA2F(APIView):
     @jwt_authentication
-    def post(self, request):
-        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
+    def post(self, request, access_token):
         user_code = request.data['totp_code']
-        user_id=access_token_obj['user_id']
+        user_id=access_token['user_id']
         user=User.objects.get(id=user_id)
 
         response = Response()
@@ -125,9 +116,8 @@ class ActivateA2F(APIView):
         return response
 
     @jwt_authentication
-    def get(self, request):
-        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
-        user_id=access_token_obj['user_id']
+    def get(self, request, access_token):
+        user_id=access_token['user_id']
         user=User.objects.get(id=user_id)
         response = Response()
 
@@ -146,9 +136,8 @@ class ActivateA2F(APIView):
         return response
     
     @jwt_authentication
-    def put(self, request):
-        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
-        user_id=access_token_obj['user_id']
+    def put(self, request, access_token):
+        user_id=access_token['user_id']
         user=User.objects.get(id=user_id)
         response = Response()
 
@@ -201,14 +190,8 @@ class LoginA2F(APIView):
             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
         )
-        user.token_refresh = response.set_cookie(
-                 key = settings.SIMPLE_JWT['REFRESH_COOKIE'],
-                 value = data["refresh"],
-                 expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-                 secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                 httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-        )
+        user.token_refresh = data["refresh"]
+        print(user.token_refresh)
         user.save() 
         csrf.get_token(request)
         response.data = {"Success" : "Login successfully","data":data, "status": "success"}
@@ -216,11 +199,10 @@ class LoginA2F(APIView):
 
 class UserView(APIView):
     @jwt_authentication
-    def get(self, request):
-        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
+    def get(self, request, access_token):
         response = Response()
 
-        user_id=access_token_obj['user_id']
+        user_id=access_token['user_id']
         user=User.objects.get(id=user_id)
         serialiazer = UserSerializer(user)
 
@@ -228,12 +210,10 @@ class UserView(APIView):
         return response
 
     @jwt_authentication
-    def put(self, request):
+    def put(self, request, access_token):
         oldpassword = request.data.get('oldpassword', None)
-
-        access_token_obj = AccessToken(request.COOKIES.get('access_token'))
-        
-        user_id=access_token_obj['user_id']
+     
+        user_id=access_token['user_id']
         user=User.objects.get(id=user_id)
 
         if not user.check_password(oldpassword):
@@ -246,7 +226,6 @@ class UserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-############ Need to check if connected and raise expection ###################
 class LogoutView(APIView):
     def post(self, request):
         response = Response()

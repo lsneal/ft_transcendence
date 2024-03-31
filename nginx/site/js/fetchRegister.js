@@ -7,12 +7,11 @@ async function EventRegister () {
     const confirmPassword = document.querySelector('#ConfirmPassword').value;
 
 
-    let myModalEl = document.getElementById('modalRegistrer');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
+    const myModalEl = document.getElementById('modalRegistrer');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
 
     if (!email || !pseudo ||!password || !confirmPassword) {
-        //alert('Veuillez remplir tous les champs !');
         const errorMessage = 'Empty fields';
         const errorElement = document.getElementById('error-message-Register');
         errorElement.innerText = errorMessage;
@@ -68,14 +67,13 @@ async function EventRegister () {
                     errorMessage = data.password    
                 const errorElement = document.getElementById('error-message-Register');
                 errorElement.innerText = errorMessage;
-                errorElement.style.display = 'block'; // Assurez-vous que l'élément est affiché
+                errorElement.style.display = 'block';
             }
 
 
         });
     }
     catch (error) {
-        alert(error)
     };
 
 

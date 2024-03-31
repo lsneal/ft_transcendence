@@ -57,7 +57,6 @@ function doAjaxSubmit(e) {
 
     if (contentType === 'multipart/form-data') {
       if (!window.FormData) {
-        alert('Your browser does not support AJAX multipart form submissions');
         return;
       }
 

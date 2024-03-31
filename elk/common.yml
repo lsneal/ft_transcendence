@@ -1,10 +1,10 @@
-version: "3.8"
 
 services:
   setup:
     depends_on:
       vault:
         condition: service_healthy
+    container_name: setup-elk
     image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
@@ -57,6 +57,7 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=basic
+      - logger.level=WARN
     mem_limit: 4294967296
     ulimits:
       memlock:
@@ -96,6 +97,7 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
       - SERVER_PUBLICBASEURL=https://kibana.localhost
+      - logger.level=WARN
     mem_limit: 1073741824
     healthcheck:
       test:
@@ -117,7 +119,6 @@ services:
     volumes:
       - certs:/usr/share/logstash/config/certs
       - ./postgresql-42.7.1.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.7.1.jar
-      #- ./nginx:/usr/share/logstash/pattern/nginx:ro
       - ./logstash/config:/usr/share/logstash/pipeline/
       - ./logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:st
       - logstashdata:/usr/share/logstash/data

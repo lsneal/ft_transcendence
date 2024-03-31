@@ -23,7 +23,7 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
         })
         .then((response) => response.json())
         .then(data => {
-            let url = `wss://localhost/api/pong/ws/` + data.data.id 
+            let url = `wss://10.13.249.106/api/pong/ws/` + data.data.id 
             const socket = new WebSocket(url)
             let player1 = name1
             let player2 = name2
@@ -33,6 +33,8 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
             }
         })
 }
+
+
 
 function playGameOnline(gameId, socket, pseudo, player)
 { 
@@ -46,7 +48,20 @@ function playGameOnline(gameId, socket, pseudo, player)
     let leftBar = document.getElementById("leftBox")
     let ball = document.getElementById("ball")
     let rightBar = document.getElementById("rightBox")
+    let eventWin;
 
+    function sendToSocket(e)
+    {
+        if (e.key === "ArrowUp" || e.key === "ArrowDown")
+        {
+            socket.send(JSON.stringify({
+                'game':'in progress',
+                'moov':e.key,
+                'gameId': gameId,
+                'typeParty': 'game'
+            }))
+        }
+    }
 
     socket.onopen = () => {
         socket.send(JSON.stringify({
@@ -56,17 +71,7 @@ function playGameOnline(gameId, socket, pseudo, player)
             'typeParty': 'game'
         }))
         
-        window.addEventListener("keydown", function (e) {
-            if (e.key === "ArrowUp" || e.key === "ArrowDown")
-            {
-                socket.send(JSON.stringify({
-                    'game':'in progress',
-                    'moov':e.key,
-                    'gameId': gameId,
-                    'typeParty': 'game'
-                }))
-            }
-        })
+        window.addEventListener("keydown", sendToSocket, false);
     }
 
     socket.onmessage = function (event) {
@@ -94,7 +99,9 @@ function playGameOnline(gameId, socket, pseudo, player)
                     ball.style.left = data.posX.toString() + "px";
                 }
                 if (document.getElementById("scoreP1") == null || document.getElementById("scoreP2") == null)
+                {
                     socket.close()
+                }
                 else
                 {
                     document.getElementById("scoreP1").innerHTML = data.scoreP1;
@@ -104,11 +111,13 @@ function playGameOnline(gameId, socket, pseudo, player)
                 {
                     winner = "p1";
                     UserStatsGame(pseudo, 'p1', player, 'p2', data.scoreP1, data.scoreP2, gameId);
+                    socket.close()
                 }
                 if (data.scoreP2 == 5)
                 {
                     winner = "p2";
                     UserStatsGame(pseudo, 'p2', player, 'p1', data.scoreP1, data.scoreP2, gameId);
+                    socket.close()
                 }
             }
         }
@@ -126,7 +135,8 @@ function playGameOnline(gameId, socket, pseudo, player)
         }
     }
     socket.onclose = () => {
-        if (document.getElementById("time") != null)
+        window.removeEventListener("keydown", sendToSocket, false);
+        if (document.getElementById("time") != null && document.getElementById("player2"))
         {
             document.getElementById("player1").innerHTML = ``
             document.getElementById("player2").innerHTML = ``
@@ -144,12 +154,13 @@ function playGameOnline(gameId, socket, pseudo, player)
         ball.style.top = "240px";
         ball.style.left ="45%";
         ball.style.animation = "none";
+        
 
      
     }
 }
 
-async function UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score, gameId) {
+async function  UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score, gameId) {
     
     let player1 = null
     let player2 = null
