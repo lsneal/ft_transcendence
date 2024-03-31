@@ -6,10 +6,10 @@ services:
       - dashboard_network
       - vault_network_dashboard
       - postgres_exporter-network
+    env_file:
+      - ../.env
     environment:
-      - POSTGRES_PASSWORD=password
       - PGPORT=5434
-      - PGUSER=postgres
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
@@ -38,7 +38,6 @@ services:
     restart: always
     volumes:
       - vault_django_dashboard:/opt
-      #- static:/var/www/admin/css
       - ./dashboard/script/:/script/mysite #development purpose
     depends_on:
       vault:

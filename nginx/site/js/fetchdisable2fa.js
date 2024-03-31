@@ -1,9 +1,7 @@
 async function EventDisableTwoFA() {
 
-    let myModalEl = document.getElementById('modalActivateOrDeactivateTwoFA');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
-
-
+    const myModalEl = document.getElementById('modalActivateOrDeactivateTwoFA');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
     try {
         const response = await fetch('/api/users/activate2fa/', {

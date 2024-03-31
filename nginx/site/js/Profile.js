@@ -30,17 +30,12 @@ export default class extends AbstractView {
                 isAuthenticated = true; 
             }
         } catch (error) {
-            alert('Erreur : ' + error.message);
         }
 
-        if (isAuthenticated === false) {
+        if (isAuthenticated === false || window.location.href.indexOf('profile') < -1) {
             return; 
         }
-
-        EventProfile();
-      
-        //EventProfile()
-
+   
         document.getElementById("TournamentButton").addEventListener('click', event => {
             window.history.pushState(null, "Tournament", "/tournament/");
             window.dispatchEvent(new Event('popstate'));

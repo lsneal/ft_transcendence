@@ -5,10 +5,16 @@ async function EventChange () {
     const  confirmpassword  = document.querySelector('#ConfirmChangePassword').value;
 
 
-    let myModalEl = document.getElementById('modalProfile');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
+    const myModalEl = document.getElementById('modalProfile');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
-
+    if (!CurrentPseudo || !password) {
+      const errorMessage = 'Password or pseudo is empty';
+      const errorElement = document.getElementById('error-message-Login');
+      errorElement.innerText = errorMessage;
+      errorElement.style.display = 'block';
+      return;
+    }
     if(oldpassword == password && oldpassword != ''){
       const errorMessage = 'No changes made';
       const errorElement = document.getElementById('error-message-Login');
@@ -23,7 +29,16 @@ async function EventChange () {
       errorElement.style.display = 'block';
       return;
     }
+    if (password && password === confirmpassword) {
+      if (password.length < 6) {
+        const errorMessage = 'Password length must be greater than 6 character';
+        const errorElement = document.getElementById('error-message-Login');
+        errorElement.innerText = errorMessage;
+        errorElement.style.display = 'block';
+        return;
+      }
 
+    }
       const userresponse = await fetch('/api/users/user/', {
           method: 'GET',
           headers: {
@@ -48,10 +63,7 @@ async function EventChange () {
         password: password,
     };
     
-
     const jsonString = JSON.stringify(formData);
-
-    
     const url = '/api/users/user/';
 
     const options = {
@@ -72,12 +84,16 @@ async function EventChange () {
           const errorElement = document.getElementById('error-message-Login');
           errorElement.innerText = errorMessage;
           errorElement.style.display = 'block';
-        }else{
+        }
+        else{
+          document.querySelector('#ActuallyPseudo').value = '';
+          document.querySelector('#OldPassword').value = '';
+          document.querySelector('#ChangePassword').value = '';
+          document.querySelector('#ConfirmChangePassword').value = '';
           modal.hide()
         }
     })
     .catch(error => {
-        console.error('Erreur lors de la requête :', error);
     });
 
 }

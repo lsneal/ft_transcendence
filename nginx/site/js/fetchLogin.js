@@ -5,11 +5,11 @@ async function EventLogin () {
     const email = document.querySelector('#emailLogin').value;
     const password = document.querySelector('#PasswordLogin').value;
 
-    let myModalEl = document.getElementById('modalEmail');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
+    const myModalEl = document.getElementById('modalEmail');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
 
-    var Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
+    const Modal2fa = new bootstrap.Modal(document.getElementById('modallogin2fa'), {
         keyboard: false
       });
 

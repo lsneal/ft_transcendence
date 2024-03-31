@@ -55,13 +55,16 @@ async function EventGetQRCode() {
         });
         
     });
-    var Modal2faAcif = new bootstrap.Modal(document.getElementById('modalActivateOrDeactivateTwoFA'), {
+    let Modal2faAcif = new bootstrap.Modal(document.getElementById('modalActivateOrDeactivateTwoFA'), {
         keyboard: false
     });
 
-    var Modal2faInacif = new bootstrap.Modal(document.getElementById('modaltwoFA'), {
+    let Modal2faInacif = new bootstrap.Modal(document.getElementById('modaltwoFA'), {
         keyboard: false
     });
+
+    const myModalEl = document.getElementById('modalBurger');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
     try {
         const response = await fetch('/api/users/activate2fa/', {
@@ -73,6 +76,7 @@ async function EventGetQRCode() {
         const data = await response.json();
       
         if (data.message === 'error') {
+            modal.hide();
             Modal2faAcif.show();
         } 
         else if (!Modal2faAcif._isShown) {
@@ -80,9 +84,9 @@ async function EventGetQRCode() {
             qrcode.src = data.url;
             var imgElement = document.getElementById("2FA-link");
             imgElement.src = qrcode.src;
+            modal.hide();
             Modal2faInacif.show();
         }
     } catch (error) {
-        alert('Erreur de déconnexion');
     }
 }   

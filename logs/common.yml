@@ -117,13 +117,7 @@ networks:
   postgres_exporter-network:
     driver: bridge
 
-  vault-postgres-exporter_network:
-    driver: bridge
-
   prometheus_elastic-network:
-    driver: bridge
-
-  prometheus_nginx-network:
     driver: bridge
 
 
@@ -131,7 +125,6 @@ volumes:
   prometheus:
   grafana-data:
   grafana-conf:
-  alertmanager-data:
 
 
 

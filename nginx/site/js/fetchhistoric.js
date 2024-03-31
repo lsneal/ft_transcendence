@@ -1,7 +1,7 @@
 async function getHistoricOnline () {
 
-    let myModalEl = document.getElementById('modalBurger');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
+    const myModalEl = document.getElementById('modalBurger');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
 
     try {
@@ -44,6 +44,5 @@ async function getHistoricOnline () {
             tbody.appendChild(row);
         }
     } catch (error) {
-        alert('Erreur : ' + error.message);
     }
 }  

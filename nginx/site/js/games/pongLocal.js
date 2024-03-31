@@ -160,7 +160,7 @@ function playGameLocal(gameId, socket)
             }
 
         }
-        if (data.type === "time")
+        if (data.type === "time" && document.getElementById("time"))
         {
             document.getElementById("time").style.display = 'block';
             document.getElementById("time").style.fontSize = '7.0rem';

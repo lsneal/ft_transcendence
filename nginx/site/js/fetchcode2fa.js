@@ -1,7 +1,7 @@
 async function send2facode() {
 
-    let myModalEl = document.getElementById('modalEmail');
-    let modal = bootstrap.Modal.getInstance(myModalEl);
+    const myModalEl = document.getElementById('modalEmail');
+    const modal = bootstrap.Modal.getInstance(myModalEl);
 
     const code1 = document.getElementById('codelog1').value;
     const code2 = document.getElementById('codelog2').value;
@@ -10,8 +10,8 @@ async function send2facode() {
     const code5 = document.getElementById('codelog5').value;
     const code6 = document.getElementById('codelog6').value;
 
-    let myModal2FA = document.getElementById('modallogin2fa');
-    let modal2fa = bootstrap.Modal.getInstance(myModal2FA);
+    const myModal2FA = document.getElementById('modallogin2fa');
+    const modal2fa = bootstrap.Modal.getInstance(myModal2FA);
 
     const totalcode = code1 + code2 + code3 + code4 + code5 + code6;
     const formData = { totp: totalcode };
@@ -32,16 +32,15 @@ try {
             window.history.pushState(null, "Profile", "/profile/");
             window.dispatchEvent(new Event('popstate'));
         }
-        else{
+        else {
             const errorMessage = 'Wrong Code';
-            const errorElement = document.getElementById('errormessage2fa');
+            const errorElement = document.getElementById('error-message-2fa');
             errorElement.innerText = errorMessage;
             errorElement.style.display = 'block';
         }
     });
 }
 catch (error) {
-    console.log(error);
 };
 
 }

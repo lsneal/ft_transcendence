@@ -126,7 +126,7 @@ function playGameOnline(gameId, socket, pseudo, player)
         }
     }
     socket.onclose = () => {
-        if (document.getElementById("time") != null)
+        if (document.getElementById("time") != null && document.getElementById("player2"))
         {
             document.getElementById("player1").innerHTML = ``
             document.getElementById("player2").innerHTML = ``
