@@ -38,10 +38,14 @@ function CreateTournament() {
                             </div>`   
     }
     users.innerHTML += `
-        <div class="d-flex align-items-center justify-content-center">
+        <div class="d-flex align-items-center justify-content-center">f
             <button type="button" onclick="getName(${nbPlayer})" id="button_tournament" class="btn btn-primary btn-lg lign-items-center" >Commencer le tournoi</button>
         </div>
             `
+}
+
+function checkWhitespace(str) {
+    return /\s/.test(str);
 }
 
 function getName(nbPlayer) 
@@ -51,7 +55,7 @@ function getName(nbPlayer)
     for (let i = 0; i < nbPlayer; i++)
     {
         let name = document.getElementById(`name${i}`);
-        if (name === null || name.value === "" || name.value === " ")
+        if (name === null || name.value === "" || name.value === " " || checkWhitespace(name.value))
             break ;
         arrPlayer[i] = name.value
     }
@@ -115,7 +119,7 @@ function beforeStart(gameId, value) {
     })
     .then((response) => response.json())
     .then(data => {
-        let url = `wss://localhost/api/pong/ws/` + data.data.id 
+        let url = `wss://10.13.249.106/api/pong/ws/` + data.data.id 
         const socket = new WebSocket(url)
         playTournament(gameId, socket, value)
     })
