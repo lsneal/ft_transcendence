@@ -16,8 +16,6 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
         document.getElementById("ball").style.width = "30px";
     }
 
-
-
     fetch("/api/users/user/", {
             method: "GET",
         })
