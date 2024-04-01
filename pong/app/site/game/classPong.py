@@ -190,6 +190,7 @@ class Pong:
             return
 
     def ballSendToJs(self, ballPosX, ballPosY, typeParty):
+        leave = 0
         try:
             self.player1.send(text_data=json.dumps({
                 'type':'game',
@@ -199,6 +200,7 @@ class Pong:
                 'scoreP1':self.scoreP1,
                 'scoreP2':self.scoreP2
             }))
+            leave = 1
             if typeParty == 'game':
                 self.player2.send(text_data=json.dumps({
                     'type':'game',
@@ -208,8 +210,32 @@ class Pong:
                     'scoreP1':self.scoreP1,
                     'scoreP2':self.scoreP2
                 }))
+            leave = 2
         except:
-            pass
+            if leave == 0:
+                try:
+                    self.player2.send(text_data=json.dumps({
+                    'type':'game',
+                    'moov':'ball',
+                    'posX':ballPosX,
+                    'posY':ballPosY,
+                    'scoreP1':self.scoreP1,
+                    'scoreP2':5
+                    }))
+                except:
+                    pass
+            elif leave == 1:
+                try:
+                    self.player1.send(text_data=json.dumps({
+                        'type':'game',
+                        'moov':'ball',
+                        'posX':ballPosX,
+                        'posY':ballPosY,
+                        'scoreP1':5,
+                        'scoreP2':self.scoreP2
+                    }))
+                except:
+                    pass
         if self.scoreP1 == 5 or self.scoreP2 == 5:
             self.barSendToJs('ArrowUp', 250, 250)
             self.leftBoxTop = 250
