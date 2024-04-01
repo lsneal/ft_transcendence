@@ -6,7 +6,7 @@ services:
       - pong_network
       - vault_network_pong
       - postgres_exporter-network
-      #- logstash_network
+      - logstash_network
     env_file:
       - ../.env
     environment:
@@ -39,7 +39,7 @@ services:
     restart: always
     volumes:
       - vault_django_pong:/opt
-      - ./app/site/:/script/mysite #development purpose
+      - ./app/site/:/script/mysite
     depends_on:
       postgres_pong:
         condition: service_healthy

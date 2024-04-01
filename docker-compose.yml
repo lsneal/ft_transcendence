@@ -2,7 +2,7 @@
 include:
   - users/common.yml
   - pong/common.yml
-  #- elk/common.yml
+  - elk/common.yml
   - logs/common.yml
   - dashboard/common.yml
   
@@ -11,9 +11,9 @@ services:
     container_name: nginx
     build: nginx
     volumes:
-      - ./users/users/script/static/:/var/www/django/ #development purpose
+      - ./users/users/script/static/:/var/www/django/ 
       - ./pong/app/site/static/:/var/www
-      - ./nginx/site/:/var/www/html/ #development purpose
+      - ./nginx/site/:/var/www/html/ 
       - vault_nginx:/opt
       - nginx_logs:/var/log/
     restart: always
@@ -30,8 +30,8 @@ services:
         condition: service_healthy
       grafana:
         condition: service_healthy
-   #   kibana:
-        # condition: service_healthy
+      kibana:
+        condition: service_healthy
     healthcheck:
       test: wget -qO- --no-check-certificate https://localhost || exit 1
       interval: 10s
