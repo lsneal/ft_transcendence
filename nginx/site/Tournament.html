@@ -26,15 +26,17 @@
 </div>
 
 
-<div id="game-container">
-	<div id="tournament">
-		<label></label>
-		<select id="nbP" class="btn btn-primary btn-lg col-5" name="nbP" id="pet-select">
-		  <option>4 players</option>
-		  <option>8 players</option>
-		  <option>16 players</option>
-		</select>
-		<button id="CreateTournament"  class="btn btn-primary btn-lg" style="display: block;" onclick="CreateTournament()">Create tournament</button>
+<div id="game-container" >
+	<div id="realTournament" style="display: block;">
+		<div id="tournament">
+			<label></label>
+			<select id="nbP" class="btn btn-primary btn-lg col-5" name="nbP" id="pet-select">
+			  <option>4 players</option>
+			  <option>8 players</option>
+			  <option>16 players</option>
+			</select>
+			<button id="CreateTournament"  class="btn btn-primary btn-lg" style="display: block;" onclick="CreateTournament()">Create tournament</button>
+		</div>
 	</div>
 	<form id="users" style="display: 'none';">
 		<div id="error" style="display: none; color: #9B4444;">

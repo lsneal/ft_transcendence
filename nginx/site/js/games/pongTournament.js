@@ -9,9 +9,15 @@ function CreateTournament() {
     if (document.getElementById("crown") != null)
         document.getElementById("crown").style.display = 'none';
     let nbPlayer = document.getElementById("nbP");
-    let button3 = document.getElementById("tournament");
+    let button3 = document.getElementById("realTournament");
     let users = document.getElementById("users");
     
+    if (document.getElementById("ball") != null)
+    {
+        document.getElementById("ball").style.height = "30px";
+        document.getElementById("ball").style.width = "30px";
+    }
+
     nbPlayer = nbPlayer.value.split(' ');
     nbPlayer = Number(nbPlayer[0]);
     if (nbPlayer != 4 && nbPlayer != 8 && nbPlayer != 16)
@@ -109,7 +115,7 @@ function beforeStart(gameId, value) {
     })
     .then((response) => response.json())
     .then(data => {
-        let url = `wss://10.13.249.106/api/pong/ws/` + data.data.id 
+        let url = `wss://localhost/api/pong/ws/` + data.data.id 
         const socket = new WebSocket(url)
         playTournament(gameId, socket, value)
     })
@@ -144,7 +150,7 @@ function playTournament(gameId, socket, tournament) {
     let ball = document.getElementById("ball")
     let rightBar = document.getElementById("rightBox")
 
-    let button3 = document.getElementById("tournament");
+    let button3 = document.getElementById("realTournament");
 
     socket.onopen = () => {
         socket.send(JSON.stringify({
@@ -334,6 +340,11 @@ function playTournament(gameId, socket, tournament) {
         ball.style.top = posY.toString() + "px";
         ball.style.left = posX.toString() + "px";
         button3.style.display = 'block';
+        document.getElementById("ball").style.width = "100px";
+        document.getElementById("ball").style.height = "100px";
+        ball.style.top = "240px";
+        ball.style.left ="45%";
+        ball.style.animation = "none";
     }
 }
 
