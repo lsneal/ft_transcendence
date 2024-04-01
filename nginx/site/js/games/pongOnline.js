@@ -110,12 +110,20 @@ function playGameOnline(gameId, socket, pseudo, player)
                 if (data.scoreP1 == 5)
                 {
                     winner = "p1";
+                    res = 250;    
+                    res = res.toString();
+                    leftBar.style.top = res + "px";
+                    rightBar.style.top = res + "px";
                     UserStatsGame(pseudo, 'p1', player, 'p2', data.scoreP1, data.scoreP2, gameId);
                     socket.close()
                 }
                 if (data.scoreP2 == 5)
                 {
                     winner = "p2";
+                    res = 250;    
+                    res = res.toString();
+                    leftBar.style.top = res + "px";
+                    rightBar.style.top = res + "px";
                     UserStatsGame(pseudo, 'p2', player, 'p1', data.scoreP1, data.scoreP2, gameId);
                     socket.close()
                 }

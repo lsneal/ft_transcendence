@@ -20,7 +20,7 @@ function startGameLocal(gameId) {
     })
     .then((response) => response.json())
     .then(data => {
-        let url = `wss://10.13.249.106/api/pong/ws/` + data.data.id 
+        let url = `wss://localhost/api/pong/ws/` + data.data.id 
         const socket = new WebSocket(url)
         playGameLocal(gameId, socket)
     })
@@ -154,11 +154,22 @@ function playGameLocal(gameId, socket)
                     document.getElementById("scoreP2").innerHTML = data.scoreP2;
                 }
                 if (data.scoreP1 == 5)
+                {
                     winner = "p1";
+                    res = 250;    
+                    res = res.toString();
+                    leftBar.style.top = res + "px";
+                    rightBar.style.top = res + "px";
+                }
                 if (data.scoreP2 == 5)
+                {
                     winner = "p2";
+                    res = 250;    
+                    res = res.toString();
+                    leftBar.style.top = res + "px";
+                    rightBar.style.top = res + "px";
+                }        
             }
-
         }
         if (data.type === "time" && document.getElementById("time"))
         {

@@ -28,10 +28,12 @@ class GameConsumer(WebsocketConsumer):
         
         if gameIdx > len(manager.games):
             gameIdx = len(manager.games) - 1
-        
+
         if game == 'tournament':
             tournamentId = text_data_json['tournamentId']
             tournamentId = tournamentId - 1
+            if tournamentId > len(managerTournament.tournaments):
+                tournamentId = len(managerTournament.tournaments) - 1
             users = text_data_json['users']
             nb_user = text_data_json['nb_user']
             managerTournament.tournaments[tournamentId].users = users
@@ -51,6 +53,8 @@ class GameConsumer(WebsocketConsumer):
         if game == 'tournamentInProgress':
             tournamentId = text_data_json['tournamentId']
             tournamentId = tournamentId - 1
+            if tournamentId > len(managerTournament.tournaments):
+                tournamentId = len(managerTournament.tournaments) - 1
             if manager.games[gameIdx].scoreP1 == 5:
                 managerTournament.tournaments[tournamentId].winner = managerTournament.tournaments[tournamentId].match[0]
             elif manager.games[gameIdx].scoreP2 == 5:
@@ -114,4 +118,3 @@ class GameConsumer(WebsocketConsumer):
                     game.player2 = 'END'
                     game.player1 = 'END'
         raise StopConsumer
-
