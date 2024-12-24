@@ -38,7 +38,7 @@ services:
     restart: always
     volumes:
       - vault_django_dashboard:/opt
-      - ./dashboard/script/:/script/mysite #development purpose
+      - ./dashboard/script/:/script/mysite 
     depends_on:
       vault:
         condition: service_healthy

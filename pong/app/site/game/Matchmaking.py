@@ -28,9 +28,9 @@ class Matchmaking():
 
     def endGame(self, game):
         try:
-            if game.player1 == game.player2 and game.player1  is not 'END':
+            if game.player1 == game.player2 and game.player1  != 'END':
                 game.player1.close()
-            elif game.player1  is not 'END' and game.player2 is not 'END':
+            elif game.player1  != 'END' and game.player2 != 'END':
                 game.player1.close()
                 game.player2.close()
             game.player2 = 'END'

@@ -196,9 +196,9 @@ function playGameLocal(gameId, socket)
             document.getElementById("time").style.display = 'block';
             document.getElementById("crown").style.display = 'block';
             if (winner == 'p1')
-                document.getElementById("time").innerHTML = `Joueur1 gagne`;
+                document.getElementById("time").innerHTML = `Joueur1 Wins`;
             if (winner == 'p2')
-                document.getElementById("time").innerHTML = `Joueur2 gagne`;
+                document.getElementById("time").innerHTML = `Joueur2 Wins`;
             document.getElementById("time").style.fontSize = 'xxx-large';
             document.getElementById("time").style.left = '35%';
 

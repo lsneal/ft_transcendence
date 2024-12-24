@@ -138,14 +138,11 @@ label {
 .accordion {
     position: fixed;
     top: 105px; /* ajustez la valeur en fonction de votre besoin */
-    right: 10px; /* ajustez la valeur en fonction de votre besoin */
-    z-index: 9999; /* assurez-vous que l'élément est au-dessus des autres contenus */
 }
 
 
 .accordion-button {
     width: 1px; /* Adjust width to fit content */
-	background-color: #43766C;
 	overflow: hidden;
     background: none; /* Remove background */
     border: none; /* Remove border */
@@ -154,11 +151,11 @@ label {
 }
 
 .accordion-button:not(.collapsed) {
-	background-color: #43766C!important;
+	background-color: #222831!important;
 	box-shadow: none;
 }
 
 .accordion-button:focus{
-	border-color: #43766C;
+	border-color: #222831;
 	box-shadow: none;
 }

@@ -45,12 +45,17 @@ export default class extends AbstractView {
         }
       });
 
+      document.getElementById("logoenhaut").addEventListener('click', event => {
+        window.history.pushState(null, "Profile", "/");
+        window.dispatchEvent(new Event('popstate'));
+      });
+
       document.getElementById("BtnRank").addEventListener('click', getRankingPlayers);
 
     
       const container = document.querySelector('#body');
   
-      function clearBubbles() {
+      /*function clearBubbles() {
         const bubbles = document.querySelectorAll('.bubble');
         bubbles.forEach(bubble => {
           bubble.remove();
@@ -122,7 +127,7 @@ export default class extends AbstractView {
   
       createSphere(container.offsetWidth / 4, container.offsetHeight / 4, -2, 6, 'sphere4');
   
-      createSphere(container.offsetWidth / 3, container.offsetHeight / 3, -1, 4, 'sphere5');
+      createSphere(container.offsetWidth / 3, container.offsetHeight / 3, -1, 4, 'sphere5');*/
     }
 
     async getHtml() {

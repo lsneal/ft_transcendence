@@ -16,6 +16,8 @@ function startGameOnline(gameId, player, pseudo, name1, name2) {
         document.getElementById("ball").style.width = "30px";
     }
 
+
+
     fetch("/api/users/user/", {
             method: "GET",
         })
@@ -179,9 +181,9 @@ async function  UserStatsGame(pseudo, winner, player, looser, p1Score, p2Score, 
         player2 = data.player2_name
         document.getElementById("time").style.display = 'block';
         if (data.player2 == winner)
-            document.getElementById("time").innerHTML = `${data.player2_name} gagne`
+            document.getElementById("time").innerHTML = `${data.player2_name} Wins`
         if (data.player1 == winner)
-            document.getElementById("time").innerHTML = `${data.player1_name} gagne`
+            document.getElementById("time").innerHTML = `${data.player1_name} Wins`
     })
     if (winner === player || looser === player)
     {   

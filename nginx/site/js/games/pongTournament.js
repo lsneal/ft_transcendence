@@ -30,16 +30,16 @@ function CreateTournament() {
     {
         users.innerHTML += `<div class="row mb-4">
                                 <div class="col">
-                                    <input type="text" class="form-control" id="name${i}" placeholder="nom du joueur">
+                                    <input type="text" class="form-control" id="name${i}" placeholder="Name">
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control" id="name${i + 1}" placeholder="nom du joueur">  
+                                    <input type="text" class="form-control" id="name${i + 1}" placeholder="Name">  
                                 </div>
                             </div>`   
     }
     users.innerHTML += `
-        <div class="d-flex align-items-center justify-content-center">f
-            <button type="button" onclick="getName(${nbPlayer})" id="button_tournament" class="btn btn-primary btn-lg lign-items-center" >Commencer le tournoi</button>
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="button" onclick="getName(${nbPlayer})" id="button_tournament" class="btn btn-primary btn-lg lign-items-center" >Start Tournament</button>
         </div>
             `
 }
@@ -47,6 +47,7 @@ function CreateTournament() {
 function checkWhitespace(str) {
     return /\s/.test(str);
 }
+
 
 function getName(nbPlayer) 
 {    
@@ -94,8 +95,8 @@ function getName(nbPlayer)
     }
     else
     {
-        document.getElementById("error").style.display = 'block';
-        arrPlayer = [];
+        if (document.getElementById("error"))
+            document.getElementById("error").style.display = 'block';
         arrPlayer = [];
     }
 }
@@ -250,11 +251,12 @@ function playTournament(gameId, socket, tournament) {
             bracket.innerHTML = ``
             document.getElementById("time").style.display = 'block';
             document.getElementById("crown").style.display = 'block';
-            document.getElementById("time").innerHTML = `${data.winner} gagne`;
+            document.getElementById("time").innerHTML = `${data.winner} Wins`;
             document.getElementById("time").style.fontSize = 'xxx-large';
             document.getElementById("time").style.left = '38%';
             document.getElementById("scoreP1").innerHTML = 0;
             document.getElementById("scoreP2").innerHTML = 0;
+            arrPlayer = []
             return
         }
         if (data.type === "game")
@@ -341,14 +343,18 @@ function playTournament(gameId, socket, tournament) {
             ball.style.top = posY.toString() + "px";
             ball.style.left = posX.toString() + "px";
         }
-        ball.style.top = posY.toString() + "px";
-        ball.style.left = posX.toString() + "px";
         button3.style.display = 'block';
-        document.getElementById("ball").style.width = "100px";
-        document.getElementById("ball").style.height = "100px";
-        ball.style.top = "240px";
-        ball.style.left ="45%";
-        ball.style.animation = "none";
+        if (document.getElementById("ball")){
+            ball.style.top = posY.toString() + "px";
+            ball.style.left = posX.toString() + "px";
+
+            document.getElementById("ball").style.width = "100px";
+            document.getElementById("ball").style.height = "100px";
+            
+            ball.style.top = "240px";
+            ball.style.left ="45%";
+            ball.style.animation = "none";
+        }
     }
 }
 

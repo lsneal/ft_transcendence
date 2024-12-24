@@ -28,12 +28,10 @@ const navigateTo = url => {
 const router = async () => {
     const routes = [
         {   path: "/", view:  Home },
-        {   path: "/logout/", view: Logout },
         {   path: "/profile/", view: Profile },
         {   path: "/tournament/", view: Tournament },
         {   path: "/online/", view: Online },
         {   path: "/local/", view: Local },
-        {   path: "/error/", view: Error },
         {   path: "/games/", view: Games },
     ];
 

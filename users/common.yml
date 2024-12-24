@@ -6,7 +6,7 @@ services:
       - users_network
       - vault_network_users
       - postgres_exporter-network
-      #- logstash_network
+      - logstash_network
     env_file:
       - ../.env
     environment:
@@ -38,7 +38,7 @@ services:
     restart: always
     volumes:
       - vault_django_users:/opt
-      - ./users/script/:/script/mysite #development purpose
+      - ./users/script/:/script/mysite
     depends_on:
       vault:
         condition: service_healthy

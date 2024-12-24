@@ -1,17 +1,13 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from .Matchmaking import Matchmaking
 from .MatchmakingTournament import MatchmakingTournament
 from django.http import JsonResponse
-from rest_framework import permissions, viewsets
 
 from .models import Game
 from rest_framework import status
-# from .serializers import UserGameSerializer
 from .serializers import GameSerializer
 from .serializers import TournamentSerializer
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import APIView
 
 manager = Matchmaking()

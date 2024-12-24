@@ -9,5 +9,5 @@ fi
 python manage.py makemigrations
 python manage.py migrate
 
-exec python -m gunicorn --bind 0.0.0.0:8003 -w 1 -k uvicorn.workers.UvicornWorker game.asgi:application
+exec python -m gunicorn --bind 0.0.0.0:8003 -k uvicorn.workers.UvicornWorker game.asgi:application
 

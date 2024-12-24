@@ -9,6 +9,7 @@ export default class extends AbstractView {
 
     async executeViewScript()
     {
+      arrPlayer = []
       const container = document.querySelector('#body');
       function clearSpheres() {
         const spheres = document.querySelectorAll('.sphere');
